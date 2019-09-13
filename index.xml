@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/</link>
+    <description>Recent content on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 09 Sep 2019 09:33:39 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>正则表达式</title>
+      <link>https://chen-feiyang.github.io/posts/regex/</link>
+      <pubDate>Mon, 09 Sep 2019 09:33:39 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/regex/</guid>
+      <description>注：python引用re模块来解析正则表达式，不同变成语言关于正则表达式的解析稍有区别，但python3.7.4文档并未提及其re模块的正则表达式遵循什么标准。不过其给出了一些关于正则表达式的示例、Mastering Regular Expressions、Regular Expression HOWTO等帮助掌握python中的正则表达式。暂不考虑不同语言正则表达式差别的话，[deerchao的正则表达式30分钟入门教程]是不错的中文教材。
+以下是篇幅均根据deerchao的此博文来做笔记。
+1. 本文目标 30分钟内让你明白正则表达式是什么，并对它有一些基本的了解，让你可以在自己的程序或网页里使用它。
+2. 如何使用本教程 作为入门教程（但入门了也不代表记住了，很细节的东西显然之后会忘，时时像翻阅字典一样翻阅这篇文章），并作为正则表达式语法参考手册。
+3. 正则表达式到底是什么东西？ 在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。
+很可能你使用过Windows/Dos下用于文件查找的通配符(wildcard)，也就是*和?。如果你想查找某个目录下的所有的Word文档的话，你会搜索*.doc。在这里，*会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本匹配的工具，只不过比起通配符，它能更精确地描述你的需求——当然，代价就是更复杂——比如你可以编写一个正则表达式，用来查找所有以0开头，后面跟着2-3个数字，然后是一个连字号“-”，最后是7或8位数字的字符串(像010-12345678或0376-7654321)。
+注：
+ 字符是计算机软件处理文字时最基本的单位，可能是字母，数字，标点符号，空格，换行符，汉字等等。字符串是0个或更多个字符的序列。文本也就是文字，字符串。说某个字符串匹配某个正则表达式，通常是指这个字符串里有一部分（或几部分分别）能满足表达式给出的条件。  4. 入门 学习正则表达式的最好方法是从例子开始，理解例子之后再自己对例子进行修改，实验。下面给出了不少简单的例子，并对它们作了详细的说明。
+假设你在一篇英文小说里查找hi，你可以使用正则表达式hi。
+这几乎是最简单的正则表达式了，它可以精确匹配这样的字符串：由两个字符组成，前一个字符是h,后一个是i。通常，处理正则表达式的工具会提供一个忽略大小写的选项，如果选中了这个选项，它可以匹配hi,HI,Hi,hI这四种情况中的任意一种。
+不幸的是，很多单词里包含hi这两个连续的字符，比如him,history,high等等。用hi来查找的话，这里边的hi也会被找出来。如果要精确地查找hi这个单词的话，我们应该使用\bhi\b。
+\b是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处。虽然通常英文的单词是由空格，标点符号或者换行来分隔的，但是\b并不匹配这些单词分隔字符中的任何一个，它只匹配一个位置。
+假如你要找的是hi后面不远处跟着一个Lucy，你应该用\bhi\b.*\bLucy\b。
+这里，.是另一个元字符，匹配除了换行符以外的任意字符。*同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定*前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，.*连在一起就意味着任意数量的不包含换行的字符。现在\bhi\b.*\bLucy\b的意思就很明显了：先是一个单词hi,然后是任意个任意字符(但不能是换行)，最后是Lucy这个单词。
+如果同时使用其它元字符，我们就能构造出功能更强大的正则表达式。比如下面这个例子：
+0\d\d-\d\d\d\d\d\d\d\d匹配这样的字符串：以0开头，然后是两个数字，然后是一个连字号“-”，最后是8个数字(也就是中国的电话号码。当然，这个例子只能匹配区号为3位的情形)。
+这里的\d是个新的元字符，匹配一位数字(0，或1，或2，或……)。-不是元字符，只匹配它本身——连字符(或者减号，或者中横线，或者随你怎么称呼它)。
+为了避免那么多烦人的重复，我们也可以这样写这个表达式：0\d{2}-\d{8}。这里\d后面的{2}({8})的意思是前面\d必须连续重复匹配2次(8次)。
+注：
+ 1. 如果需要更精确的说法，\b匹配这样的位置：它的前一个字符和后一个字符不全是(一个是,一个不是或不存在)\w。 2. 换行符就是&#39;\n&#39;,ASCII编码为10(十六进制0x0A)的字符。  5. 测试正则表达式 可用的测试工具：RegexBuddy、Javascript正则表达式在线测试工具、Regester（作者自己编写）。
+这样可实时显示是否满足自己要求
+6. 元字符 现在你已经知道几个很有用的元字符了，如\b,.,*，还有\d.正则表达式里还有更多的元字符，比如\s匹配任意的空白符，包括空格，制表符(Tab)，换行符，中文全角空格等。\w匹配字母或数字或下划线或汉字等。
+下面来看看更多的例子：
+\ba\w*\b匹配以字母a开头的单词——先是某个单词开始处(\b)，然后是字母a,然后是任意数量的字母或数字(\w*)，最后是单词结束处(\b)。
+\d+匹配1个或更多连续的数字。这里的+是和*类似的元字符，不同的是*匹配重复任意次(可能是0次)，而+则匹配重复1次或更多次。
+\b\w{6}\b匹配刚好6个字符的单词。
+表1.常用的元字符
+   代码 说明     . 匹配除换行符以外的任意字符   \w 匹配字母或数字或下划线或汉字   \s 匹配任意的空白符   \d 匹配数字   \b 匹配单词的开始或结束   ^ 匹配字符串的开始   $ 匹配字符串的结束    元字符^（和数字6在同一个键位上的符号）和$都匹配一个位置，这和\b有点类似。^匹配你要用来查找的字符串的开头，$匹配结尾。这两个代码在验证输入的内容时非常有用，比如一个网站如果要求你填写的QQ号必须为5位到12位数字时，可以使用：^\d{5,12}$。</description>
+    </item>
+    
+    <item>
+      <title>Data_join</title>
+      <link>https://chen-feiyang.github.io/posts/data_join/</link>
+      <pubDate>Thu, 05 Sep 2019 17:11:32 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_join/</guid>
+      <description>比方我们想获得房地产新房数据，一些字段来自网站a，另一些字段来自网站b（如销量、库存等来自网站b）。如何拼接这些字段呢？暂时想到的是根据楼盘名来拼接。但是楼盘名可以很杂乱，楼盘名相同可能是不同房地产商在不同地域开发的楼盘。还更可能的情况是一个地块上的建筑物，依据物业，依据开盘时间等被分成多个展现却使用相同的楼盘名。假设有个楼盘叫珠江沁园，可能10年开发的叫这个名；因为卖得好，开发商13年在旁边拿地开发仍叫这个名却不冠以二期；之后开发了写字楼还叫这个名；之后开发的别墅还叫这个名。
+总之，按百度百科，楼盘是香港对物业的称呼。一套商品房是物业，一层是物业、一栋是物业，几栋也是物业，开发商地块上所有建筑物也是物业，在这个地块上还可以扩建建筑，均可叫楼盘。a网站其可能将一期、二期、住宅、商铺、写字楼、别墅等数据归并为1个楼盘，b网站也可将一期、二期、住宅、商铺、写字楼、别墅等拆分成多个楼盘、甚至其还可以拆分得更随意些，甚至还可以拆分后这几项名字完全相同。那么简单根据楼盘名合并表格是存在问题的。</description>
+    </item>
+    
+    <item>
+      <title>Steel_defect_detection</title>
+      <link>https://chen-feiyang.github.io/posts/steel_defect_detection/</link>
+      <pubDate>Sat, 31 Aug 2019 10:01:42 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/steel_defect_detection/</guid>
+      <description>Description描述 Steel is one of the most important building materials of modern times. Steel buildings are resistant to natural and man-made wear which has made the material ubiquitous around the world. To help make production of steel more efficient, this competition will help identify defects.钢铁是现代社会最重要建材之一。钢结构建筑能够抵抗自然和人为的磨损，这使得这种材料在世界各地普遍存在。为了使钢铁生产更有效率，此竞赛将帮助识别缺陷。
+Severstal is leading the charge in efficient steel mining and production. They believe the future of metallurgy requires development across the economic, ecological, and social aspects of the industry—and they take corporate responsibility seriously.</description>
+    </item>
+    
+    <item>
+      <title>平常遇到的一些问题及问题的解决办法</title>
+      <link>https://chen-feiyang.github.io/posts/sundry/</link>
+      <pubDate>Mon, 26 Aug 2019 13:07:47 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/sundry/</guid>
+      <description>这些问题的记录将以问题出现的时间为轴。格式为问题、细节、时间、解决方法、原因。
+问题：pandas查询那些列含有空值  细节：无 时间：20190826 解决办法：df.isnull().any()  问题：pandas查询那些列全部为空值  细节：无 时间：20190826 解决办法：df.isnull().all()  问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”  细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据&#39;name&#39;列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型Int64Index和RangeIndex，不同的index类型可能是不能join的原因。 时间：20190826 解决办法：只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。  问题：数据库更新方式：全量更新、增量更新  细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。 时间：20190829 解决办法：就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。 采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据； 采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。 所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。  问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。  细节：字符串内部为字典是指列中的格式为&amp;quot;{&#39;ka&#39;:&#39;va&#39;, &#39;kb&#39;:&#39;vb&#39;...}&amp;quot;，字符串内部为列表是指列中格式为&amp;quot;[&#39;va&#39;,&#39;vb&#39;,&#39;vc&#39;,...]&amp;quot;，嵌套列表与之类似。 时间：20190829 解决办法：这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为&#39;a&#39;转换为字典df[&#39;a&#39;].apply(eval)，如需要拆分出&#39;va&#39;等值并命名为列&#39;ka&#39;,可df[&#39;ka&#39;] = df[&#39;a&#39;].apply(eval).apply(lambda x: x[&#39;ka&#39;])。当然列&#39;a&#39;可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：
+# 列a非空的索引 column_a_not_null_index = df[df[&#39;a&#39;].notnull()].index df.loc[column_a_not_null_index, &#39;a&#39;] = \ df.loc[column_a_not_null_index, &#39;a&#39;].apply(eval) df[&#39;ka&#39;] = np.</description>
+    </item>
+    
+    <item>
+      <title>数据清洗-为规范录入数据</title>
+      <link>https://chen-feiyang.github.io/posts/data_cleaning_1/</link>
+      <pubDate>Fri, 23 Aug 2019 12:59:23 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_cleaning_1/</guid>
+      <description>前言 工作中一个常见的工作场景是：爬虫爬取的数据需要录入数据库，数据库有其元数据：包含哪些字段，字段名字是什么、字段的格式是什么（字符？字符格式？数字？数字格式？），需要经过清洗工作。这个工作可由爬取的原数据进行清洗，为更加自动化，也可在爬虫程序里自动进行清洗，例如scrapy框架里可直接在Item Pipeline里进行清洗。为完成这些清洗工作，我总结为三个清洗步骤（当然，如果在爬虫程序中清洗，由于缺少交互式数据呈现，故仅进行第二步骤，即实际清洗过程）。这样的清洗过程产出的数据仍不可避免含有一些错误，至少会有离群值等，为数据分析（机器学习）等，仍需要清洗离群值等，我准备再总结一篇关于数据分析（机器学习）的数据清洗。本博文仅介绍为录入数据库而进行的清洗工作。
+1.原表检查 原表应结合数据库导出的表进行查看，当然如果公司制度完善的话应有实时更新的关于产出表的字段描述，那可直接看字段描述。
+1.1 检查原表与产出表字段的匹配情况 不考虑字段名，而考虑字段里的内容。产出表含有哪些字段？产出表哪些字段必须要有？能爬取到哪些字段？哪些字段可经由爬取的字段转化而来？将产出表必须要有的字段和能爬取（包括能转换的字段）联系起来，后者必去包含前者！否则爬虫同事可能要想想办法。
+1.2 检查字段漂移 并不是专业术语，我编的。用来定义某个字段出现的值仅从形式来看就不属于该字段的情况。例如：容积率出现345000平方米或3吨等。 代码：
+for i in data.columns: print(i) print(data[i].unique()) print(i) print(data[i].unique()) print(&#39;-------------------------------------------------------------------&#39;) print(&#39;-------------------------------------------------------------------&#39;)  由于可能字段具体值的字符串很长，需要首尾均提示字段名，并用显眼字符串分隔不同字符串。一点小技巧，我觉得挺有用。
+1.3 检查字段漂移情况出现的次数 这个可能因为网页原因等等，可能要去问问爬虫同事。如果确实比例很少或无关紧要等，爬虫同事可能会让这些出现字段漂移的实例删除。 代码：
+data[data[&#39;财产年限&#39;]==&#39; 总楼栋数：2栋;公寓：2栋;&#39;][&#39;楼盘名&#39;]  检查字段漂移发现财产年限居然出现了&#39; 总楼栋数：2栋;公寓：2栋;&#39;，那么可利用此代码检查字段漂移实例，进一步，还可以看看此实例的唯一键，在这个场景中‘楼盘名’即可作为唯一键。
+1.4 检查数据格式 爬取数据归根结底是在抓取字符串，因此，即使产出表里是数字，爬取的数字仍是字符串格式的。总归，我们需要检查字符串的格式是否规整。其实还可以使用1.1代码，但是这次已根据2.1删除了字段漂移的少数实例，看起来应会清爽少许吧。着眼点要比1.1更细致一点，比方价格，我们发现既有元/m²又有万元/套，而且产出表要求纯数字，单位为元/m²。那么就容不得偷懒了。
+2.根据检查情况进行处理 理想情况是，爬虫程序建立字段时即应命名与产出表相同的字段。可能因为爬取的字段杂糅在一起不好分开等，现实情况就不是这样，当然需要修改字段名以满足要求。我认为修改字段名应在字段转换之后。
+2.1 删除字段漂移的实例 少量字段漂移，可能源于网站质量等，不甚影响数据质量，也许也较难改进，可询问爬虫同事是否能删除？若大比例的实例出现字段漂移，则或应寻求代码同事改进爬虫代码。
+2.2 删除冗余字段 有些字段不会在产出表里出现，甚至不是中间过程字段，则应在第一时间删除。否则，若字段很多将显示杂乱。事实上在检查时候即应进行此步。
+2.3 字段转换 因为含有空值等，很可能原表的所有字段都是字符形式。产出表仅要求字符状形式，可字符截取等，应较简单；产出表要求数字形式，如不需进行计算，可仅按规则截取得到字符状的数字如‘5’和‘np.nan’,然后再apply(eval)，即可得到数字；产出表要求数字格式，又需经过中间转化的，将转换表达式写成字符串如‘5*3+6’和‘np.nan’,然后再apply(eval)，即可得到数字。这其中还涉及到代码的筛选。一个场景：爬取的房价含有元/m²、万元/套、待定，产出表需要数字形式的房价并字段名为deal_price。代码如下：
+#元/m²的去掉元/m²。 data[data[&#39;价格&#39;].str.contains(&#39;元/m²&#39;, regex=False), &#39;价格&#39;] = \ data[data[&#39;价格&#39;].str.contains(&#39;元/m²&#39;, regex=False), &#39;价格&#39;].str.extract(&#39;\d+\.?\d*\/\d+&#39;, expanding=False) #万元/套的，求掉万元/套，再乘以10000，再乘以套面积（套面积可能是数字格式的） data[data[&#39;价格&#39;].str.contains(&#39;万元/套&#39;, regex=False), &#39;价格&#39;] = \ data[data[&#39;价格&#39;].str.contains(&#39;万元/套&#39;, regex=False), &#39;价格&#39;].str.extract(&#39;\d+\.?\d*\/\d+&#39;, expanding=False)+&#39;*10000*&#39; + \ data[data[&#39;价格&#39;].</description>
+    </item>
+    
+    <item>
+      <title>Pyspark</title>
+      <link>https://chen-feiyang.github.io/posts/pyspark/</link>
+      <pubDate>Mon, 12 Aug 2019 19:57:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/pyspark/</guid>
+      <description>若工作场景涉及大数据，则需要使用pyspark。找了三天，暂时发现Tomasz Drabas, Denny Lee的《Learning PySpark》应该是一本较适合的书，感知其难度适中。发现此书不介绍环境搭建。Bill Chambers and Matei Zaharia的《Spark: The Definitive Guide》也是，难度适中，但不涉及环境搭建。不涉及环境搭建是不行的，因为可能版本演进太快，可用代码在不同环境无法运行。比如，anaconda里面conda install -c conda-forge pyspark搭建的环境无法运行《Spark: The Definitive Guide》里的代码，也许涉及本地安装等变量的设置问题而无法运行等，暂不清楚。还是应该找本包括环境搭建的书。琳达贵的《python+spark2.0+hadoop机器学习与大数据实战》包含环境搭建的过程，需要内存和固态空间，我电脑不一定跟得上，试着安装吧。2019-08-21装好虚拟机装好linux装好hadoop，目前很卡。
+20190826: 最近在学习scrapy爬虫，今天看点这本书，明天看点那个博客，因此笔记就很杂乱。启示是：要先列一个提纲，这样即使看的书、知识比较杂也好，都可以把笔记写在对应位置。
+网易云课堂有一免费课程《Spark编程基础》，我接下来的笔记大纲则遵从此课程。当然，有可能会找其他资料等补充此笔记大纲。
+1. 大数据计数概括 1.1 大数据时代 1.2 大数据的概念 1.3 大数据的影响 1.4 大数据的关键技术 1.5 答案数据计算模式 1.6 代表大数据技术之Hadoop 1.7 代表大数据技术之Spark 1.8 代表大数据技术之Flink和Beam 2. Spark的设计与运行原理 2.1 Spark概述 2.2 Spark生态系统 2.3 基本概念和架构设计 2.4 Spark运行原理（RDD概念、操作和特性） 2.5 RDD运行原理（RDD之间的依赖关系） 2.6 RDD运行原理（阶段的划分和RDD运行过程） 2.7 Spark的部署和应用方式 3. Spark环境搭建和使用方法 3.1 安装Spark 3.2 在pyspark中运行代码 3.3 开发Spark独立应用程序 3.4 Spark集群环境搭建 3.5 在集群上运行Spark应用程序 4. RDD编程基础 4.</description>
+    </item>
+    
+    <item>
+      <title>Selenium</title>
+      <link>https://chen-feiyang.github.io/posts/selenium/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:55 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/selenium/</guid>
+      <description>又是爬虫，我似乎跟爬虫干上了。同事教了我selenium并要求我将房天下此页面分区域、近一年的数据爬下来。同事已经实现，现在的问题是：手动确实能实现，但是由于量大很费时，因此需要改一下代码，使得可以更加自动实现。</description>
+    </item>
+    
+    <item>
+      <title>Scrapy</title>
+      <link>https://chen-feiyang.github.io/posts/scrapy/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:26 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/scrapy/</guid>
+      <description>之前没学过爬虫，这次需要我去运维爬虫，所以这次找了本书专门学一下。《精通Scrapy网络爬虫》。学习有5天了，学到了第十章模拟登录，也说不上有什么很大体会。但是，关于选书，这本还是不错的，上面的示例经我验证均能成功运行，这得益于作者示例选的网站是专门供爬虫练习者使用的。
+我理解爬虫的难点：1.网站多不喜欢被爬，因此会设置障碍并持续改进以阻挡爬虫。2.解析（prase，会用到xpath、css）爬取的内容是关键，怎么从一堆代码中提取有用信息，我遇到的难点就在这。3.要循序渐进，否则劳而无功或劳得微功。
+照着《精通Scrapy网络爬虫》敲了对应示例，发现最大困难是选择器的运用，css和xpath。同事说scrapy的css选择器跟前端的css选择器是不同的，建议我完全使用xpath解析器。而且，在运行爬虫scrapy scrawl xx会得到log信息，出现2019-08-21 19:49:07 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to &amp;lt;GET https://matplotlib.org/robots.txt&amp;gt; from &amp;lt;GET http://matplotlib.org/robots.txt&amp;gt;，[scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301)代表网页重定向，重定向之后自然解析不到内容。或者还要注意[scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt:，我这次运行出现一行2019-08-21 19:49:08 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: &amp;lt;GET http://matplotlib.org/examples/index.html&amp;gt;，
+那么问题来了：在哪里可以看到xpath选择器语法的官方文档呢？ 答：W3C xpath cover page是scrapy给出的xpath链接，其上显示2017-03-21发布了XML Path Language (XPath) 3.1。太长的英文，所以等遇到其他有错误嫌疑再来细看此文吧。同事推荐了Xpath和CSS选择器的使用详解、CSS 选择器参考手册、xpath如何取包含多个class属性、XPath详解，总结、Xpath string()提取多个子节点中的文本、使用 lxml 中的 xpath 高效提取文本与标签属性值、Xpath判断某个属性是否包含或不包含指定的属性或值等博文，均是同事认为不错的，遇到不懂的还是首先看看同事给的资料，而不是即刻网络搜索。
+什么是xpath？ xpath使用路径表达式在xml文档中进行导航；xpatth包含一个标准函数库；xpath是xslt中的主要元素，xpath是一个w3c标准。
+xpath术语： 在xpath中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以即文档（根）节点。XML文档是一种被作为节点树来对待的。树的根被称为文档节点或者根节点。
+请看下面这个XML文档：
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;ISO-8859-1&amp;quot;?&amp;gt; &amp;lt;bookstore&amp;gt; &amp;lt;book&amp;gt; &amp;lt;title lang=&amp;quot;en&amp;quot;&amp;gt;Harry Potter&amp;lt;/title&amp;gt; &amp;lt;author&amp;gt;J K. Rowling&amp;lt;/author&amp;gt; &amp;lt;year&amp;gt;2005&amp;lt;/year&amp;gt; &amp;lt;price&amp;gt;29.99&amp;lt;/price&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/bookstore&amp;gt;  上面的XML文档中的节点例子：
+&amp;lt;bookstore&amp;gt; （文档节点） &amp;lt;author&amp;gt;J K.</description>
+    </item>
+    
+    <item>
+      <title>linux定时执行</title>
+      <link>https://chen-feiyang.github.io/posts/linux_crontab/</link>
+      <pubDate>Mon, 12 Aug 2019 13:03:28 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/linux_crontab/</guid>
+      <description>目前工作需要我运维爬虫，在集群上爬取速度会更快。由于爬虫代码很多时候是不变动的。但需要按照时间、周期等有规律爬取数据。故根据公司要求学习linux定时执行命令，以便按时完成爬虫排期规定的爬虫任务。
+没怎么接触过linux操作，所以笔记以备忘。
+给我的文件crontab.txt文件，含有同格式命令28条，其中第一条为0 6 * * * sh /home/chenfy/crawl/tt/crontab.sh。这是linux的crontab定时任务命令。参考(linux （ crontab 定时任务命令）)[https://www.cnblogs.com/shizhengquan/p/10876386.html]，其格式为`minute hour day month week command。时间代表触发自动执行的时间条件，command可指定command所在位置。详见此网址。关于命令本身，此示例的命令为sh，即运行脚本，后跟脚本的绝对地址（或者也可相对地址吧，暂未验证）。脚本内部命令可看同事给的linux计划执行/crontab.sh.example文件，其实这就是crontab.sh脚本，只不过希望运维人员根据具体版本环境修改后重命名为crontab.sh`再运行。脚本里面内容为：
+cd /home/chenfy/crawls/tt nohup /home/chenfy/.local/bin/scrapy crawl fang &amp;gt;&amp;gt; fang_zu.log 2&amp;gt;&amp;amp;1 &amp;amp;  cd后的内容即具体的爬虫代码，公司为了保证采用最新版本的代码，将代码放在gitlab仓库。遇到有代码更新（或为保险起见），git clone xxx加git pull original以让代码保鲜。nohup是为了保证在你退出帐户/关闭终端之后继续运行相应的进程，这些细节详见(nohup 详解)[https://www.cnblogs.com/jinxiao-pu/p/9131057.html]。 但是这些计划执行命令不可以直接在Xshell prompt执行，需要放入用户的crontab文件中（关于crontab文件的位置，暂未找到。但可通过crontab -l查看，并可通过crontab -e进入编辑。编辑时候采用linux的vim命令，按i可插入，再按esc将退出，再输入&amp;quot;:&amp;quot;可选择退出与否保存与否。“:wq”代表保存并退出。
+这些计划执行命令将根据设定的时间点开始执行，并不能限定执行完成时间。
+注意以上细节应该就可以定时执行计划命令了，爬取的文件或在计划命令的工作路径或在爬虫代码设置的具体输出路径。将爬取的文件发给对应的爬虫项目负责人。
+关于爬虫计划，暂不知道放在什么位置。仅计划了周期而没更严格的时间规定的话，可选择集群负荷较小的深夜凌晨。</description>
+    </item>
+    
+    <item>
+      <title>Kaggle之House Prices: Advanced Regression Techniques竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/hpart/</link>
+      <pubDate>Sun, 28 Jul 2019 22:58:19 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/hpart/</guid>
+      <description> 项目介绍： 竞赛数据集为Ames Housing dataset，是一个房价销售的数据集，需据此预测房屋销售价格，误差度量要求采用实际售价与预测售价的对数的均方根误差（RMSE），在此度量标准下，关注的不是实际售价和预测售价的差值，而是其比值。
+项目成绩： 我的迄今最好成绩是0.10616，也就是实际售价与预测售价之比平均约为e的0.10616次方（约等于1.1120），目前排名29/4413。成绩见于https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard，名称feiyang0chen1。
+项目心得体会：  若未认真理解项目需求，采用不经对数转换的RMSE，也许成绩停留在0.15；若不经对数转换，采用RMSLE（对数均方根误差），也许误差停留在0.14。显然损失函数决定优化的方向，这两种情况均因偏离项目要求的优化方向难以取得更好表现。 单个模型最好的是线性回归，发现对严重偏离正态分布的特征进行转换可提高成绩。 线性模型需要特征矩阵之间线性无关，PCA可以做到，但将过滤掉一些有用信息。若不采用PCA，可引入正则化项抑制线性模型特征对应的系数，这也是一种特征选择的方法，视正则化项的不同分别为lasso、ridge、elasticnet。 分类变量最理想的情况应该平衡，查阅文献，对于高分化分类变量（即含有很多分类，一些分类含有极少的数据点rare category），应采用target encoding而不是onehot encoding，target encoding可以采取忽视rare category的策略以减少杂讯。本案例分类变量虽不是特别高分化，但某些分类所含的数据点只有6个，应具有类似特点。但是发现target encoding没有提高成绩。 数据集含有较多的缺失数据，对于一些特征列，有相互印证的数据列比较好填补缺失值，没有这些印证信息的缺失数据，可采用删除数据点、删除特征列，或补入均值、中值、众值、回归（分类）等，回归（分类）又涉及到具体该采用什么模型什么特征列等，变数很多，查阅文献暂没有绝对优势的策略。补入虽然补充了信息但也引入了杂讯，一般认为补充中值、众值将使模型更鲁棒。 离群值，检索数据集，含有一个特征名为MSZoning，是标注地产商业性质的分类变量。通过分析此变量，发现在大多数特征点为各种住宅地产，极少数是工业或其他地产。自然想到有些数据点为离群值。而且，常识判断，与总售价最相关的是总使用面积GrLivArea，分析相关性也证明了这一点。根据总使用面积和总售价的联合分布，有些数据点是明显偏离的。单变量离群值分析，可假设此变量服从某分布，再排除概率小于某值比如1%的范围区间内的值，但这种判断方法应无益于机器学习问题。机器学习中可将模型残差大于一定值的数据点视为域外值，但选择什么特征建立模型、选择什么模型、残差大于多少判断为残差目前似乎没有公论，只能视具体情况试验。而且，排除过多数据点将使预测数据集的分布过多偏离训练数据。这违背机器学习的根本假设即数据同分布。 若特征数量较少，可直观地判断欠拟合和过拟合；当纬度较大时，可通过判断验证数据集上的表现来减小过拟合，但仍不能根绝。异源的模型组合可进一步减少过拟合以提高表现，假设两个模型的预测不同，具体到某一数据点，若真实值不在两模型预测值之间，此点模型融合的表现将是单个模型表现的某权值组合的加权平均；但也很可能实际值处在两模型预测值之间，此点模型融合的表现将优于单个模型，所以模型融合较大概率对表现有提升，我的模型的明显提升也正是来源于此，几个RMSE在0.11上下的模型平均后RMSE为0.106，优于任一单个模型的表现。可任意武断假设模型的权值，这在sklearn里面可通过VotingRegressor实现。当然模型融合的权值也是可以通过学习得到的，mlxtend中便捷函数StackingRegressor，设置meta_regressor为线性模型并线性模型设置fit_intercept=False可学习权值。当然meta_regressor也可不是线性模型甚至融合模型让基础模型的特征重新参与训练，这正是堆叠stack的含义。基础模型的预测作为特征重新参与建模将造成过拟合/泄露，可以让基础模型的预测来自k折后的k个训练数据形成的模型的折外数据点的预测（out-of-fold predictions），这可通过StackingCVRegressor实现。 关于模型的特征数量和特征选择：模型的特征数量影响计算速度并模型复杂度，过度复杂的模型容易产生过拟合。分类变量的编码方式将改变潜在特征数，lasso、基于树的模型等可自动选择特征。 最终模型取自特定补充缺失值策略、分类变量编码策略、排除离群值策略、PCA、基础模型选择、模型融合策略的组合，很难相信这是最优解，但结果尚可。 鉴于我的模型表现与排行榜仍有较大差距，猜测也许数据更适于采用某一非线性模型。可实现非线性的模型主要有：1基于树的模型，2线性模型采用非线性核函数，3.深度模型采用非线性激活函数。基于树的模型如决策树、提升等不能取得优于线性模型的表现是因为训练数据点较少时基于树的模型将不够顺滑，这将使预测表现不够好。当训练数据点较少时候，以决策树为例，若训练数据点含n个独特值，那么模型的预测值也将不外乎这n个独特值。提升算法的情况类似，虽然权值将导致预测的可能取值稍微增加，但仍不可避免比较稀疏，这将导致在非训练数据上表现不佳。而线性模型采用非线性核函数将不产生类似基于树模型同类的稀疏，但是，其非线性是不可学习的，只能作为高参调参，而且非线性高参可调弹性比较小，比方采用多项式核，其次数只能为整数。深度学习可学习非线性本身，也许进一步提升模型性能的方向在此。 以上体会基于此项目的一些经验或我的一些主观猜测，错漏之处在所难免，应进一步夯实。  </description>
+    </item>
+    
+    <item>
+      <title>Dont_overfit_ii</title>
+      <link>https://chen-feiyang.github.io/posts/dont_overfit_ii/</link>
+      <pubDate>Fri, 12 Apr 2019 17:02:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/dont_overfit_ii/</guid>
+      <description>2019/4/9开始kaggle的Don&#39;t Overfit! II竞赛，竞赛含250条训练数据，需要据此预测19.8k条数据的目标值。特征300个，目标值为0-1变量，训练样本含正样本160条，负样本90条。
+kaggle的Don&#39;t Overfit! II竞赛。
+显然，此竞赛的特点是小样本和不平衡样本。
+关于小样本的解决参考4；关于不平衡数据参考2。
+注意：不平衡数据不会造成过拟合，不平衡数据倾向于归入大分类的误分类，AUCROC是度量这种误分类的度量函数。？？？？？？
+关于不平衡：
+按参考2，解决不平衡学习问题的五种方法包括： 1. Up-sample the minority class对少数分类升采样 2. Down-sample the majority class对多数分类降采样 3. Change your performance metric改变度量函数 4. Penalize algorithms (cost-sensitive training)惩罚算法（即代价敏感训练） 5. Use tree-based algorithms采用基于树的算法
+COSTCLA、costsensitive包可实现方法4。
+按TOM FAWCETT，分类问题不能简单地预测标签。因为但： 1. 预测标签浪费很多信息，概率才是更重要的。 2. 虽然很多分类学习器都有预测概率这个功能，但很可能其简单以0.5作为阈值划分分类标签的依据。由于算法、数据不平衡和训练测试数据集标签比例不均衡等原因，此模型所谓的”概率“是不准确的，所以不可以简单以0.5作概率阈值。 3. 在概率不准情况下需要选择合适的概率阈值作为划分标签的依据。 4.也可以校准，在sklearn中有sklearn.calibration.CalibratedClassifierCV。TOM FAWCETT先生的意思我并没有叙述准确，详见其博客（参考4、5）。
+那么将train分成tra、val，选取学习器比如逻辑回归，高参由tra进行cv获取，运用全部tra并cv获取的高参训练模型。查看模型对tra和val的aucroc，比较tra和val的aucroc，若接近说明没有过拟合，可用这个模型对test进行预测。class_weight需使weigh乘以分类样本数得到的乘积平衡，在sklearn可选‘balanced’。其他包应根据分类样本数自己设定。
+第一步选择逻辑回归，重复上行过程，这个结果作为基础，其他学习器的结果需好于此学习器。
+参考：
+ 1.Investigation on handling Structured &amp;amp; Imbalanced Datasets with Deep Learning； 2.EXPLAINERS TUTORIALS__How to Handle Imbalanced Classes in Machine Learning； 3.Cost-sensitive 分类算法——综述与实验； 4.</description>
+    </item>
+    
+    <item>
+      <title>Xgboost_lightgbm_catboost</title>
+      <link>https://chen-feiyang.github.io/posts/xgboost_lightgbm_catboost/</link>
+      <pubDate>Wed, 13 Mar 2019 15:45:59 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/xgboost_lightgbm_catboost/</guid>
+      <description>xgboost、lightgbm和catboost是实现adaboost算法的三个常用python包。在adaboost里面介绍到其提升的损失函数为： $$L^{(t)}=\sum_{i=1}^{n}l(y_{i},\hat{y}_{i}^{(t-1)}+f^{(t)}(\vec{x}_{i}))+\Omega (f^{(t)})$$ 再根据此损失函数更新第t个学习器和此学习器的权重。上述三个包采用了计算负担更小的近似，根据泰勒展开式有： $$L^{(t)} \approx \sum_{i=1}^{n}l(y_{i},\hat{y}_{i}^{(t-1)})+g^{(t)}f^{(t)}(\vec{x}_{i})+\frac{1}{2}h^{(t)}f^{(t)}(\vec{x}_{i})+\Omega (f^{(t)})$$ $i$代表样本序号，$y_{i}$代表第i个样本目标真实值，$\hat{y}_{i}^{(t-1)}$代表前t-1个学习器对第i个样本目标的预测值，$f^{(t)}(\vec{x}_{i})$代表第t个学习器对第i个样本的目标预测乘以此学习器的权重，$\Omega (f^{(t)})$代表惩罚项，$g^{(t)}$代表损失函数的一阶导数，$h^{(t)}$代表损失函数的二阶导数。可以看出在计算第t个学习器及其权重时，$\sum_{i=1}^{n}l(y_{i},\hat{y}_{i}^{(t-1)})$、$g^{(t)}$和$h^{(t)}$为常数。
+参考：
+ Loss function Approximation With Taylor Expansion；  </description>
+    </item>
+    
+    <item>
+      <title>Ab_test</title>
+      <link>https://chen-feiyang.github.io/posts/ab_test/</link>
+      <pubDate>Mon, 04 Mar 2019 21:31:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/ab_test/</guid>
+      <description>数据分析遇到要提高指标比如转化率，一个很重要的分析是A/B Test，以下是其python代码。
+注意：A/B Test不是因果推断，因果推断我搜索了一下，python有causality和DoWhy包，Pearl有Do-Calculus包，目前较少人涉及，DoWhy甚至没有成熟发布版。
+ </description>
+    </item>
+    
+    <item>
+      <title>《增长黑客》笔记</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%A2%9E%E9%95%BF%E9%BB%91%E5%AE%A2%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Mon, 04 Mar 2019 12:48:07 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%A2%9E%E9%95%BF%E9%BB%91%E5%AE%A2%E7%AC%94%E8%AE%B0/</guid>
+      <description>笔记前言：《增长黑客》这本书在我看来是针对产品经理的，其中涉及到互联网思维、增长技巧、数据采集等等。我主要将学习可能影响增长涉及数据分析的一些指标（在机器学习术语中叫特征）、增长的数据分析技巧。这样的选择可能跳过《增长黑客》里面的很多内容。不过，为了系统性将保留所有章节目录。
+第1章 增长黑客的崛起 1.1 创业家的黑暗前传 在国内，中小企业的平均寿命只有3.7年，小微企业还不 到3年。至于创业门槛相对较低的互联网行业，能够幸存的比例甚至更低。
+1.2 增长黑客的胜利 Hotmail刚推出时反响平平。这种摒弃了传统邮件客户端、只需要访问浏览器就能收 发邮件的全新产品形态，并没有立即赢得市场的认可。
+但对于一家网络 公司而言，指望当地偶然开车路过广告牌或听到广播的卡车司机马上理解什么是“基于网页的电子邮件系统”，存在一定难度，对方也不一定有实际需求，广告费很可能要打水漂。他们需 要一种更精准的方式来找到真正的用户。
+于是聪明的投资人蒂莫西·德拉佩尔（Timothy Draper）替他们想出了 一个绝妙的主意——他们在每一封用Hotmail发出的邮件末尾签名处，增加了一行附言： “我 爱你。快来Hotmail申请你的免费邮箱。 ”（PS:Iloveyou.GetyourfreeE-mailatHotmail.）
+这是互联网发展早期的一起教科书式的网络营销事件。Hotmail仅依靠一行文字，就 恰到好处地撬动了它的用户为它免费进行了宣传。整个过程既没有生硬植入的骚扰信息，也 没有大张旗鼓的巨额投入。直至今天，这一策略依然被国内外的邮件服务提供商所采用。而 其背后的思想，也逐步被人归纳整理，成为一套低成本驱动初创公司产品增长的有效方法。 在硅谷，这股全新的产品增长理念正在兴起，而使用这一方法工作的人——增长黑客 （Growth Hacker）。
+1.3 什么是“增长黑客” “增长黑客”的起源 “增长黑客”这一说法源于硅谷，最早在2010年由Qualaroo的创始人兼首席执行官肖恩·埃利斯（SeanEllis）提出。但它真正引起业界广泛关注与交流，却是因为安德鲁·陈（Andrew Chen）在2012年4月发表的《Growth Hacker is the new VP Marketing》一文。 他在文中谈到，增长黑客们试图用更聪明的方式解答产品得以增长的奥秘，并使之成为助力 产品增长的长效机制。他们通常采用的手段包括A/B测试、搜索引擎优化、电子邮件召回、 病毒营销等，而页面加载速度、注册转化率、E-mail到达水平、病毒因子这些指标成为他们日常关注的对象。
+换句话说，这是一群以数据驱动营销、以市场指导产品，通过技术化手段贯彻增长目 标的人。他们通常既了解技术，又深谙用户心理，擅长发挥创意、绕过限制，通过低成本的手段解决初创公司产品早期的增长问题。在外行人眼里，他们就像是极客、发明家和广告狂人的混合体。再通俗一点形容，他们的职责接近于专门为初创公司设立的市场推广部门，因 为很少有用于营销的大笔经费，所以更多的是将注意力聚焦在产品策略本身带来的自发增长上。
+根据不同阶段用户参与行为的深度和类型，我们可以将增长目标拆分并 概括为“AARRR”转化漏斗模型，即：Acquisition（获取用户）、Activation（激发活跃）、Retention（提高留存）、Revenue（增加收入）、Referral（传播推荐）。在这个漏斗中，被导入的一部分用户会在某个环节流失，而剩下的那部分用户则在继续使用中抵达下一环节， 在层层深入中实现最终转化。
+“AARRR”转化漏斗中的5个环节分别的含义如下：
+ 获取用户：指让潜在用户首次接触到产品，或者可以更宽泛地理解为“吸引流量”、“用户量增长”。其来源途径可能多种多样，如通过搜索引擎发现、点击网站广告进入、看到媒体 报道下载等。如果以开一家饭馆为例，那么这就像是饭馆在确定了选址、开张营业后，需要努力招徕熙熙攘攘的过往人群进店一样，既可以在店门口散发传单，也可以开展免费试吃活 动，或者邀请当地的美食节目拍摄一期宣传特辑。不同的推广方式，投入的成本各不相同，吸引到顾客的原因也千差万别。有的人不远万里慕名而来，有的人纯粹是想换换口味，还有 的人刚好被“免费”二字所吸引。无论出于何种原因，只要有人肯一脚踏进店门，这就算是良好的开端。 激发活跃：获取到用户后下一步是引导用户完成某些“指定动作”，使之成为长期活跃的忠实用户。这里的“指定动作”可以是填写一份表单、下载一个软件、发表一篇内容、上传一张照片，或是任何促使他们正确而高效使用产品的行为。如同饭馆吸引来顾客，但如果顾 客只是傻站在大堂里无所事事，那么就无法给饭馆带来实际生意。正确的做法是通过店内陈设布置和服务员主动引导，让顾客马上明白：哪里有空位可以就座，从何处获取菜单，如何 使用优惠券，怎样办理会员卡，以及跟别人拼桌时如何相处等。 提高留存：在解决了用户的活跃度问题后，另一个问题又冒了出来。用户来得快，走得也快。产品缺乏黏性，导致的结果是，一方面新用户不断涌入，另一方面他们又迅速流失。 我们都知道，通常留住一个老用户的成本要远远低于获取一个新用户的成本。因此提高用户留存，是维持产品价值、延长生命周期的重要手段。一家饭馆，如果物美价廉、独具特色， 或者在某方面有别人难以复制的核心优势，那么顾客就愿意反复光临，成为老主顾。“一锤子 买卖”在市场上难以立足，而真正的可取之道是成为一家百年老店。 增加收入：商业主体都是逐利的，很少有人创业只是纯粹出于兴趣，绝大多数创业者最关心的就是收入。即使是互联网时代的免费产品，也应该有其盈利模式。在一家客源稳定 的饭馆里，增加收入可以通过制定营销策略、拓展外送业务、提高用餐高峰期翻台率等途径实现。而在互联网行业，除了直接向用户收费，还可以通过广告展示、业务分成等方式向其 他利益方收取费用。 传播推荐：社交网络的兴起促成了基于用户关系的病毒传播，这是低成本推广产品的全新方式，运用妥当将可能引发奇妙的链式增长。这就如同检验一家饭馆是否足够有人气，就看有多少顾客愿意主动向身边的朋友推荐。口碑的力量是无穷的，来自熟人的好评往往比 高高在上的权威品鉴更具说服力。 从获取用户到传播推荐，整个AARRR转化漏斗构成了一条螺旋上升的产品使用周期闭环。增长黑客的价值正是通过不断地“头脑风暴-排定优先级-测试-分析-常态化部署”来优化产品策略，减少这当中每个环节的不必要损耗，提高转化效率，从而不断扩大自己用户群体的 数量和质量。本书之后的章节结构也正是遵照AARRR的顺序来安排的。  1.4 增长黑客的职责和特质 安迪总结自己一手组建起来的Facebook用户增长团队所肩负的职责为以下五点： 1.</description>
+    </item>
+    
+    <item>
+      <title>Kaggle之Store item demand forecasting challenge竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</link>
+      <pubDate>Sun, 03 Mar 2019 22:06:58 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</guid>
+      <description>1.项目情况 kaggle的Store Item Demand Forecasting Challenge竞赛， 有2013年初到2017年末10个商店、50种货物每日销量情况，预测2018年头3个月这些商店、货物的每日销售情况。竞赛要求结果采用SMAPE度量。 $$SMAPE=100 \text{%} \frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2}$$ $A_i$代表第i个样本的真实值，$F_i$代表第i个样本的预测值。
+2.项目成绩 以下代码采用2014年、2015年和2016年数据用于训练，2017年数据用于验证，模型采用损失函数RMSE，度量函数SMAPE。得到训练smape约12.30[11]，2017年smape为11.860766606767626[12]，2014年第一季度smape为14.645917711865364[3]，2015年第一季度smape为14.091883155407277[4]，2016年第一季度smape为13.476791353148277[5]，2017年第一季度smape为13.301776762020786[6]。据此推断2018年第一季度smape约12.5846141148，与竞赛最优成绩12.58015相当，可惜不在竞赛时段，无法最终验证。依据如下：
+损失函数采用RMSE， $$RMSE=\sqrt{\frac{1}{n} \sum_{i=1}^{n} {(A_i-F_i)}^{2}}$$ 其关注的是绝对误差，而且RMSE对绝对误差的离散程度容忍较小，个体绝对误差偏离均值将显著增加RMSE，因此RMSE倾向于减小绝对误差并使绝对误差尽可能均一化。 模型的绝对误差接近均一化，但是由于实际销量情况随时间是不平衡的，这就是造成smape差异的原因。
+为估计2018年第一季度smape，作如下假设：
+ SMAPE约等于销量绝对误差的平均值除以销量的平均值。即： $$SMAPE=\frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} (|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} |A_i|}$$ 2018年第一季度销量平均值取自2013年第一季度、2014年第一季度、2015年第一季度、2016年第一季度、2017年第一季度销量平均值的最小二乘法线性插值。  smape计算
+   时间 平均绝对误差[8] 平均销量[9] smape     2014q1 572.6247872118 39.097911[1] 14.645917711865364[3]   2015q1 574.5670977178 40.772911[1] 14.091883155407277[4]   2016q1 594.8380237664 44.137956[1] 13.476791353148277[5]   2017q1 609.</description>
+    </item>
+    
+    <item>
+      <title>堆叠stacking</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%A0%86%E5%8F%A0stacking/</link>
+      <pubDate>Wed, 30 Jan 2019 18:52:34 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%A0%86%E5%8F%A0stacking/</guid>
+      <description>在集成学习（Ensemble Learning）中除了Bagging和Boosting对数据的横向划分划分之外，还有一个纵向划分（加深）的方法， 一般称为Stacked Generalization（SG）的技术。
+SG是怎么诞生的？最早重视并提出Stacking技术的是David H. Wolpert，他在1992年发表了SG技术论文：这好比是巧妙的扩展了交叉验证（cross-validation）， 通过胜者全得（winner-takes-all）的方式来集成的方法。 Wolpert大神是一个三栖学者， 数学家， 物理学家， 和计算学家。 他更为成名的是1995年提出No-Free-Lunch（NFL）理论。 NFL理论很直观，就是算法差异更多在于适不适合你要解决的问题。 比较多个算法， 例如，问题P1和机器学习M1合适， 但是不可能合适所有的问题。
+对stacking还没有清晰概念，由维基百科，其23-29为关于stacking的文章，似乎25，也就是2013年的文章是关于stacking最近的文章，那么可能需要较多关注这篇文章。
+Stacking
+Stacking (sometimes called stacked generalization) involves training a learning algorithm to combine the predictions of several other learning algorithms. First, all of the other algorithms are trained using the available data, then a combiner algorithm is trained to make a final prediction using all the predictions of the other algorithms as additional inputs.</description>
+    </item>
+    
+    <item>
+      <title>Testlatex</title>
+      <link>https://chen-feiyang.github.io/posts/testlatex/</link>
+      <pubDate>Tue, 08 Jan 2019 21:50:04 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/testlatex/</guid>
+      <description>Suppose we are now given the individual machines, whether obtained from boosting or bagging and ask the best way to combine them rather than using averaging (for bagging) or the weighted median (for boosting). Breiman (1996a) suggests the following stacking technique: Suppose that once again pattern $i$ has an observed value $y_i$ on the training set. Suppose machine $k$ has a predicted value $y_i^{(k)}$ for pattern $i$ on the training set where there are a total of $K$ machines.</description>
+    </item>
+    
+    <item>
+      <title>Adaboost2</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost2/</link>
+      <pubDate>Tue, 08 Jan 2019 21:43:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost2/</guid>
+      <description>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。
+Abstract摘要 In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.</description>
+    </item>
+    
+    <item>
+      <title>Adaboost1</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost1/</link>
+      <pubDate>Wed, 26 Dec 2018 15:04:08 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost1/</guid>
+      <description>sklearn文档介绍AdaBoostClassifier采用的算法是SAMME和SAMME.R，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有优势，下文全文翻译SAMME和SAMME.R发明人论文，当然，遇有不懂的我将找资料再去了解。
+1 Introduction介绍 Boosting has been a very successful technique for solving the two-class classiﬁcation problem. It was ﬁrst introduced by Freund &amp;amp; Schapire (1997), with their AdaBoost algorithm. In going from two-class to multi-class classiﬁcation, most boosting algorithms have been restricted to reducing the multi-class classiﬁcation problem to multiple two-class problems, e.g. Freund &amp;amp; Schapire (1997), Schapire (1997), Schapire &amp;amp; Singer (1999), Allwein, Schapire &amp;amp; Singer (2000), Friedman, Hastie &amp;amp; Tibshirani (2000), Friedman (2001).</description>
+    </item>
+    
+    <item>
+      <title>集成学习ensemble_learning</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</link>
+      <pubDate>Thu, 20 Dec 2018 21:58:16 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</guid>
+      <description>The goal of ensemble methods is to combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness over a single estimator.集成方法的目标是将多个基本估计器的预测与给定的学习算法结合起来，以提高单个估计器的可通用性/鲁棒性。
+Two families of ensemble methods are usually distinguished:通常分成两类不同的集成方法：
+ In averaging methods, the driving principle is to build several estimators independently and then to average their predictions. On average, the combined estimator is usually better than any of the single base estimator because its variance is reduced.</description>
+    </item>
+    
+    <item>
+      <title>决策树decision_tree</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</link>
+      <pubDate>Thu, 20 Dec 2018 21:57:24 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</guid>
+      <description>1 不纯度impurity 考虑特征数据集$\mathbf{D}=(\mathbf{X},\vec{y})$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m \tag{1}$$ 每个数据点$\vec{x}_i$由$m$个特征组成，我们可以试着根据其中一个特征及其阈值划分数据，这样的一个划分我们称之为节点，节点是某一特征及其阈值组成的元组。
+例如，假设我们有一个班的数据，这些数据中有一列是发色深色与否，我们想根据头发颜色判断男生还是女生。碰巧男生均是深色头发，女生均是浅色头发，那么我们预测深色头发为男生浅色头发为女生。那么我们只用特征深色头发与否就成功将学生性别分类了。
+但是，经一个节点（也就是一个特征及其阈值）划分后每个划分的目标变量$y$只含一个值的情况是理想情况。大多时候每个划分含有多个值，也就是划分后的$y$的值是不纯的。比如按发色深与否划分后的两个分类，每个分类将既有男生又有女生（你见过深色头发的男生与女生，也见过浅色头发的男生与女生）。为此我们引入不纯度概念。
+用于分类的不纯度impurity有：
+ 基尼不纯度Gini impurity： $$I_{Gini}(\mathbf{D}) = \sum_k p(y=k) (1 - p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{2}$$ 熵不纯度Entropy impurity： $$I_{Entropy}(\mathbf{D}) = - \sum_k p(y=k) \log(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{3}$$ 基尼不纯度Misclassification impurity： $$I_{Misclassification}(\mathbf{D}) = 1 - \max(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{4}$$  用于回归的不纯度impurity有：</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_2</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</link>
+      <pubDate>Wed, 19 Dec 2018 16:16:17 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</guid>
+      <description>8 Decision Trees and Ensemble Learning决策树和集成学习 8.1 Binary decision trees二分类决策树 决策树的公式基本都是错误的，请参阅我的博文笔记决策树decision_tree。 In the following figure, there are plots of an unnormalized bidimensional dataset and the cross-validation scores obtained using a logistic regression and a decision tree:下图是一个未归一化的二维数据集，以及使用逻辑回归和决策树得到的交叉验证得分: 8.1.1 Binary decisions二分类决策 Let&#39;s consider an input dataset $\mathbf{X}$:让我们考虑一个输入数据集$\mathbf{X}$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m$$ Every vector is made up of $m$ features, so each of them can be a good candidate to create a node based on the (feature, threshold) tuple:每个向量由$m$个特征组成，因此每个特征都是基于(特征、阈值)元组创建节点的良好候选： For example, let&#39;s consider a class of students where all males have dark hair and all females have blonde hair, while both subsets have samples of different sizes.</description>
+    </item>
+    
+    <item>
+      <title>支持向量机svm之数学原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sun, 16 Dec 2018 23:04:20 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</guid>
+      <description>A support vector machine constructs a hyper-plane or set of hyper-planes in a high or infinite dimensional space, which can be used for classification, regression or other tasks. Intuitively, a good separation is achieved by the hyper-plane that has the largest distance to the nearest training data points of any class (so-called functional margin), since in general the larger the margin the lower the generalization error of the classifier.机器在高维或无限维空间中构造超平面或超平面集合，可用于分类、回归或其他任务。直观上，超平面是距离任何类最近的训练数据点距离最大的平面(即所谓的函数边界)，可以实现很好的分离，因为一般来说，边界越大，分类器的泛化误差越低。</description>
+    </item>
+    
+    <item>
+      <title>Gbdt&#43;lr特征融合的sklearn例子</title>
+      <link>https://chen-feiyang.github.io/posts/gbdt&#43;lr%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88%E7%9A%84sklearn%E4%BE%8B%E5%AD%90/</link>
+      <pubDate>Sat, 15 Dec 2018 22:13:17 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/gbdt&#43;lr%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88%E7%9A%84sklearn%E4%BE%8B%E5%AD%90/</guid>
+      <description>import pandas as pd from sklearn.linear_model import LogisticRegression from sklearn.ensemble import GradientBoostingClassifier from sklearn.preprocessing import OneHotEncoder # 导入数据 X = pd.read_table(&#39;vecs_new.txt&#39;,header=None,sep=&#39;,&#39;) y = pd.read_table(&#39;labels_new.txt&#39;,header=None) # 切分为测试集和训练集，比例0.5 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.5) # 将训练集切分为两部分，一部分用于训练GBDT模型，另一部分输入到训练好的GBDT模型生成GBDT特征，然后作为LR的特征。这样分成两部分是为了防止过拟合。 X_train, X_train_lr, y_train, y_train_lr = train_test_split(X_train, y_train, test_size=0.5) # 弱分类器的数目 n_estimator = 10 # 调用GBDT分类模型 grd = GradientBoostingClassifier(n_estimators=n_estimator) # 调用one-hot编码。 grd_enc = OneHotEncoder() # 调用LR分类模型。 grd_lm = LogisticRegression() #使用X_train训练GBDT模型，后面用此模型构造特征 grd.fit(X_train, y_train) #直接进行预测，查看AUC得分 y_pred_grd = grd.</description>
+    </item>
+    
+    <item>
+      <title>prophet</title>
+      <link>https://chen-feiyang.github.io/posts/prophet/</link>
+      <pubDate>Sat, 15 Dec 2018 22:05:10 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/prophet/</guid>
+      <description>据一群友介绍，一般时序数据预测，无非是从长期趋势和局部模式上卡精度。对于长期趋势，Facebook有一个Prophet工具；对于局部模式，可用lstm。
+lstm我有个粗浅了解，但Prophet完全无概念。准备有空学下Facebook这个工具。</description>
+    </item>
+    
+    <item>
+      <title>朴素贝叶斯naive_bayes</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</link>
+      <pubDate>Sat, 15 Dec 2018 11:16:40 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</guid>
+      <description>Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable. Bayes’ theorem states the following relationship, given class variable $y$ and dependent feature vector $x_1$ through $x_m$ ,:朴素贝叶斯方法是应用贝叶斯定理的监督学习算法的集合，其假设决定目标分类的各特征列之间两两条件独立，这是“朴素”二字的由来。贝叶斯定理陈述如下关系，给定分类变量$y$和其依存特征变量从$x_1$到$x_m$： $$P(y \mid x_1, x_2, \dots, x_m) = \frac{P(y) P(x_1, x_2, \dots x_m \mid y)} {P(x_1, x_2, \dots, x_m)} \tag{1}$$</description>
+    </item>
+    
+    <item>
+      <title>逻辑回归logistic_regression</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</link>
+      <pubDate>Thu, 13 Dec 2018 19:19:09 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</guid>
+      <description>1 回归(Regression) 回归，我的理解来说，其直观的理解就是拟合的意思。我们以线性回归为例子，在二维平面上有一系列红色的点，我们想用一条直线来尽量拟合这些红色的点，这就是线性回归。回归的本质就是我们的预测结果尽量贴近实际观测的结果，或者说我们的求得一些参数，经过计算之后的预测结果尽可能接近真实值。 按照机器学习的一些作者的叙述，如果目标变量是连续型的，那么是回归；如果预测变量是离散型的，那么是分类。
+最简单的回归是普通最小二乘法回归（Ordinary Least Squares），在sklearn中是sklearn.linear_model.LinearRegression。数学上即解决以下数学问题。 $$\min_{w} {|| \mathbf{X} \vec{w} - \vec{y}||_2}^2$$ 也就是损失函数为MSE。
+2 逻辑回归的由来 对于二类线性可分的数据集，使用线性感知器就可以很好的分类。如下图中红色和蓝色的点，我们使用一条直线$x_1 +x_2 = 3$就可以区分两种数据集，在直线上方的属于红色类，直线下方的属于蓝色类。 线性回归和非线性回归的分类问题都不能给予解答，因为线性回归和非线性回归的问题，假设其分类函数如下： $$y=\vec{w}^T\vec{x}+b$$ 这里$\vec{x}$是数据矩阵$\mathbf{X}$中的一行。
+但是如果我们想知道对于一个二类分类问题，对于具体的一个样例，我们不仅想知道该类属于某一类，而且还想知道该类属于某一类的概率多大,有什么办法呢？
+y的阈值处于$(-\infty，+\infty)$，此时不能很好的给出属于某一类的概率，因为概率的范围是$(0,1)$，我们需要一个更好的映射函数，能够将分类的结果很好的映射成为$(0,1)$之间的概率，并且这个函数能够具有很好的可微分性。在这种需求下，人们找到了这个映射函数，即逻辑斯谛函数，也就是我们常说的sigmoid函数，其形式如下： $$\frac{1}{1+e^{-z}}$$ sigmoid函数图像如下图所示 如图，其可以将$(-\infty，+\infty)$数据映射到$(0,1)$，正好满足我们的要求。
+sigmoid函数完美的解决了上述需求，而且sigmoid函数连续可微分。 假设数据离散二类可分，分为0类和1类,如果概率值大于1/2，我们就将该类划分为1类，如果概率值低于1/2,我们就将该类划分为0类。当z取值为0的时候，概率值为1/2，这时候需要人为规定划分为哪一类。
+但是如果二类线性不可分的数据集，我们无法找到一条直线能够将两种类别很好的区分，即线性回归的分类法对于线性不可分的数据无法有效分类。例如下图中的红色点和蓝色点，我们无法使用一条直线很好的区分这两类，但是我们可以使用非线性分类器，如果我们使用${x_1}^2+{x_2}^2 = 1$，在圆外面的为红色类，在圆里面的一类为蓝色类。 诚然，数据线性可分可以使用线性分类器，如果数据线性不可分，可以使用非线性分类器，然后再运用sigmoid函数，这样就是非线性逻辑回归。
+但以下讨论仅限于线性可分的情况的逻辑回归。
+3 为什么采用sigmoid函数 http://www.win-vector.com/dfiles/LogisticRegressionMaxEnt.pdf
+3 逻辑回归的损失函数(Loss Function)和成本函数(Cost Function) 在二类分类中，我们假定sigmoid输出结果表示属于1类的概率值，我们很容易想到用平方损失函数（也就是MSE），即 $$J(\vec{w})=\sum_{i=1}^{n}{\frac{1}{2}(\hat{y}_{i}-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi({z}_i)-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi(\vec{w}^T\vec{x}_i+b)-y_{i})^2}$$ 这里$z_i=\vec{w}^T\vec{x}_i+b$，$i$代表第$i$个样本点。$\hat{y}_i$代表第$i$个样本的预测值，$y_i$代表第$i$个样本的实际值，$\phi{(z_i)}$代表对第$i$个$z$施加sigmoid函数。
+在这种情况下，我们$\phi({z_{i}})$表示sigmoid对第i个值的预测结果，我们将sigmoid函数带入上述成本函数中，绘制其图像，发现这个成本函数的函数图像是一个非凸函数，如下图所示，这个函数里面有很多极小值，如果采用梯度下降法，则会导致陷入局部最优解中,有没有一个凸函数的成本函数呢？ Cross entropy can be used to define a loss function in machine learning and optimization. The true probability $p_{i}$ is the true label, and the given distribution $q_{i}$ is the predicted value of the current model.</description>
+    </item>
+    
+    <item>
+      <title>对pca的总结</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%AF%B9pca%E7%9A%84%E6%80%BB%E7%BB%93/</link>
+      <pubDate>Tue, 11 Dec 2018 14:28:32 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%AF%B9pca%E7%9A%84%E6%80%BB%E7%BB%93/</guid>
+      <description>不同PCA 原数据矩阵 变换后矩阵 惩罚项 算法/原理     PCA 不作要求 1. 列向量线性无关； 2. 维度减少。 无 $\mathbf{P}$对$\mathbf{X}$进行转换，使$\mathbf{Y}$的协方差矩阵是个对角矩阵。 必要的话丢弃小的方差。 $\mathbf{X}^T\mathbf{X}$的特征向量组成的的确就是我们SVD中的$\mathbf{V}$矩阵,也就是PCA中的$\mathbf{Y}$。   NNMF 非负 1. 列向量线性无关； 2. 维度减少； 3. 分解出的两个矩阵只要有一个所有值非负。 有 $\begin{split}&amp;amp; (W_{n \times k}^*, H_{k \times m}^*) \\ &amp;amp; = \underset{W_{n \times k}, H_{k \times m}}{\operatorname{arg\,min\,}} d_{\mathrm{Fro}}(X_{n \times m}, W_{n \times k}H_{k \times m}) \\ &amp;amp; + \alpha \rho \|W_{n \times k}\|_1 + \alpha \rho \|H_{k \times m}\|_1 \\ &amp;amp; + \frac{\alpha(1-\rho)}{2} \|W_{n \times k}\|_{\mathrm{Fro}} ^ 2 \\ &amp;amp; + \frac{\alpha(1-\rho)}{2} \|H_{k \times m}\|_{\mathrm{Fro}} ^ 2\end{split}$   Sparse PCA 不作要求 1.</description>
+    </item>
+    
+    <item>
+      <title>核方法kernel_method</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%A0%B8%E6%96%B9%E6%B3%95kernel_method/</link>
+      <pubDate>Sat, 08 Dec 2018 17:10:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%A0%B8%E6%96%B9%E6%B3%95kernel_method/</guid>
+      <description>$$ 方程latex参考skearn、分类、定义等框架参考维基。
+本质上来说，核函数就是一个内积函数，定义了一个内积空间。因此核函数和普通内积一样，都可以看成是衡量两个向量相似程度的函数。
+根据公式2，核函数可分解为两个行向量$\vec{x}_1$和$\vec{x}_1$的转换到另一空间$\mathcal{V}$后的向量$\varphi (\vec {x}_1)$和$\varphi (\vec {x}_1)$的乘积，除非采用线性核函数，否则$\varphi (\vec {x}_1)$一定将$\vec{x}_1$进行了非线性的转换，所以核技巧可以对数据进行非线性转换。
+采用了核技巧的KernelPCA可以利用$\varphi (\vec {x})$对数据矩阵进行非线性转换，再行降维（当然，PCA、KernelPCA、SparsePCA等均有n_components参数用于设置维度转换后的维度数，并没有要求一定小于m，像所有PCA一样，既可升维又可降维）。
+采用了核技巧的SVM可以利用$\varphi (\vec {x})$对数据矩阵进行非线性转换，转换后特征矩阵将易于划分。同时核函数$k(\vec {x}_i ,\vec {x})$将用于训练数据集以外数据的预测。比如，对于SVC其实就是根据公式2，公式2中另一参数根据另一优化得到。详情参阅博文支持向量机svm之数学原理。
+In machine learning, kernel methods are a class of algorithms for pattern analysis, whose best known member is the support vector machine (SVM). The general task of pattern analysis is to find and study general types of relations (for example clusters, rankings, principal components, correlations, classifications) in datasets. In its simplest form, the kernel trick means transforming data into another dimension that has a clear dividing margin between classes of data.</description>
+    </item>
+    
+    <item>
+      <title>范数norm</title>
+      <link>https://chen-feiyang.github.io/posts/%E8%8C%83%E6%95%B0norm/</link>
+      <pubDate>Sat, 08 Dec 2018 17:09:39 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E8%8C%83%E6%95%B0norm/</guid>
+      <description>维基搜索norm得到的结果数学部分摘录如下：
+In mathematics：
+ Norm (mathematics), a map that assigns a length or size to a mathematical object, e.g.:  Vector norm, a map that assigns a length or size to any vector in a vector space Matrix norm, a map that assigns a length or size to a matrix Operator norm, a map that assigns a length or size to any operator in a function space Norm (abelian group), a map that assigns a length or size to any element of an abelian group  Field norm, a map in algebraic number theory and Galois theory that generalizes the usual distance norm Ideal norm, the ideal-theoretic generalization of the field norm Norm (group), a certain subgroup of a group Norm (map), a map from a pointset into the ordinals inducing a prewellordering Norm group, a group in class field theory that is the image of the multiplicative group of a field Norm function, a term in the study of Euclidean domains, sometimes used in place of &amp;quot;Euclidean function&amp;quot;  下面仅介绍我预测数据分析可能用到的向量范数和矩阵范数。</description>
+    </item>
+    
+    <item>
+      <title>mmf或者叫nnmf原理</title>
+      <link>https://chen-feiyang.github.io/posts/nmf%E6%88%96%E8%80%85%E5%8F%ABnnmf%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sat, 08 Dec 2018 15:10:09 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/nmf%E6%88%96%E8%80%85%E5%8F%ABnnmf%E5%8E%9F%E7%90%86/</guid>
+      <description>NMF is an alternative approach to decomposition that assumes that the data and the components are non-negative. NMF can be plugged in instead of PCA or its variants, in the cases where the data matrix does not contain negative values. It finds a decomposition of samples $X$ into two matrices $W$ and $H$ of non-negative elements, by optimizing the distance $d$ between $X$ and the matrix product $WH$ . The most widely used distance function is the squared Frobenius norm, which is an obvious extension of the Euclidean norm to matrices:假设数据和组件是非负的，那应该使用NMF分解方法。在数据矩阵不包含负值的情况下，该采用NMF而不是PCA和PCA的其他变体。NMF通过优化$X$与$WH$之间的距离$d$，将$X$分解为不含负值的$W$和不含负值的$H$。最广泛使用的距离函数是平方Frobenius范数，其是欧式范数到矩阵的明显扩展： $$d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{\mathrm{Fro}}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2$$ Unlike PCA, the representation of a vector is obtained in an additive fashion, by superimposing the components, without subtracting.</description>
+    </item>
+    
+    <item>
+      <title>稀疏pca原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sat, 08 Dec 2018 13:31:30 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</guid>
+      <description>Note that there are many different formulations for the Sparse PCA problem. The one implemented here is based on Mrl09. The optimization problem solved is a PCA problem with an $\ell_1$ penalty on the components:注意稀疏主成分分析问题有许多不同的公式。这里应用的公式基于Mrl09。优化问题是一个带有$\ell_1$惩罚组件的PCA问题： $$\begin{split}(W_{n \times k}^*, H_{k \times m}^*) = \underset{W_{n \times k}, H_{k \times m}}{\operatorname{arg\,min\,}} &amp;amp; \frac{1}{2} ||X_{n \times m}-W_{n \times k}H_{k \times m}||_2^2+\alpha||H_{k \times m}||_1 \\ \text{subject to } &amp;amp; ||W_i||_2 = 1 \text{ for all } 0 \leq i \leq k \leq m\end{split}$$</description>
+    </item>
+    
+    <item>
+      <title>pca原理</title>
+      <link>https://chen-feiyang.github.io/posts/pca%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Fri, 07 Dec 2018 15:41:47 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/pca%E5%8E%9F%E7%90%86/</guid>
+      <description>1 PCA目标 设X为$n \times m$的特征矩阵，那么X的列协方差矩阵为: $$\mathbf{C} = \frac{1}{n}\mathbf{X^T X} $$ 设想存在线性投影使得: $$\mathbf{Y}=\mathbf{XP}$$ $\mathbf{P}$是$m \times m$阶矩阵，那么$\mathbf{Y}$的列协方差矩阵为: $$\frac{1}{n}\mathbf{Y^T Y} = \frac{1}{n}\mathbf{(XP)^T (XP)} = \mathbf{P^T} (\frac{1}{n}\mathbf{X^T X})\mathbf{P} = \mathbf{P^T C P} $$
+PCA基本思想就是找到$\mathbf{P}$对$\mathbf{X}$进行转换，使$\mathbf{Y}$的协方差矩阵只有方差而无协方差（就是要使得$\mathbf{Y}$的协方差矩阵是个对角矩阵），必要的话丢弃小的方差（这需要$\mathbf{P}$为$m \times k$阶矩阵（$k&amp;lt;m$）），根据信息理论，这样可以保留大部分信息，丢掉小方差即丢掉信息含量小的特征从而达到降维的目的。
+2 PCA的实现 2.1 回顾特征值和特征向量 求特征值特征向量必须是方阵。
+我们首先回顾下特征值和特征向量的定义如下： $$\mathbf{A}\vec{w}=\lambda\vec{w}$$ 其中$\mathbf{A}$是$n \times n$矩阵，$\vec{w}$是特征向量，$\lambda$是特征向量对应的特征值。
+求出特征值和特征向量有什么好处呢？ 就是我们可以将矩阵A特征分解。如果我们求出了矩阵$\mathbf{A}$的 $k$（特征值特征向量的个数与矩阵$\mathbf{A}$的秩相同） 个特征值 $\lambda_1 \ge \lambda_2 \ge \dots \ge \lambda_k$ ，以及这 $k$ 个特征值所对应的特征向量 $\{\vec{w}_1,\vec{w}_2,\dots,\vec{w}_k\}$ 。
+如果这 $n$(即特征值特征向量个数$k=n$) 个特征向量线性无关(协方差矩阵是对称矩阵，对称矩阵的特征向量两两正交，因此线性无关)，那么矩阵$\mathbf{A}$就可以用下式的特征分解表示： $$\mathbf{A}=\mathbf{W}\mathbf{\Sigma}\mathbf{W}^{-1}$$ 其中$\mathbf{W}$是$n \times n$矩阵，$\mathbf{\Sigma}$是包含所有n个特征值的$n \times n$主对角矩阵。一般我们会把$\mathbf{W}$的这 $n$ 个特征向量标准化，即满足 $||\vec{w}_i||_2 =1$ , 或者说 $\vec{w}_i^T\vec{w}_i =1$ ，此时$\mathbf{W}$的 $n$ 个特征向量为标准正交基，满足 $\mathbf{W}^T\mathbf{W}=\mathbf{I}$ 。即 $\mathbf{W}^T=\mathbf{W}^{-1}$ , 也就是说$\mathbf{W}$为酉矩阵。</description>
+    </item>
+    
+    <item>
+      <title>mysql笔记</title>
+      <link>https://chen-feiyang.github.io/posts/mysql%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Sun, 02 Dec 2018 19:19:27 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/mysql%E7%AC%94%E8%AE%B0/</guid>
+      <description>MySQL有点生疏了，现在重新复习以下。
+不同版本可能稍有不同，本文具体对应mysql-8.0.13-winx64（MySQL Community Server 8.0.13）。
+笔记框架将按照《深入浅出MySQL-数据库开发、优化与管理维护第2版本》，当然，此书是数据库工程师的技能的视角写的，数据分析人士不需要掌握这么多。暂时认为熟悉基本增删改查即可，对应书中基础篇吧。再深入可学开发篇。
+1-6章为基础篇，7-17为开发篇，18-23为优化篇，24-30为管理维护篇，31-33为架构篇。
+1 MySQL安装 1.1 MySQL下载 官网 社区版免费 Community
+1.2 MySQL安装 以下为在win10下安装过程：
+参考小楼札记-MySQL-mysql 8.0.11安装教程
+ 下载zip安装包： mysql-8.0.15-winx64（MySQL Community Server 8.0.15）
+ 解压zip 解压zip包到安装目录，我的解压在了E:\mysql（因为e盘为固态，设想数据库应很需要性能）。
+ 配置环境变量 将解压文件夹下的bin路径添加到Path的变量值中。
+ 初始化数据库 在安装时，必须以管理员身份运行cmd，否则在安装时会报错，会导致安装失败的情况。
+  在MySQL安装目录的 bin 目录下执行命令：
+mysqld --initialize --console  执行完成后，会打印 root 用户的初始默认密码，比如：
+E:\mysql\bin&amp;gt;mysqld --initialize --console 2019-02-22T12:11:47.907225Z 0 [System] [MY-013169] [Server] E:\mysql\bin\mysqld.exe (mysqld 8.0.15) initializing of server in progress as process 9912 2019-02-22T12:11:52.279958Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: 7;KRrrw/72H!</description>
+    </item>
+    
+    <item>
+      <title>latex实现及hugo</title>
+      <link>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</link>
+      <pubDate>Mon, 26 Nov 2018 19:09:32 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</guid>
+      <description>最近在学机器学习算法，其中涉及到大量数学公式。而我之前用的博客工具是hexo portable无法用latex编辑公式，很不方便。就好像古代研究语音的没有方便的工具表示语音，只能用反切，切来切去就是搞不清楚是什么音，不能忍。 粗略一看hugo是能实现latex的。
+关于hugo的使用，许多博客，但官方的安装使用指导其实见于HUGO-Quick Start等。
+博客内容的网页 推送博客本地文件至互联网等需要git，可从git官网下载，但由于需翻墙等，也可从waylau贡献的国内源-Git for Windows 国内下载站下载。 git安装参考田闯-Git安装教程 (windows)。
+评论需用到leancloud的服务，已注册，注册邮箱为我outlook邮箱，密码为常用密码尾位改为大写。 评论功能就不能按hugo官网，或可按Hugo加入评论的功能。 评论需要leancloud或disqus的服务（均已成功注册），其中disqus为hugo推荐并有设置指导，奈何需要翻墙。leancloud暂不知道如何设置。 评论功能咱作罢。
+1 步骤 1.1 安装hugo 按HUGO-Install Hugo，各系统平台均可于Hugo Releases下载系统对应的hugo二进制文件， 其是免安装的，只需将hugo二进制文件所在目录加入path系统变量（如我系统是windows64位系统，下载对应文件并放在d:\hugo，则将d:\hugo放入系统变量path）。
+hugo version能正常显示信息说明hugo已安装成功。
+1.2 静态网址存放处（site后，比如我准备存放在d盘software文件夹下建立chen-feiyang.github.io文件夹作为静态网址存放处。） d:
+cd software hugo new site chen-feiyang.github.io
+cd chen-feiyang.github.io
+tree
+注： * 1. config.toml 是网站的配置文件，hugo 同时还支持 YAML 格式的 config.yaml 或 JSON 格式的 config.json。
+  content 目录放 markdown 文章，data 目录放数据，layouts 目录放网站模板文件，static 目录放图片、css、js 等静态资源，themes 命令放下载的主题。   tree命令一定要运行，否则hugo new about.md命令建立的about.md将不在正确位置。   1.</description>
+    </item>
+    
+    <item>
+      <title>建博客计划与申明</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%AE%A1%E5%88%92%E4%B8%8E%E7%94%B3%E6%98%8E/</link>
+      <pubDate>Mon, 26 Nov 2018 16:10:10 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%AE%A1%E5%88%92%E4%B8%8E%E7%94%B3%E6%98%8E/</guid>
+      <description>1.建博客目的是为了自学知识点，除非我申明什么是我原创，否则均是我摘录自别人原创。为获取知识效率，我暂不会注明摘自哪里或转载的是什么文章。 2.我将建立数据分析、数据挖掘、数据科学、机器学习、统计学、python数据分析包的概要，或摘自维基与其他材料，或自己总结。不求提纲条理明确，但求知识点名词不遗漏，就如火龙果。有空再去充实其中的小芝麻。知识点会很庞杂，那就保证先从最重要或者正要用的知识点开始，绝不可不加选择的完全碾压过去。 3.为什么逻辑回归得到的值是概率？ 4.特征哈希</description>
+    </item>
+    
+    <item>
+      <title>statistical_data_type统计数据类型</title>
+      <link>https://chen-feiyang.github.io/posts/statistical_data_type%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Mon, 26 Nov 2018 16:09:44 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/statistical_data_type%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>The following table classifies the various simple data types, associated distributions, permissible operations, etc. Regardless of the logical possible values, all of these data types are generally coded using real numbers, because the theory of random variables often explicitly assumes that they hold real numbers. 下表对各种简单的数据类型、相关的分布、允许的操作等进行了分类。不管逻辑上的可能值是多少，所有这些数据类型通常都是用实数编码的，因为随机变量理论通常明确假设它们都是实数。
+   Data Type 数据类型 Possible values 可能值 Example usage 应用示例 Level of measurement 测量层次 Distribution 分布 Scale of relative differences 尺度相对差异 Permissible statistics 允许的统计数据 Regression analysis 回归分析     binary 二分类数据 0, 1 (arbitrary labels) 0, 1（任意标签） binary outcome (&amp;quot;yes/no&amp;quot;, &amp;quot;true/false&amp;quot;, &amp;quot;success/failure&amp;quot;, etc.</description>
+    </item>
+    
+    <item>
+      <title>outline of Machine Learning机器学习的概要</title>
+      <link>https://chen-feiyang.github.io/posts/outline-of-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%A6%82%E8%A6%81/</link>
+      <pubDate>Mon, 26 Nov 2018 16:09:08 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/outline-of-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%A6%82%E8%A6%81/</guid>
+      <description>The following outline is provided as an overview of and topical guide to machine learning.
+下面的概要是机器学习的概述和主题指南。
+Machine learning – subfield of computer science1 that evolved from the study of pattern recognition and computational learning theory in artificial intelligence.[1] In 1959, Arthur Samuel defined machine learning as a &amp;quot;Field of study that gives computers the ability to learn without being explicitly programmed&amp;quot;.[2] Machine learning explores the study and construction of algorithms that can learn from and make predictions on data.</description>
+    </item>
+    
+    <item>
+      <title>markdown及latex语法</title>
+      <link>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Mon, 26 Nov 2018 16:08:20 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</guid>
+      <description>本文总结摘录Markdown及LaTex语法。由于不同环境可能稍有不同，本文指hugo+github pages环境
+1 Markdown 1.1 标题写法 第一种方法：
+1、在文本下面加上 等于号 = ，那么上方的文本就变成了大标题。等于号的个数无限制，但一定要大于0个哦。。
+2、在文本下面加上 下划线 - ，那么上方的文本就变成了中标题，同样的 下划线个数无限制。
+3、要想输入=号，上面有文本而不让其转化为大标题，则需要在两者之间加一个空行。
+另一种方法：（推荐这种方法；注意⚠️中间需要有一个空格）
+关于标题还有等级表示法，分为六个等级，显示的文本大小依次减小。不同等级之间是以井号 # 的个数来标识的。一级标题有一个 #，二级标题有两个# ，以此类推。
+例如：
+一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 1.2 列表  项目1
+ 项目2
+ 项目3
+ 项目1 （一个*号会显示为一个黑点，注意⚠️有空格，否则直接显示为*项目1）
+ 项目2
+   无序列表使用星号、加号或是减号
+1.3 文字换行 （建议直接在前一行后面补两个空格）
+直接回车不能换行，
+可以在上一行文本后面补两个空格，
+这样下一行的文本就换行了。
+或者就是在两行文本直接加一个空行。
+也能实现换行效果，不过这个行间距有点大。
+1.4 居中 这一行需要居中
+1.5 字体格式强调 我们可以使用下面的方式给我们的文本添加强调的效果
+强调 (示例：斜体)
+强调 (示例：斜体)
+加重强调 (示例：粗体)
+加重强调 (示例：粗体)</description>
+    </item>
+    
+    <item>
+      <title>machine_learning机器学习</title>
+      <link>https://chen-feiyang.github.io/posts/machine_learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</link>
+      <pubDate>Mon, 26 Nov 2018 16:07:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/machine_learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</guid>
+      <description>For the journal, see Machine Learning (journal). &amp;quot;Statistical learning&amp;quot; redirects here. For statistical learning in linguistics, see statistical learning in language acquisition.
+ Machine learning (ML) is a field of artificial intelligence that uses statistical techniques to give computer systems the ability to &amp;quot;learn&amp;quot; (e.g., progressively improve performance on a specific task) from data, without being explicitly programmed.[2]
+机器学习(ML)是人工智能的一个领域，它使用统计技术使计算机系统能够从数据中“学习”(例如，逐步提高特定任务的性能)，而不需要明确编程。
+The name machine learning was coined in 1959 by Arthur Samuel.</description>
+    </item>
+    
+    <item>
+      <title>feature engineering for machine mearning机器学习的特征工程alice zhang</title>
+      <link>https://chen-feiyang.github.io/posts/feature-engineering-for-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8Balice-zhang/</link>
+      <pubDate>Mon, 26 Nov 2018 16:06:51 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/feature-engineering-for-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8Balice-zhang/</guid>
+      <description>1 The Machine Learning Pipeline机器学习管道 1.1 Data数据 What we call data are observations of real-world phenomena.对现实社会现象的观察称为数据。
+1.2 Tasks任务 从数据到答案的道路就是任务。
+1.3 Models模型 A mathematical model of data describes the relationships between different aspects of the data.数据的数学模型描述数据不同方面之间的关系。（数学模型说白了就是数学表达式。）
+Mathematical formulas relate numeric quantities to each other. But raw data is often not numeric.数学表达式用数字联系彼此，但源数据不一定总是用数字表达的（可能用字符串等）。
+1.4 Features特征 A feature is a numeric representation of raw data.特征是源数据的数字化表达。
+some models are more appropriate for some types of features, and vice versa.</description>
+    </item>
+    
+    <item>
+      <title>data_scince数据科学</title>
+      <link>https://chen-feiyang.github.io/posts/data_scince%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/</link>
+      <pubDate>Mon, 26 Nov 2018 16:06:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_scince%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/</guid>
+      <description>Data science is an interdisciplinary field that uses scientific methods, processes, algorithms and systems to extract knowledge and insights from data in various forms, both structured and unstructured,[1][2] similar to data mining.
+数据科学是一个跨学科的领域，它使用科学的方法、过程、算法和系统从各种形式的数据中提取知识和见解，无论是结构化的还是非结构化的，类似于数据挖掘。
+Data science is a &amp;quot;concept to unify statistics, data analysis, machine learning and their related methods&amp;quot; in order to &amp;quot;understand and analyze actual phenomena&amp;quot; with data.[3] It employs techniques and theories drawn from many fields within the context of mathematics, statistics, information science, and computer science.</description>
+    </item>
+    
+    <item>
+      <title>data_mining数据挖掘</title>
+      <link>https://chen-feiyang.github.io/posts/data_mining%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/</link>
+      <pubDate>Mon, 26 Nov 2018 16:05:52 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_mining%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/</guid>
+      <description>Data mining is the process of discovering patterns in large data sets involving methods at the intersection of machine learning, statistics, and database systems.[1] Data mining is an interdisciplinary subfield of computer science with an overall goal to extract information (with intelligent methods) from a data set and transform the information into a comprehensible structure for further use.[1][2][3][4] Data mining is the analysis step of the &amp;quot;knowledge discovery in databases&amp;quot; process, or KDD.</description>
+    </item>
+    
+    <item>
+      <title>data_analysis数据分析</title>
+      <link>https://chen-feiyang.github.io/posts/data_analysis%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</link>
+      <pubDate>Mon, 26 Nov 2018 16:05:15 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_analysis%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</guid>
+      <description>这里要成系统地叙述什么叫数据分析，然后涉及的知识点在这里不展开，仅仅链接内容，链接内容之后去扩充。
+Data analysis is a process of inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making. Data analysis has multiple facets and approaches, encompassing diverse techniques under a variety of names, while being used in different business, science, and social science domains.
+数据分析是一个对数据进行查看、清洗、转换、建模的过程，目的是为了发现有用信息、含有信息的结论、或者支持决策。数据分析有很多方面和手段，包含不同的技术，以不同名字出现在商业、科学、社科等领域。
+Data mining is a particular data analysis technique that focuses on modeling and knowledge discovery for predictive rather than purely descriptive purposes, while business intelligence covers data analysis that relies heavily on aggregation, focusing mainly on business information.</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_1</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</link>
+      <pubDate>Mon, 26 Nov 2018 15:35:14 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</guid>
+      <description>make sure all our blog md file under post.
+文前申明：机器学习算法涉及到很多公式、数学概念。为统一表述，特申明：
+ 关于向量、矩阵：矩阵标记采用\mathbf{X} $\mathbf{X}$；向量标记采用 \vec{x} $\vec{x}$；行向量的元素是用逗号隔开$\vec{x} = [ x_1,x_2,\ldots,x_m ]$；列向量则用分号隔开$\vec{x} = [ x_1;x_2;\ldots;x_n ]$。 那么$n \times m$矩阵$\mathbf{X}$，可表示为由行向量作为元素组成的列向量，即： $$\mathbf{X}=[\vec{x_1};\vec{x_2};\ldots;\vec{x_n}] \\ where \ \vec{x_i}=[x_{i1},x_{i2},\ldots,x_{im}] \\ where \ i \in \lbrace 1,2,\ldots,n \rbrace$$
+ 那么$n \times m$矩阵$\mathbf{X}$，可表示为由列向量作为元素组成的行向量，即： $$\mathbf{X}=[\vec{x_1},\vec{x_2},\ldots,\vec{x_m}] \\ where \ \vec{x_j}=[x_{1j};x_{2j};\ldots;x_{nj}] \\ where \ j \in \lbrace 1,2,\ldots,m \rbrace$$
+ 区间用小括号()表示；有序的元素用中括号[]，例如向量中的元素就是有顺序要求的；无序的元素用大括号{}括起来，例如集合中的元素就是不要求顺序的。
+     algorithms            监督学习、非监督学习、强化学习 分类、回归 参数学习、无参数学习</description>
+    </item>
+    
+    <item>
+      <title>About</title>
+      <link>https://chen-feiyang.github.io/about/</link>
+      <pubDate>Mon, 26 Nov 2018 15:32:56 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/about/</guid>
+      <description>Hi, I am Feiyang Chen, thanks for your vist. make sure draft: false</description>
+    </item>
+    
+  </channel>
+</rss>

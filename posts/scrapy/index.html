@@ -1,0 +1,1040 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Scrapy | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Scrapy</h1>
+<p>之前没学过爬虫，这次需要我去运维爬虫，所以这次找了本书专门学一下。《精通Scrapy网络爬虫》。学习有5天了，学到了第十章模拟登录，也说不上有什么很大体会。但是，关于选书，这本还是不错的，上面的示例经我验证均能成功运行，这得益于作者示例选的网站是专门供爬虫练习者使用的。</p>
+
+<p>我理解爬虫的难点：1.网站多不喜欢被爬，因此会设置障碍并持续改进以阻挡爬虫。2.解析（prase，会用到xpath、css）爬取的内容是关键，怎么从一堆代码中提取有用信息，我遇到的难点就在这。3.要循序渐进，否则劳而无功或劳得微功。</p>
+
+<p>照着《精通Scrapy网络爬虫》敲了对应示例，发现最大困难是选择器的运用，css和xpath。同事说scrapy的css选择器跟前端的css选择器是不同的，建议我完全使用xpath解析器。而且，在运行爬虫<code>scrapy scrawl xx</code>会得到log信息，出现<code>2019-08-21 19:49:07 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to &lt;GET https://matplotlib.org/robots.txt&gt; from &lt;GET http://matplotlib.org/robots.txt&gt;</code>，<code>[scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301)</code>代表网页重定向，重定向之后自然解析不到内容。或者还要注意<code>[scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt:</code>，我这次运行出现一行<code>2019-08-21 19:49:08 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: &lt;GET http://matplotlib.org/examples/index.html&gt;</code>，</p>
+
+<p>那么问题来了：在哪里可以看到xpath选择器语法的官方文档呢？
+答：<a href="https://www.w3.org/TR/xpath/all/">W3C xpath cover page</a>是scrapy给出的xpath链接，其上显示2017-03-21发布了<a href="https://www.w3.org/TR/2017/REC-xpath-31-20170321/">XML Path Language (XPath) 3.1</a>。太长的英文，所以等遇到其他有错误嫌疑再来细看此文吧。同事推荐了<a href="https://blog.csdn.net/lanhaixuanvv/article/details/78565877">Xpath和CSS选择器的使用详解</a>、<a href="https://www.w3school.com.cn/cssref/css_selectors.asp">CSS 选择器参考手册</a>、<a href="https://blog.csdn.net/qq_34627002/article/details/83309209">xpath如何取包含多个class属性</a>、<a href="https://blog.csdn.net/z69183787/article/details/53200340">XPath详解，总结</a>、<a href="https://www.cnblogs.com/thunderLL/p/8038927.html">Xpath string()提取多个子节点中的文本</a>、<a href="https://www.cnblogs.com/hhh5460/p/5079465.html">使用 lxml 中的 xpath 高效提取文本与标签属性值</a>、<a href="https://blog.csdn.net/caorya/article/details/81839928">Xpath判断某个属性是否包含或不包含指定的属性或值</a>等博文，均是同事认为不错的，遇到不懂的还是首先看看同事给的资料，而不是即刻网络搜索。</p>
+
+<p>什么是xpath？
+xpath使用路径表达式在xml文档中进行导航；xpatth包含一个标准函数库；xpath是xslt中的主要元素，xpath是一个w3c标准。</p>
+
+<p>xpath术语：
+在xpath中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以即文档（根）节点。XML文档是一种被作为节点树来对待的。树的根被称为文档节点或者根节点。</p>
+
+<p>请看下面这个XML文档：</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book&gt;
+  &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt; 
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+
+<p>上面的XML文档中的节点例子：</p>
+
+<pre><code>&lt;bookstore&gt; （文档节点）
+&lt;author&gt;J K. Rowling&lt;/author&gt; （元素节点）
+lang=&quot;en&quot; （属性节点）
+</code></pre>
+
+<p>基本值（或称原子值，Atomic value）
+基本值是无父或无子的节点。</p>
+
+<p>基本值的例子：</p>
+
+<pre><code>J K. Rowling
+&quot;en&quot;
+</code></pre>
+
+<p>项目（Item）
+项目是基本值或者节点。</p>
+
+<p>节点关系</p>
+
+<p>父（Parent）
+每个元素以及属性都有一个父。</p>
+
+<p>在上面的例子中，book元素是title、author、year以即price元素的父：</p>
+
+<pre><code>&lt;book&gt;
+  &lt;title&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+</code></pre>
+
+<p>子（Children）</p>
+
+<p>元素节点可有零个、一个或多个子。</p>
+
+<p>在下面的例子中，title、author、year以即price元素都是book元素的子：</p>
+
+<pre><code>&lt;book&gt;
+  &lt;title&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+</code></pre>
+
+<p>同胞（Sibling）
+拥有相同的父的节点
+在上面的例子中，title、author、year以即price元素都是同胞：</p>
+
+<p>先辈（Ancestor）
+某节点的父、父的父，等等。</p>
+
+<p>在上面的例子中，title元素的先辈是book元素和bookstore元素。</p>
+
+<p>后代（Descenddant）</p>
+
+<p>某个节点的子、子的子，等等。</p>
+
+<p>在上面的例子中，bookstore的后代是book、title、author、year以及price元素。</p>
+
+<p>Xpath使用路径表达式来选取XML文档中的节点或节点集。节点是通过沿着路径（path）或者步（steps）来选取的。</p>
+
+<p>XML实例文档
+我们将在下面的例子中使用这个XML文档。</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book&gt;
+  &lt;title lang=&quot;eng&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book&gt;
+  &lt;title lang=&quot;eng&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+
+<p>选取节点
+XPath使用路径表达式在XML文档中选取节点。系欸但是通过step来选取的。
+下面列出了最有用的路径表达式：</p>
+
+<table>
+<thead>
+<tr>
+<th>表达式</th>
+<th>描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>nodename</td>
+<td>选取此节点的所有子节点。</td>
+</tr>
+
+<tr>
+<td>/</td>
+<td>从根节点选取。</td>
+</tr>
+
+<tr>
+<td>//</td>
+<td>从匹配选择的当前节点选择文档中的节点，而不考虑它们的位置。</td>
+</tr>
+
+<tr>
+<td>.</td>
+<td>选取当前节点。</td>
+</tr>
+
+<tr>
+<td>..</td>
+<td>选取当前节点的父节点。</td>
+</tr>
+
+<tr>
+<td>@</td>
+<td>选取属性。</td>
+</tr>
+</tbody>
+</table>
+
+<p>实例</p>
+
+<p>在上面的表格中，我们已列出了一些路径表达式以即表达式的结果:</p>
+
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>bookstore</td>
+<td>选取 bookstore 元素的所有子节点。</td>
+</tr>
+
+<tr>
+<td>/bookstore</td>
+<td>选取根元素 bookstore。<br>注释：假如路径起始于正斜杠( / )，则此路径始终代表到某元素的绝对路径！</td>
+</tr>
+
+<tr>
+<td>bookstore/book</td>
+<td>选取属于 bookstore 的子元素的所有 book 元素。</td>
+</tr>
+
+<tr>
+<td>//book</td>
+<td>选取所有 book 子元素，而不管它们在文档中的位置。</td>
+</tr>
+
+<tr>
+<td>bookstore//book</td>
+<td>选择属于 bookstore 元素的后代的所有 book 元素，而不管它们位于 bookstore 之下的什么位置。</td>
+</tr>
+
+<tr>
+<td>//@lang</td>
+<td>选取名为 lang 的所有属性。</td>
+</tr>
+</tbody>
+</table>
+
+<p>谓语（Predicates）</p>
+
+<p>谓语用来查找某个特定的节点或者包含某个指定的值的节点。</p>
+
+<p>谓语被镶嵌在方括号中。</p>
+
+<p>实例</p>
+
+<p>在上面的表格中，我们列出了带有谓语的一些路径表达式，以即表达式的结果：</p>
+
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>/bookstore/book[1]</td>
+<td>选取属于 bookstore 子元素的第一个 book 元素。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book[last()]</td>
+<td>选取属于 bookstore 子元素的最后一个 book 元素。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book[last()-1]</td>
+<td>选取属于 bookstore 子元素的倒数第二个 book 元素。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book[position()&lt;3]</td>
+<td>选取最前面的两个属于 bookstore 元素的子元素的 book 元素。</td>
+</tr>
+
+<tr>
+<td>//title[@lang]</td>
+<td>选取所有拥有名为 lang 的属性的 title 元素。</td>
+</tr>
+
+<tr>
+<td>//title[@lang='eng']</td>
+<td>选取所有 title 元素，且这些元素拥有值为 eng 的 lang 属性。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book[price&gt;35.00]</td>
+<td>选取 bookstore 元素的所有 book 元素，且其中的 price 元素的值须大于 35.00。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book[price&gt;35.00]/title</td>
+<td>选取 bookstore 元素中的 book 元素的所有 title 元素，且其中的 price 元素的值须大于 35.00。</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>同事建议应避免采用相对位置来选取节点，而应该采用不变、唯一的标识来选取节点。这个节点是什么id吧，暂不懂，以后掌握再补充。比如我们需爬取某房产网站容积率字段，审视之后发现该字段是某父节点的第2个子节点，据此相对位置来爬取容积率很可能得到错误，因为之后其可能会变成第3ge子节点位置。</strong></p>
+
+<p>选取未知节点</p>
+
+<p>XPath通配符可以用来选取未知的XML元素。</p>
+
+<table>
+<thead>
+<tr>
+<th>通配符</th>
+<th>描述</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>*</td>
+<td>匹配任何元素节点。</td>
+</tr>
+
+<tr>
+<td>@*</td>
+<td>匹配任何属性节点。</td>
+</tr>
+
+<tr>
+<td>node()</td>
+<td>匹配任何类型的节点。</td>
+</tr>
+</tbody>
+</table>
+
+<p>实例</p>
+
+<p>在下面的表格中，我们i而除了一些路径表达式，以即这些表达式的结果：</p>
+
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>/bookstore/*</td>
+<td>选取 bookstore 元素的所有子元素。</td>
+</tr>
+
+<tr>
+<td>//*</td>
+<td>选取文档中的所有元素。</td>
+</tr>
+
+<tr>
+<td>//title[@*]</td>
+<td>选取所有带有属性的 title 元素。</td>
+</tr>
+</tbody>
+</table>
+
+<p>选取若干路径</p>
+
+<p>通过在路径表达式中使用“|”运算符，您可以选取若干个子路径。</p>
+
+<p>实例</p>
+
+<p>在下面的表格中，我们列出了一些路径表达式，以即这些表达式的结果。</p>
+
+<table>
+<thead>
+<tr>
+<th>路径表达式</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>//book/title | //book/price</td>
+<td>选取 book 元素的所有 title 和 price 元素。</td>
+</tr>
+
+<tr>
+<td>//title | //price</td>
+<td>选取文档中的所有 title 和 price 元素。</td>
+</tr>
+
+<tr>
+<td>/bookstore/book/title | //price</td>
+<td>选取属于 bookstore 元素的 book 元素的所有 title 元素，以及文档中所有的 price 元素。</td>
+</tr>
+</tbody>
+</table>
+
+<p>XML实例文档</p>
+
+<p>我们将在下面的例子中使用此XML文档：</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book&gt;
+  &lt;title lang=&quot;eng&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book&gt;
+  &lt;title lang=&quot;eng&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+
+<p>XPath轴</p>
+
+<p>轴可定义相对于当前节点的节点集。</p>
+
+<table>
+<thead>
+<tr>
+<th>轴名称</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>ancestor</td>
+<td>选取当前节点的所有先辈（父、祖父等）。</td>
+</tr>
+
+<tr>
+<td>ancestor-or-self</td>
+<td>选取当前节点的所有先辈（父、祖父等）以及当前节点本身。</td>
+</tr>
+
+<tr>
+<td>attribute</td>
+<td>选取当前节点的所有属性。</td>
+</tr>
+
+<tr>
+<td>child</td>
+<td>选取当前节点的所有子元素。</td>
+</tr>
+
+<tr>
+<td>descendant</td>
+<td>选取当前节点的所有后代元素（子、孙等）。</td>
+</tr>
+
+<tr>
+<td>descendant-or-self</td>
+<td>选取当前节点的所有后代元素（子、孙等）以及当前节点本身。</td>
+</tr>
+
+<tr>
+<td>following</td>
+<td>选取文档中当前节点的结束标签之后的所有节点。</td>
+</tr>
+
+<tr>
+<td>namespace</td>
+<td>选取当前节点的所有命名空间节点。</td>
+</tr>
+
+<tr>
+<td>parent</td>
+<td>选取当前节点的父节点。</td>
+</tr>
+
+<tr>
+<td>preceding</td>
+<td>选取文档中当前节点的开始标签之前的所有节点。</td>
+</tr>
+
+<tr>
+<td>preceding-sibling</td>
+<td>选取当前节点之前的所有同级节点。</td>
+</tr>
+
+<tr>
+<td>self</td>
+<td>选取当前节点。</td>
+</tr>
+</tbody>
+</table>
+
+<p>位置路径表达式</p>
+
+<p>位置路径可以是绝对的，也可以是相对的。</p>
+
+<p>绝对路径七十余正斜杠（），而相对路径不会这样。在两种情况中，位置路径均包括一个或多个步，每个步均被斜杠分隔：</p>
+
+<p>绝对位置路径：</p>
+
+<pre><code>/step/step/...
+</code></pre>
+
+<p>相对位置路径：</p>
+
+<pre><code>step/step/...
+</code></pre>
+
+<p><strong>每个步均根据当前节点集之中的节点来进行计算。</strong></p>
+
+<p>步（step）包括：</p>
+
+<p>轴（axis）</p>
+
+<p>定义所选节点与当前节点之间的树关系。</p>
+
+<p>节点测试（node-test）</p>
+
+<p>识别某个轴内部的节点</p>
+
+<p>零个或者更多位于（predicate）</p>
+
+<p>步的语法：</p>
+
+<pre><code>轴名称::节点测试[谓语]
+</code></pre>
+
+<p>实例</p>
+
+<table>
+<thead>
+<tr>
+<th>例子</th>
+<th>结果</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>child::book</td>
+<td>选取所有属于当前节点的子元素的 book 节点。</td>
+</tr>
+
+<tr>
+<td>attribute::lang</td>
+<td>选取当前节点的 lang 属性。</td>
+</tr>
+
+<tr>
+<td>child::*</td>
+<td>选取当前节点的所有子元素。</td>
+</tr>
+
+<tr>
+<td>attribute::*</td>
+<td>选取当前节点的所有属性。</td>
+</tr>
+
+<tr>
+<td>child::text()</td>
+<td>选取当前节点的所有文本子节点。</td>
+</tr>
+
+<tr>
+<td>child::node()</td>
+<td>选取当前节点的所有子节点。</td>
+</tr>
+
+<tr>
+<td>descendant::book</td>
+<td>选取当前节点的所有 book 后代。</td>
+</tr>
+
+<tr>
+<td>ancestor::book</td>
+<td>选择当前节点的所有 book 先辈。</td>
+</tr>
+
+<tr>
+<td>ancestor-or-self::book</td>
+<td>选取当前节点的所有 book 先辈以及当前节点（如果此节点是 book 节点）</td>
+</tr>
+
+<tr>
+<td>child::*/child::price</td>
+<td>选取当前节点的所有 price 孙节点。</td>
+</tr>
+</tbody>
+</table>
+
+<p>XPath运算符</p>
+
+<p>下面列出了可用在XPath表达式中的运算符：</p>
+
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>实例</th>
+<th>返回值</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>|</td>
+<td>计算两个节点集</td>
+<td>//book | //cd</td>
+<td>返回所有拥有 book 和 cd 元素的节点集</td>
+</tr>
+
+<tr>
+<td>+</td>
+<td>加法</td>
+<td>6 + 4</td>
+<td>10</td>
+</tr>
+
+<tr>
+<td>-</td>
+<td>减法</td>
+<td>6 - 4</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>*</td>
+<td>乘法</td>
+<td>6 * 4</td>
+<td>24</td>
+</tr>
+
+<tr>
+<td>div</td>
+<td>除法</td>
+<td>8 div 4</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>=</td>
+<td>等于</td>
+<td>price=9.80</td>
+<td>如果 price 是 9.80，则返回 true。<br>如果 price 不是 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>!=</td>
+<td>不等于</td>
+<td>price!=9.80</td>
+<td>如果 price 不是 9.80，则返回 true。<br>如果 price 是 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>price&lt;9.80</td>
+<td>如果 price 小于 9.80，则返回 true。<br>如果 price 大于等于 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>&lt;=</td>
+<td>小于或等于</td>
+<td>price&lt;=9.80</td>
+<td>如果 price 小于等于 9.80，则返回 true。<br>如果 price 大于 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+<td>price&gt;9.80</td>
+<td>如果 price 大于 9.80，则返回 true。<br>如果 price 小于等于 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>&gt;=</td>
+<td>大于或等于</td>
+<td>price&gt;=9.80</td>
+<td>如果 price 大于等于 9.90，则返回 true。<br>如果 price 小于 9.80，则返回 false。</td>
+</tr>
+
+<tr>
+<td>or</td>
+<td>或</td>
+<td>price=9.80 or price=9.70</td>
+<td>如果 price 是 9.80或9.70，则返回 true。<br>如果 price 既不是 9.80 又不是 9。70，则返回 false。</td>
+</tr>
+
+<tr>
+<td>and</td>
+<td>与</td>
+<td>price&gt;9.00 and price&lt;9.90</td>
+<td>如果 price 大于 9.00 且小于9.90，则返回 true。<br>如果 price 大于等于9.90或小于等于9.00，则返回 false。</td>
+</tr>
+
+<tr>
+<td>mod</td>
+<td>计算除法的余数</td>
+<td>5 mod 2</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+
+<p>XML实例文档</p>
+
+<p>我们将在下面的例子中使用则个XML文档：</p>
+
+<p>&quot;books.xml&quot;</p>
+
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;ISO-8859-1&quot;?&gt;
+
+&lt;bookstore&gt;
+
+&lt;book category=&quot;COOKING&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Everyday Italian&lt;/title&gt;
+  &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;30.00&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;CHILDREN&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Harry Potter&lt;/title&gt;
+  &lt;author&gt;J K. Rowling&lt;/author&gt;
+  &lt;year&gt;2005&lt;/year&gt;
+  &lt;price&gt;29.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;WEB&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;XQuery Kick Start&lt;/title&gt;
+  &lt;author&gt;James McGovern&lt;/author&gt;
+  &lt;author&gt;Per Bothner&lt;/author&gt;
+  &lt;author&gt;Kurt Cagle&lt;/author&gt;
+  &lt;author&gt;James Linn&lt;/author&gt;
+  &lt;author&gt;Vaidyanathan Nagarajan&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;49.99&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;book category=&quot;WEB&quot;&gt;
+  &lt;title lang=&quot;en&quot;&gt;Learning XML&lt;/title&gt;
+  &lt;author&gt;Erik T. Ray&lt;/author&gt;
+  &lt;year&gt;2003&lt;/year&gt;
+  &lt;price&gt;39.95&lt;/price&gt;
+&lt;/book&gt;
+
+&lt;/bookstore&gt;
+</code></pre>
+
+<p>（略）</p>
+
+<p>------以上内容摘自<a href="https://www.w3school.com.cn/xpath/index.asp">w3c XPath 教程</a></p>
+
+<p>scrapy提供的链接，<a href="https://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches?_ga=2.253691393.922698893.1566388551-773961900.1565080123">XPath Tips from the Web Scraping Trenches</a>介绍了关于XPath使用的一些技巧。</p>
+
+<p>成功运行代码却没有抓取任何信息的可能原因：1.web服务器原因，这部分可关注log信息里面三位数（如401代表访问被拒绝，如401.2代表服务器配置导致登陆失败。）的web服务器错误代码。2.XPath选择器或css选择器并未抓取到内容，这部分在log里面会怎么报错暂不清楚。或可参阅scrapy文档之Exceptions-Built-in Exceptions reference，这些exceptions包括DropItem、CloseSpider、DontCloseSpider、IgnoreRequest、NotConfigured、NotSupported。</p>
+
+<p>20190824，练习了<a href="https://www.cnblogs.com/zhaof/p/7189860.html">Python爬虫从入门到放弃（十四）之 Scrapy框架中选择器的用法</a>上的示例。</p>
+
+<p>运行爬虫命令出现<code>[scrapy] DEBUG: Forbidden by robots.txt</code>，将setting改变ROBOTSTXT_OBEY为False，即可解决此问题。</p>
+
+<p>ProxyHandler处理器</p>
+
+<ol>
+<li>代理的原理：在请求目的网站之前，先请求代理服务器，然后让代理服务器去请求目的网站，代理服务器拿到目的网站的数据后，再转发给我们的代码。</li>
+<li><code>http://httpbin.org</code>这个网站可以方便的查看http请求的一些参数。</li>
+
+<li><p>在代码中使用代理：使用<code>urllib.request.ProxyHandler</code>传入一个代理，这个代理是一个字典，字典的key依赖于代理服务器能够接收的类型，一般是<code>ip:port</code>。使用上一步创建的<code>handler</code>，以及<code>request.build_opener</code>创建一个<code>opener</code>对象。对上一步创建的<code>opener</code>，调用<code>open</code>函数，发起请求。
+示例代码如下：</p>
+
+<pre><code>from urllib import request
+url = 'http://httpbin.org/ip'
+#1.使用ProxyHandler构建一个handler
+#此代理ip来自快代理
+handler = request.ProxyHandler({&quot;http&quot;:&quot;58.22.214.124:9000&quot;})
+#2.使用上面创建的handler构建opener
+opener = request.build_opener(handler)
+#3.使用opener去发送一个请求
+resp = opener.open(url)
+print(resp.read())
+</code></pre></li>
+</ol>
+
+<p>requests笔记：</p>
+
+<ol>
+<li><p>发送<code>get</code>请求
+发送<code>get</code>请求，直接调用<code>resquests.get</code></p>
+
+<pre><code>import requests
+response = requests.get('http://wwww.baidu.com/')
+</code></pre></li>
+
+<li><p><code>response</code>的一些属性</p>
+
+<pre><code>import requests
+response = requests.get('http://www.baidu.com/')
+print(response.url)
+print(response.encoding)
+print(response.status_code)
+</code></pre></li>
+
+<li><p><code>response.text</code>和<code>response.content</code>的区别：
+3.1 <code>reponse.content</code>：这个是直接从网络上面抓取数据，没有经过任何解码。所以是一种bytes类型。其实在硬盘和网络上传输的字符串都是bytes类型。
+3.2 <code>reponse.text</code>：这个是<code>requests</code>，将<code>request.content</code>进行解码的字符串。解码需要指定一个编码方式，requests会根据自己的猜测来判断编码方式。所以有时候可能会猜测错误，就会导致解码产生乱码。这时候应该使用<code>reponse.content.decode('utf-8')</code>进行手动解码。</p></li>
+
+<li><p>发送post请求</p></li>
+
+<li><p>处理cookie</p></li>
+
+<li><p>处理没有授权的https协议</p></li>
+</ol>
+
+<p>20190826:</p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

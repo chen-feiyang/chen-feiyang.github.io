@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/</loc>
+    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/</loc>
+    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/regex/</loc>
+    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/data_join/</loc>
+    <lastmod>2019-09-05T17:11:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/steel_defect_detection/</loc>
+    <lastmod>2019-08-31T10:01:42+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/sundry/</loc>
+    <lastmod>2019-08-26T13:07:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/data_cleaning_1/</loc>
+    <lastmod>2019-08-23T12:59:23+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/pyspark/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/selenium/</loc>
+    <lastmod>2019-08-12T16:37:55+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/scrapy/</loc>
+    <lastmod>2019-08-12T16:37:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/linux_crontab/</loc>
+    <lastmod>2019-08-12T13:03:28+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/hpart/</loc>
+    <lastmod>2019-07-28T22:58:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/dont_overfit_ii/</loc>
+    <lastmod>2019-04-12T17:02:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/xgboost_lightgbm_catboost/</loc>
+    <lastmod>2019-03-13T15:45:59+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/ab_test/</loc>
+    <lastmod>2019-03-04T21:31:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E5%A2%9E%E9%95%BF%E9%BB%91%E5%AE%A2%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2019-03-04T12:48:07+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</loc>
+    <lastmod>2019-03-03T22:06:58+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E5%A0%86%E5%8F%A0stacking/</loc>
+    <lastmod>2019-01-30T18:52:34+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/testlatex/</loc>
+    <lastmod>2019-01-08T21:50:04+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/adaboost2/</loc>
+    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/machine-learning/</loc>
+    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/python/</loc>
+    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/</loc>
+    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/adaboost1/</loc>
+    <lastmod>2018-12-26T15:04:08+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</loc>
+    <lastmod>2018-12-20T21:58:16+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</loc>
+    <lastmod>2018-12-20T21:57:24+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</loc>
+    <lastmod>2018-12-19T16:16:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-12-16T23:04:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/gbdt&#43;lr%E7%89%B9%E5%BE%81%E8%9E%8D%E5%90%88%E7%9A%84sklearn%E4%BE%8B%E5%AD%90/</loc>
+    <lastmod>2018-12-15T22:13:17+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/prophet/</loc>
+    <lastmod>2018-12-15T22:05:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</loc>
+    <lastmod>2018-12-15T11:16:40+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</loc>
+    <lastmod>2018-12-13T19:19:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E5%AF%B9pca%E7%9A%84%E6%80%BB%E7%BB%93/</loc>
+    <lastmod>2018-12-11T14:28:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E6%A0%B8%E6%96%B9%E6%B3%95kernel_method/</loc>
+    <lastmod>2018-12-08T17:10:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E8%8C%83%E6%95%B0norm/</loc>
+    <lastmod>2018-12-08T17:09:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/nmf%E6%88%96%E8%80%85%E5%8F%ABnnmf%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-12-08T15:10:09+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-12-08T13:31:30+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/pca%E5%8E%9F%E7%90%86/</loc>
+    <lastmod>2018-12-07T15:41:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/mysql%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2018-12-02T19:19:27+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E5%BB%BA%E5%8D%9A%E5%AE%A2%E8%AE%A1%E5%88%92%E4%B8%8E%E7%94%B3%E6%98%8E/</loc>
+    <lastmod>2018-11-26T16:10:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/statistical_data_type%E7%BB%9F%E8%AE%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</loc>
+    <lastmod>2018-11-26T16:09:44+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/outline-of-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%A6%82%E8%A6%81/</loc>
+    <lastmod>2018-11-26T16:09:08+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2018-11-26T16:08:20+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/machine_learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2018-11-26T16:07:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/feature-engineering-for-machine-learning%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8Balice-zhang/</loc>
+    <lastmod>2018-11-26T16:06:51+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/data_scince%E6%95%B0%E6%8D%AE%E7%A7%91%E5%AD%A6/</loc>
+    <lastmod>2018-11-26T16:06:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/data_mining%E6%95%B0%E6%8D%AE%E6%8C%96%E6%8E%98/</loc>
+    <lastmod>2018-11-26T16:05:52+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/data_analysis%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</loc>
+    <lastmod>2018-11-26T16:05:15+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</loc>
+    <lastmod>2018-11-26T15:35:14+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/about/</loc>
+    <lastmod>2018-11-26T15:32:56+08:00</lastmod>
+  </url>
+  
+</urlset>

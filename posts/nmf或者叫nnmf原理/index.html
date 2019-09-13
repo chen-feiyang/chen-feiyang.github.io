@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>mmf或者叫nnmf原理 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>mmf或者叫nnmf原理</h1>
+<p>NMF is an alternative approach to decomposition that assumes that the data and the components are non-negative. NMF can be plugged in instead of PCA or its variants, in the cases where the data matrix does not contain negative values. It finds a decomposition of samples
+<code>$X$</code>
+into two matrices
+<code>$W$</code>
+and
+<code>$H$</code>
+of non-negative elements, by optimizing the distance
+<code>$d$</code>
+between
+<code>$X$</code>
+and the matrix product
+<code>$WH$</code>
+. The most widely used distance function is the squared Frobenius norm, which is an obvious extension of the Euclidean norm to matrices:假设数据和组件是非负的，那应该使用NMF分解方法。在数据矩阵不包含负值的情况下，该采用NMF而不是PCA和PCA的其他变体。NMF通过优化<code>$X$</code>与<code>$WH$</code>之间的距离<code>$d$</code>，将<code>$X$</code>分解为不含负值的<code>$W$</code>和不含负值的<code>$H$</code>。最广泛使用的距离函数是平方Frobenius范数，其是欧式范数到矩阵的明显扩展：
+<code>$$d_{\mathrm{Fro}}(X, Y) = \frac{1}{2} ||X - Y||_{\mathrm{Fro}}^2 = \frac{1}{2} \sum_{i,j} (X_{ij} - {Y}_{ij})^2$$</code>
+Unlike PCA, the representation of a vector is obtained in an additive fashion, by superimposing the components, without subtracting. Such additive models are efficient for representing images and text.与主成分分析不同的是，矢量的表示是通过叠加分量而不是减法得到的。这种加性模型对于表示图像和文本是有效的。</p>
+
+<p>In NMF, L1 and L2 priors can be added to the loss function in order to regularize the model. The L2 prior uses the Frobenius norm, while the L1 prior uses an elementwise L1 norm. As in ElasticNet, we control the combination of L1 and L2 with the l1_ratio (
+<code>$\rho$</code>
+) parameter, and the intensity of the regularization with the alpha (
+<code>$\alpha$</code>
+) parameter. Then the priors terms are:在NMF中，可以在损失函数中加入预先的L1和L2，从而对模型进行正则化。预先的L2使用Frobenius范数，而预先的L1使用按元素的L1范数。就像在松紧带回归，我们通过L1比值(<code>$\rho$</code>)参数来控制L1和L2的组合，以及通过alpha(<code>$\alpha$</code>)参数来控制正则化强度。预先项如下：
+<code>$$\alpha \rho ||W||_1 + \alpha \rho ||H||_1
++ \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
++ \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2$$</code>
+and the regularized objective function is:正则化后的目标函数为：
+<code>$$d_{\mathrm{Fro}}(X, WH)
++ \alpha \rho ||W||_1 + \alpha \rho ||H||_1
++ \frac{\alpha(1-\rho)}{2} ||W||_{\mathrm{Fro}} ^ 2
++ \frac{\alpha(1-\rho)}{2} ||H||_{\mathrm{Fro}} ^ 2$$</code></p>
+
+<p><strong>由上式，惩罚项让W和H至少有一个全部值非负。这与机器学习算法一书漏掉了所有惩罚项。与pca的异同：去掉惩罚项其实就是普通pca。</strong></p>
+
+<p><strong>矩阵Frobenius范数不同于矩阵2范数，具体阅读范数博文。</strong></p>
+
+<p>NMF regularizes both W and H. The public function non_negative_factorization allows a finer control through the regularization attribute, and may regularize only W, only H, or both.通过设置，NMF可正则化W和H之一或同时正则化这两者。</p>
+
+<p>Other distance functions can be used in NMF as, for example, the (generalized) Kullback-Leibler (KL) divergence, also referred as I-divergence:NMF中还可以使用其他距离函数，例如(广义)Kullback-Leibler (KL)散度，也称为I-散度：
+<code>$$d_{KL}(X, Y) = \sum_{i,j} (X_{ij} \log(\frac{X_{ij}}{Y_{ij}}) - X_{ij} + Y_{ij})$$</code>
+Or, the Itakura-Saito (IS) divergence:或者Itakura-Saito (IS)散度：
+<code>$$d_{IS}(X, Y) = \sum_{i,j} (\frac{X_{ij}}{Y_{ij}} - \log(\frac{X_{ij}}{Y_{ij}}) - 1)$$</code>
+These three distances are special cases of the beta-divergence family, with
+<code>$\beta = 2, 1, 0$</code>
+respectively. The beta-divergence are defined by :平方Frobenius范数、Kullback-Leibler (KL)散度、Itakura-Saito (IS)散度是beta-散度簇的特例，对应<code>$\beta = 2, 1, 0$</code>。beta-散度定义如下：
+<code>$$d_{\beta}(X, Y) = \sum_{i,j} \frac{1}{\beta(\beta - 1)}(X_{ij}^\beta + (\beta-1)Y_{ij}^\beta - \beta X_{ij} Y_{ij}^{\beta - 1})$$</code></p>
+
+<p><strong><code>$\beta$</code>可取任意实数。</strong></p>
+
+<p>Note that this definition is not valid if
+<code>$\beta \in \{0,1\}$</code>
+, yet it can be continuously extended to the definitions of
+<code>$d_{IS}$</code>
+and
+<code>$d_{KL}$</code>
+respectively.注意如果<code>$\beta \in \{0,1\}$</code>定义非法，但是，它可以继续扩展到<code>$d_{IS}$</code>和<code>$d_{KL}$</code>的定义。</p>
+
+<p>以上笔记参考自<a href="https://scikit-learn.org/stable/modules/decomposition.html#non-negative-matrix-factorization-nmf-or-nnmf">sklearn文档</a></p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

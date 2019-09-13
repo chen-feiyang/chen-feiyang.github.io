@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>平常遇到的一些问题及问题的解决办法 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>平常遇到的一些问题及问题的解决办法</h1>
+
+
+<p>这些问题的记录将以问题出现的时间为轴。格式为问题、细节、时间、解决方法、原因。</p>
+
+<h1 id="问题-pandas查询那些列含有空值">问题：pandas查询那些列含有空值</h1>
+
+<ul>
+<li>细节：无</li>
+<li>时间：20190826</li>
+<li>解决办法：df.isnull().any()</li>
+</ul>
+
+<h1 id="问题-pandas查询那些列全部为空值">问题：pandas查询那些列全部为空值</h1>
+
+<ul>
+<li>细节：无</li>
+<li>时间：20190826</li>
+<li>解决办法：df.isnull().all()</li>
+</ul>
+
+<h1 id="问题-pandas0-24-2里根据列值拼接表报错-valueerror-you-are-trying-to-merge-on-object-and-int64-columns-if-you-wish-to-proceed-you-should-use-pd-concat">问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”</h1>
+
+<ul>
+<li>细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据'name'列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型<code>Int64Index</code>和<code>RangeIndex</code>，不同的index类型可能是不能join的原因。</li>
+<li>时间：20190826</li>
+<li>解决办法：只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。</li>
+</ul>
+
+<h1 id="问题-数据库更新方式-全量更新-增量更新">问题：数据库更新方式：全量更新、增量更新</h1>
+
+<ul>
+<li>细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。</li>
+<li>时间：20190829</li>
+<li>解决办法：就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。
+采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据；
+采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。
+所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。</li>
+</ul>
+
+<h1 id="问题-pandas的dataframe里某列为字符串-但字符串内部为字典-列表或嵌套列表-根据逻辑拆分此列">问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。</h1>
+
+<ul>
+<li>细节：字符串内部为字典是指列中的格式为&quot;{'ka':'va', 'kb':'vb'...}&quot;，字符串内部为列表是指列中格式为&quot;['va','vb','vc',...]&quot;，嵌套列表与之类似。</li>
+<li>时间：20190829</li>
+
+<li><p>解决办法：这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为'a'转换为字典<code>df['a'].apply(eval)</code>，如需要拆分出'va'等值并命名为列'ka',可<code>df['ka'] = df['a'].apply(eval).apply(lambda x: x['ka'])</code>。当然列'a'可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：</p>
+
+<pre><code># 列a非空的索引
+column_a_not_null_index = df[df['a'].notnull()].index 
+df.loc[column_a_not_null_index, 'a'] = \
+df.loc[column_a_not_null_index, 'a'].apply(eval)
+df['ka'] = np.nan 
+#为保证字典含有特定键、列表含有特定位置的索引，可能在此位置还需更细致的索引
+df.loc[column_a_not_null_index, 'ka'] = \
+df.loc[column_a_not_null_index, 'a'].apply(lambda x: x['ka'])
+</code></pre></li>
+</ul>
+
+<h1 id="问题-pyspark读取hive表格-为运行效率想只读取几个字段-但是不知道字段名字-如何得到字段名字">问题：pyspark读取Hive表格，为运行效率想只读取几个字段，但是不知道字段名字，如何得到字段名字</h1>
+
+<ul>
+<li>细节：pyspark读取Hive表格，为运行效率想只读取几个字段，但是不知道字段名字，如何得到字段名字。</li>
+<li>时间：20190829</li>
+
+<li><p>解决办法：部分解决，即限制读取量的方法达到运行效率，代码为：</p>
+
+<pre><code>spark.sql(&quot;select * from tablename limit 5&quot;).show()
+</code></pre>
+
+<p>应该是有更直接方式，但暂未找到。</p></li>
+</ul>
+
+<h1 id="问题-python-pandas-将一个带参数的函数应用于一个series">问题：python pandas：将一个带参数的函数应用于一个Series</h1>
+
+<ul>
+<li>细节：我们知道可以用<code>apply</code>，但一般情况下<code>apply</code>内的函数只接受一个参数，即Series内一个具体值。但是如果函数本身含有多个参数该怎么办呢。</li>
+<li>时间：20190909</li>
+
+<li><p>解决办法：按<a href="https://www.imooc.com/wenda/detail/579404">
+慕田峪9158850在猿问中的回答</a>，可：</p>
+
+<ul>
+<li><ol>
+<li><p>按Joel Cornett建议采用functiontools.partial，例如：</p>
+
+<pre><code>import fuctiontools
+import import operator
+add_3 = fuctiontools.partial(operator.add, 3)
+add_3(2)5
+add_3(7)10
+</code></pre>
+
+<p>注：以上代码有问题，之后再核对吧。</p></li>
+</ol></li>
+
+<li><ol>
+<li><p>也可采用lambda：</p>
+
+<pre><code>my_series.apply((lambda x: your_func(a,b,c,d,...,x)))
+</code></pre></li>
+</ol></li>
+
+<li><ol>
+<li><p>pandas至少0.25也允许传递多个参数，位置参数在系列元素之后添加。</p>
+
+<pre><code>my_series.apply(your_function, args=(2,3,4), extra_kw=1)
+</code></pre></li>
+</ol></li>
+</ul></li>
+</ul>
+
+<p>应该是有更直接方式，但暂未找到。</p>
+
+<h1 id="问题-pyspark内hive数据库的数据-如何获得字段名">问题：pyspark内hive数据库的数据，如何获得字段名。</h1>
+
+<ul>
+<li><p>细节：当然可以用限制读取前几条的方法，这样不会很大开销：</p>
+
+<pre><code>columns = spark.sql(&quot;select * from tablename limit 5&quot;).toPandas().columns
+</code></pre>
+
+<p>但其实有更好更直接的方法。</p></li>
+
+<li><p>时间：201909011</p></li>
+
+<li><p>解决办法：</p>
+
+<pre><code>columns = spark.sql(&quot;select * from tablename&quot;).columns
+</code></pre>
+
+<p>按同事说法，这样不会真的读取全表，没很大开销，我运行之后也感觉是这样。</p></li>
+</ul>
+
+<p>可能还会想获得hive表格的元数据（即字段名、字段类型等），可采用：</p>
+
+<pre><code>spark.sql(&quot;desc formatted tablename&quot;).collect()
+</code></pre>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

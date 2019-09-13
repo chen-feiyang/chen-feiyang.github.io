@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Kaggle之House Prices: Advanced Regression Techniques竞赛项目总结 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Kaggle之House Prices: Advanced Regression Techniques竞赛项目总结</h1>
+
+
+<h2 id="项目介绍">项目介绍：</h2>
+
+<p>竞赛数据集为Ames Housing dataset，是一个房价销售的数据集，需据此预测房屋销售价格，误差度量要求采用实际售价与预测售价的对数的均方根误差（RMSE），在此度量标准下，关注的不是实际售价和预测售价的差值，而是其比值。</p>
+
+<h2 id="项目成绩">项目成绩：</h2>
+
+<p>我的迄今最好成绩是0.10616，也就是实际售价与预测售价之比平均约为e的<strong>0.10616</strong>次方（约等于1.1120），目前排名<strong>29/4413</strong>。成绩见于<a href="https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard">https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard，名称feiyang0chen1</a>。</p>
+
+<h2 id="项目心得体会">项目心得体会：</h2>
+
+<ol>
+<li>若未认真理解项目需求，采用不经对数转换的RMSE，也许成绩停留在0.15；若不经对数转换，采用RMSLE（对数均方根误差），也许误差停留在0.14。显然损失函数决定优化的方向，这两种情况均因偏离项目要求的优化方向难以取得更好表现。</li>
+<li>单个模型最好的是线性回归，发现对严重偏离正态分布的特征进行转换可提高成绩。</li>
+<li>线性模型需要特征矩阵之间线性无关，PCA可以做到，但将过滤掉一些有用信息。若不采用PCA，可引入正则化项抑制线性模型特征对应的系数，这也是一种特征选择的方法，视正则化项的不同分别为lasso、ridge、elasticnet。</li>
+<li>分类变量最理想的情况应该平衡，查阅文献，对于高分化分类变量（即含有很多分类，一些分类含有极少的数据点rare category），应采用target encoding而不是onehot encoding，target encoding可以采取忽视rare category的策略以减少杂讯。本案例分类变量虽不是特别高分化，但某些分类所含的数据点只有6个，应具有类似特点。但是发现target encoding没有提高成绩。</li>
+<li>数据集含有较多的缺失数据，对于一些特征列，有相互印证的数据列比较好填补缺失值，没有这些印证信息的缺失数据，可采用删除数据点、删除特征列，或补入均值、中值、众值、回归（分类）等，回归（分类）又涉及到具体该采用什么模型什么特征列等，变数很多，查阅文献暂没有绝对优势的策略。补入虽然补充了信息但也引入了杂讯，一般认为补充中值、众值将使模型更鲁棒。</li>
+<li>离群值，检索数据集，含有一个特征名为MSZoning，是标注地产商业性质的分类变量。通过分析此变量，发现在大多数特征点为各种住宅地产，极少数是工业或其他地产。自然想到有些数据点为离群值。而且，常识判断，与总售价最相关的是总使用面积GrLivArea，分析相关性也证明了这一点。根据总使用面积和总售价的联合分布，有些数据点是明显偏离的。单变量离群值分析，可假设此变量服从某分布，再排除概率小于某值比如1%的范围区间内的值，但这种判断方法应无益于机器学习问题。机器学习中可将模型残差大于一定值的数据点视为域外值，但选择什么特征建立模型、选择什么模型、残差大于多少判断为残差目前似乎没有公论，只能视具体情况试验。而且，排除过多数据点将使预测数据集的分布过多偏离训练数据。这违背机器学习的根本假设即数据同分布。</li>
+<li>若特征数量较少，可直观地判断欠拟合和过拟合；当纬度较大时，可通过判断验证数据集上的表现来减小过拟合，但仍不能根绝。异源的模型组合可进一步减少过拟合以提高表现，假设两个模型的预测不同，具体到某一数据点，若真实值不在两模型预测值之间，此点模型融合的表现将是单个模型表现的某权值组合的加权平均；但也很可能实际值处在两模型预测值之间，此点模型融合的表现将优于单个模型，所以模型融合较大概率对表现有提升，我的模型的明显提升也正是来源于此，几个RMSE在0.11上下的模型平均后RMSE为0.106，优于任一单个模型的表现。可任意武断假设模型的权值，这在sklearn里面可通过VotingRegressor实现。当然模型融合的权值也是可以通过学习得到的，mlxtend中便捷函数StackingRegressor，设置meta_regressor为线性模型并线性模型设置fit_intercept=False可学习权值。当然meta_regressor也可不是线性模型甚至融合模型让基础模型的特征重新参与训练，这正是堆叠stack的含义。基础模型的预测作为特征重新参与建模将造成过拟合/泄露，可以让基础模型的预测来自k折后的k个训练数据形成的模型的折外数据点的预测（out-of-fold predictions），这可通过StackingCVRegressor实现。</li>
+<li>关于模型的特征数量和特征选择：模型的特征数量影响计算速度并模型复杂度，过度复杂的模型容易产生过拟合。分类变量的编码方式将改变潜在特征数，lasso、基于树的模型等可自动选择特征。</li>
+<li>最终模型取自特定补充缺失值策略、分类变量编码策略、排除离群值策略、PCA、基础模型选择、模型融合策略的组合，很难相信这是最优解，但结果尚可。</li>
+<li>鉴于我的模型表现与排行榜仍有较大差距，猜测也许数据更适于采用某一非线性模型。可实现非线性的模型主要有：1基于树的模型，2线性模型采用非线性核函数，3.深度模型采用非线性激活函数。基于树的模型如决策树、提升等不能取得优于线性模型的表现是因为训练数据点较少时基于树的模型将不够顺滑，这将使预测表现不够好。当训练数据点较少时候，以决策树为例，若训练数据点含n个独特值，那么模型的预测值也将不外乎这n个独特值。提升算法的情况类似，虽然权值将导致预测的可能取值稍微增加，但仍不可避免比较稀疏，这将导致在非训练数据上表现不佳。而线性模型采用非线性核函数将不产生类似基于树模型同类的稀疏，但是，其非线性是不可学习的，只能作为高参调参，而且非线性高参可调弹性比较小，比方采用多项式核，其次数只能为整数。深度学习可学习非线性本身，也许进一步提升模型性能的方向在此。</li>
+<li>以上体会基于此项目的一些经验或我的一些主观猜测，错漏之处在所难免，应进一步夯实。</li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

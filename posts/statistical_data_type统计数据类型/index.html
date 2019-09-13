@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>statistical_data_type统计数据类型 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>statistical_data_type统计数据类型</h1>
+<p>The following table classifies the various simple data types, associated distributions, permissible operations, etc. Regardless of the logical possible values, all of these data types are generally coded using real numbers, because the theory of random variables often explicitly assumes that they hold real numbers. 下表对各种简单的数据类型、相关的分布、允许的操作等进行了分类。不管逻辑上的可能值是多少，所有这些数据类型通常都是用实数编码的，因为随机变量理论通常明确假设它们都是实数。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Data Type <br> 数据类型</th>
+<th align="left">Possible values <br> 可能值</th>
+<th align="left">Example usage <br> 应用示例</th>
+<th align="left">Level of measurement <br> 测量层次</th>
+<th align="left">Distribution <br> 分布</th>
+<th align="left">Scale of relative differences <br> 尺度相对差异</th>
+<th align="left">Permissible statistics <br> 允许的统计数据</th>
+<th align="left">Regression analysis <br> 回归分析</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">binary <br> 二分类数据</td>
+<td align="left">0, 1 (arbitrary labels) <br> 0, 1（任意标签）</td>
+<td align="left">binary outcome (&quot;yes/no&quot;, &quot;true/false&quot;, &quot;success/failure&quot;, etc.) <br> 二分结果（是/否、真/假、成功/失败等）</td>
+<td align="left">nominal scale <br> 定类尺度</td>
+<td align="left">Bernoulli <br> 伯努利分布</td>
+<td align="left">incomparable <br> 不可比较</td>
+<td align="left">mode, Chi-squared <br> 众值、卡方值</td>
+<td align="left">logistic, probit <br> 逻辑回归、概率</td>
+</tr>
+
+<tr>
+<td align="left">categorical <br> 多分类数据</td>
+<td align="left">1, 2, ..., K (arbitrary labels) <br> 1, 2, ..., K（任意标签）</td>
+<td align="left">categorical outcome (specific blood type, political party, word, etc.) <br> 多分类结果（特定血型、党派、词等）</td>
+<td align="left">nominal scale <br> 定类尺度</td>
+<td align="left">categorical <br> 多分类分布</td>
+<td align="left">incomparable <br> 不可比较</td>
+<td align="left">mode, Chi-squared <br> 众值、卡方值</td>
+<td align="left">multinomial logit, multinomial probit <br> 多项式逻辑回归、多项式概率</td>
+</tr>
+
+<tr>
+<td align="left">ordinal <br> 定序数据</td>
+<td align="left">integer or real number (arbitrary scale) <br> 整数或实数(任意比例)</td>
+<td align="left">relative score, significant only for creating a ranking <br> 相对分数，只对排名有意义</td>
+<td align="left">ordinal scale <br> 定序尺度</td>
+<td align="left">categorical?? <br> 分类分布？？</td>
+<td align="left">relative comparison <br> 相对比较</td>
+<td align="left"></td>
+<td align="left">ordinal regression (ordered logit, ordered probit) <br> 有序回归(有序逻辑回归，有序概率)</td>
+</tr>
+
+<tr>
+<td align="left">binomial <br> 二项式数据</td>
+<td align="left">0, 1, ..., N <br></td>
+<td align="left">number of successes (e.g. yes votes) out of N possible <br> N个可能中的成功数(如赞成票)</td>
+<td align="left">interval scale?? <br> 定距尺度</td>
+<td align="left">binomial, beta-binomial, etc. <br> 二项式分布、贝塔二项式分布</td>
+<td align="left">additive?? <br> 可加减</td>
+<td align="left">mean, median, mode, standard deviation, correlation <br> 均值、中值、众值、标准差、相关系数</td>
+<td align="left">binomial regression (logistic, probit) <br> 二项式回归（逻辑回归、概率）</td>
+</tr>
+
+<tr>
+<td align="left">count <br> 计数</td>
+<td align="left">nonnegative integers (0, 1, ...) <br> 非负整数(0, 1, ...)</td>
+<td align="left">number of items (telephone calls, people, molecules, births, deaths, etc.) in given interval/area/volume <br> 给定区间/面积/容量的事项（电话呼叫、人员、分子、出生、死亡等）的计数</td>
+<td align="left">ratio scale <br> 定比尺度</td>
+<td align="left">Poisson, negative binomial, etc. <br> 泊松分布、负二项式等</td>
+<td align="left">multiplicative <br> 可乘除</td>
+<td align="left">All statistics permitted for interval scales plus the following: geometric mean, harmonic mean, coefficient of variation <br> 定距尺度允许的所有统计加上：几何平均值，调和平均值，变异系数</td>
+<td align="left">Poisson, negative binomial regression <br> 泊松回归、负二项式回归</td>
+</tr>
+
+<tr>
+<td align="left">real-valued additive <br> 可加减的实值数据</td>
+<td align="left">real number <br> 实数</td>
+<td align="left">temperature, relative distance, location parameter, etc. (or approximately, anything not varying over a large scale) <br> 温度、相对距离、位置参数等（或者近似地说，任何在大范围内没有变化的东西）。</td>
+<td align="left">interval scale <br> 定比尺度</td>
+<td align="left">normal, etc. (usually symmetric about the mean) <br> 正态分布等（通常关于均值对称）。</td>
+<td align="left">additive <br> 可加减的</td>
+<td align="left">mean, median, mode, standard deviation, correlation <br> 均值、中值、众值、标准差、相关系数</td>
+<td align="left">standard linear regression <br> 标准线性回归</td>
+</tr>
+
+<tr>
+<td align="left">real-valued multiplicative <br> 可乘除的实值数据</td>
+<td align="left">positive real number <br> 正实数</td>
+<td align="left">price, income, size, scale parameter, etc. (especially when varying over a large scale) <br> 价格、收益、规模、规模参数等(特别是在大范围变化时)</td>
+<td align="left">ratio scale <br> 定比尺度</td>
+<td align="left">log-normal, gamma, exponential, etc. (usually a skewed distribution)对数正态分布、伽马分布、指数分布等（通常是偏态分布）。</td>
+<td align="left">multiplicative <br> 可乘除的</td>
+<td align="left">All statistics permitted for interval scales plus the following: geometric mean, harmonic mean, coefficient of variation <br> 定距尺度允许的所有统计加上：几何平均值，调和平均值，变异系数</td>
+<td align="left">generalized linear model with logarithmic link <br> 具有对数环节的广义线性模型</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>只有最后2种可以是连续变量，前面5种一定是离散变量。</strong></p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

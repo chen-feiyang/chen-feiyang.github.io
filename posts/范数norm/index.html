@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>范数norm | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>范数norm</h1>
+
+
+<p>维基搜索norm得到的结果数学部分摘录如下：</p>
+
+<p>In mathematics：</p>
+
+<ul>
+<li><strong>Norm (mathematics)</strong>, a map that assigns a length or size to a mathematical object, e.g.:
+
+<ul>
+<li><strong>Vector norm</strong>, a map that assigns a length or size to any vector in a vector space</li>
+<li><strong>Matrix norm</strong>, a map that assigns a length or size to a matrix</li>
+<li><strong>Operator norm</strong>, a map that assigns a length or size to any operator in a function space</li>
+<li><strong>Norm (abelian group)</strong>, a map that assigns a length or size to any element of an abelian group</li>
+</ul></li>
+<li><strong>Field norm</strong>, a map in algebraic number theory and Galois theory that generalizes the usual distance norm</li>
+<li><strong>Ideal norm</strong>, the ideal-theoretic generalization of the field norm</li>
+<li><strong>Norm (group)</strong>, a certain subgroup of a group</li>
+<li><strong>Norm (map)</strong>, a map from a pointset into the ordinals inducing a prewellordering</li>
+<li><strong>Norm group</strong>, a group in class field theory that is the image of the multiplicative group of a field</li>
+<li><strong>Norm function</strong>, a term in the study of Euclidean domains, sometimes used in place of &quot;Euclidean function&quot;</li>
+</ul>
+
+<p>下面仅介绍我预测数据分析可能用到的向量范数和矩阵范数。</p>
+
+<h2 id="1-vector-norm向量范数">1 Vector norm向量范数</h2>
+
+<h3 id="1-1-definition定义">1.1 Definition定义</h3>
+
+<p>Given a vector space <code>$V$</code> over a subfield <code>$F$</code> of the complex numbers, a norm on <code>$V$</code> is a nonnegative-valued scalar function <code>$p: V \rightarrow [0,+\infty)$</code>with the following properties:给定一个向量空间<code>$V$</code>和复数子域<code>$F$</code>，在<code>$V$</code>上的范数是一个非负标量方程：<code>$p: V \rightarrow [0,+\infty)$</code>，此方程有如下特性：</p>
+
+<p>For all <code>$a \in F$</code> and all <code>$\vec{u}, \vec{v} \in V$</code>: 对任意<code>$a \in F$</code>和任意<code>$\vec{u}, \vec{v} \in V$</code>：</p>
+
+<ol>
+<li><code>$p(\vec{u} + \vec{u}) ≤ p(\vec{u}) + p(\vec{v})$</code> (being subadditive or satisfying the triangle inequality).是次加性的也就是满足三角不等式。</li>
+<li><code>$p(a\vec{v}) = |a| p(\vec{v})$</code> (being absolutely homogeneous or absolutely scalable).是绝对同构的也就是绝对可伸缩。</li>
+<li>If <code>$p(\vec{v}) = 0$</code> then <code>$\vec{v}=\vec{0}$</code> (being positive definite or being point-separating).如果<code>$p(\vec{v}) = 0$</code>那么<code>$\vec{v}=\vec{0}$</code>（正定的或点分离的）。</li>
+</ol>
+
+<p>A <strong>seminorm</strong> on <code>$V$</code> is a function <code>$p : V → R$</code> with the properties 1 and 2 above. <code>$V$</code>上的<strong>半范数</strong>是方程<code>$p : V → R$</code>，满足上面的特性1和特性2。</p>
+
+<p>Every vector space <code>$V$</code> with seminorm <code>$p$</code> induces a normed space <code>$V/W$</code>, called the quotient space, where <code>$W$</code> is the subspace of <code>$V$</code> consisting of all vectors <code>$\vec{v}$</code> in <code>$V$</code> with <code>$p(\vec{v}) = 0$</code>. The induced norm on <code>$V/W$</code> is defined by:每个向量空间<code>$V$</code>和半范数<code>$p$</code>诱导一个范数化的空间<code>$V/W$</code>，叫做<strong>商空间</strong>，其中<code>$W$</code>是<code>$V$</code>的子空间，<code>$W$</code>含有<code>$V$</code>中所有<code>$p(\vec{v}) = 0$</code>（范数为0）的向量。引入的<code>$V/W$</code>上的范数定义如下。
+<code>$$p(W + \vec{v}) = p(\vec{v})$$</code>
+Two norms (or seminorms) <code>$p$</code> and <code>$q$</code> on a vector space <code>$V$</code> are <strong>equivalent</strong> if there exist two real constants <code>$c$</code> and <code>$C$</code>, with <code>$c &gt; 0$</code>, such that
+for every vector <code>$\vec{v}$</code> in <code>$V$</code>, one has that: <code>$c q(\vec{v}) ≤ p(\vec{v}) ≤ C q(\vec{v})$</code>.向量空间V上的两个范数(或半范数)p和q是<strong>等价</strong>的，如果存在两个实常数<code>$c$</code>和<code>$C$</code>，且<code>$c &gt; 0$</code>，对于在<code>$V$</code>的每个向量<code>$\vec{v}$</code>，有<code>$c q(\vec{v}) ≤ p(\vec{v}) ≤ C q(\vec{v})$</code>。</p>
+
+<p>A topological vector space is called normable (seminormable) if the topology of the space can be induced by a norm (seminorm).如果空间的拓扑可以由范数(半范数)诱导，则拓扑向量空间称为可规范(半可规范)。</p>
+
+<h3 id="1-2-examples举例">1.2 Examples举例</h3>
+
+<h4 id="1-2-1-euclidean-norm">1.2.1 Euclidean norm</h4>
+
+<p>(special case of:p-norm)</p>
+
+<p>可以定义到向量中的值含有复数，但由于数据分析不会涉及到复数，以下叙述仅考虑实数：
+<code>$$\left\|\vec{x}\right\|_2:=\sqrt{\sum_{i=1}^{n}{x_i^2}}$$</code>
+也可写成
+<code>$$\left\|\vec{x}\right\|_2:=\sqrt{\vec{x}^T\vec{x}}$$</code></p>
+
+<h4 id="1-2-2-taxicab-norm-or-manhattan-norm">1.2.2 Taxicab norm or Manhattan norm</h4>
+
+<p>(special case of:p-norm)
+<code>$$\left\|\vec{x}\right\|_1:=\sum_{i=1}^{n}{|x_i|}$$</code></p>
+
+<h4 id="1-2-3-p-norm">1.2.3 p-norm</h4>
+
+<p><code>$$\left\|\vec{x}\right\|_p:=\left(\sum_{i=1}^{n}{|x_i|^p}\right)^{1/p} \\
+where \ p \ge 1 \ be \ a \ real \ number$$</code></p>
+
+<h4 id="1-2-4-maximum-norm">1.2.4 Maximum norm</h4>
+
+<p>(special case of:p-norm)
+<code>$$\left\|\vec{x}\right\|_\infty:=\max_{i=1}^{n}{|x_i|}$$</code></p>
+
+<h4 id="1-2-5-infinite-dimensional-case无穷维度情况">1.2.5 Infinite-dimensional case无穷维度情况</h4>
+
+<p>无穷维度情况就是将求和相应改成求积分：
+例如，有限维度中p-范数为：
+<code>$$\left\|\vec{x}\right\|_p:=\left(\sum_{i=1}^{n}{|x_i|^p}\right)^{1/p} \\
+where \ p \ge 1 \ be \ a \ real \ number$$</code>
+无穷维度中p-范数为：
+<code>$$\left\|\vec{x}\right\|_p:=\left(\int_{X}{|x_i|^p} \ dx \right)^{1/p} \\
+where \ p \ge 1 \ be \ a \ real \ number$$</code></p>
+
+<p><img src="/norm/12max.png" alt="揭示不同范数单位环的区别" />
+<strong>上图，当维度为2时，限定l1范数、l2范数、无穷范数的值为1，那么其图形就恰如上图所示。</strong></p>
+
+<h2 id="2-matrix-norm矩阵范数">2 Matrix norm矩阵范数</h2>
+
+<h3 id="2-1-definition定义">2.1 Definition定义</h3>
+
+<p>In what follows,
+<code>$K$</code>
+will denote a field of either real or complex numbers.下来，K将表示实数或复数域。</p>
+
+<p>Let
+<code>$K^{m \times n}$</code>
+denote the vector space of all matrices of size
+<code>$m \times n$</code>
+(with
+<code>$m$</code>
+rows and
+<code>$n$</code>
+columns) with entries in the field
+<code>$K$</code>
+. 让<code>$K^{m \times n}$</code>表示所有形状为<code>$m \times n$</code>所有矩阵组成的向量空间。</p>
+
+<p>A matrix norm is a norm on the vector space
+<code>$K^{m \times n}$</code>
+. Thus, the matrix norm is a function
+<code>$\left\|\cdot\right\|:K^{m \times n}\rightarrow \mathbb{R}$</code>
+that must satisfy the following properties: 矩阵的范数是在向量空间<code>$K^{m \times n}$</code>上的范数。因此，矩阵范数是方程<code>$\left\|\cdot\right\|:K^{m \times n}\rightarrow \mathbb{R}$</code>，方程必须满足如下特性：</p>
+
+<p>For all scalars
+<code>$\alpha$</code>
+in
+<code>$K$</code>
+and for all matrices
+<code>$\mathbf{A}$</code>
+and
+<code>$\mathbf{B}$</code>
+in
+<code>$K^{m \times n}$</code> :对<code>$K$</code>内的所有标量<code>$\alpha$</code>和<code>$K^{m \times n}$</code>内的<code>$\mathbf{A}$</code>、<code>$\mathbf{B}$</code>：</p>
+
+<ul>
+<li><code>$\left\|\alpha \mathbf{A}\right\|=|\alpha|\left\|\mathbf{A}\right\|$</code>
+(being absolutely homogeneous)是绝对齐次的。</li>
+<li><code>$\left\|\mathbf{A+B}\right\| \le \left\|\mathbf{A}\right\|+\left\|\mathbf{B}\right\|$</code>
+(being sub-additive or satisfying the triangle inequality)是次加性的也就是满足三角不等式。</li>
+<li><code>$\left\|\mathbf{A}\right\| \ge 0$</code>
+(being positive-valued)是正值的。</li>
+<li><code>$\left\|\mathbf{A}\right\| = 0$</code>
+iff
+<code>$\mathbf{A}=\mathbf{0}_{m \times n}$</code>
+(being definite)<code>$\left\|\mathbf{A}\right\| = 0$</code>当且仅当<code>$\mathbf{A}=\mathbf{0}_{m \times n}$</code>（充要性）</li>
+</ul>
+
+<p>Additionally, in the case of square matrices (thus, m = n), some (but not all) matrix norms satisfy the following condition, which is related to the fact that matrices are more than just vectors:进一步，在方阵情况下（也就是m=n），一些（但不是全部）矩阵范数满足如下条件，因为矩阵不仅仅是向量：</p>
+
+<ul>
+<li><code>$\left\|\mathbf{AB}\right\| \le \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|$</code>
+for all matrices
+<code>$\mathbf{A}$</code>
+and
+<code>$\mathbf{B}$</code>
+in
+<code>$K^{m \times n}$</code>.  对<code>$K^{m \times n}$</code>内的任意矩阵<code>$\mathbf{A}$</code>和<code>$\mathbf{B}$</code>有<code>$\left\|\mathbf{AB}\right\| \le \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|$</code>。</li>
+</ul>
+
+<p>A matrix norm that satisfies this additional property is called a <strong>sub-multiplicative norm</strong> (in some books, the terminology matrix norm is used only for those norms which are sub-multiplicative).满足这一附加性质的矩阵范数称为<strong>次乘法范数</strong>(在某些书中，术语矩阵范数仅用于那些次乘法范数)。</p>
+
+<p>The definition of sub-multiplicativity is sometimes extended to non-square matrices, for instance in the case of the induced p-norm, where for
+<code>$\mathbf{A} \in K^{m \times n}$</code>
+and
+<code>$\mathbf{B} \in K^{n \times k}$</code>
+holds that
+<code>$\left\|\mathbf{AB}\right\|_q \le \left\|\mathbf{A}\right\|_p\left\|\mathbf{B}\right\|_q$</code>
+. Here
+<code>$\left\|\cdot\right\|_p$</code>
+and
+<code>$\left\|\cdot\right\|_q$</code>
+are the norms induced from
+<code>$K^n$</code>
+and
+<code>$K^k$</code>
+, respectively, and <code>$p,q \ge 1$</code>. 次乘法性的定义有时可以扩展到非方阵，例如，诱导的p-范数的情况，其中<code>$\mathbf{A} \in K^{m \times n}$</code>并<code>$\mathbf{B} \in K^{n \times k}$</code>，必定有<code>$\left\|\mathbf{AB}\right\|_q \le \left\|\mathbf{A}\right\|_p\left\|\mathbf{B}\right\|_q$</code>，<code>$\left\|\cdot\right\|_p$</code>和<code>$\left\|\cdot\right\|_q$</code>是由<code>$K^n$</code>和<code>$K^k$</code>诱导的范数，当然<code>$p,q \ge 1$</code>。</p>
+
+<p>There are three types of matrix norms which will be discussed below: 有3种类型的矩阵范数：</p>
+
+<ul>
+<li>Matrix norms induced by vector,由向量范数诱导的矩阵范数；</li>
+<li>Entrywise matrix norms,逐元素的矩阵范数；</li>
+<li>Schatten norms. Schatten范数。</li>
+</ul>
+
+<h3 id="2-2-matrix-norms-induced-by-vector由向量范数诱导的矩阵范数">2.2 Matrix norms induced by vector由向量范数诱导的矩阵范数</h3>
+
+<p>given a norm
+<code>$\left\|\cdot\right\|_{\alpha}$</code>
+on
+<code>$K^{n}$</code>
+, and a norm
+<code>$\left\|\cdot\right\|_{\beta}$</code>
+on<br />
+<code>$K^{m}$</code>
+, one can define a matrix norm on
+<code>$K^{m\times n}$</code>
+induced by these norms: 给定<code>$K^{n}$</code>上的范数<code>$\left\|\cdot\right\|_{\alpha}$</code>和<code>$K^{m}$</code>上的范数<code>$\left\|\cdot\right\|_{\beta}$</code>，可以定义由这两个范数诱导的<code>$K^{m\times n}$</code>上的矩阵范数：
+<code>$$\left\|\mathbf{A}\right\|_{\alpha ,\beta }=\max _{\vec{x}\neq \vec{0}}{\frac {\left\|\mathbf{A}\vec{x}\right\|_{\beta }}{\left\|\vec{x}\right\|_{\alpha }}}$$</code></p>
+
+<p>The matrix norm
+<code>$\left\|\mathbf{A}\right\|_{\alpha ,\beta }$</code>
+is sometimes called a subordinate norm. Subordinate norms are consistent with the norms that induce them, giving
+<code>$\left\|\mathbf{A}\vec{x}\right\|_{\beta }\leq \left\|\mathbf{A}\right\|_{\alpha ,\beta }\left\|\vec{x}\right\|_{\alpha }$</code>. 矩阵范数<code>$\left\|\mathbf{A}\right\|_{\alpha ,\beta }$</code>有时被称为从属范数。从属范数与诱导它们的范数是一致的，有<code>$\left\|\mathbf{A}\vec{x}\right\|_{\beta }\leq \left\|\mathbf{A}\right\|_{\alpha ,\beta }\left\|\vec{x}\right\|_{\alpha }$</code>。</p>
+
+<p>Any induced operator norm is a sub-multiplicative matrix norm:
+<code>$\left\|\mathbf{AB}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|$</code>
+; this follows from
+<code>$\left\|\mathbf{AB}\vec{x}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\vec{x}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|\left\|\vec{x}\right\|$</code>
+and
+<code>$\max \limits _{\left\|\vec{x}\right\|=1}\left\|\mathbf{AB}\vec{x}\right\|=\left\|\mathbf{AB}\right\|$</code>.任何诱导的操作范数是次加性矩阵范数：<code>$\left\|\mathbf{AB}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|$</code>；因为<code>$\left\|\mathbf{AB}\vec{x}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\vec{x}\right\|\leq \left\|\mathbf{A}\right\|\left\|\mathbf{B}\right\|\left\|\vec{x}\right\|$</code>和<code>$\max \limits _{\left\|\vec{x}\right\|=1}\left\|\mathbf{AB}\vec{x}\right\|=\left\|\mathbf{AB}\right\|$</code>。</p>
+
+<p>Moreover, any induced norm satisfies the inequality
+<code>$\left\|\mathbf{A}^{r}\right\|^{1/r}\geq \rho (\mathbf{A}) \tag{1}$</code>,
+where <code>$\rho(\mathbf{A})$</code> is the spectral radius of \mathbf{A}. For symmetric or hermitian <code>$\mathbf{A}$</code>, we have equality in (1) for the 2-norm, since in this case the 2-norm is precisely the spectral radius of <code>$\mathbf{A}$</code>. For an arbitrary matrix, we may not have equality for any norm; a counterexample being given by
+<code>$\mathbf{A}={\begin{bmatrix}0&amp;1\\0&amp;0\end{bmatrix}}$</code>
+, which has vanishing spectral radius. In any case, for square matrices we have the spectral radius formula:
+<code>$\lim _{r\rightarrow \infty }\left\|A^{r}\right\|^{1/r}=\rho (A)$</code>. 而且，任何诱导范数满足不等式<code>$\left\|A^{r}\right\|^{1/r}\geq \rho (A) \tag{1}$</code>，其中<code>$\rho(\mathbf{A})$</code>是<code>$\mathbf{A}$</code>的谱半径。对于对称或厄密矩阵<code>$\mathbf{A}$</code>，我们在(1)中对于2-范数是相等的，因为在这种情况下2-范数恰好是<code>$\mathbf{A}$</code>的谱半径。对于其他任意矩阵的任意范数(1)式很可能不能取等号；可以举反例<code>$\mathbf{A}={\begin{bmatrix}0&amp;1\\0&amp;0\end{bmatrix}}$</code>，其有消失的谱半径。无论如何，对方阵有谱半径公式：<code>$\lim _{r\rightarrow \infty }\left\|\mathbf{A}^{r}\right\|^{1/r}=\rho (\mathbf{A})$</code>。</p>
+
+<h4 id="2-2-1-special-cases特例">2.2.1 Special cases特例</h4>
+
+<p><code>$$\left\|\mathbf{A}\right\|_1=\max_{1 \le j \le n}{\sum_{i=1}^{m}{|a_{ij}|}}$$</code>
+即先对元素的绝对值按列求和后再挑最大的。
+<code>$$\left\|\mathbf{A}\right\|_\infty=\max_{1 \le i \le m}{\sum_{j=1}^{n}{|a_{ij}|}}$$</code>
+即先对元素的绝对值按行求和后再挑最大的。
+<code>$$\left\|\mathbf{A}\right\|_2=\sigma_{max}(\mathbf{A}) =\sqrt{\lambda_{max}(\mathbf{A^*A})} \le \left(\sum_{i=1}^{m}{\sum_{j=1}^{n}{|a_{ij}|^2}}\right)^{1/2}=\left\|\mathbf{A}\right\|_F$$</code>
+<code>$\sigma_{max}(\mathbf{A})$</code>是矩阵<code>$\mathbf{A}$</code>最大的奇异值，<code>$\mathbf{A^*}$</code>是<code>$\mathbf{A}$</code>的共轭转置（对于复数组成的矩阵才需要共轭），<code>$\left\|\mathbf{A}\right\|_F$</code>是Frobenius范数。</p>
+
+<h3 id="2-3-entrywise-matrix-norms逐元素的矩阵范数">2.3 Entrywise matrix norms逐元素的矩阵范数</h3>
+
+<p><code>$L_{p,q}$</code>norm, <code>$p, q \ge 1$</code>, defined by:范数<code>$L_{p,q}$</code>（<code>$p, q \ge 1$</code>）定义如下：
+<code>$$\left\| \mathbf{A}\right\| _{p,q}=\left(\sum _{j=1}^{n}\left(\sum _{i=1}^{m}|a_{ij}|^{p}\right)^{q/p}\right)^{1/q}$$</code></p>
+
+<p><code>$L_{p,p}$</code>可直接记作<code>$L_{p}$</code>。</p>
+
+<h4 id="2-3-1-frobenius-norm-frobenius范数">2.3.1 Frobenius norm Frobenius范数</h4>
+
+<p>When <code>$p = q = 2$</code> for the
+<code>$L_{p,q}$</code>
+norm, it is called the Frobenius norm or the Hilbert–Schmidt norm, though the latter term is used more frequently in the context of operators on (possibly infinite-dimensional) Hilbert space. This norm can be defined in various ways:
+<code>$\left\|\mathbf{A}\right\|_{\rm {F}}={\sqrt {\sum _{i=1}^{m}\sum _{j=1}^{n}|a_{ij}|^{2}}}={\sqrt {\operatorname {trace} \left(\mathbf{A^{*}A}\right)}}={\sqrt {\sum _{i=1}^{\min\{m,n\}}\sigma _{i}^{2}(\mathbf{A})}}$</code>.
+where
+<code>$\sigma _{i}(\mathbf{A})$</code>
+are the singular values of
+<code>$\mathbf{A}$</code>
+. Recall that the trace function returns the sum of diagonal entries of a square matrix.当<code>$p = q = 2$</code>时，<code>$L_{p,q}$</code>范数叫做Frobenius范数也叫Hilbert–Schmidt范数，后者更常用于Hilbert空间的操作的概念中。Frobenius范数定义为：<code>$\left\|\mathbf{A}\right\|_{\rm {F}}={\sqrt {\sum _{i=1}^{m}\sum _{j=1}^{n}|a_{ij}|^{2}}}={\sqrt {\operatorname {trace} \left(\mathbf{A^{*}A}\right)}}={\sqrt {\sum _{i=1}^{\min\{m,n\}}\sigma _{i}^{2}(\mathbf{A})}}$</code>。其中<code>$\sigma _{i}(\mathbf{A})$</code>是<code>$\mathbf{A}$</code>的奇异值。回想一下trace函数返回的是方阵对角线元素的和。</p>
+
+<p>The Frobenius norm is the Euclidean norm on
+<code>$K^{n\times n}$</code>
+and comes from the Frobenius inner product on the space of all matrices. Frobenius范数是<code>$K^{n\times n}$</code>上的欧式范数并且来自<code>$K^{n\times n}$</code>上所有矩阵的Frobenius内积。</p>
+
+<p>The Frobenius norm is sub-multiplicative and is very useful for numerical linear algebra. This norm is often easier to compute than induced norms and has the useful property of being invariant under rotations, that is,
+<code>$\left\|\mathbf{A}\right\|_{\rm {F}}^{2}=\left\|\mathbf{AR}\right\|_{\rm {F}}^{2}=\left\|\mathbf{RA}\right\|_{\rm {F}}^{2}$</code>
+for any rotation matrix
+<code>$\mathbf{R}$</code>
+. This property follows from the trace definition restricted to real matrices:
+<code>$\left\|\mathbf{AR}\right\|_{\rm {F}}^{2}=\operatorname {trace} \left(\mathbf{R}^{\textsf {T}}\mathbf{A}^{\textsf {T}}\mathbf{AR}\right)=\operatorname {trace} \left(\mathbf{RR}^{\textsf {T}}\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>
+and
+<code>$\left\|\mathbf{RA}\right\|_{\rm {F}}^{2}=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{R}^{\textsf {T}}\mathbf{R}\mathbf{A}\right)=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>,
+where we have used the orthogonal nature of
+<code>$\mathbf{R}$</code>
+(that is,
+<code>$\mathbf{R}^{\textsf {T}}\mathbf{R}=\mathbf{RR}^{\textsf {T}}=\mathbf {\mathbf{I}}$</code>
+) and the cyclic nature of the trace (
+<code>$\operatorname {trace} (\mathbf{XYZ})=\operatorname {trace} (\mathbf{ZXY})$</code>
+). More generally the norm is invariant under a unitary transformation for complex matrices. Frobenius范数是次加性的并对数字线性代数很有用。这个模量比诱导模量更易计算并有旋转下不变这一有用特性，也就是，对于任何旋转矩阵<code>$\mathbf{R}$</code>有<code>$\left\|\mathbf{A}\right\|_{\rm {F}}^{2}=\left\|\mathbf{AR}\right\|_{\rm {F}}^{2}=\left\|\mathbf{RA}\right\|_{\rm {F}}^{2}$</code>。这一特性的根据是严格的实数矩阵的迹的定义：<code>$\left\|\mathbf{AR}\right\|_{\rm {F}}^{2}=\operatorname {trace} \left(\mathbf{R}^{\textsf {T}}\mathbf{A}^{\textsf {T}}\mathbf{AR}\right)=\operatorname {trace} \left(\mathbf{RR}^{\textsf {T}}\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>和<code>$\left\|\mathbf{RA}\right\|_{\rm {F}}^{2}=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{R}^{\textsf {T}}\mathbf{R}\mathbf{A}\right)=\operatorname {trace} \left(\mathbf{A}^{\textsf {T}}\mathbf{A}\right)=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>，这里我们用到了<code>$\mathbf{R}$</code>的正交本质（也就是<code>$\mathbf{R}^{\textsf {T}}\mathbf{R}=\mathbf{RR}^{\textsf {T}}=\mathbf {\mathbf{I}}$</code>）和迹的环本质（<code>$\operatorname {trace} (\mathbf{XYZ})=\operatorname {trace} (\mathbf{ZXY})$</code>）。更一般地，范数在复矩阵的酉变换下是不变的。</p>
+
+<p>It also satisfies
+<code>$\left\|\mathbf{A}^{\rm {T}}\mathbf{A}\right\|_{\rm {F}}=\left\|\mathbf{AA}^{\rm {T}}\right\|_{\rm {F}}\leq \left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>
+and
+<code>$\left\|\mathbf{A+B}\right\|_{\rm {F}}^{2}=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}+\left\|\mathbf{B}\right\|_{\rm {F}}^{2}+2\langle \mathbf{A,B}\rangle _{\mathrm {F} }$</code>,
+where
+<code>$\langle \mathbf{A,B}\rangle _{\mathrm {F} }$</code>
+is the Frobenius inner product. 也满足<code>$\left\|\mathbf{A}^{\rm {T}}\mathbf{A}\right\|_{\rm {F}}=\left\|\mathbf{AA}^{\rm {T}}\right\|_{\rm {F}}\leq \left\|\mathbf{A}\right\|_{\rm {F}}^{2}$</code>和<code>$\left\|\mathbf{A+B}\right\|_{\rm {F}}^{2}=\left\|\mathbf{A}\right\|_{\rm {F}}^{2}+\left\|\mathbf{B}\right\|_{\rm {F}}^{2}+2\langle \mathbf{A,B}\rangle _{\mathrm {F} }$</code>，其中<code>$\langle \mathbf{A,B}\rangle _{\mathrm {F} }$</code>是Frobenius内积。</p>
+
+<h4 id="2-3-2-max-norm-最大范数">2.3.2 max norm 最大范数</h4>
+
+<p>The max norm is the elementwise norm with <code>$p = q = \infty$</code>:
+<code>$\left\|\mathbf{A}\right\|_{\max }=\max _{ij}|a_{ij}|$</code>. 最大范数是<code>$p = q = \infty$</code>的逐元素范数： <code>$\left\|\mathbf{A}\right\|_{\max }=\max _{ij}|a_{ij}|$</code>。</p>
+
+<p>This norm is not sub-multiplicative.这一范数不是次加性的。</p>
+
+<h3 id="2-4-schatten-norms-schatten范数">2.4 Schatten norms Schatten范数</h3>
+
+<p>The Schatten p-norms arise when applying the p-norm to the vector of singular values of a matrix. If the singular values are denoted by <code>$\sigma_i$</code>, then the Schatten p-norm is defined by
+<code>$\left\|\mathbf{A}\right\|_{p}=\left(\sum _{i=1}^{\min\{m,\,n\}}\sigma _{i}^{p}(\mathbf{A})\right)^{1/p}$</code>. 当将p范数应用于矩阵奇异值向量时，产生了Schatten p范数。如果奇异值表示为<code>$\sigma_i$</code>，那么Schatten p范数定义为<code>$\left\|\mathbf{A}\right\|_{p}=\left(\sum _{i=1}^{\min\{m,\,n\}}\sigma _{i}^{p}(\mathbf{A})\right)^{1/p}$</code>。</p>
+
+<p>These norms again share the notation with the induced and entrywise p-norms, but they are different. <strong>Schatten p范数与逐元素p范数标注相同，但两者是不同的。</strong></p>
+
+<p>All Schatten norms are sub-multiplicative. They are also unitarily invariant, which means that
+<code>$\left\|\mathbf{A}\right\|=\left\|\mathbf{UAV}\right\|$</code>
+for all matrices
+<code>$\mathbf{A}$</code>
+and all unitary matrices
+<code>$\mathbf{U}$</code>
+and
+<code>$\mathbf{V}$</code>
+. 所有Schatten p范数都是次加性的，它们也是一致不变量，也就是说对所有矩阵<code>$\mathbf{A}$</code>、所有一致矩阵<code>$\mathbf{U}$</code>和<code>$\mathbf{V}$</code>有<code>$\left\|\mathbf{A}\right\|=\left\|\mathbf{UAV}\right\|$</code>。</p>
+
+<p>The most familiar cases are <code>$p = 1，2 \infty$</code>. The case <code>$p = 2$</code> yields the Frobenius norm, introduced before. The case <code>$p = \infty$</code> yields the spectral norm, which is the operator norm induced by the vector 2-norm (see above). Finally, <code>$p = 1$</code> yields the nuclear norm (also known as the trace norm, or the Ky Fan 'n'-norm[3]), defined as
+<code>$\left\|\mathbf{A}\right\|_{*}=\operatorname {trace} \left({\sqrt {\mathbf{A^{*}A}}}\right)=\sum _{i=1}^{\min\{m,\,n\}}\!\sigma _{i}(\mathbf{A})$</code>.
+(Here
+<code>${\sqrt {\mathbf{A^{*}A}}}$</code>
+denotes a positive semidefinite matrix
+<code>$\mathbf{B}$</code>
+such that
+<code>$\mathbf{BB}=\mathbf{A^{*}A}$</code>
+. More precisely, since
+<code>$\mathbf{A^{*}A}$</code>
+is a positive semidefinite matrix, its square root is well-defined.) 最熟悉的案例是<code>$p = 1，2 \infty$</code>。当<code>$p = 2$</code>就是Frobenius范数。当<code>$p = \infty$</code>就是谱范数，也就是向量2范数诱导的操作范数。当<code>$p = \infty$</code>就是Frobenius范数。当<code>$p = 1$</code>就是核范数（也叫迹范数、Ky Fan 'n'-范数），定义为<code>$\left\|\mathbf{A}\right\|_{*}=\operatorname {trace} \left({\sqrt {\mathbf{A^{*}A}}}\right)=\sum _{i=1}^{\min\{m,\,n\}}\!\sigma _{i}(\mathbf{A})$</code>。（这里<code>${\sqrt {\mathbf{A^{*}A}}}$</code>表示半正定矩阵<code>$\mathbf{B}$</code>使得<code>$\mathbf{BB}=\mathbf{A^{*}A}$</code>。或者更精确地，既然<code>$\mathbf{A^{*}A}$</code>是半正定矩阵，那么其平方根是存在定义的。）</p>
+
+<p>参考：</p>
+
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Norm">维基搜索</a>；</li>
+<li><a href="https://en.wikipedia.org/wiki/Norm_(mathematics)">维基Norm (mathematics)</a>；</li>
+<li><a href="https://en.wikipedia.org/wiki/Matrix_norm">维基Matrix norm</a>。</li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

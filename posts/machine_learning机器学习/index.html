@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>machine_learning机器学习 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>machine_learning机器学习</h1>
+
+
+<blockquote>
+<p>For the journal, see Machine Learning (journal).
+&quot;Statistical learning&quot; redirects here. For statistical learning in linguistics, see statistical learning in language acquisition.</p>
+</blockquote>
+
+<p><strong>Machine learning</strong> (ML) is a field of artificial intelligence that uses statistical techniques to give computer systems the ability to &quot;learn&quot; (e.g., progressively improve performance on a specific task) from data, without being explicitly programmed.[2]</p>
+
+<p>机器学习(ML)是人工智能的一个领域，它使用统计技术使计算机系统能够从数据中“学习”(例如，逐步提高特定任务的性能)，而不需要明确编程。</p>
+
+<p>The name machine learning was coined in 1959 by Arthur Samuel.[1] Machine learning explores the study and construction of algorithms that can learn from and make predictions on data[3] – such algorithms overcome following strictly static program instructions by making data-driven predictions or decisions,[4]:2 through building a model from sample inputs. Machine learning is employed in a range of computing tasks where designing and programming explicit algorithms with good performance is difficult or infeasible; example applications include email filtering, detection of network intruders, and computer vision.</p>
+
+<p>机器学习这个名字是阿瑟·塞缪尔在1959年创造的。机器学习探索了一种算法的研究和构建，这种算法可以从数据中学习，并对数据进行预测。这种算法通过从样本输入构建模型，克服了严格遵循静态程序指令的情况。设计和编程性能良好的显式算法是困难或不可行的;示例应用程序包括电子邮件过滤、网络入侵者检测和计算机视觉，机器学习被用于一系列计算任务中。</p>
+
+<p>Machine learning is closely related to (and often overlaps with) computational statistics, which also focuses on prediction-making through the use of computers. It has strong ties to mathematical optimization, which delivers methods, theory and application domains to the field. Machine learning is sometimes conflated with data mining,[5] where the latter subfield focuses more on exploratory data analysis and is known as unsupervised learning.[6][7]</p>
+
+<p>机器学习与计算机统计密切相关(且经常重叠)，计算机统计也侧重于通过计算机进行预测。它与数学优化有着密切的联系，将方法、理论和应用领域引入到该领域。机器学习有时与数据挖掘混为一谈，后者更侧重于探索性数据分析，被称为无监督学习。</p>
+
+<p>Within the field of data analytics, machine learning is a method used to devise complex models and algorithms that lend themselves to prediction; in commercial use, this is known as predictive analytics. These analytical models allow researchers, data scientists, engineers, and analysts to &quot;produce reliable, repeatable decisions and results&quot; and uncover &quot;hidden insights&quot; through learning from historical relationships and trends in the data.[8]</p>
+
+<p>在数据分析领域，机器学习是一种用来设计复杂模型和算法的方法，这些模型和算法有助于预测;在商业应用中，这被称为预测分析。这些分析模型允许研究人员、数据科学家、工程师和分析师“产生可靠的、可重复的决策和结果”，并通过从数据的历史关系和趋势中学习来发现“隐藏的洞察力”。</p>
+
+<h2 id="1-overview综述">1 Overview综述</h2>
+
+<p>Tom M. Mitchell provided a widely quoted, more formal definition of the algorithms studied in the machine learning field: &quot;A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P if its performance at tasks in T, as measured by P, improves with experience E.&quot;[9] This definition of the tasks in which machine learning is concerned offers a fundamentally operational definition rather than defining the field in cognitive terms. This follows Alan Turing's proposal in his paper &quot;Computing Machinery and Intelligence&quot;, in which the question &quot;Can machines think?&quot; is replaced with the question &quot;Can machines do what we (as thinking entities) can do?&quot;.[10] In Turing's proposal the various characteristics that could be possessed by a thinking machine and the various implications in constructing one are exposed.</p>
+
+<p>汤姆·m·米切尔提供了广泛引用的、更正式定义的机器学习领域研究的算法:算法即“一个计算机程序从经验E中学习一些任务T和性能测量P，如果它在任务T中的性能，如P测量的，随着经验E的提高。”机器学习所涉及的任务的这个定义提供了一个基本的操作性定义，而不是用认知的术语来定义这个领域。这与艾伦•图灵(Alan Turing)在其论文《计算机器与智能》(Computing Machinery and Intelligence)中提出的建议一致。在这篇论文中，“机器能思考吗?”被“机器能做我们(思维实体)能做的吗？”替代。在图灵的提议揭示了一个思考机器可拥有的和构造一个思考机器所拥有的各种各样的特点。</p>
+
+<h3 id="1-1-machine-learning-tasks机器学习任务">1.1 Machine learning tasks机器学习任务</h3>
+
+<p>Machine learning tasks are typically classified into several broad categories:
+ - Supervised learning: The computer is presented with example inputs and their desired outputs, given by a &quot;teacher&quot;, and the goal is to learn a general rule that maps inputs to outputs. As special cases, the input signal can be only partially available, or restricted to special feedback.
+ - Semi-supervised learning: The computer is given only an incomplete training signal: a training set with some (often many) of the target outputs missing.
+ - Active learning: The computer can only obtain training labels for a limited set of instances (based on a budget), and also has to optimize its choice of objects to acquire labels for. When used interactively, these can be presented to the user for labeling.
+ - Unsupervised learning: No labels are given to the learning algorithm, leaving it on its own to find structure in its input. Unsupervised learning can be a goal in itself (discovering hidden patterns in data) or a means towards an end (feature learning).
+ - Reinforcement learning: Data (in form of rewards and punishments) are given only as feedback to the program's actions in a dynamic environment, such as driving a vehicle or playing a game against an opponent.[4]:3</p>
+
+<p>机器学习任务通常被分为几个大类：
+ - 监督式学习：给计算机示例输入及其期望输出(由“老师”给出)，目标是学习将输入映射到输出的一般规则。在特殊情况下，输入信号只能部分可用，或者被限制于特殊反馈。
+ - 半监督式学习：计算机只得到一个不完整的训练信号:一个缺少一些(通常是很多)目标输出的训练集。
+ - 主动式学习：计算机只能为有限的一组实例获取训练标签(基于预算)，并且还必须优化其对象的选择以获取标签。当交互使用时，这些实例和标签可以呈现给用户进行标记。
+ - 非监督式学习：不给学习算法标签，学习算法自己从输入中寻找（有用的）结构。无监督学习本身可以是一个目标(发现数据中的隐藏模式)，也可以是达到目的的一种手段(特征学习)。
+ - 强化学习： （奖惩形式的）数据仅作为动态环境下程序动作的反馈提供，例如驾驶车辆或与对手进行游戏。</p>
+
+<h3 id="1-2-machine-learning-applications机器学习的应用">1.2 Machine learning applications机器学习的应用</h3>
+
+<p>Another categorization of machine learning tasks arises when one considers the desired output of a machine-learned system:[4]:3
+ - In classification, inputs are divided into two or more classes, and the learner must produce a model that assigns unseen inputs to one or more (multi-label classification) of these classes. This is typically tackled in a supervised way. Spam filtering is an example of classification, where the inputs are email (or other) messages and the classes are &quot;spam&quot; and &quot;not spam&quot;.
+ - In regression, also a supervised problem, the outputs are continuous rather than discrete.
+ - In clustering, a set of inputs is to be divided into groups. Unlike in classification, the groups are not known beforehand, making this typically an unsupervised task.
+ - Density estimation finds the distribution of inputs in some space.
+ - Dimensionality reduction simplifies inputs by mapping them into a lower-dimensional space. Topic modeling is a related problem, where a program is given a list of human language documents and is tasked to find out which documents cover similar topics.</p>
+
+<p>当考虑到机器学习系统的期望输出时，就会出现另一种机器学习任务的分类：
+ - 在分类中，输入被划分为两个或多个类，学习者必须生成一个模型，将不可见的输入分配给这些类的一个或多个(多标签分类)。这通常是在监督下处理的。垃圾邮件过滤是一个分类示例，其中输入是电子邮件(或其他)消息，类是“垃圾邮件”和“不是垃圾邮件”。
+ - 在回归中，也是一个有监督的问题，输出是连续的而不是离散的。
+ - 在聚类分析中，一组输入将被分成组。与分类不同的是，这些组事先并不知道，因此这是一项典型的无人监督的任务。
+ - 密度估计是寻找输入在一定空间内的分布。
+ - 降维，通过将输入映射到低维空间，来简化输入。主题建模是一个相关的问题，在这个问题中，给程序一个人类语言文档的列表，并负责找出哪些文档涵盖了类似的主题。</p>
+
+<p>Among other categories of machine learning problems, learning to learn its own inductive bias based on previous experience. Developmental learning, elaborated for robot learning, generates its own sequences (also called curriculum) of learning situations to cumulatively acquire repertoires of novel skills through autonomous self-exploration and social interaction with human teachers and using guidance mechanisms such as active learning, maturation, motor synergies, and imitation.</p>
+
+<p>在机器学习问题的其他类别中，学习根据以往的经验学习自己的归纳偏差。为机器人学习而精心设计的发展性学习，产生了自己的学习情境的序列(也称为课程)，通过自主的自我探索和与人类教师的社会互动，以及使用诸如主动学习、成熟、运动协同和模仿等指导机制，累积获得新的技能储备。</p>
+
+<h2 id="2-history-and-relationships-to-other-fields历史和与其他领域的关系">2 History and relationships to other fields历史和与其他领域的关系</h2>
+
+<blockquote>
+<p>See also: Timeline of machine learning</p>
+</blockquote>
+
+<p>Arthur Samuel, an American pioneer in the field of computer gaming and artificial intelligence, coined the term &quot;Machine Learning&quot; in 1959 while at IBM[11]. As a scientific endeavour, machine learning grew out of the quest for artificial intelligence. Already in the early days of AI as an academic discipline, some researchers were interested in having machines learn from data. They attempted to approach the problem with various symbolic methods, as well as what were then termed &quot;neural networks&quot;; these were mostly perceptrons and other models that were later found to be reinventions of the generalized linear models of statistics.[12] Probabilistic reasoning was also employed, especially in automated medical diagnosis.[13]:488</p>
+
+<p>亚瑟·塞缪尔是计算机游戏和人工智能领域的美国先驱，1959年在IBM工作时发明了“机器学习”这个词。作为一项科学努力，机器学习产生于对人工智能的追求。在人工智能作为一门学科的早期，一些研究人员对让机器从数据中学习很感兴趣。他们试图用各种各样的符号方法，以及后来被称为“神经网络”的方法来解决这个问题;这些模型主要是感知器和其他模型，后来被发现是统计学的广义线性模型的再造。概率推理也被使用，特别是在自动化医疗诊断。</p>
+
+<p>However, an increasing emphasis on the logical, knowledge-based approach caused a rift between AI and machine learning. Probabilistic systems were plagued by theoretical and practical problems of data acquisition and representation.[13]:488 By 1980, expert systems had come to dominate AI, and statistics was out of favor.[14] Work on symbolic/knowledge-based learning did continue within AI, leading to inductive logic programming, but the more statistical line of research was now outside the field of AI proper, in pattern recognition and information retrieval.[13]:708–710; 755 Neural networks research had been abandoned by AI and computer science around the same time. This line, too, was continued outside the AI/CS field, as &quot;connectionism&quot;, by researchers from other disciplines including Hopfield, Rumelhart and Hinton. Their main success came in the mid-1980s with the reinvention of backpropagation.[13]:25
+Machine learning, reorganized as a separate field, started to flourish in the 1990s. The field changed its goal from achieving artificial intelligence to tackling solvable problems of a practical nature. It shifted focus away from the symbolic approaches it had inherited from AI, and toward methods and models borrowed from statistics and probability theory.[14] It also benefited from the increasing availability of digitized information, and the ability to distribute it via the Internet.</p>
+
+<p>然而，对逻辑的、知识为基础的过程的日益强调导致了人工智能和机器学习之间的裂痕。到1980年，专家系统开始主导人工智能，统计数据不再受欢迎。基于知识的学习确实在人工智能中继续，导致了归纳逻辑编程，但更多的统计学的研究路线已经超出了人工智能本身的领域，即模式识别和信息检索。这条线路，也在AI/CS领域之外继续，被其他学科的研究人员，包括Hopfield、Rumelhart和Hinton，称为“连接主义”。他们的主要成功是在1980年代中期，伴随着反向传播的重新发明。机器学习，作为一个独立领域，在20世纪90年代开始蓬勃发展。该领域的目标从实现人工智能转变为解决实际问题。它将注意力从继承自人工智能的符号方法转移到借鉴自统计学和概率论的方法和模型上。</p>
+
+<p>Machine learning and data mining often employ the same methods and overlap significantly, but while machine learning focuses on prediction, based on known properties learned from the training data, data mining focuses on the discovery of (previously) unknown properties in the data (this is the analysis step of knowledge discovery in databases). Data mining uses many machine learning methods, but with different goals; on the other hand, machine learning also employs data mining methods as &quot;unsupervised learning&quot; or as a preprocessing step to improve learner accuracy. Much of the confusion between these two research communities (which do often have separate conferences and separate journals, ECML PKDD being a major exception) comes from the basic assumptions they work with: in machine learning, performance is usually evaluated with respect to the ability to reproduce known knowledge, while in knowledge discovery and data mining (KDD) the key task is the discovery of previously unknown knowledge. Evaluated with respect to known knowledge, an uninformed (unsupervised) method will easily be outperformed by other supervised methods, while in a typical KDD task, supervised methods cannot be used due to the unavailability of training data.</p>
+
+<p>机器学习和数据挖掘通常采用相同并大幅重叠的方法,但是机器学习关注预测从训练数据得来的已知属性,数据挖掘的重点是发现先前未知的属性数据(这是数据库中知识发现的分析步骤)。数据挖掘使用了许多机器学习方法，但目标不同;另一方面，机器学习也使用数据挖掘方法作为“无监督学习”或作为预处理步骤来提高学习器的准确性。对这两个研究社区(经常有单独的会议和单独的期刊,ECML PKDD成为一个主要例外)的混淆来自他们的工作基本假设:在机器学习中,通常对已知知识的能力进行评估,而数据库知识挖掘(KDD)的关键任务是发现先前未知的知识。根据已知知识进行评估，不知情(无监督)的方法很容易被其他监督方法超越，而在典型的KDD任务中，由于缺乏训练数据，无法使用监督方法。</p>
+
+<p>Machine learning also has intimate ties to optimization: many learning problems are formulated as minimization of some loss function on a training set of examples. Loss functions express the discrepancy between the predictions of the model being trained and the actual problem instances (for example, in classification, one wants to assign a label to instances, and models are trained to correctly predict the pre-assigned labels of a set of examples). The difference between the two fields arises from the goal of generalization: while optimization algorithms can minimize the loss on a training set, machine learning is concerned with minimizing the loss on unseen samples.[15]</p>
+
+<p>机器学习与优化也有着密切的联系:许多学习问题被表述为在一组训练示例上最小化某些损失函数。损失函数表示正在训练的模型的预测与实际问题实例之间的差异(例如，在分类中，一个人想给实例分配一个标签，而模型被训练来正确地预测一组示例的预先分配的标签)。这两个领域的区别来自于一般化的目标:优化算法可以最小化训练集上的损失，而机器学习则关注于最小化不可见样本上的损失。</p>
+
+<h3 id="2-1-relation-to-statistics与统计学的关系">2.1 Relation to statistics与统计学的关系</h3>
+
+<p>Machine learning and statistics are closely related fields. According to Michael I. Jordan, the ideas of machine learning, from methodological principles to theoretical tools, have had a long pre-history in statistics.[16] He also suggested the term data science as a placeholder to call the overall field.[16]</p>
+
+<p>机器学习和统计是密切相关的领域。迈克尔·I·乔丹(Michael I. Jordan)认为，机器学习的概念，从方法论原理到理论工具，在统计学领域有着悠久的历史。他还建议将数据科学作为一个占位符来调用整个领域。</p>
+
+<p>Leo Breiman distinguished two statistical modelling paradigms: data model and algorithmic model,[17] wherein &quot;algorithmic model&quot; means more or less the machine learning algorithms like Random forest.</p>
+
+<p>Leo Breiman区分了两种统计建模范式:数据模型和算法模型，其中“算法模型”或多或少意味着机器学习算法，比如随机森林。</p>
+
+<p>Some statisticians have adopted methods from machine learning, leading to a combined field that they call statistical learning.[18]</p>
+
+<p>一些统计学家采用了机器学习的方法，从而形成了一个他们称之为统计学习的综合领域。</p>
+
+<h2 id="3-theory理论">3 Theory理论</h2>
+
+<blockquote>
+<p>Main article: Computational learning theory</p>
+</blockquote>
+
+<p>A core objective of a learner is to generalize from its experience.[4][19] Generalization in this context is the ability of a learning machine to perform accurately on new, unseen examples/tasks after having experienced a learning data set. The training examples come from some generally unknown probability distribution (considered representative of the space of occurrences) and the learner has to build a general model about this space that enables it to produce sufficiently accurate predictions in new cases.</p>
+
+<p>学习器的一个核心目标是总结经验。在这种情况下，一般化就是学习机器在经历了学习数据集之后，能够准确地执行新的、看不见的示例/任务。训练的例子来自一些通常未知的概率分布(认为这一份不代表发生空间)，学习器必须建立一个关于这个空间的通用模型，使它能够在新的情况下产生足够准确的预测。</p>
+
+<p>The computational analysis of machine learning algorithms and their performance is a branch of theoretical computer science known as computational learning theory. Because training sets are finite and the future is uncertain, learning theory usually does not yield guarantees of the performance of algorithms. Instead, probabilistic bounds on the performance are quite common. The bias–variance decomposition is one way to quantify generalization error.</p>
+
+<p>机器学习算法及其表现的计算机分析是理论计算机科学的一个分支，即计算学习理论。由于训练集是有限的，未来是不确定的，学习理论通常不能保证算法的性能。但是，性能上的概率界限很常见。偏差方差分解是量化泛化误差的一种方法。</p>
+
+<p>For the best performance in the context of generalization, the complexity of the hypothesis should match the complexity of the function underlying the data. If the hypothesis is less complex than the function, then the model has underfit the data. If the complexity of the model is increased in response, then the training error decreases. But if the hypothesis is too complex, then the model is subject to overfitting and generalization will be poorer.[20]</p>
+
+<p>为了泛化背景下的表现，假设的复杂性应该与数据背后函数的复杂性相匹配。如果假设不如函数复杂，那么模型就不适合数据。如果模型的复杂性相应增加，那么训练误差就会减小。但如果假设过于复杂，那么模型就会过度拟合，泛化能力就会下降。</p>
+
+<p>In addition to performance bounds, computational learning theorists study the time complexity and feasibility of learning. In computational learning theory, a computation is considered feasible if it can be done in polynomial time. There are two kinds of time complexity results. Positive results show that a certain class of functions can be learned in polynomial time. Negative results show that certain classes cannot be learned in polynomial time.</p>
+
+<p>除了性能界限外，计算学习理论还研究了学习的时间复杂度和可行性。在计算学习理论中，如果能在多项式时间内进行计算，则认为计算是可行的。时间复杂度的结果有两种。正结果表明，一类函数可以在多项式时间内学习。负结果表明，某些类不能在多项式时间内学习。</p>
+
+<h2 id="4-approaches方法">4 Approaches方法</h2>
+
+<blockquote>
+<p>Main article: List of machine learning algorithms</p>
+</blockquote>
+
+<h3 id="4-1-decision-tree-learning决策树学习">4.1 Decision tree learning决策树学习</h3>
+
+<blockquote>
+<p>Main article: Decision tree learning</p>
+</blockquote>
+
+<p>Decision tree learning uses a decision tree as a predictive model, which maps observations about an item to conclusions about the item's target value.</p>
+
+<p>决策树学习使用决策树作为预测模型，它将项目观察值映射到关于项目目标值的结论。</p>
+
+<h3 id="4-2-association-rule-learning关联规则学习">4.2 Association rule learning关联规则学习</h3>
+
+<blockquote>
+<p>Main article: Association rule learning</p>
+</blockquote>
+
+<p>Association rule learning is a method for discovering interesting relations between variables in large databases.</p>
+
+<p>关联规则学习是一种发现大型数据库中变量的有趣关系的方法。</p>
+
+<h3 id="4-3-artificial-neural-networks人工神经网络">4.3 Artificial neural networks人工神经网络</h3>
+
+<blockquote>
+<p>Main article: Artificial neural network</p>
+</blockquote>
+
+<p>An artificial neural network (ANN) learning algorithm, usually called &quot;neural network&quot; (NN), is a learning algorithm that is vaguely inspired by biological neural networks. Computations are structured in terms of an interconnected group of artificial neurons, processing information using a connectionist approach to computation. Modern neural networks are non-linear statistical data modeling tools. They are usually used to model complex relationships between inputs and outputs, to find patterns in data, or to capture the statistical structure in an unknown joint probability distribution between observed variables.</p>
+
+<p>人工神经网络(ANN)学习算法，通常被称为“神经网络”(NN)，是一种受到生物神经网络模糊启发的学习算法。计算结构是由一组相互连接的人工神经元组成，信息的处理由这些连接的步骤计算。现代神经网络是非线性统计数据建模工具。它们通常用于模拟输入和输出之间的复杂关系，在数据中寻找模式，或在观察变量之间未知的联合概率分布中捕获统计结构。</p>
+
+<h4 id="4-3-1-deep-learning深度学习">4.3.1 Deep learning深度学习</h4>
+
+<blockquote>
+<p>Main article: Deep learning</p>
+</blockquote>
+
+<p>Falling hardware prices and the development of GPUs for personal use in the last few years have contributed to the development of the concept of deep learning which consists of multiple hidden layers in an artificial neural network. This approach tries to model the way the human brain processes light and sound into vision and hearing. Some successful applications of deep learning are computer vision and speech recognition.[21]</p>
+
+<p>近年来，硬件价格的下降和个人使用的gpu的发展促进了深度学习的概念的发展，深度学习是由人工神经网络中的多个隐藏层组成的。这种方法试图模拟人类大脑将光和声音加工成视觉和听觉的方式。深度学习的一些成功应用是计算机视觉和语音识别。</p>
+
+<h3 id="4-4-inductive-logic-programming归纳逻辑程序">4.4 Inductive logic programming归纳逻辑程序</h3>
+
+<blockquote>
+<p>Main article: Inductive logic programming</p>
+</blockquote>
+
+<p>Inductive logic programming (ILP) is an approach to rule learning using logic programming as a uniform representation for input examples, background knowledge, and hypotheses. Given an encoding of the known background knowledge and a set of examples represented as a logical database of facts, an ILP system will derive a hypothesized logic program that entails all positive and no negative examples. Inductive programming is a related field that considers any kind of programming languages for representing hypotheses (and not only logic programming), such as functional programs.</p>
+
+<p>归纳逻辑编程(ILP)是一种使用逻辑编程作为输入示例、背景知识和假设的统一表示的规则学习方法。给定已知背景知识的编码和一组示例，将其表示为事实的逻辑数据库，ILP系统将派生一个假设的逻辑程序，该程序包含所有积极的和没有消极的示例。归纳编程是一个相关的领域，它考虑任何类型的编程语言来表示假设(而不仅仅是逻辑编程)，比如函数程序。</p>
+
+<h3 id="4-5-support-vector-machines支持向量机">4.5 Support vector machines支持向量机</h3>
+
+<blockquote>
+<p>Main article: Support vector machines</p>
+</blockquote>
+
+<p>Support vector machines (SVMs) are a set of related supervised learning methods used for classification and regression. Given a set of training examples, each marked as belonging to one of two categories, an SVM training algorithm builds a model that predicts whether a new example falls into one category or the other.</p>
+
+<p>支持向量机(SVMs)是一套用于分类和回归的相关监督学习方法。给定一组训练示例(每个示例都标记为属于两个类别中的一个)，SVM训练算法构建一个模型来预测一个新示例是否属于一个类别。</p>
+
+<h3 id="4-6-clustering聚类">4.6 Clustering聚类</h3>
+
+<blockquote>
+<p>Main article: Cluster analysis</p>
+</blockquote>
+
+<p>Cluster analysis is the assignment of a set of observations into subsets (called clusters) so that observations within the same cluster are similar according to some predesignated criterion or criteria, while observations drawn from different clusters are dissimilar. Different clustering techniques make different assumptions on the structure of the data, often defined by some similarity metric and evaluated for example by internal compactness (similarity between members of the same cluster) and separation between different clusters. Other methods are based on estimated density and graph connectivity. Clustering is a method of unsupervised learning, and a common technique for statistical data analysis.</p>
+
+<p>聚类分析是，根据某些预先指定的标准或标准，将一组观察值分配到子集(称为聚类)，使在同一聚类内的观察值是相似的而取自不同聚类的观测值不相似。不同的聚类技术对数据的结构做出不同的假设，聚类技术通常由一些相似度度量来定义，并通过内部紧凑性(相同集群成员之间的相似性)和不同集群之间的分离来评估。其他方法基于估计密度和图连通性。聚类是一种无监督学习方法，是统计数据分析的常用技术。</p>
+
+<h3 id="4-7-bayesian-networks贝叶斯网络">4.7 Bayesian networks贝叶斯网络</h3>
+
+<blockquote>
+<p>Main article: Bayesian network</p>
+</blockquote>
+
+<p>A Bayesian network, belief network or directed acyclic graphical model is a probabilistic graphical model that represents a set of random variables and their conditional independencies via a directed acyclic graph (DAG). For example, a Bayesian network could represent the probabilistic relationships between diseases and symptoms. Given symptoms, the network can be used to compute the probabilities of the presence of various diseases. Efficient algorithms exist that perform inference and learning.</p>
+
+<p>贝叶斯网络、信念网络或有向无环图模型是通过有向无环图(DAG)表示一组随机变量及其条件独立性的概率图形模型。例如，贝叶斯网络可以表示疾病和症状之间的概率关系。给定症状，该网络可用于计算各种疾病出现的概率。有效的算法可以进行推理和学习。</p>
+
+<h3 id="4-8-representation-learning表示学习">4.8 Representation learning表示学习</h3>
+
+<blockquote>
+<p>Main article: Representation learning</p>
+</blockquote>
+
+<p>Several learning algorithms, mostly unsupervised learning algorithms, aim at discovering better representations of the inputs provided during training. Classical examples include principal components analysis and cluster analysis. Representation learning algorithms often attempt to preserve the information in their input but transform it in a way that makes it useful, often as a pre-processing step before performing classification or predictions, allowing reconstruction of the inputs coming from the unknown data generating distribution, while not being necessarily faithful for configurations that are implausible under that distribution.</p>
+
+<p>一些学习算法(主要是非监督学习算法)旨在发现训练过程中提供的输入的更好表示。经典的例子包括主成分分析和聚类分析。表示学习算法常常试图保存输入的信息但变换方式以使它有用,经常作为执行分类或预测之前的预处理步骤,允许重建来自未知的数据生成的分布的输入,而却不重现分布的不合理之处。</p>
+
+<p>Manifold learning algorithms attempt to do so under the constraint that the learned representation is low-dimensional. Sparse coding algorithms attempt to do so under the constraint that the learned representation is sparse (has many zeros). Multilinear subspace learning algorithms aim to learn low-dimensional representations directly from tensor representations for multidimensional data, without reshaping them into (high-dimensional) vectors.[22] Deep learning algorithms discover multiple levels of representation, or a hierarchy of features, with higher-level, more abstract features defined in terms of (or generating) lower-level features. It has been argued that an intelligent machine is one that learns a representation that disentangles the underlying factors of variation that explain the observed data.[23]</p>
+
+<p>流形学习算法学习后的表示是低维的。稀疏编码算法学习后的表示是稀疏的（有许多零）。多线性子空间学习算法的目标是直接从多维数据的张量表示中学习低维表示，而不是将它们重新塑造成(高维)向量。深度学习算法发现多层次的表示，或更高层次的一个层级的特征，被定义为(或生成为)较低层次的更抽象的特征。有人认为，智能机器是一种能够学习一种表示的机器，它能够解开解释观测数据的潜在变异因素。</p>
+
+<h3 id="4-9-similarity-and-metric-learning相似性与度量学习">4.9 Similarity and metric learning相似性与度量学习</h3>
+
+<blockquote>
+<p>Main article: Similarity learning</p>
+</blockquote>
+
+<p>In this problem, the learning machine is given pairs of examples that are considered similar and pairs of less similar objects. It then needs to learn a similarity function (or a distance metric function) that can predict if new objects are similar. It is sometimes used in Recommendation systems.</p>
+
+<p>在这个问题中，学习机器得到一些对被认为相似的例子和一些对不那么相似的对象。然后学习机器需要学习一个相似函数(或者距离度量函数)来预测新对象是否相似。有时在推荐系统中使用。</p>
+
+<h3 id="4-10-sparse-dictionary-learning稀疏字典学习">4.10 Sparse dictionary learning稀疏字典学习</h3>
+
+<blockquote>
+<p>Main article: Sparse dictionary learning</p>
+</blockquote>
+
+<p>In this method, a datum is represented as a linear combination of basis functions, and the coefficients are assumed to be sparse. Let $x$ be a d-dimensional datum, $D$ be a $d$ by $n$ matrix, where each column of $D$ represents a basis function. $r$ is the coefficient to represent $x$ using $D$. Mathematically, sparse dictionary learning means solving
+$x \apporx D r$
+ where $r$ is sparse. Generally speaking, $n$ is assumed to be larger than $d$ to allow the freedom for a sparse representation.</p>
+
+<p>该方法将基准表示为基函数的线性组合，并假设系数是稀疏的。设x为d维基准，$D$为$d \times n$矩阵，其中$D$的每一列表示一个基函数。$r$是用$D$表示$x$的系数。从数学上讲，稀疏字典学习就是解决$x \apporx D r$问题（r稀疏）。一般来说，$n$应大于$d$，这样稀疏表示具有自由度。</p>
+
+<p>Learning a dictionary along with sparse representations is strongly NP-hard and also difficult to solve approximately.[24] A popular heuristic method for sparse dictionary learning is K-SVD.</p>
+
+<p>学习字典和稀疏表示是强np困难的(NP-hard，其中，NP是指非确定性多项式（non-deterministic polynomial，缩写NP）。所谓的非确定性是指，可用一定数量的运算去解决多项式时间内可解决的问题。)，也很难近似求解。稀疏字典学习的一种常用的启发式方法是K-SVD。</p>
+
+<p>Sparse dictionary learning has been applied in several contexts. In classification, the problem is to determine which classes a previously unseen datum belongs to. Suppose a dictionary for each class has already been built. Then a new datum is associated with the class such that it's best sparsely represented by the corresponding dictionary. Sparse dictionary learning has also been applied in image de-noising. The key idea is that a clean image patch can be sparsely represented by an image dictionary, but the noise cannot.[25]</p>
+
+<p>稀疏字典学习已经在多个场景中得到了应用。在分类中，问题是确定一个先前不可见的数据属于哪个类。假设已经为每个类构建了一个字典。然后，将一个新数据与类关联起来，使其由最恰当的字典稀疏表示。稀疏字典学习在图像去噪中也得到了应用。关键的思想是一个干净的图像块可以用图像字典稀疏地表示，但噪声不能。</p>
+
+<h3 id="4-11-genetic-algorithms遗传算法">4.11 Genetic algorithms遗传算法</h3>
+
+<blockquote>
+<p>Main article: Genetic algorithm</p>
+</blockquote>
+
+<p>A genetic algorithm (GA) is a search heuristic that mimics the process of natural selection, and uses methods such as mutation and crossover to generate new genotype in the hope of finding good solutions to a given problem. In machine learning, genetic algorithms found some uses in the 1980s and 1990s.[26][27] Conversely, machine learning techniques have been used to improve the performance of genetic and evolutionary algorithms.[28]</p>
+
+<p>遗传算法(GA)是一种模拟自然选择过程的搜索启发式算法，它使用突变和交叉等方法生成新的基因型，希望找到给定的问题好的解决方案。在机器学习中，遗传算法在20世纪80年代和90年代发现了一些用途。相反，机器学习技术被用来提高遗传算法和进化算法的性能。</p>
+
+<h3 id="4-12-rule-based-machine-learning基于规则的机器学习">4.12 Rule-based machine learning基于规则的机器学习</h3>
+
+<p>Rule-based machine learning is a general term for any machine learning method that identifies, learns, or evolves &quot;rules&quot; to store, manipulate or apply, knowledge. The defining characteristic of a rule-based machine learner is the identification and utilization of a set of relational rules that collectively represent the knowledge captured by the system. This is in contrast to other machine learners that commonly identify a singular model that can be universally applied to any instance in order to make a prediction.[29] Rule-based machine learning approaches include learning classifier systems, association rule learning, and artificial immune systems.</p>
+
+<p>基于规则的机器学习是任何机器学习方法的总称，它识别、学习或演化“规则”来存储、操作或应用知识。基于规则的机器学习器的定义特征是识别和利用一组关系规则，这些规则共同表示系统捕获的知识。这与其他机器学习器不同，机器学习器通常会识别出一个单一的模型，这个模型可以普遍应用于任何实例，以便进行预测。基于规则的机器学习方法包括学习分类系统、关联规则学习和人工免疫系统。</p>
+
+<h4 id="4-12-1-learning-classifier-systems学习分类器系统">4.12.1 Learning classifier systems学习分类器系统</h4>
+
+<blockquote>
+<p>Main article: Learning classifier system</p>
+</blockquote>
+
+<p>Learning classifier systems (LCS) are a family of rule-based machine learning algorithms that combine a discovery component (e.g. typically a genetic algorithm) with a learning component (performing either supervised learning, reinforcement learning, or unsupervised learning). They seek to identify a set of context-dependent rules that collectively store and apply knowledge in a piecewise manner in order to make predictions.[30]</p>
+
+<p>学习分类器系统(Learning classifier systems, LCS)是一组基于规则的机器学习算法，它将发现组件(例如，典型的遗传算法)与学习组件(执行监督学习、强化学习或非监督学习)结合在一起。他们寻求识别一组情景依赖的规则，这些规则以分段的方式共同存储和应用知识，以便做出预测。</p>
+
+<h2 id="5-applications应用领域">5 Applications应用领域</h2>
+
+<ul>
+<li>Agriculture农业</li>
+<li>Automated theorem proving[31][32]自动定理证明</li>
+<li>Adaptive websites[citation needed]自适应网站</li>
+<li>Affective computing情感计算</li>
+<li>Bioinformatics生物信息学</li>
+<li>Brain–machine interfaces脑机接口</li>
+<li>Cheminformatics化学信息学</li>
+<li>Classifying DNA sequences分类DNA序列</li>
+<li>Computational anatomy计算解剖学</li>
+<li>Computer Networks计算机网络</li>
+<li>Telecommunication电讯</li>
+<li>Computer vision, including object recognition计算机图形学，包括物体识别</li>
+<li>Detecting credit-card fraud信用卡欺诈检测</li>
+<li>General game playing[33]一般游戏</li>
+<li>Information retrieval信息检索</li>
+<li>Internet fraud detection[20]网络欺诈检测</li>
+<li>Computational linguistics计算语言学</li>
+<li>Marketing行销</li>
+<li>Machine learning control机器学习控制</li>
+<li>Machine perception机器感知</li>
+<li>Automated medical diagnosis[13]自动化的医学诊断</li>
+<li>Computational economics计算经济学</li>
+<li>Insurance保险</li>
+<li>Natural language processing自然语言处理</li>
+<li>Natural language understanding[34]自然语言理解</li>
+<li>Optimization and metaheuristic优化与元启发式</li>
+<li>Online advertising在线广告</li>
+<li>Recommender systems推荐系统</li>
+<li>Robot locomotion机器人移动</li>
+<li>Search engines搜索引擎</li>
+<li>Sentiment analysis (or opinion mining)情绪分析(或意见挖掘)</li>
+<li>Sequence mining序列挖掘</li>
+<li>Software engineering软件工程</li>
+<li>Speech and handwriting recognition语音和手写识别</li>
+<li>Financial market analysis金融市场分析</li>
+<li>Structural health monitoring结构健康监测</li>
+<li>Syntactic pattern recognition句法模式识别</li>
+<li>Time series forecasting时间序列预测法</li>
+<li>User behavior analytics用户行为分析</li>
+<li>Machine translation[35]机器翻译</li>
+</ul>
+
+<p>In 2006, the online movie company Netflix held the first &quot;Netflix Prize&quot; competition to find a program to better predict user preferences and improve the accuracy on its existing Cinematch movie recommendation algorithm by at least 10%. A joint team made up of researchers from AT&amp;T Labs-Research in collaboration with the teams Big Chaos and Pragmatic Theory built an ensemble model to win the Grand Prize in 2009 for $1 million.[36] Shortly after the prize was awarded, Netflix realized that viewers' ratings were not the best indicators of their viewing patterns (&quot;everything is a recommendation&quot;) and they changed their recommendation engine accordingly.[37]</p>
+
+<p>2006年，在线电影公司Netflix举办了首届“Netflix Prize”竞赛，该竞赛旨在找到一种程序来更好地预测用户的喜好，并将现有的Cinematch电影推荐算法的准确度提高至少10%。一个由AT&amp;T实验室研究人员与Big Chaos and Pragmatic Theory团队联合组成的团队合作建立了一个集成模型，以100万美元的价格赢得了2009年的大奖。颁奖后不久，Netflix意识到观众的收视率并不是他们观看模式的最佳指标(“一切都是推荐”)，于是他们相应地改变了推荐引擎。</p>
+
+<p>In 2010 The Wall Street Journal wrote about the firm Rebellion Research and their use of Machine Learning to predict the financial crisis. [38]</p>
+
+<p>2010年，《华尔街日报》(Wall Street Journal)报道了Rebellion公司的研究以及它们利用机器学习预测金融危机的情况。</p>
+
+<p>In 2012, co-founder of Sun Microsystems Vinod Khosla predicted that 80% of medical doctors jobs would be lost in the next two decades to automated machine learning medical diagnostic software.[39]</p>
+
+<p>2012年，Sun Microsystems的联合创始人维诺德•科斯拉(Vinod Khosla)预测，在未来20年里，自动化机器学习医疗诊断软件将导致80%的医生岗位流失。</p>
+
+<p>In 2014, it has been reported that a machine learning algorithm has been applied in Art History to study fine art paintings, and that it may have revealed previously unrecognized influences between artists.[40]</p>
+
+<p>2014年，有报道称，一种机器学习算法已经应用于艺术史研究精细美术绘画，它可能已经揭示了艺术家之间之前未被认可的影响。</p>
+
+<h2 id="6-limitations局限性">6 Limitations局限性</h2>
+
+<p>Although machine learning has been transformative in some fields, effective machine learning is difficult because finding patterns is hard and often not enough training data are available; as a result, many machine-learning programs often fail to deliver the expected value.[41][42][43]</p>
+
+<p>虽然机器学习在某些领域具有变革性，但有效的机器学习是困难的，因为发现模式很困难，而且往往没有足够的训练数据;因此，许多机器学习程序经常不能提供预期的价值。</p>
+
+<p>Reasons for this are numerous: lack of (suitable) data, lack of access to the data, data bias, privacy problems, badly chosen tasks and algorithms, wrong tools and people, lack of resources, and evaluation problems.[44]</p>
+
+<p>原因有很多:缺乏(合适的)数据，缺乏对数据的访问，数据偏差，隐私问题，选择了错误的任务和算法，错误的工具和人，缺乏资源，和评估问题。</p>
+
+<p>In 2018, a self-driving car from Uber failed to detect a pedestrian, who got killed in the accident.[45] Attempts to use machine learning in healthcare with the IBM Watson system failed to deliver even after years of time and billions of investment.[46][47]</p>
+
+<p>2018年，优步(Uber)的一辆自动驾驶汽车未能检测到一名在事故中丧生的行人。即使经过多年的时间和数十亿的投资，在医疗保健领域使用IBM Watson系统的机器学习的尝试也未能取得成功。</p>
+
+<h3 id="6-1-bias偏差">6.1 Bias偏差</h3>
+
+<blockquote>
+<p>Main article: Algorithmic bias</p>
+</blockquote>
+
+<p>Machine learning approaches in particular can suffer from different data biases. A machine learning system trained on your current customers only may not be able to predict the needs of new customer groups that are not represented in the training data. When trained on man-made data, machine learning is likely to pick up the same constitutional and unconscious biases already present in society.[48] Language models learned from data have been shown to contain human-like biases.[49][50] Machine learning systems used for criminal risk assessment have been found to be biased against black people.[51][52] In 2015, Google photos would often tag black people as gorillas,[53] and in 2018 this still was not well resolved, but Google reportedly was still using the workaround to remove all gorilla from the training data, and thus was not able to recognize real gorillas at all.[54] Similar issues with recognizing non-white people have been found in many other systems.[55] In 2016, Microsoft tested a chatbot that learned from Twitter, and it quickly picked up racist and sexist language.[56] Because of such challenges, the effective use of machine learning may take longer to be adopted in other domains.[57]</p>
+
+<p>机器学习方法尤其会受到不同数据偏见的影响。仅针对当前客户训练的机器学习系统可能无法预测训练数据中没有表示的新客户群体的需求。当对人工数据进行训练时，机器学习很可能会发现社会中已经存在的同样的本质和无意识的偏见。从数据中习得的语言模型被证明包含了跟人类一样的偏见。用于刑事风险评估的机器学习系统被发现对黑人有偏见。在2015年，谷歌的照片经常会把黑人标记为大猩猩，到2018年，这个问题仍然没有得到很好的解决，但是据报道，谷歌仍然在使用权宜之计将所有的大猩猩从训练数据中移除，因此根本无法识别真正的大猩猩。在许多其他系统中也发现了与识别非白人类似的问题。2016年，微软测试了一个从Twitter学习的聊天机器人，它很快学会了种族主义和性别歧视的语言。由于这些挑战，可能需要更长的时间才能在其他领域有效采用机器学习。</p>
+
+<h2 id="7-model-assessments模型的评估">7 Model assessments模型的评估</h2>
+
+<p>Classification machine learning models can be validated by accuracy estimation techniques like the Holdout method, which splits the data in a training and test set (conventionally 2/3 training set and 1/3 test set designation) and evaluates the performance of the training model on the test set. In comparison, the N-fold-cross-validation method randomly splits the data in k subsets where the k-1 instances of the data are used to train the model while the kth instance is used to test the predictive ability of the training model. In addition to the holdout and cross-validation methods, bootstrap, which samples n instances with replacement from the dataset, can be used to assess model accuracy.[58]</p>
+
+<p>分类机器学习模型可以通过精度估计技术如留置法来验证，留置法将训练和测试集中的数据分开（惯例设计为2/3作训练数据集、1/3作测试数据集），并训练模型使用测试数据集的性能。相比之下，N-fold-cross-validation方法在k个子集中随机分割数据，其中数据的k-1实例用于训练模型，而第k个实例用于测试训练模型的预测能力。除了留置法和交叉验证方法外，自助法bootstrap可以从数据集中替换样本n个实例来评估模型的准确性。</p>
+
+<p>In addition to overall accuracy, investigators frequently report sensitivity and specificity meaning True Positive Rate (TPR) and True Negative Rate (TNR) respectively. Similarly, investigators sometimes report the False Positive Rate (FPR) as well as the False Negative Rate (FNR). However, these rates are ratios that fail to reveal their numerators and denominators. The Total Operating Characteristic (TOC) is an effective method to express a model's diagnostic ability. TOC shows the numerators and denominators of the previously mentioned rates, thus TOC provides more information than the commonly used Receiver Operating Characteristic (ROC) and ROC's associated Area Under the Curve (AUC).[59]</p>
+
+<p>除了总体的准确性外，研究人员还经常报告敏感性和特异性分别为真正率(TPR)和真负率(TNR)。同样，调查人员有时报告假正率(FPR)和假负率(FNR)。然而，这些比率并不能揭示它们的分子和分母。总工作特性(Total Operating characteristics, TOC)是一种表达模型诊断能力的有效方法。TOC显示了前面提到的比率的分子和分母，因此TOC提供的信息比常用的接收机工作特性(ROC)和ROC曲线下的相关面积(AUC)更多。</p>
+
+<h2 id="8-ethics道德标准">8 Ethics道德标准</h2>
+
+<p>Machine learning poses a host of ethical questions. Systems which are trained on datasets collected with biases may exhibit these biases upon use (algorithmic bias), thus digitizing cultural prejudices.[60] For example, using job hiring data from a firm with racist hiring policies may lead to a machine learning system duplicating the bias by scoring job applicants against similarity to previous successful applicants.[61][62] Responsible collection of data and documentation of algorithmic rules used by a system thus is a critical part of machine learning.</p>
+
+<p>（略，有空再学习）</p>
+
+<p>Because language contains biases, machines trained on language corpora will necessarily also learn bias.[63]</p>
+
+<p>（略，有空再学习）</p>
+
+<p>Other forms of ethical challenges, not related to personal biases, are more seen in health care. There are concerns among health care professionals that these systems might not be designed in the public's interest, but as income generating machines. This is especially true in the United States where there is a perpetual ethical dilemma of improving health care, but also increasing profits. For example, the algorithms could be designed to provide patients with unnecessary tests or medication in which the algorithm's proprietary owners hold stakes in. There is huge potential for machine learning in health care to provide professionals a great tool to diagnose, medicate, and even plan recovery paths for patients, but this will not happen until the personal biases mentioned previously, and these &quot;greed&quot; biases are addressed.[64]</p>
+
+<p>（略，有空再学习）</p>
+
+<h2 id="9-software软件">9 Software软件</h2>
+
+<p>Software suites containing a variety of machine learning algorithms include the following :</p>
+
+<h3 id="9-1-free-and-open-source-software免费开源软件">9.1 Free and open-source software免费开源软件</h3>
+
+<ul>
+<li>CNTK</li>
+<li>Deeplearning4j</li>
+<li>ELKI</li>
+<li>H2O</li>
+<li>Mahout</li>
+<li>Mallet</li>
+<li>mlpack</li>
+<li>MXNet</li>
+<li>OpenNN</li>
+<li>Orange</li>
+<li>scikit-learn</li>
+<li>Shogun</li>
+<li>Spark MLlib</li>
+<li>TensorFlow / keras</li>
+<li>Torch / PyTorch</li>
+<li>Weka / MOA</li>
+<li>Yooreeka</li>
+</ul>
+
+<h3 id="9-2-proprietary-software-with-free-and-open-source-editions专有软件的免费和开源版本">9.2 Proprietary software with free and open-source editions专有软件的免费和开源版本</h3>
+
+<ul>
+<li>KNIME</li>
+<li>RapidMiner</li>
+</ul>
+
+<h3 id="9-3-proprietary-software专有软件">9.3 Proprietary software专有软件</h3>
+
+<ul>
+<li>Amazon Machine Learning</li>
+<li>Angoss KnowledgeSTUDIO</li>
+<li>Ayasdi</li>
+<li>IBM Data Science Experience</li>
+<li>Google Prediction API</li>
+<li>IBM SPSS Modeler</li>
+<li>KXEN Modeler</li>
+<li>LIONsolver</li>
+<li>Mathematica</li>
+<li>MATLAB</li>
+<li>Microsoft Azure Machine Learning</li>
+<li>Neural Designer</li>
+<li>NeuroSolutions</li>
+<li>Oracle Data Mining</li>
+<li>Oracle AI Platform Cloud Service</li>
+<li>RCASE</li>
+<li>SAS Enterprise Miner</li>
+<li>SequenceL</li>
+<li>Splunk</li>
+<li>STATISTICA Data Miner</li>
+<li>Journals[edit]</li>
+</ul>
+
+<h2 id="10-journals学术期刊">10 Journals学术期刊</h2>
+
+<ul>
+<li>Journal of Machine Learning Research</li>
+<li>Machine Learning</li>
+<li>Neural Computation</li>
+</ul>
+
+<h2 id="11-conferences会议">11 Conferences会议</h2>
+
+<ul>
+<li>Conference on Neural Information Processing Systems</li>
+<li>International Conference on Machine Learning</li>
+</ul>
+
+<h2 id="12-see-also请参阅">12 See also请参阅</h2>
+
+<ul>
+<li>Artificial intelligence人工智能</li>
+<li>Automated machine learning自动化机器学习</li>
+<li>Automatic reasoning自动推理</li>
+<li>Big data大数据</li>
+<li>Computational intelligence计算机智能</li>
+<li>Computational neuroscience计算神经科学</li>
+<li>Data science数据科学</li>
+<li>Deep learning深度学习</li>
+<li>Ethics of artificial intelligence人工智能伦理</li>
+<li>Existential risk from advanced artificial intelligence来自高级人工智能的存在风险</li>
+<li>Explanation-based learning基于解释的学习</li>
+<li>Important publications in machine learning机器学习的重要出版物</li>
+<li>Information engineering信息工程</li>
+<li>List of machine learning algorithms机器学习算法列表</li>
+<li>List of datasets for machine learning research用于机器学习研究的数据集列表</li>
+<li>Quantum machine learning量子机器学习</li>
+<li>Similarity learning相似度学习</li>
+<li>Machine-learning applications in bioinformatics应用在生物信息学的机器学习</li>
+</ul>
+
+<h2 id="13-references参考资料">13 References参考资料</h2>
+
+<p>^
+Jump up to:
+a b Samuel, Arthur (1959). &quot;Some Studies in Machine Learning Using the Game of Checkers&quot;. IBM Journal of Research and Development. 3 (3): 210–229. CiteSeerX 10.1.1.368.2254. doi:10.1147/rd.33.0210.
+Jump up
+^ The &quot;without being explicitly programmed&quot; definition is often attributed to Arthur Samuel, who coined the term &quot;machine learning&quot; in 1959.[1] But the phrase is not found literally in this publication, and may be a paraphrase that appeared later. Confer &quot;Paraphrasing Arthur Samuel (1959), the question is: How can computers learn to solve problems without being explicitly programmed?&quot; in Koza, John R.; Bennett, Forrest H.; Andre, David; Keane, Martin A. (1996). Automated Design of Both the Topology and Sizing of Analog Electrical Circuits Using Genetic Programming. Artificial Intelligence in Design '96. Springer, Dordrecht. pp. 151–170. doi:10.1007/978-94-009-0279-4_9.
+Jump up
+^ Ron Kohavi; Foster Provost (1998). &quot;Glossary of terms&quot;. Machine Learning. 30: 271–274.
+^
+Jump up to:
+a b c d e Bishop, C. M. (2006), Pattern Recognition and Machine Learning, Springer, ISBN 978-0-387-31073-2
+Jump up
+^ Mannila, Heikki (1996). Data mining: machine learning, statistics, and databases. Int'l Conf. Scientific and Statistical Database Management. IEEE Computer Society.
+Jump up
+^ Machine learning and pattern recognition &quot;can be viewed as two facets of the same field.&quot;[4]:vii
+Jump up
+^ Friedman, Jerome H. (1998). &quot;Data Mining and Statistics: What's the connection?&quot;. Computing Science and Statistics. 29 (1): 3–9.
+Jump up
+^ &quot;Machine Learning: What it is and why it matters&quot;. www.sas.com. Retrieved 2016-03-29.
+Jump up
+^ Mitchell, T. (1997). Machine Learning. McGraw Hill. p. 2. ISBN 978-0-07-042807-2.
+Jump up
+^ Harnad, Stevan (2008), &quot;The Annotation Game: On Turing (1950) on Computing, Machinery, and Intelligence&quot;, in Epstein, Robert; Peters, Grace, The Turing Test Sourcebook: Philosophical and Methodological Issues in the Quest for the Thinking Computer, Kluwer
+Jump up
+^ R. Kohavi and F. Provost, &quot;Glossary of terms,&quot; Machine Learning, vol. 30, no. 2–3, pp. 271–274, 1998.
+Jump up
+^ Sarle, Warren. &quot;Neural Networks and statistical models&quot;. CiteSeerX 10.1.1.27.699.
+^
+Jump up to:
+a b c d e Russell, Stuart; Norvig, Peter (2003) [1995]. Artificial Intelligence: A Modern Approach (2nd ed.). Prentice Hall. ISBN 978-0137903955.
+^
+Jump up to:
+a b Langley, Pat (2011). &quot;The changing science of machine learning&quot;. Machine Learning. 82 (3): 275–279. doi:10.1007/s10994-011-5242-y.
+Jump up
+^ Le Roux, Nicolas; Bengio, Yoshua; Fitzgibbon, Andrew (2012). &quot;Improving First and Second-Order Methods by Modeling Uncertainty&quot;. In Sra, Suvrit; Nowozin, Sebastian; Wright, Stephen J. Optimization for Machine Learning. MIT Press. p. 404.
+^
+Jump up to:
+a b Michael I. Jordan (2014-09-10). &quot;statistics and machine learning&quot;. reddit. Retrieved 2014-10-01.
+Jump up
+^ Cornell University Library. &quot;Breiman: Statistical Modeling: The Two Cultures (with comments and a rejoinder by the author)&quot;. Retrieved 8 August 2015.
+Jump up
+^ Gareth James; Daniela Witten; Trevor Hastie; Robert Tibshirani (2013). An Introduction to Statistical Learning. Springer. p. vii.
+Jump up
+^ Mohri, Mehryar; Rostamizadeh, Afshin; Talwalkar, Ameet (2012). Foundations of Machine Learning. USA, Massachusetts: MIT Press. ISBN 9780262018258.
+^
+Jump up to:
+a b Alpaydin, Ethem (2010). Introduction to Machine Learning. London: The MIT Press. ISBN 978-0-262-01243-0. Retrieved 4 February 2017.
+Jump up
+^ Honglak Lee, Roger Grosse, Rajesh Ranganath, Andrew Y. Ng. &quot;Convolutional Deep Belief Networks for Scalable Unsupervised Learning of Hierarchical Representations&quot; Proceedings of the 26th Annual International Conference on Machine Learning, 2009.
+Jump up
+^ Lu, Haiping; Plataniotis, K.N.; Venetsanopoulos, A.N. (2011). &quot;A Survey of Multilinear Subspace Learning for Tensor Data&quot; (PDF). Pattern Recognition. 44 (7): 1540–1551. doi:10.1016/j.patcog.2011.01.004.
+Jump up
+^ Yoshua Bengio (2009). Learning Deep Architectures for AI. Now Publishers Inc. pp. 1–3. ISBN 978-1-60198-294-0.
+Jump up
+^ Tillmann, A. M. (2015). &quot;On the Computational Intractability of Exact and Approximate Dictionary Learning&quot;. IEEE Signal Processing Letters. 22 (1): 45–49. arXiv:1405.6664. Bibcode:2015ISPL...22...45T. doi:10.1109/LSP.2014.2345761.
+Jump up
+^ Aharon, M, M Elad, and A Bruckstein. 2006. &quot;K-SVD: An Algorithm for Designing Overcomplete Dictionaries for Sparse Representation.&quot; Signal Processing, IEEE Transactions on 54 (11): 4311–4322
+Jump up
+^ Goldberg, David E.; Holland, John H. (1988). &quot;Genetic algorithms and machine learning&quot;. Machine Learning. 3 (2): 95–99. doi:10.1007/bf00113892.
+Jump up
+^ Michie, D.; Spiegelhalter, D. J.; Taylor, C. C. (1994). &quot;Machine Learning, Neural and Statistical Classification&quot;. Ellis Horwood Series in Artificial Intelligence. Bibcode:1994mlns.book.....M.
+Jump up
+^ Zhang, Jun; Zhan, Zhi-hui; Lin, Ying; Chen, Ni; Gong, Yue-jiao; Zhong, Jing-hui; Chung, Henry S.H.; Li, Yun; Shi, Yu-hui (2011). &quot;Evolutionary Computation Meets Machine Learning: A Survey&quot; (PDF). Computational Intelligence Magazine. 6 (4): 68–75. doi:10.1109/mci.2011.942584.
+Jump up
+^ Bassel, George W.; Glaab, Enrico; Marquez, Julietta; Holdsworth, Michael J.; Bacardit, Jaume (2011-09-01). &quot;Functional Network Construction in Arabidopsis Using Rule-Based Machine Learning on Large-Scale Data Sets&quot;. The Plant Cell. 23 (9): 3101–3116. doi:10.1105/tpc.111.088153. ISSN 1532-298X. PMC 3203449. PMID 21896882.
+Jump up
+^ Urbanowicz, Ryan J.; Moore, Jason H. (2009-09-22). &quot;Learning Classifier Systems: A Complete Introduction, Review, and Roadmap&quot;. Journal of Artificial Evolution and Applications. 2009: 1–25. doi:10.1155/2009/736398. ISSN 1687-6229.
+Jump up
+^ Bridge, James P., Sean B. Holden, and Lawrence C. Paulson. &quot;Machine learning for first-order theorem proving.&quot; Journal of automated reasoning 53.2 (2014): 141–172.
+Jump up
+^ Loos, Sarah, et al. &quot;Deep Network Guided Proof Search.&quot; arXiv preprint arXiv:1701.06972 (2017).
+Jump up
+^ Finnsson, Hilmar, and Yngvi Björnsson. &quot;Simulation-Based Approach to General Game Playing.&quot; AAAI. Vol. 8. 2008.
+Jump up
+^ Sarikaya, Ruhi, Geoffrey E. Hinton, and Anoop Deoras. &quot;Application of deep belief networks for natural language understanding.&quot; IEEE/ACM Transactions on Audio, Speech and Language Processing (TASLP) 22.4 (2014): 778–784.
+Jump up
+^ &quot;AI-based translation to soon reach human levels: industry officials&quot;. Yonhap news agency. Retrieved 4 Mar 2017.
+Jump up
+^ &quot;BelKor Home Page&quot; research.att.com
+Jump up
+^ &quot;The Netflix Tech Blog: Netflix Recommendations: Beyond the 5 stars (Part 1)&quot;. Retrieved 8 August 2015.
+Jump up
+^ Scott Patterson (13 July 2010). &quot;Letting the Machines Decide&quot;. The Wall Street Journal. Retrieved 24 June 2018.
+Jump up
+^ Vonod Khosla (January 10, 2012). &quot;Do We Need Doctors or Algorithms?&quot;. Tech Crunch.
+Jump up
+^ When A Machine Learning Algorithm Studied Fine Art Paintings, It Saw Things Art Historians Had Never Noticed, The Physics at ArXiv blog
+Jump up
+^ &quot;Why Machine Learning Models Often Fail to Learn: QuickTake Q&amp;A&quot;. Bloomberg.com. 2016-11-10. Retrieved 2017-04-10.
+Jump up
+^ &quot;The First Wave of Corporate AI Is Doomed to Fail&quot;. Harvard Business Review. 2017-04-18. Retrieved 2018-08-20.
+Jump up
+^ &quot;Why the A.I. euphoria is doomed to fail&quot;. VentureBeat. 2016-09-18. Retrieved 2018-08-20.
+Jump up
+^ &quot;9 Reasons why your machine learning project will fail&quot;. www.kdnuggets.com. Retrieved 2018-08-20.
+Jump up
+^ &quot;Why Uber's self-driving car killed a pedestrian&quot;. The Economist. Retrieved 2018-08-20.
+Jump up
+^ &quot;IBM's Watson recommended 'unsafe and incorrect' cancer treatments - STAT&quot;. STAT. 2018-07-25. Retrieved 2018-08-21.
+Jump up
+^ Hernandez, Daniela; Greenwald, Ted (2018-08-11). &quot;IBM Has a Watson Dilemma&quot;. Wall Street Journal. ISSN 0099-9660. Retrieved 2018-08-21.
+Jump up
+^ Garcia, Megan (2016). &quot;Racist in the Machine&quot;. World Policy Journal. 33 (4): 111–117. doi:10.1215/07402775-3813015. ISSN 0740-2775.
+Jump up
+^ Caliskan, Aylin; Bryson, Joanna J.; Narayanan, Arvind (2017-04-14). &quot;Semantics derived automatically from language corpora contain human-like biases&quot;. Science. 356 (6334): 183–186. arXiv:1608.07187. Bibcode:2017Sci...356..183C. doi:10.1126/science.aal4230. ISSN 0036-8075. PMID 28408601.
+Jump up
+^ Wang, Xinan; Dasgupta, Sanjoy (2016), Lee, D. D.; Sugiyama, M.; Luxburg, U. V.; Guyon, I., eds., &quot;An algorithm for L1 nearest neighbor search via monotonic embedding&quot; (PDF), Advances in Neural Information Processing Systems 29, Curran Associates, Inc., pp. 983–991, retrieved 2018-08-20
+Jump up
+^ &quot;Machine Bias&quot;. ProPublica. Julia Angwin, Jeff Larson, Lauren Kirchner, Surya Mattu. 2016-05-23. Retrieved 2018-08-20.
+Jump up
+^ &quot;Opinion | When an Algorithm Helps Send You to Prison&quot;. New York Times. Retrieved 2018-08-20.
+Jump up
+^ &quot;Google apologises for racist blunder&quot;. BBC News. 2015-07-01. Retrieved 2018-08-20.
+Jump up
+^ &quot;Google 'fixed' its racist algorithm by removing gorillas from its image-labeling tech&quot;. The Verge. Retrieved 2018-08-20.
+Jump up
+^ &quot;Opinion | Artificial Intelligence's White Guy Problem&quot;. New York Times. Retrieved 2018-08-20.
+Jump up
+^ Metz, Rachel. &quot;Why Microsoft's teen chatbot, Tay, said lots of awful things online&quot;. MIT Technology Review. Retrieved 2018-08-20.
+Jump up
+^ Simonite, Tom. &quot;Microsoft says its racist chatbot illustrates how AI isn't adaptable enough to help most businesses&quot;. MIT Technology Review. Retrieved 2018-08-20.
+Jump up
+^ Kohavi, Ron (1995). &quot;A Study of Cross-Validation and Bootstrap for Accuracy Estimation and Model Selection&quot; (PDF). International Joint Conference on Artificial Intelligence.
+Jump up
+^ Pontius, Robert Gilmore; Si, Kangping (2014). &quot;The total operating characteristic to measure diagnostic ability for multiple thresholds&quot;. International Journal of Geographical Information Science. 28 (3): 570–583. doi:10.1080/13658816.2013.862623.
+Jump up
+^ Bostrom, Nick (2011). &quot;The Ethics of Artificial Intelligence&quot; (PDF). Retrieved 11 April 2016.
+Jump up
+^ Edionwe, Tolulope. &quot;The fight against racist algorithms&quot;. The Outline. Retrieved 17 November 2017.
+Jump up
+^ Jeffries, Adrianne. &quot;Machine learning is racist because the internet is racist&quot;. The Outline. Retrieved 17 November 2017.
+Jump up
+^ Narayanan, Arvind (August 24, 2016). &quot;Language necessarily contains human biases, and so will machines trained on language corpora&quot;. Freedom to Tinker.
+Jump up
+^ Char, D. S.; Shah, N. H.; Magnus, D. (2018). &quot;Implementing Machine Learning in Health Care—Addressing Ethical Challenges&quot;. New England Journal of Medicine. 378 (11): 981–983. doi:10.1056/nejmp1714229. PMC 5962261. PMID 29539284.</p>
+
+<h2 id="14-further-reading延伸阅读">14 Further reading延伸阅读</h2>
+
+<ul>
+<li>Nils J. Nilsson, Introduction to Machine Learning.</li>
+<li>Trevor Hastie, Robert Tibshirani and Jerome H. Friedman (2001). The Elements of Statistical Learning, Springer. ISBN 0-387-95284-5.</li>
+<li>Pedro Domingos (September 2015), The Master Algorithm, Basic Books, ISBN 978-0-465-06570-7</li>
+<li>Ian H. Witten and Eibe Frank (2011). Data Mining: Practical machine learning tools and techniques Morgan Kaufmann, 664pp., ISBN 978-0-12-374856-0.</li>
+<li>Ethem Alpaydin (2004). Introduction to Machine Learning, MIT Press, ISBN 978-0-262-01243-0.</li>
+<li>David J. C. MacKay. Information Theory, Inference, and Learning Algorithms Cambridge: Cambridge University Press, 2003. ISBN 0-521-64298-1</li>
+<li>Richard O. Duda, Peter E. Hart, David G. Stork (2001) Pattern classification (2nd edition), Wiley, New York, ISBN 0-471-05669-3.</li>
+<li>Christopher Bishop (1995). Neural Networks for Pattern Recognition, Oxford University Press. ISBN 0-19-853864-2.</li>
+<li>Stuart Russell &amp; Peter Norvig, (2002). Artificial Intelligence – A Modern Approach. Prentice Hall, ISBN 0-136-04259-7.</li>
+<li>Ray Solomonoff, An Inductive Inference Machine, IRE Convention Record, Section on Information Theory, Part 2, pp., 56–62, 1957.</li>
+<li>Ray Solomonoff, An Inductive Inference Machine A privately circulated report from the 1956 Dartmouth Summer Research Conference on AI.</li>
+</ul>
+
+<h2 id="15-external-links扩展链接">15 External links扩展链接</h2>
+
+<ul>
+<li>International Machine Learning Society</li>
+<li>Popular online course by Andrew Ng, at Coursera. It uses GNU Octave. The course is a free version of Stanford University's actual course taught by Ng, whose lectures are also available for free.</li>
+<li>mloss is an academic database of open-source machine learning software.</li>
+<li>Machine Learning Crash Course by Google. This is a free course on machine learning through the use of TensorFlow.</li>
+<li>Machine Learning with Python Course</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

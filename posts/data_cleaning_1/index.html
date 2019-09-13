@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>数据清洗-为规范录入数据 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>数据清洗-为规范录入数据</h1>
+
+
+<h1 id="前言">前言</h1>
+
+<p>工作中一个常见的工作场景是：爬虫爬取的数据需要录入数据库，数据库有其元数据：包含哪些字段，字段名字是什么、字段的格式是什么（字符？字符格式？数字？数字格式？），需要经过清洗工作。这个工作可由爬取的原数据进行清洗，为更加自动化，也可在爬虫程序里自动进行清洗，例如scrapy框架里可直接在Item Pipeline里进行清洗。为完成这些清洗工作，我总结为三个清洗步骤（当然，如果在爬虫程序中清洗，由于缺少交互式数据呈现，故仅进行第二步骤，即实际清洗过程）。这样的清洗过程产出的数据仍不可避免含有一些错误，至少会有离群值等，为数据分析（机器学习）等，仍需要清洗离群值等，我准备再总结一篇关于数据分析（机器学习）的数据清洗。本博文仅介绍为录入数据库而进行的清洗工作。</p>
+
+<h1 id="1-原表检查">1.原表检查</h1>
+
+<p>原表应结合数据库导出的表进行查看，当然如果公司制度完善的话应有实时更新的关于产出表的字段描述，那可直接看字段描述。</p>
+
+<h2 id="1-1-检查原表与产出表字段的匹配情况">1.1 检查原表与产出表字段的匹配情况</h2>
+
+<p>不考虑字段名，而考虑字段里的内容。产出表含有哪些字段？产出表哪些字段必须要有？能爬取到哪些字段？哪些字段可经由爬取的字段转化而来？将产出表必须要有的字段和能爬取（包括能转换的字段）联系起来，后者必去包含前者！否则爬虫同事可能要想想办法。</p>
+
+<h2 id="1-2-检查字段漂移">1.2 检查字段漂移</h2>
+
+<p>并不是专业术语，我编的。用来定义某个字段出现的值仅从形式来看就不属于该字段的情况。例如：容积率出现345000平方米或3吨等。
+代码：</p>
+
+<pre><code>for i in data.columns:
+	print(i)
+	print(data[i].unique())
+	print(i)
+	print(data[i].unique())
+	print('-------------------------------------------------------------------')
+	print('-------------------------------------------------------------------')
+</code></pre>
+
+<p>由于可能字段具体值的字符串很长，需要首尾均提示字段名，并用显眼字符串分隔不同字符串。一点小技巧，我觉得挺有用。</p>
+
+<h2 id="1-3-检查字段漂移情况出现的次数">1.3 检查字段漂移情况出现的次数</h2>
+
+<p>这个可能因为网页原因等等，可能要去问问爬虫同事。如果确实比例很少或无关紧要等，爬虫同事可能会让这些出现字段漂移的实例删除。
+代码：</p>
+
+<pre><code>data[data['财产年限']=='                总楼栋数：2栋;公寓：2栋;']['楼盘名']
+</code></pre>
+
+<p>检查字段漂移发现财产年限居然出现了'                总楼栋数：2栋;公寓：2栋;'，那么可利用此代码检查字段漂移实例，进一步，还可以看看此实例的唯一键，在这个场景中‘楼盘名’即可作为唯一键。</p>
+
+<h2 id="1-4-检查数据格式">1.4 检查数据格式</h2>
+
+<p>爬取数据归根结底是在抓取字符串，因此，即使产出表里是数字，爬取的数字仍是字符串格式的。总归，我们需要检查字符串的格式是否规整。其实还可以使用1.1代码，但是这次已根据2.1删除了字段漂移的少数实例，看起来应会清爽少许吧。着眼点要比1.1更细致一点，比方价格，我们发现既有元/m²又有万元/套，而且产出表要求纯数字，单位为元/m²。那么就容不得偷懒了。</p>
+
+<h1 id="2-根据检查情况进行处理">2.根据检查情况进行处理</h1>
+
+<p>理想情况是，爬虫程序建立字段时即应命名与产出表相同的字段。可能因为爬取的字段杂糅在一起不好分开等，现实情况就不是这样，当然需要修改字段名以满足要求。我认为修改字段名应在字段转换之后。</p>
+
+<h2 id="2-1-删除字段漂移的实例">2.1 删除字段漂移的实例</h2>
+
+<p>少量字段漂移，可能源于网站质量等，不甚影响数据质量，也许也较难改进，可询问爬虫同事是否能删除？若大比例的实例出现字段漂移，则或应寻求代码同事改进爬虫代码。</p>
+
+<h2 id="2-2-删除冗余字段">2.2 删除冗余字段</h2>
+
+<p>有些字段不会在产出表里出现，甚至不是中间过程字段，则应在第一时间删除。否则，若字段很多将显示杂乱。事实上在检查时候即应进行此步。</p>
+
+<h2 id="2-3-字段转换">2.3 字段转换</h2>
+
+<p>因为含有空值等，很可能原表的所有字段都是字符形式。产出表仅要求字符状形式，可字符截取等，应较简单；产出表要求数字形式，如不需进行计算，可仅按规则截取得到字符状的数字如‘5’和‘np.nan’,然后再apply(eval)，即可得到数字；产出表要求数字格式，又需经过中间转化的，将转换表达式写成字符串如‘5*3+6’和‘np.nan’,然后再apply(eval)，即可得到数字。这其中还涉及到代码的筛选。一个场景：爬取的房价含有元/m²、万元/套、待定，产出表需要数字形式的房价并字段名为deal_price。代码如下：</p>
+
+<pre><code>#元/m²的去掉元/m²。
+data[data['价格'].str.contains('元/m²', regex=False), '价格'] = \
+data[data['价格'].str.contains('元/m²', regex=False), '价格'].str.extract('\d+\.?\d*\/\d+', expanding=False)
+#万元/套的，求掉万元/套，再乘以10000，再乘以套面积（套面积可能是数字格式的）
+data[data['价格'].str.contains('万元/套', regex=False), '价格'] = \
+data[data['价格'].str.contains('万元/套', regex=False), '价格'].str.extract('\d+\.?\d*\/\d+', expanding=False)+'*10000*' + \
+data[data['价格'].str.contains('万元/套', regex=False), '套面积'].apply(str)
+#其他的如暂定等可以认为空值
+data[~((data['价格'].str.contains('元/m²', regex=False))|(data['价格'].str.contains('万元/套', regex=False))), '价格'] = 'np.nan'
+#现在价格仅三种情况数字、数字表达式、pandas空值标识符的字符，
+#可apply(eval)
+data['价格'] = data['价格'].apply(eval)
+</code></pre>
+
+<h2 id="2-4-字段改名">2.4 字段改名</h2>
+
+<p>将字段改名以符合产出表字段。</p>
+
+<h2 id="2-5-删除冗余字段">2.5 删除冗余字段</h2>
+
+<p>在这个阶段，产出表所不需要的字段应进行删除。</p>
+
+<h1 id="3-后检查">3. 后检查</h1>
+
+<p>在删除字段漂移的实例、删除冗余字段、字段转换、字段改名、删除冗余字段后，理论上应满足产出要求了，但为了保险起见，继续步骤1的检查。</p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>latex实现及hugo | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>latex实现及hugo</h1>
+
+
+<p>最近在学机器学习算法，其中涉及到大量数学公式。而我之前用的博客工具是hexo portable无法用latex编辑公式，很不方便。就好像古代研究语音的没有方便的工具表示语音，只能用反切，切来切去就是搞不清楚是什么音，不能忍。
+粗略一看hugo是能实现latex的。</p>
+
+<p>关于hugo的使用，许多博客，但官方的安装使用指导其实见于<a href="https://gohugo.io/getting-started/quick-start/">HUGO-Quick Start</a>等。</p>
+
+<p>博客内容的网页
+推送博客本地文件至互联网等需要git，可从<a href="https://git-scm.com/downloads">git官网</a>下载，但由于需翻墙等，也可从<a href="https://github.com/waylau/git-for-win">waylau贡献的国内源-Git for Windows 国内下载站</a>下载。
+git安装参考<a href="https://blog.csdn.net/qq_39377418/article/details/95199800">田闯-Git安装教程 (windows)</a>。</p>
+
+<p>评论需用到leancloud的服务，已注册，注册邮箱为我outlook邮箱，密码为常用密码尾位改为大写。
+评论功能就不能按hugo官网，或可按<a href="https://blog.csdn.net/anonymking/article/details/86370082">Hugo加入评论的功能</a>。
+评论需要leancloud或disqus的服务（均已成功注册），其中disqus为hugo推荐并有设置指导，奈何需要翻墙。leancloud暂不知道如何设置。
+评论功能咱作罢。</p>
+
+<h1 id="1-步骤">1 步骤</h1>
+
+<h2 id="1-1-安装hugo">1.1 安装hugo</h2>
+
+<p>按<a href="https://gohugo.io/getting-started/installing">HUGO-Install Hugo</a>，各系统平台均可于<a href="https://gohugo.io/getting-started/installing">Hugo Releases</a>下载系统对应的hugo二进制文件，
+其是免安装的，只需将hugo二进制文件所在目录加入<code>path</code>系统变量（如我系统是windows64位系统，下载对应文件并放在<code>d:\hugo</code>，则将<code>d:\hugo</code>放入系统变量<code>path</code>）。</p>
+
+<p>hugo version能正常显示信息说明hugo已安装成功。</p>
+
+<h2 id="1-2-静态网址存放处-site后-比如我准备存放在d盘software文件夹下建立chen-feiyang-github-io文件夹作为静态网址存放处">1.2 静态网址存放处（site后，比如我准备存放在d盘software文件夹下建立chen-feiyang.github.io文件夹作为静态网址存放处。）</h2>
+
+<p>d:</p>
+
+<h1 id="cd-software">cd software</h1>
+
+<p>hugo new site chen-feiyang.github.io</p>
+
+<p>cd chen-feiyang.github.io</p>
+
+<p>tree</p>
+
+<p>注：
+ * 1. config.toml 是网站的配置文件，hugo 同时还支持 YAML 格式的 config.yaml 或 JSON 格式的 config.json。</p>
+
+<ul>
+<li><ol>
+<li>content 目录放 markdown 文章，data 目录放数据，layouts 目录放网站模板文件，static 目录放图片、css、js 等静态资源，themes 命令放下载的主题。</li>
+</ol></li>
+
+<li><ol>
+<li>tree命令一定要运行，否则hugo new about.md命令建立的about.md将不在正确位置。</li>
+</ol></li>
+</ul>
+
+<h2 id="1-3-建立md文件-未来应将md文件置于post文件夹下">1.3 建立md文件，未来应将md文件置于post文件夹下</h2>
+
+<p>hugo new about.md</p>
+
+<p>hugo new post/first.md</p>
+
+<p>确保draft: false，这样才能正确显示。</p>
+
+<h2 id="1-4-设置主题">1.4 设置主题</h2>
+
+<p>###git submodule add <a href="https://github.com/damiencaselli/hugo-journal.git">https://github.com/damiencaselli/hugo-journal.git</a> themes/journal</p>
+
+<p>cd themes</p>
+
+<p>git clone <a href="https://github.com/vjeantet/hugo-theme-casper">https://github.com/vjeantet/hugo-theme-casper</a> casper</p>
+
+<p>配置config.toml文件中务必theme = &quot;casper&quot;，这样本地浏览器方能正确显示。</p>
+
+<p>BaseUrl= &quot;<a href="https://chen-feiyang.github.io/&quot;">https://chen-feiyang.github.io/&quot;</a></p>
+
+<h2 id="1-5-本地测试">1.5 本地测试</h2>
+
+<p>cd..</p>
+
+<p>hugo server -w casper</p>
+
+<p>服务器启动后访问<a href="http://localhost:1313/">http://localhost:1313/</a> 访问网站，发现问题可以及时修改。</p>
+
+<h2 id="1-6-发布到github">1.6 发布到github</h2>
+
+<p>hugo -t casper</p>
+
+<p>Hugo将编译所有文件并输出到public目录，你需要在github上创建repository，名字就是&lt;你的用户名&gt;.github.io，
+创建完后，返回你本地命令行，进入public目录，执行以下命令：</p>
+
+<p>cd public</p>
+
+<p>git init</p>
+
+<p>git add .</p>
+
+<p>git commit -m &quot;Initial commit.&quot;</p>
+
+<p>git remote add origin git@github.com:chen-feiyang/chen-feiyang.github.io.git</p>
+
+<p>git pull origin master</p>
+
+<p>git push -u origin master</p>
+
+<p>稍等片刻后，打开&lt;你的用户名&gt;.github.io网址，就可以看到你的个人网站了。</p>
+
+<p>【
+正确步骤：
+1. git init //初始化仓库</p>
+
+<ol>
+<li><p>git add .(文件name) //添加文件到本地仓库</p></li>
+
+<li><p>git commit -m &quot;first commit&quot; //添加文件描述信息</p></li>
+
+<li><p>git remote add origin + 远程仓库地址 //链接远程仓库，创建主分支</p></li>
+
+<li><p>git pull origin master // 把本地仓库的变化连接到远程仓库主分支</p></li>
+
+<li><p>git push -u origin master //把本地仓库的文件推送到远程仓库</p></li>
+</ol>
+
+<p>OK
+搞定，回家吃饭！！
+】</p>
+
+<h1 id="2-问题排查">2 问题排查</h1>
+
+<h2 id="2-1-最后一步-若出现如下提示的解决办法">2.1 最后一步，若出现如下提示的解决办法。</h2>
+
+<p>D:\software\chen-feiyang.github.io\public&gt;git push -u origin master
+To github.com:chen-feiyang/chen-feiyang.github.io.git
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: failed to push some refs to 'git@github.com:chen-feiyang/chen-feiyang.github.io.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.</p>
+
+<p>最后一步，若出现上面提示可强推，即使用如下语句。
+git push -f origin master
+】</p>
+
+<h2 id="2-2-关于挂载图片">2.2 关于挂载图片</h2>
+
+<p><img src="/mla/f1.1.png" alt="Figure 1-1. classic machine" />
+mla位于static文件夹之下。</p>
+
+<h2 id="2-3-关于latex">2.3 关于latex</h2>
+
+<p>发现要实现latex还是需要设置的。</p>
+
+<p>参考<a href="http://note.qidong.name/2018/03/hugo-mathjax/">在Hugo中使用MathJax</a>，将如下代码：</p>
+
+<pre><code>&lt;script type=&quot;text/javascript&quot;
+        async
+        src=&quot;https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML&quot;&gt;
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: &quot;AMS&quot; },
+         extensions: [&quot;AMSmath.js&quot;, &quot;AMSsymbols.js&quot;] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    // Fix &lt;code&gt; tags after MathJax finishes running. This is a
+    // hack to overcome a shortcoming of Markdown. Discussion at
+    // https://github.com/mojombo/jekyll/issues/199
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i &lt; all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+&lt;/script&gt;
+
+&lt;style&gt;
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+&lt;/style&gt;
+</code></pre>
+
+<p>放入新建的layouts/partials/mathjax.html中，同时，在正在\chen-feiyang.github.io\themes\casper\layouts\partials\header.html（如，此刻我正在使用themes为casper）的最后一行后加上如下语句：</p>
+
+<pre><code>{{ partial &quot;mathjax.html&quot; . }}
+</code></pre>
+
+<p>(c)(r)等转义问题
+要禁用全局的这种转义，也可以在config.toml中添加以下配置，禁用该功能。</p>
+
+<pre><code>[blackfriday]
+smartypants = false
+</code></pre>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

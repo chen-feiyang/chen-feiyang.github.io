@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Pyspark | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Pyspark</h1>
+
+
+<p>若工作场景涉及大数据，则需要使用pyspark。找了三天，暂时发现Tomasz Drabas, Denny Lee的《Learning PySpark》应该是一本较适合的书，感知其难度适中。发现此书不介绍环境搭建。Bill Chambers and Matei Zaharia的《Spark: The Definitive Guide》也是，难度适中，但不涉及环境搭建。不涉及环境搭建是不行的，因为可能版本演进太快，可用代码在不同环境无法运行。比如，anaconda里面conda install -c conda-forge pyspark搭建的环境无法运行《Spark: The Definitive Guide》里的代码，也许涉及本地安装等变量的设置问题而无法运行等，暂不清楚。还是应该找本包括环境搭建的书。琳达贵的《python+spark2.0+hadoop机器学习与大数据实战》包含环境搭建的过程，需要内存和固态空间，我电脑不一定跟得上，试着安装吧。2019-08-21装好虚拟机装好linux装好hadoop，目前很卡。</p>
+
+<p>20190826: 最近在学习scrapy爬虫，今天看点这本书，明天看点那个博客，因此笔记就很杂乱。启示是：要先列一个提纲，这样即使看的书、知识比较杂也好，都可以把笔记写在对应位置。</p>
+
+<p>网易云课堂有一免费课程《Spark编程基础》，我接下来的笔记大纲则遵从此课程。当然，有可能会找其他资料等补充此笔记大纲。</p>
+
+<h1 id="1-大数据计数概括">1. 大数据计数概括</h1>
+
+<h2 id="1-1-大数据时代">1.1 大数据时代</h2>
+
+<h2 id="1-2-大数据的概念">1.2 大数据的概念</h2>
+
+<h2 id="1-3-大数据的影响">1.3 大数据的影响</h2>
+
+<h2 id="1-4-大数据的关键技术">1.4 大数据的关键技术</h2>
+
+<h2 id="1-5-答案数据计算模式">1.5 答案数据计算模式</h2>
+
+<h2 id="1-6-代表大数据技术之hadoop">1.6 代表大数据技术之Hadoop</h2>
+
+<h2 id="1-7-代表大数据技术之spark">1.7 代表大数据技术之Spark</h2>
+
+<h2 id="1-8-代表大数据技术之flink和beam">1.8 代表大数据技术之Flink和Beam</h2>
+
+<h1 id="2-spark的设计与运行原理">2. Spark的设计与运行原理</h1>
+
+<h2 id="2-1-spark概述">2.1 Spark概述</h2>
+
+<h2 id="2-2-spark生态系统">2.2 Spark生态系统</h2>
+
+<h2 id="2-3-基本概念和架构设计">2.3 基本概念和架构设计</h2>
+
+<h2 id="2-4-spark运行原理-rdd概念-操作和特性">2.4 Spark运行原理（RDD概念、操作和特性）</h2>
+
+<h2 id="2-5-rdd运行原理-rdd之间的依赖关系">2.5 RDD运行原理（RDD之间的依赖关系）</h2>
+
+<h2 id="2-6-rdd运行原理-阶段的划分和rdd运行过程">2.6 RDD运行原理（阶段的划分和RDD运行过程）</h2>
+
+<h2 id="2-7-spark的部署和应用方式">2.7 Spark的部署和应用方式</h2>
+
+<h1 id="3-spark环境搭建和使用方法">3. Spark环境搭建和使用方法</h1>
+
+<h2 id="3-1-安装spark">3.1 安装Spark</h2>
+
+<h2 id="3-2-在pyspark中运行代码">3.2 在pyspark中运行代码</h2>
+
+<h2 id="3-3-开发spark独立应用程序">3.3 开发Spark独立应用程序</h2>
+
+<h2 id="3-4-spark集群环境搭建">3.4 Spark集群环境搭建</h2>
+
+<h2 id="3-5-在集群上运行spark应用程序">3.5 在集群上运行Spark应用程序</h2>
+
+<h1 id="4-rdd编程基础">4. RDD编程基础</h1>
+
+<h2 id="4-1-rdd创建">4.1 RDD创建</h2>
+
+<p>从本地文件系统中加载数据创建RDD的示例</p>
+
+<pre><code>lines = sc.textFile(&quot;file:///usr/local/spark/mycode/rdd/word.txt&quot;)
+lines.foreach(print)
+</code></pre>
+
+<p>注：本地文件系统的文件一定要<code>file:///</code>，可惜我暂时没在本地安装pyspark，在<a href="http://192.168.1.56:8888/">公司集群端口http://192.168.1.56:8888/的pyspark的jupyter环境</a>不能成功运行，毕竟不是本地。</p>
+
+<p>从分布式文件系统HDFS中加载数据</p>
+
+<pre><code>lines = sc.textFile(&quot;hdfs://localhost:9000/user/hadoop/word.text&quot;)  #主机名localhost 端口号9000，来源于配置。 
+lines = sc.textFile(&quot;/user/hadoop/word.text&quot;)
+lines = sc.textFile(&quot;word.txt&quot;)
+</code></pre>
+
+<p>注：三条语句完全等价，可以使用其中任意一种方式。这条或者能在公司集群端口运行，可惜暂不知道怎么将我创建的word.txt放到集群分布式文件系统。</p>
+
+<p>注：可能关于集群各种路径是难点，本地，集群hdfs、集群中某台主机的本地、集群jupyter工作路径等等。</p>
+
+<p>通过并行集合（组合）创建RDD</p>
+
+<pre><code>array = [1,2,3,4,5]
+rdd = sc.parallelize(array)
+rdd.foreach(print)
+</code></pre>
+
+<p>注：以上应是pyspark命令行才能运行，我在公司集群端口jupyter环境下能不报错运行，但无输出。</p>
+
+<h2 id="4-2-rdd操作-转换操作之filter-map-flatmap">4.2 RDD操作（转换操作之filter、map、flatMap）</h2>
+
+<p>每次转换生成一个新的RDD，但RDD是不能更改的。
+多次转换即一个有向无环图。转换操作是惰性的，只记录这个转换需要进行的操作，不真正计算。</p>
+
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>含义</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>filter(func)</td>
+<td>筛选出满足函数func的元素，并返回一个新的数据集</td>
+</tr>
+
+<tr>
+<td>map(func)</td>
+<td>将每个元素传递到函数func中，并将结果返回为一个新的数据集</td>
+</tr>
+
+<tr>
+<td>flatMap(func)</td>
+<td>与map()相似，但每个输入元素都可以映射到0或多个输出结果</td>
+</tr>
+
+<tr>
+<td>groupByKey()</td>
+<td>应用于(K,V)键值对的数据集时，返回一个新的(K,Iterable)形式的数据集</td>
+</tr>
+
+<tr>
+<td>reduceByKey(func)</td>
+<td>应用于(K,V)键值对的数据集时，返回一个新的(K,V)形式的数据集，其中每个值是将每个key传递到函数func中进行聚合后的结果</td>
+</tr>
+</tbody>
+</table>
+
+<pre><code>
+</code></pre>
+
+<h2 id="4-3-rdd操作-转换操作之groupbykey-reducebykey">4.3 RDD操作（转换操作之groupByKey、reduceByKey）</h2>
+
+<h2 id="4-4-rdd操作-行动操作">4.4 RDD操作（行动操作）</h2>
+
+<h2 id="4-5-持久化">4.5 持久化</h2>
+
+<p><code>.persist()</code>可进行持久化，后面再用到就会比较快。因为在内存中运算最快，可在此函数中添加参数<code>MEMORY_ONLY</code>。<code>.persist(MEMORY_ONLY)</code>等价于<code>.cache()</code>。持久化会占用内存资源，后面不用的话应去持久化，采用<code>.unpersist()</code>。</p>
+
+<p>注意：这里的持久化是标记为持久化，只有触发行动操作才真正触发持久化。</p>
+
+<h2 id="4-6-分区-分区的作用和原则-设置分区的方法">4.6 分区（分区的作用和原则、设置分区的方法）</h2>
+
+<h2 id="4-7-分区-自定义分区方法">4.7 分区（自定义分区方法）</h2>
+
+<p>动态调整分区大小很有必要。
+分区数量可在具体函数如<code>sc.parallelize</code>中设置，哪些数据分在什么区可自定义函数。如下面自定义函数（文件名为TestPartitioner.py）：</p>
+
+<pre><code>from pyspark import SparkConf, SparkContext
+
+def MyPatitioner(key):
+    print(&quot;MyPatitioner is running&quot;)
+    print('The key is %d' % key)
+    return key%10
+
+def main():
+    print(&quot;The main function is running&quot;)
+    conf = SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;MyApp&quot;)
+    sc = SparkContext(conf=conf)
+    data = sc.parallelize(range(10), 5)
+    data.map(lambda x: (x,1)) \    # 转成键值对数据，方便使用partitionBy函数
+        partitionBy(10, MyPartitioner) \    # 对data数据进行重新分区
+        .map(lambda x: x[0]) \  # 转回只含键值的数据
+        .saveAsTextFilee(&quot;file:///usr/local/spark/mycode/rdd/patitioner&quot;)    # 这里是目录地址，而不是文件地址
+
+if __name__ == '__main__':   # 判断本文件是单独执行则执行以下程序，如果只调用本文件的一部分，则不执行以下程序。
+    main()
+</code></pre>
+
+<p>使用如下命令运行TestPartitioner.py:</p>
+
+<pre><code>$ cd /usr/local/spark/mycode/rdd
+$ python3 TestPartitioner.py
+</code></pre>
+
+<p>或者，使用如下命令运行TestPartitioner.py:</p>
+
+<pre><code>$ cd /usr/local/spark/mycode/rdd
+$ /usr/local/spark/bin/spark-submit TestPartitioner.py
+</code></pre>
+
+<h2 id="4-8-一个综合实例">4.8 一个综合实例</h2>
+
+<pre><code>&gt;&gt;&gt; lines = sc. \
+   textFile(&quot;file:///usr/local/spark/mycode/rdd/word.txt&quot;)
+&gt;&gt;&gt;wordCount = lines.flatMap(lambda line: line.split(&quot; &quot;)). \
+   map(lambda word: (word,1)).reduceByKey(lambda a, b: a+b)
+&gt;&gt;&gt;print(wordCount.colleect())
+
+[('good', 1), ('Spark', 2), ('is', 3), ('better', 1), ('Hadoop', 1), ('fast', 1)]
+</code></pre>
+
+<h2 id="4-9-键值对rdd的创建">4.9 键值对RDD的创建</h2>
+
+<p>从文件加载</p>
+
+<pre><code>&gt;&gt;&gt;lines = \
+   sc.textFile(&quot;file:///usr/local/spark/mycode/pairrdd/word.txt&quot;)
+&gt;&gt;&gt;pairRDD = \
+   lines.flatMap(lambda line: line.split(&quot; &quot;)).map(lambda word: (word,1))
+&gt;&gt;&gt;pairRDD.foreach(print)
+
+('I', 1)
+('love', 1)
+('Hadoop', 1)
+......
+</code></pre>
+
+<p>通过并行集合（列表）创建RDD</p>
+
+<pre><code>&gt;&gt;&gt;list = [&quot;Hadoop&quot;, &quot;Spark&quot;, &quot;Hive&quot;, &quot;Spark&quot;]
+&gt;&gt;&gt;rdd = sc.parallelize(list)
+&gt;&gt;&gt;pairRDD = rdd.map(lambda word: (word, 1))
+&gt;&gt;&gt;pairRDD.foreach(print)
+(Hadoop, 1)
+(Spark, 1)
+(Hive, 1)
+(Spark, 1)
+</code></pre>
+
+<h2 id="4-10-常用的键值对rdd转换操作-reducebykey和groupbykey">4.10 常用的键值对RDD转换操作（reduceByKey和groupByKey）</h2>
+
+<p><code>reduceByKey(func)</code>:使用<code>func</code>函数合并具有相同键的值。</p>
+
+<pre><code>&gt;&gt;&gt;pairRDD = \
+   sc.parallelize([(&quot;Hadoop&quot;, 1), (&quot;Spark&quot;, 1), (&quot;Hive&quot;, 1), (&quot;Spark&quot;, 1)])
+&gt;&gt;&gt;pairRDD.reduceByKey(lambda a, b: a+b).foreach(print)
+
+('Spark', 2)
+('Hive', 1)
+('Hadoop', 1)
+</code></pre>
+
+<p><code>groupByKey()</code>:对具有相同键的值进行分组。</p>
+
+<pre><code>&gt;&gt;&gt;list = \
+   [(&quot;spark&quot;, 1), (&quot;spark&quot;, 2), (&quot;hadoop&quot;, 3), (&quot;hadoop&quot;, 5)]
+&gt;&gt;&gt;pairRDD = sc.parallelize(list)
+&gt;&gt;&gt;pairRDD.groupByKey()
+
+PythonRDD[27] at RDD at PythonRDD.scala:48
+
+&gt;&gt;&gt;pairRDD.groupByKey().foreach(print)
+
+('hadoop', &lt;pyspark.resultiterable.ResultIterable object at 0x7f2c1093ecf8&gt;)
+('spark', &lt;pyspark.resultiterable.ResultIterable object at 0x7f2c1093ecf8&gt;)
+</code></pre>
+
+<p><code>groupByKey()</code>和<code>reduceByKey(func)</code>的区别：</p>
+
+<ul>
+<li><code>groupByKey()</code>对每个key进行操作，但只生成一个sequence，<code>groupByKey()</code>本身不能自定义函数，需要先用<code>groupByKey()</code>生成RDD，然后才能对此RDD通过map进行性自定义函数操作。</li>
+
+<li><p><code>reduceByKey(func)</code>用于对每个key对应的多个value进行merge操作，最重要的是它能够在本地先进行merge操作，并且merge操作做可以通过函数自定义。</p>
+
+<pre><code>&gt;&gt;&gt;words = [&quot;one&quot;, &quot;two&quot;, &quot;two&quot;, &quot;three&quot;, &quot;three&quot;, &quot;three&quot;]
+&gt;&gt;&gt;wordsPairsRDD = sc.parallelize(words).map(lambda word: (word, 1))
+&gt;&gt;&gt;wordCountsWithReduce = wordPairsRDD.reduceByKey(lambda a, b: a+b)
+&gt;&gt;&gt;wordCountsWithReduce.foreach(print)
+
+('one', 1)
+('two', 2)
+('three', 3)
+
+&gt;&gt;&gt;wordCountsWithGroup = wordPairsRDD.groupByKey(). \
+map(lambda t: (t[0], sum(t[1])))
+&gt;&gt;&gt;wordCountsWithGroup.foreach(print)
+
+('two', 2)
+('three', 3)
+('one', 1)
+</code></pre></li>
+</ul>
+
+<h2 id="4-11-常用的pairrdd转换操作-keys-values-sortbykey-mapvalues-join">4.11 常用的PairRDD转换操作（keys、values、sortByKey、mapValues、join）</h2>
+
+<pre><code>&gt;&gt;&gt;list = \
+   [(&quot;Hadoop&quot;, 1), (&quot;Spark&quot;, 1), (&quot;Hive&quot;, 1), (&quot;Spark&quot;, 1)]
+&gt;&gt;&gt;pairRDD = sc.parallelize(list)
+&gt;&gt;&gt;pairRDD.keys().foreach(print)
+
+Hadoop
+Spark
+Hive
+Spark
+
+&gt;&gt;&gt;pairRDD.values().foreach(print)
+
+1
+1
+1
+1
+
+&gt;&gt;&gt;pairRDD.foreach(print)
+
+('Hadoop', 1)
+('Spark', 1)
+('Hive', 1)
+('Spark', 1)
+
+&gt;&gt;&gt;pairRDD.sortByKey().foreach(print)
+
+('Hadoop', 1)
+('Hive', 1)
+('Spark', 1)
+('Spark', 1)
+
+&gt;&gt;&gt;pairRDD.sortByKey(False).foreach(print)
+
+('Spark', 1)
+('Spark', 1)
+('Hive', 1)
+('Hadoop', 1)
+</code></pre>
+
+<pre><code>&gt;&gt;&gt;d1 = sc.parallelize([(&quot;c&quot;, 8), (&quot;b&quot;, 25), (&quot;c&quot;, 17), (&quot;a&quot;, 42), 
+   (&quot;b&quot;, 4), (&quot;d&quot;, 9), (&quot;e&quot;, 17), (&quot;c&quot;, 2), (&quot;f&quot;, 29), (&quot;g&quot;, 21), (&quot;b&quot;, 9)])
+
+# collect将得到RDD的列表
+&gt;&gt;&gt;d1.reduceByKey(lambda a, b: a+b).sortByKey(False).collect() 
+
+[('g', 21), ('f', 29), ('e', 17), ('d', 9), ('c', 27), ('b', 38), ('a', 42)]
+
+# 按key的降序，注意0代表key，False代表降序。
+&gt;&gt;&gt;d1.reduceByKey(lambda a, b: a+b).sortBy(lambda x: x[0], False).collect() 
+
+[('g', 21), ('f', 29), ('e', 17), ('d', 9), ('c', 27), ('b', 38), ('a', 42)]
+
+# 按value的降序，注意0代表key，False代表降序。
+&gt;&gt;&gt;d1.reduceByKey(lambda a, b: a+b).sortBy(lambda x: x[1], False).collect() 
+
+[('a', 42), ('b', 38), ('f', 29), ('c', 27), ('g', 21), ('e', 17), ('d', 9)]
+</code></pre>
+
+<pre><code>&gt;&gt;&gt;list = \
+   [(&quot;Hadoop&quot;, 1), (&quot;Spark&quot;, 1), (&quot;Hive&quot;, 1), (&quot;Spark&quot;, 1)]
+&gt;&gt;&gt;pairRDD = sc.parallelize(list)
+&gt;&gt;&gt;pairRDD = pairRDD.mapValues(lambda x: x+1)
+&gt;&gt;&gt;pairRDD.foreach(print)
+
+('Hadoop', 2)
+('Spark', 2)
+('Hive', 2)
+('Spark', 2)
+</code></pre>
+
+<pre><code>&gt;&gt;&gt;pairrRDD1 = sc. \
+   parallelize([(&quot;spark&quot;, 1), (&quot;spark&quot;, 2), (&quot;hadoop&quot;, 3), (&quot;hadoop&quot;, 5)])
+&gt;&gt;&gt;pairRDD2 = sc.parallelize([(&quot;spark&quot;, &quot;fast&quot;)])
+&gt;&gt;&gt;pairRDD3 = pairRDD1.join(pairRDD2)
+&gt;&gt;&gt;pairRDD3.foreach(print)
+
+('spark', (1, 'fast'))
+('spark', (2, 'fast'))
+</code></pre>
+
+<h2 id="4-12-一个综合实例">4.12 一个综合实例</h2>
+
+<pre><code>&gt;&gt;&gt;rdd = sc.parallelize([(&quot;spark&quot;, 2), (&quot;hadoop&quot;, 6), (&quot;hadoop&quot;, 4), (&quot;spark&quot;, 6)])
+&gt;&gt;&gt;rdd.mapValues(lambda x: (x,1)). \
+   reduceByKey(lambda x, y: (x[0]+y[0], x[1]+y[1])). \
+   mapValues(lambda x: x[0]/x[1]).collect()
+
+[('hadoop', 5.0), ('spark', 4.0)]
+</code></pre>
+
+<h2 id="4-13-文件数据读写">4.13 文件数据读写</h2>
+
+<h3 id="4-13-1-本地文件系统的读写">4.13.1 本地文件系统的读写</h3>
+
+<p>从本地文件中读取数据创建RDD</p>
+
+<pre><code>&gt;&gt;&gt;textFile = sc. \
+   textFile(&quot;file:///usr/local/spark/mycode/rdd/word.txt&quot;)
+&gt;&gt;&gt;textFile.first()
+
+'Hadoop is good'
+</code></pre>
+
+<p>把RDD写入到文本文件中</p>
+
+<pre><code>&gt;&gt;&gt;textFile = sc. \
+   textFile(&quot;file:///usr/local/spark/mycode/rdd/word.txt&quot;)
+# 给出的是目录，而不是文件
+&gt;&gt;&gt;textFile. \
+   saveAsTextFile(&quot;file:///usr/local/spark/mycode/rdd/writeback&quot;)
+</code></pre>
+
+<pre><code>$ cd /usr/local/spark/mycode/wordcount/writeback
+$ ls
+</code></pre>
+
+<p>再次把数据加载在RDD中</p>
+
+<pre><code>&gt;&gt;&gt;textFile = sc. \
+   textFile(&quot;file:///usr/local/spark/mycode/rdd/writeback&quot;)
+</code></pre>
+
+<h3 id="4-13-2-分布式文件系统hdfs的数据读写">4.13.2 分布式文件系统HDFS的数据读写</h3>
+
+<p>分布式文件HDFS的数据读写</p>
+
+<pre><code>&gt;&gt;&gt;textFile = sc.textFile(&quot;hdfs://localhost:9000/usr/hadoop/word.txt&quot;)
+&gt;&gt;&gt;textFile.first()
+</code></pre>
+
+<p>把RDD中的数据保存到HDFS文件中</p>
+
+<pre><code>&gt;&gt;&gt;textFile = sc.textFile(&quot;word.txt&quot;)
+&gt;&gt;&gt;textFile.saveAsTextFile(&quot;writeback&quot;)
+</code></pre>
+
+<h2 id="4-14-读写hbase数据-hbase介绍">4.14 读写HBase数据（HBase介绍）</h2>
+
+<p>HBase数据库是四维数据库，由行键、列族、列限定符、版本时间戳定位具体数据（四维定位）；而关系型数据库如MySQL仅由行键、列限定符即可确定数据（二维定位）。</p>
+
+<h2 id="4-15-读写hbase数据-创建一个hbase表">4.15 读写HBase数据（创建一个HBase表）</h2>
+
+<p>HBase的安装（伪分布式模式）详见<a href="http://dblab.xmu.edu.cn/blog/install-hbase">厦门大学数据库实验室HBase安装教程</a>。</p>
+
+<p>启动Hadoop</p>
+
+<pre><code>$ cd /usr/local/hadoop
+$ ./sbin/start-all.sh
+</code></pre>
+
+<p>启动HBase</p>
+
+<pre><code>$ cd /usr/local/hbase
+$ ./bin/start-hbase.sh  //启动HBase
+$ ./bin/hbase shell  //启动hbase shell
+</code></pre>
+
+<pre><code>hbase&gt; disable 'student'  # 使student表失效
+hbase&gt; drop 'student'   # 删除student表
+</code></pre>
+
+<p>创建列族信息</p>
+
+<pre><code>hbase&gt; create 'student', 'info'
+</code></pre>
+
+<p>录入student表第一个学生记录</p>
+
+<pre><code>hbase&gt; put 'student', '1', 'info:name', 'Xueqian'
+hbase&gt; put 'student', '1', 'info:gender', 'F'
+hbase&gt; put 'student', '1', 'info:age', '23'
+</code></pre>
+
+<p>录入student表第二个学生记录</p>
+
+<pre><code>hbase&gt; put 'student', '2', 'info:name', 'Weiliang'
+hbase&gt; put 'student', '2', 'info:gender', 'M'
+hbase&gt; put 'student', '2', 'info:age', '24'
+</code></pre>
+
+<h2 id="4-16-读写hbase数据-配置spark">4.16 读写HBase数据（配置Spark）</h2>
+
+<p>应导入jar包，包括所有以‘hbase’开头的jar包、guava-12.0.1.jar、htrace-core-3.1.0-incubating.jar和protobuf-java-2.5.0.jar到spark安装目录下。</p>
+
+<pre><code>$ cd /usr/local/spark/jars
+$ mkdir hbase
+$ cd hbase
+$ cp /usr/local/hbase/lib/hbase*.jar ./
+$ cp /usr/local/hbase/lib/guava-12.0.1.jar ./
+$ cp /usr/local/hbase/lib/htrace-core-3.1.0-incubating.jar ./
+$ cp /usr/local/hbase/lib/protobuf-java-2.5.0.jar ./
+</code></pre>
+
+<p>此外，在Spark 2.0以上版本中，缺少把HBase数据转换成Python可读取数据的jar包，需要另行下载。可以访问下面地址下载<a href="https://mvnrepository.com/artifact/org.apache.spark/spark-examples_2.11/1.6.0-typesafe-001">spark-examples_2.11-1.6.0-typesafe-001.jar</a>。下载以后保存到“/usr/local/spark/jars/hbase”目录中。</p>
+
+<p>使用vim编辑器打开spark-env.sh文件，设置Spark的spark-env.sh文件，告诉Spark可以在哪个路径下找到HBase相关的jar文件，命令如下：</p>
+
+<pre><code>$ cd /usr/local/spark/conf
+$ vim spark-env.sh
+</code></pre>
+
+<p>打开spark-env.sh文件以后，可以在文件最前面增加下面一行内容：</p>
+
+<pre><code>export
+SPARK_DIST_CLASSPATH=$(/usr/local/hadoop/bin/hadoopclasspath):$(/usr/local/hbase/bin/hbaseclasspath):/usr/local/spark/jars/hbase/*
+</code></pre>
+
+<p>这样，后面编译和运行过程才不会出错。</p>
+
+<p>用SparkContext提供的newAPIHadoopRDD API将表的内容以RDD的形式加载到Spark中。</p>
+
+<p>SparkOperateHBase.py：</p>
+
+<pre><code>#!/usr/bin/env python3
+from pyspark import SparkConf, SparkContext
+conf = SparkConf().setMaster(&quot;local&quot;).setAppName(&quot;ReadHBase&quot;)
+sc = SparkContext(conf=conf)
+host = 'localhost'
+table = 'student'
+conf = {&quot;hbase.zookeeper.quorum&quot;:host,&quot;hbase.mapreduce.inputtable&quot;:table}
+keyConv = &quot;org.apache.spark.examples.pythonconverters.ImmutableBytesWritableToStringConverter&quot;
+valueConv = &quot;org.apache.spark.examples.pythonconverters.HBaseResultToStringConverter&quot;
+hbase_rdd = sc.newAPIHadoopRDD(&quot;org.apache.hadoop.hbase.mapreduce.TableInputFormat&quot;, &quot;org.apche.hadoop.hbase.io.ImmutableBytesWritable&quot;, &quot;org.apache.hadoop.hbase.client.Result&quot;, keyConverter=keyConv, valueConverter=valueConver, conf=conf)
+count = hbase_rdd.count()
+hbase_rdd.cache()
+output = hbase_rdd.collect()
+for (k,v) in output:
+    print(k, v)
+</code></pre>
+
+<p>执行结果：</p>
+
+<pre><code>1 {&quot;qualifier&quot;:&quot;age&quot;, &quot;timestamp&quot;:&quot;1545728145163&quot;, &quot;columnFamily&quot;:&quot;info&quot;, &quot;row&quot;:&quot;1&quot;, &quot;type&quot;:&quot;Put&quot;, &quot;value&quot;:&quot;23&quot;}
+{&quot;qualifier&quot;:&quot;gender&quot;, &quot;timestamp&quot;:&quot;1545728114020&quot;, &quot;columnFamily&quot;:&quot;info&quot;, &quot;row&quot;:&quot;1&quot;, &quot;type&quot;:&quot;Put&quot;, &quot;value&quot;:&quot;F&quot;}
+{&quot;qualifier&quot;:&quot;name&quot;, &quot;timestamp&quot;:&quot;1545728100663&quot;, &quot;columnFamily&quot;:&quot;info&quot;, &quot;row&quot;:&quot;1&quot;, &quot;type&quot;:&quot;Put&quot;, &quot;value&quot;:&quot;Xueqian&quot;}
+2 {&quot;qualifier&quot;:&quot;age&quot;, &quot;timestamp&quot;:&quot;1545728168727&quot;, &quot;columnFamily&quot;:&quot;info&quot;, &quot;row&quot;:&quot;2&quot;, &quot;type&quot;:&quot;Put&quot;, &quot;value&quot;:&quot;24&quot;}
+...
+</code></pre>
+
+<p>执行该代码文件，命令如下：</p>
+
+<pre><code>$ cd /usr/local/spark/mycode/rdd
+$ /usr/local/spaark/bin/spark-submit SparkOperateHBase.py
+</code></pre>
+
+<h2 id="4-17-读写hbase数据-编写程序读取hbase数据">4.17 读写HBase数据（编写程序读取HBase数据）</h2>
+
+<h2 id="4-18-读写hbase数据-编写程序向hbase写入数据">4.18 读写HBase数据（编写程序向HBase写入数据）</h2>
+
+<h2 id="4-19-案例1-求top值">4.19 案例1：求TOP值</h2>
+
+<h2 id="4-20-案例2-文件排序">4.20 案例2：文件排序</h2>
+
+<h2 id="4-21-案例3-二次排序">4.21 案例3：二次排序</h2>
+
+<h1 id="5-spark-sql">5. Spark SQL</h1>
+
+<h2 id="5-1-spark-sql简介">5.1 Spark SQL简介</h2>
+
+<h2 id="5-2-dataframe概述">5.2 DataFrame概述</h2>
+
+<h2 id="5-3-dataframe的创建">5.3 DataFrame的创建</h2>
+
+<h2 id="5-4-dataframe的保存">5.4 DataFrame的保存</h2>
+
+<h2 id="5-5-dataframe的常用操作">5.5 DataFrame的常用操作</h2>
+
+<h2 id="5-6-利用反射机制推断rdd模式">5.6 利用反射机制推断RDD模式</h2>
+
+<h2 id="5-7-使用编程方式定义rdd模式">5.7 使用编程方式定义RDD模式</h2>
+
+<h2 id="5-8-mysql数据库准备工作">5.8 MySQL数据库准备工作</h2>
+
+<h2 id="5-9-使用spark-sql读写数据库">5.9 使用Spark SQL读写数据库</h2>
+
+<h1 id="6-spark-streaming">6. Spark Streaming</h1>
+
+<h2 id="6-1-流计算概述">6.1 流计算概述</h2>
+
+<h2 id="6-2-spark-streaming">6.2 Spark Streaming</h2>
+
+<h2 id="6-3-dstream操作概述">6.3 DStream操作概述</h2>
+
+<h2 id="6-4-文件流">6.4 文件流</h2>
+
+<h2 id="6-5-套接字流-使用nc程序产生数据">6.5 套接字流（使用NC程序产生数据）</h2>
+
+<h2 id="6-6-套接字流-使用socket编程实现自定义数据流">6.6 套接字流（使用Socket编程实现自定义数据流）</h2>
+
+<h2 id="6-7-rdd队列流">6.7 RDD队列流</h2>
+
+<h2 id="6-8-使用apache-kafka作为spark-streaming数据源-准备工作">6.8 使用Apache Kafka作为Spark Streaming数据源（准备工作）</h2>
+
+<h2 id="6-9-使用apache-kafka作为spark-streaming数据源-编写流计算程序">6.9 使用Apache Kafka作为Spark Streaming数据源（编写流计算程序）</h2>
+
+<h2 id="6-10-dstream无状态转换操作">6.10 DStream无状态转换操作</h2>
+
+<h2 id="6-11-dstream有状态转换操作-滑动窗口转换操作">6.11 DStream有状态转换操作（滑动窗口转换操作）</h2>
+
+<h2 id="6-12-dstream有状态转换操作-updatestatebykey操作">6.12 DStream有状态转换操作（updateStateByKey操作）</h2>
+
+<h2 id="6-13-输出操作">6.13 输出操作</h2>
+
+<h1 id="7-structured-streaming程序的基本步骤">7. Structured Streaming程序的基本步骤</h1>
+
+<h2 id="7-1-概述">7.1 概述</h2>
+
+<h2 id="7-2-编写structued-streaming程序的基本操作">7.2 编写Structued Streaming程序的基本操作</h2>
+
+<h2 id="7-3-file源">7.3 File源</h2>
+
+<h2 id="7-4-kafka源">7.4 Kafka源</h2>
+
+<h2 id="7-5-socket源和rate源">7.5 Socket源和Rate源</h2>
+
+<h2 id="7-6-输出操作">7.6 输出操作</h2>
+
+<h1 id="8-spark-mllib">8. Spark MLlib</h1>
+
+<h2 id="8-1-spark-mllib简介">8.1 Spark MLlib简介</h2>
+
+<h2 id="8-2-机器学习流水线">8.2 机器学习流水线</h2>
+
+<h2 id="8-3-特征提取-tf-idf">8.3 特征提取：TF-IDF</h2>
+
+<h2 id="8-4-特征转换-标签和索引转化">8.4 特征转换：标签和索引转化</h2>
+
+<h2 id="8-5-逻辑斯蒂回归分类器">8.5 逻辑斯蒂回归分类器</h2>
+
+<h2 id="8-6-决策树分类器">8.6 决策树分类器</h2>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

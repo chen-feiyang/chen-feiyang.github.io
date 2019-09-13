@@ -1,0 +1,659 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>核方法kernel_method | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>核方法kernel_method</h1>
+
+
+<p><code>$$</code>
+方程latex参考skearn、分类、定义等框架参考维基。</p>
+
+<p><strong>本质上来说，核函数就是一个内积函数，定义了一个内积空间。因此核函数和普通内积一样，都可以看成是衡量两个向量相似程度的函数。</strong></p>
+
+<p><strong>根据公式2，核函数可分解为两个行向量<code>$\vec{x}_1$</code>和<code>$\vec{x}_1$</code>的转换到另一空间<code>$\mathcal{V}$</code>后的向量<code>$\varphi (\vec {x}_1)$</code>和<code>$\varphi (\vec {x}_1)$</code>的乘积，除非采用线性核函数，否则<code>$\varphi (\vec {x}_1)$</code>一定将<code>$\vec{x}_1$</code>进行了非线性的转换，所以核技巧可以对数据进行非线性转换。</strong></p>
+
+<p><strong>采用了核技巧的KernelPCA可以利用<code>$\varphi (\vec {x})$</code>对数据矩阵进行非线性转换，再行降维（当然，PCA、KernelPCA、SparsePCA等均有<code>n_components</code>参数用于设置维度转换后的维度数，并没有要求一定小于m，像所有PCA一样，既可升维又可降维）。</strong></p>
+
+<p><strong>采用了核技巧的SVM可以利用<code>$\varphi (\vec {x})$</code>对数据矩阵进行非线性转换，转换后特征矩阵将易于划分。同时核函数<code>$k(\vec {x}_i ,\vec {x})$</code>将用于训练数据集以外数据的预测。比如，对于SVC其实就是根据公式2，公式2中另一参数根据另一优化得到。详情参阅博文<a href="https://chen-feiyang.github.io/post/支持向量机svm之数学原理/">支持向量机svm之数学原理</a>。</strong></p>
+
+<p>In machine learning, <strong>kernel methods</strong> are a class of algorithms for pattern analysis, whose best known member is the support vector machine (SVM). The general task of pattern analysis is to find and study general types of relations (for example clusters, rankings, principal components, correlations, classifications) in datasets. In its simplest form, the kernel trick means transforming data into another dimension that has a clear dividing margin between classes of data.[1] For many algorithms that solve these tasks, the data in raw representation have to be explicitly transformed into feature vector representations via a user-specified feature map: in contrast, kernel methods require only a user-specified kernel, i.e., a similarity function over <strong>pairs of data points</strong> in raw representation.在机器学习中，<strong>核方法</strong>是模式分析的一类算法，其最广为人知的是用于支持向量机(SVM)。模式分析的一般任务是发现和研究数据集中关系的一般类型(例如集群、排名、主成分、相关性、分类)。在最简单的形式中，核技巧意味着将数据转换为另一个维度，数据类之间在该维度有明显的分隔。对于许多解决这些任务的算法，原始表示中的数据必须通过用户指定的feature map显式地转换为feature vector表示:相比之下，核方法只需要用户指定的核，即，是对原始表示的<strong>数据点对</strong>的一种相似性函数。</p>
+
+<p>Kernel methods owe their name to the use of kernel functions, which enable them to operate in a high-dimensional, implicit feature space without ever computing the coordinates of the data in that space, but rather by simply computing the inner products between the images of all pairs of data in the feature space. This operation is often computationally cheaper than the explicit computation of the coordinates. This approach is called the &quot;kernel trick&quot;[2]. Kernel functions have been introduced for sequence data, graphs, text, images, as well as vectors.核方法命名源于内核函数的使用,这使他们在一个高维、隐式特征空间下，不计算在这个空间的坐标数据,而是通过简单计算特征空间下全部数据对的图像之间的内积。这一操作通常较显式计算坐标更不消耗算力。这一方法叫做核技巧。为序列数据、图像、文本、照片还有向量引入核函数。</p>
+
+<p>Algorithms capable of operating with kernels include the kernel perceptron, support vector machines (SVM), Gaussian processes, principal components analysis (PCA), canonical correlation analysis, ridge regression, spectral clustering, linear adaptive filters and many others. Any linear model can be turned into a non-linear model by applying the kernel trick to the model: replacing its features (predictors) by a kernel function[3]. 可采用核操作的算法包括：核感知机、支持向量机（SVM）、高斯过程、主成分分析（PCA）、典型相关分析、岭回归、谱聚类、线性自适应滤波器等等。对任何线性模型施加核技巧可将之转化成非线性模型：用核函数替代增加（<strong>维基原文是替代，我认为核函数相当于一个特征列，替代将浪费大量信息。</strong>）其特征（或者预测变量）。</p>
+
+<p>Most kernel algorithms are based on convex optimization or eigenproblems and are statistically well-founded. Typically, their statistical properties are analyzed using statistical learning theory (for example, using Rademacher complexity).大多数核算法都是基于凸优化或特征问题的，并且具有良好的统计基础。通常，使用统计学习理论(例如，使用Rademacher复杂度)分析它们的统计特性。</p>
+
+<h2 id="1-motivation-and-informal-explanation">1 Motivation and informal explanation</h2>
+
+<p>Kernel methods can be thought of as instance-based learners: rather than learning some fixed set of parameters corresponding to the features of their inputs, they instead &quot;remember&quot; the
+<code>$i$</code>
+-th training example
+<code>$(\vec {x} _{i},\vec{y}_{i})$</code>
+and learn for it a corresponding weight
+<code>$w_{i}$</code>
+. Prediction for unlabeled inputs, i.e., those not in the training set, is treated by the application of a <strong>similarity function</strong>
+<code>$k$</code>
+, called a kernel, between the unlabeled input
+<code>$\vec {x}'$</code>
+and each of the training inputs
+<code>$\vec {x} _{i}$</code>
+. For instance, a kernelized binary classifier typically computes a weighted sum of similarities:核方法可以看作是基于实例的学习者:它们不是学习与输入特性相对应的固定参数集，而是“记住”第<code>$i$</code>个训练样本<code>$(\vec {x} _{i},\vec{y}_{i})$</code>并学习其对应的参数<code>$w_{i}$</code>。未标记输入的预测，即在未标记的输入<code>$\vec {x}'$</code>和每个训练输入<code>$\vec {x} _{i}$</code>之间（既然叫输入，那么<code>$\vec {x}'$</code>和<code>$\vec {x} _{i}$</code>是行向量），应用一个称为核的<strong>相似度函数</strong><code>$k$</code>来处理那些不在训练集中的输入。例如，核化的二分类器通常计算相似度的加权合计：
+<code>$${\hat {y}}=\operatorname {sgn} \sum _{i=1}^{n}w_{i}y_{i}k(\vec {x} _{i},\vec {x}' )  \tag{1}$$</code>
+where:其中：</p>
+
+<ul>
+<li><code>${\hat {y}}\in \{-1,+1\}$</code>
+is the kernelized binary classifier's predicted label for the unlabeled input
+<code>$\vec {x}'$</code>
+whose hidden true label
+<code>$y$</code>
+is of interest; <code>${\hat {y}}\in \{-1,+1\}$</code>是核化二分类器的预测标签，对于未被标记的输入<code>$\vec {x}'$</code>，我们关心其未知的标签<code>$y$</code>；</li>
+<li><code>$k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R}$</code>
+is the kernel function that measures similarity between any pair of inputs
+<code>$\vec {x} ,\vec {x}' \in {\mathcal {X}}$</code>
+; <code>$k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R}$</code>是测量任意输入对<code>$\vec {x} ,\vec {x}' \in {\mathcal {X}}$</code>之间相似度的核函数；</li>
+<li>the sum ranges over the n labeled examples
+<code>$\{(\vec {x} _{i},\vec{y}_{i})\}_{i=1}^{n}$</code>
+in the classifier's training set, with
+<code>$y_{i}\in \{-1,+1\}$</code>
+;求和应包括分类器中全部n个标记了的样本<code>$\{(\vec {x} _{i},\vec{y}_{i})\}_{i=1}^{n}$</code>，其中<code>$y_{i}\in \{-1,+1\}$</code>；</li>
+<li>the
+<code>$w_{i}\in \mathbb {R}$</code>
+are the weights for the training examples, as determined by the learning algorithm; <code>$w_{i}\in \mathbb {R}$</code>是训练实例的权重，由学习算法确定；</li>
+<li>the sign function
+<code>$\operatorname {sgn}$</code>
+determines whether the predicted classification
+<code>${\hat {y}}$</code>
+comes out positive or negative.符号函数<code>$\operatorname {sgn}$</code>决定了预测的<code>${\hat {y}}$</code>分类结果是正的还是负的。</li>
+</ul>
+
+<p>Kernel classifiers were described as early as the 1960s, with the invention of the kernel perceptron.[4] They rose to great prominence with the popularity of the support vector machine (SVM) in the 1990s, when the SVM was found to be competitive with neural networks on tasks such as handwriting recognition.</p>
+
+<h2 id="2-mathematics-the-kernel-trick">2 Mathematics: the kernel trick</h2>
+
+<p>The kernel trick avoids the explicit mapping that is needed to get linear learning algorithms to learn a nonlinear function or decision boundary. For all
+<code>$\mathbf {x}$</code>
+and
+<code>$\vec {x}'$</code>
+in the input space
+<code>$\mathcal {X}$</code>
+, certain functions
+<code>$k(\vec {x} ,\vec {x}' )$</code>
+can be expressed as an inner product in another space
+<code>$\mathcal {V}$</code>
+. The function
+<code>$k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R}$</code>
+is often referred to as a kernel or a kernel function. The word &quot;kernel&quot; is used in mathematics to denote a weighting function for a weighted sum or integral.核技巧避免了线性学习算法学习非线性函数或决策边界所需要的显式映射。对于在输入空间<code>$\mathcal {X}$</code>上的所有<code>$\vec {x}$</code>和<code>$\vec {x}'$</code>，特定函数<code>$k(\vec {x} ,\vec {x}' )$</code>可以被表达为另一个空间<code>$\mathcal {V}$</code>的内积。函数<code>$k\colon {\mathcal {X}}\times {\mathcal {X}}\to \mathbb {R}$</code>通常被称为核或核函数。“核”这个词在数学中用来表示加权和或加权积分函数。</p>
+
+<p>Certain problems in machine learning have additional structure than an arbitrary weighting function
+<code>$k$</code>
+. The computation is made much simpler if the kernel can be written in the form of a &quot;feature map&quot;
+<code>$\varphi \colon {\mathcal {X}}\to {\mathcal {V}}$</code>
+which satisfies:机器学习中的某些问题具有比任意加权函数<code>$k$</code>更多的结构。计算会简单得多，如果核可以写成“feature map”<code>$\varphi \colon {\mathcal {X}}\to {\mathcal {V}}$</code>的形式，该形式满足：
+<code>$$k(\vec {x} ,\vec {x}' )=\langle \varphi (\vec {x} ),\varphi (\vec {x}' )\rangle _{\mathcal {V}}  \tag{2}$$</code>
+The key restriction is that
+<code>$\langle \cdot ,\cdot \rangle _{\mathcal {V}}$</code>
+must be a proper inner product. On the other hand, an explicit representation for
+<code>$\varphi$</code>
+is not necessary, as long as
+<code>$\mathcal{V}$</code>
+is an inner product space. The alternative follows from Mercer's theorem: an implicitly defined function
+<code>$\varphi$</code>
+exists whenever the space
+<code>$\mathcal{X}$</code>
+can be equipped with a suitable measure ensuring the function
+<code>$k$</code>
+satisfies Mercer's condition.关键的限制是<code>$\langle \cdot ,\cdot \rangle _{\mathcal {V}}$</code>必须是一个合适的内积（注意这里<code>$\mathcal {V}$</code>是下标，代表空间<code>$\mathcal {V}$</code>的内积）。另一方面，<code>$\varphi$</code>的显式表示是不必要的，只要<code>$\mathcal{V}$</code>是一个内积空间。另一种选择来自Mercer定理:当空间<code>$\mathcal{X}$</code>可以配备适当的度量来确保函数<code>$k$</code>满足Mercer条件时，就存在隐式定义的函数<code>$\varphi$</code>。</p>
+
+<p>Mercer's theorem is similar to a generalization of the result from linear algebra that associates an inner product to any positive-definite matrix. In fact, Mercer's condition can be reduced to this simpler case. If we choose as our measure the counting measure
+<code>$\mu (T)=|T|$</code>
+for all
+<code>$T\subset X$</code>
+, which counts the number of points inside the set
+<code>$T$</code>
+, then the integral in Mercer's theorem reduces to a summation: Mercer定理类似于线性代数结果的推广，它将内积与任何正定矩阵联系起来。实际上，Mercer条件可以简化为这个简单的例子。如果我们对于所有<code>$T\subset X$</code>选择计数测量<code>$\mu (T)=|T|$</code>作为测量尺度，计数测量计算集合<code>$T$</code>内的点数，那么Mercer定理中的积分就可以化为一个求和：
+<code>$$\sum_{i=1}^{n}\sum _{j=1}^{n}k(\vec {x} _{i},\vec {x} _{j})c_{i}c_{j}\geq 0  \tag{3}$$</code>
+If this summation holds for all finite sequences of points
+<code>$(\vec {x} _{1},\dotsc ,\vec {x} _{n})$</code>
+in
+<code>$\mathcal{X}$</code>
+and all choices of
+<code>$n$</code>
+real-valued coefficients
+<code>$(c_{1},\dots ,c_{n})$</code>
+(cf. positive definite kernel), then the function
+<code>$k$</code>
+satisfies Mercer's condition.如果这个总和适用于<code>$\mathcal{X}$</code>中的所有有限序列点<code>$(\vec {x} _{1},\dotsc ,\vec {x} _{n})$</code>和<code>$n$</code>个实值系数<code>$(c_{1},\dots ,c_{n})$</code> (cf.正定核)的所有选择，那么函数<code>$k$</code>满足Mercer条件。</p>
+
+<p>Some algorithms that depend on arbitrary relationships in the native space
+<code>$\mathcal{X}$</code>
+would, in fact, have a linear interpretation in a different setting: the range space of
+<code>$\varphi$</code>
+. The linear interpretation gives us insight about the algorithm. Furthermore, there is often no need to compute
+<code>$\varphi$</code>
+directly during computation, as is the case with support vector machines. Some cite this running time shortcut as the primary benefit. Researchers also use it to justify the meanings and properties of existing algorithms.一些算法依赖于原生空间<code>$\mathcal{X}$</code>中的任意关系，实际上，这些算法在不同的设置中会有一个线性解释:<code>$\varphi$</code>的范围空间。线性解释使我们对该算法有了更深入的了解。此外，在计算过程中通常不需要直接计算<code>$\varphi$</code>，支持向量机就不用计算<code>$\varphi$</code>。一些人将这种运行时间快捷方式作为主要优点。研究人员还用它来证明现有算法的意义和性质。</p>
+
+<p>Theoretically, a Gram matrix
+<code>$\mathbf {K} \in \mathbb {R} ^{n\times n}$</code>
+with respect to
+<code>$\{\vec {x} _{1},\dotsc ,\vec {x} _{n}\}$</code>
+(sometimes also called a &quot;kernel matrix&quot;[5]), where
+<code>$K_{ij}=k(\vec {x} _{i},\vec {x} _{j})$</code>
+, must be positive semi-definite (PSD).[6] Empirically, for machine learning heuristics, choices of a function
+<code>$k$</code>
+that do not satisfy Mercer's condition may still perform reasonably if
+<code>$k$</code>
+at least approximates the intuitive idea of similarity.[7] Regardless of whether
+<code>$k$</code>
+is a Mercer kernel,
+<code>$k$</code>
+may still be referred to as a &quot;kernel&quot;.
+If the kernel function
+<code>$k$</code>
+is also a covariance function as used in Gaussian processes, then the Gram matrix
+<code>$\mathbf {K}$</code>
+can also be called a covariance matrix.理论上，关于<code>$\{\vec {x} _{1},\dotsc ,\vec {x} _{n}\}$</code>的Gram矩阵（其第i行j列元素为第i和j个向量的内积<code>$\langle \vec{x_j} ,\vec{x_j} \rangle$</code>）<code>$\mathbf {K} \in \mathbb {R} ^{n\times n}$</code>(有时也称为“核矩阵”)必须是正半定的(PSD)，其中<code>$K_{ij}=k(\vec {x} _{i},\vec {x} _{j})$</code>。根据经验，对于机器学习启发式，如果<code>$k$</code>至少近似于直观的相似性概念，那么不满足Mercer条件的函数<code>$k$</code>的选择可能仍然合理。无论<code>$k$</code>是否是Mercer核，“$k$”仍然可以称为“核”。如果核函数<code>$k$</code>也是高斯过程中使用的协方差函数，那么Gram矩阵<code>$\mathbf {K}$</code>也可以称为协方差矩阵。</p>
+
+<h2 id="3-applications">3 Applications</h2>
+
+<p>Application areas of kernel methods are diverse and include geostatistics,[9] kriging, inverse distance weighting, 3D reconstruction, bioinformatics, chemoinformatics, information extraction and handwriting recognition.核方法的应用领域多种多样，包括地理统计学、克里格法、反转距离加权法、三维重建法、生物信息学、化学信息学、信息提取和笔迹识别。</p>
+
+<h2 id="4-popular-kernels">4 Popular kernels</h2>
+
+<h3 id="4-1-cosine-similarity余弦相似度">4.1 Cosine similarity余弦相似度</h3>
+
+<p>cosine_similarity computes the L2-normalized dot product of vectors. That is, if
+<code>$\vec{x}$</code>
+and
+<code>$\vec{y}$</code>
+are row vectors, their cosine similarity
+<code>$k$</code>
+is defined as:
+<code>$$k(\vec{x}, \vec{y}) = \frac{\vec{x}^T \vec{y}}{\|\vec{x}\| \|\vec{y}\|}  \tag{4}$$</code>
+<strong>skearn文档关于cos相似度的公式错误，上式才是对的！</strong></p>
+
+<p>This is called cosine similarity, because Euclidean (L2) normalization projects the vectors onto the unit sphere, and their dot product is then the cosine of the angle between the points denoted by the vectors.</p>
+
+<p>This kernel is a popular choice for computing the similarity of documents represented as tf-idf vectors. cosine_similarity accepts <code>scipy.sparse</code> matrices. (Note that the tf-idf functionality in <code>sklearn.feature_extraction.text</code> can produce normalized vectors, in which case cosine_similarity is equivalent to linear_kernel, only slower.)</p>
+
+<h3 id="4-2-linear-kernel线性核">4.2 Linear kernel线性核</h3>
+
+<p>The function linear_kernel computes the linear kernel, that is, a special case of polynomial_kernel with <code>degree=1</code> and <code>coef0=0</code> (homogeneous). If <code>x</code> and <code>y</code> are column vectors, their linear kernel is:
+<code>$$k(\vec{x}, \vec{y}) = \vec{x}^T \vec{y}  \tag{5}$$</code></p>
+
+<h3 id="4-3-polynomial-kernel多项式核">4.3 Polynomial kernel多项式核</h3>
+
+<p>The function polynomial_kernel computes the degree-d polynomial kernel between two vectors. The polynomial kernel represents the similarity between two vectors. Conceptually, the polynomial kernels considers not only the similarity between vectors under the same dimension, but also across dimensions. When used in machine learning algorithms, this allows to account for feature interaction.
+The polynomial kernel is defined as:
+<code>$$k(\vec{x}, \vec{y}) = (\gamma \vec{x}^T \vec{y} +c_0)^d  \tag{6}$$</code>
+where:</p>
+
+<ul>
+<li><code>$\vec{x}$</code>, <code>$\vec{y}$</code> are the input vectors</li>
+<li><code>$d$</code> is the kernel degree</li>
+</ul>
+
+<p>If
+<code>$c_0 = 0$</code>
+the kernel is said to be homogeneous.如果<code>$c_0 = 0$</code>那核函数将是齐次的（即每一项中<code>$\vec{x}$</code>和<code>$\vec{y}$</code>的指数之和总为<code>$d$</code>）。</p>
+
+<h3 id="4-4-sigmoid-kernel-sigmoid核">4.4 Sigmoid kernel Sigmoid核</h3>
+
+<p>The function sigmoid_kernel computes the sigmoid kernel between two vectors. The sigmoid kernel is also known as hyperbolic tangent, or Multilayer Perceptron (because, in the neural network field, it is often used as neuron activation function). It is defined as:
+<code>$$k(\vec{x}, \vec{y}) = \tanh( \gamma \vec{x}^T \vec{y} + c_0)  \tag{7}$$</code>
+where:</p>
+
+<ul>
+<li><code>$\vec{x}$</code>, <code>$\vec{y}$</code> are the input vectors</li>
+<li><code>$\gamma$</code>
+is known as slope</li>
+<li><code>$c_0$</code>
+is known as intercept</li>
+</ul>
+
+<h3 id="4-5-radial-basis-function-kernel-rbf-kernel径向基函数-rbf-核">4.5 Radial basis function kernel (RBF) kernel径向基函数(RBF)核</h3>
+
+<p>The function rbf_kernel computes the radial basis function (RBF) kernel between two vectors. This kernel is defined as:
+<code>$$k(\vec{x}, \vec{y}) = \exp( -\gamma \| \vec{x}-\vec{y} \|_2^2)  \tag{8}$$</code>
+where:</p>
+
+<ul>
+<li><code>$\vec{x}$</code> and <code>$\vec{y}$</code> are the input vectors；</li>
+<li><code>$\| \vec{x}-\vec{y} \|_2^2$</code> may be recognized as the squared Euclidean distance between the two feature vectors.</li>
+</ul>
+
+<p>If
+<code>$\gamma = \frac{1}{2\sigma^{2}}$</code>
+the kernel is known as the Gaussian kernel of variance
+<code>$\sigma^2$</code>
+.</p>
+
+<h3 id="4-6-laplacian-kernel拉普拉斯核">4.6 Laplacian kernel拉普拉斯核</h3>
+
+<p>The function laplacian_kernel is a variant on the radial basis function kernel defined as:
+<code>$$k(\vec{x}, \vec{y}) = \exp( -\gamma \| \vec{x}-\vec{y} \|_1)  \tag{9}$$</code>
+where:</p>
+
+<ul>
+<li>x and y are the input vectors and
+<code>$\|\vec{x}-\vec{y}\|_1$</code>
+is the Manhattan distance between the input vectors.</li>
+</ul>
+
+<p>It has proven useful in ML applied to noiseless data. See e.g. <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/qua.24954">Machine learning for quantum mechanics in a nutshell</a>.在机器学习中对降噪很有作用。</p>
+
+<h3 id="4-7-chi-squared-kernel卡方核">4.7 Chi-squared kernel卡方核</h3>
+
+<p>The chi-squared kernel is a very popular choice for training non-linear SVMs in computer vision applications. It can be computed using chi2_kernel and then passed to an sklearn.svm.SVC with <code>kernel=&quot;precomputed&quot;</code>.
+The chi squared kernel is given by：卡方核在非线性SVM训练计算机视觉应很常见，其定义如下：
+<code>$$k(\vec{x}, \vec{y}) = \exp \left (-\gamma \sum_i \frac{(\vec{x}[i] - \vec{y}[i]) ^ 2}{\vec{x}[i] + \vec{y}[i]} \right )   \tag{10}$$</code>
+The data is assumed to be non-negative, and is often normalized to have an L1-norm of one. The normalization is rationalized with the connection to the chi squared distance, which is a distance between discrete probability distributions.
+The chi squared kernel is most commonly used on histograms (bags) of visual words.</p>
+
+<h3 id="4-8-fisher-kernel费雪核">4.8 Fisher kernel费雪核</h3>
+
+<p>Fisher score:</p>
+
+<p>The Fisher kernel makes use of the Fisher score, defined as：
+<code>$$\mathbf{U}_{\vec{x}}=\nabla _{\vec{\theta} }\log P(\vec{x}|\vec{\theta} )  \tag{11}$$</code>
+with <code>$\vec{\theta}$</code> being a set (vector) of parameters. <code>$\log P(\vec{x}|\vec{\theta} )$</code> is the log-likelihood of the probabilistic model.其中<code>$\vec{\theta}$</code>是参数集（向量）。<code>$\log P(\vec{x}|\vec{\theta} )$</code>是概率模型的对数似然。（右边代表对<code>$\log P(\vec{x}|\vec{\theta} )$</code>关于<code>$\vec{\theta}$</code>求偏导。）</p>
+
+<p>Fisher kernel:</p>
+
+<p>The Fisher kernel is defined as：
+<code>$$K(\vec{x}_{i},\vec{x}_{j})=\mathbf{U}_{\vec{x}_{i}}^{T}\mathbf{I}^{-1}\mathbf{U}_{\vec{x}_{j}}  \tag{12}$$</code>
+with <code>$\mathbf{I}$</code> being the Fisher information matrix.</p>
+
+<p>The Fisher kernel is the kernel for a generative probabilistic model.费雪核是适用于生成概率模型的核。(所以暂不细究。)</p>
+
+<h3 id="4-9-kernel-smoother核平滑器">4.9 Kernel smoother核平滑器</h3>
+
+<p>A kernel smoother is a statistical technique to estimate a real valued function
+<code>$f:\mathbb {R} ^{p}\to \mathbb {R}$</code>
+as the weighted average of neighboring observed data. The weight is defined by the kernel, such that closer points are given higher weights. The estimated function is smooth, and the level of smoothness is set by a single parameter.核平滑器是一种将实值函数<code>$f:\mathbb {R} ^{p}\to \mathbb {R}$</code>估计为相邻观测数据加权平均值的统计技术。权重是由核定义的，这样更接近的点被赋予更高的权重。所估计的函数是光滑的，平滑程度由单个参数设置。</p>
+
+<p>This technique is most appropriate for low-dimensional (p &lt; 3) data visualization purposes. Actually, the kernel smoother represents the set of irregular data points as a smooth line or surface.这种技术最适合于低维(p &lt; 3)数据可视化目的。实际上，核平滑器将一组不规则的数据点表示为一条光滑的线或曲面。</p>
+
+<p>Let
+<code>$K_{h_{\lambda }}(\vec{x}_{0},\vec{x})$</code>
+be a kernel defined by:核<code>$K_{h_{\lambda }}(\vec{x}_{0},\vec{x})$</code>定义为：
+<code>$$K_{h_{\lambda }}(\vec{x}_{0},\vec{x})=D\left({\frac {\left\|\vec{x}-\vec{x}_{0}\right\|_2}{h_{\lambda }(\vec{x}_{0})}}\right) \tag{13}$$</code>
+where:其中：</p>
+
+<ul>
+<li><code>$\vec{x},\vec{x}_{0}\in \mathbb {R} ^{p}$</code></li>
+<li><code>$\left\|\cdot \right\|_2$</code>
+is the Euclidean norm  <code>$\left\|\cdot \right\|_2$</code>是欧式范数</li>
+<li><code>$h_{\lambda }(\vec{x}_{0})$</code>
+is a parameter (kernel radius)  <code>$h_{\lambda }(\vec{x}_{0})$</code>是一个参数（核半径）</li>
+<li><code>$D(t)$</code> typically is a positive real valued function, which value is decreasing (or not increasing) for the increasing distance between the <code>$\vec{x}$</code> and <code>$\vec{x}_{0}$</code>.  <code>$D(t)$</code>通常是一个正实值函数，当<code>$\vec{x}$</code>和<code>$\vec{x}_{0}$</code>之间的距离增加时，其值减少(或不增加)。</li>
+</ul>
+
+<p>Popular kernels used for smoothing include parabolic (Epanechnikov), Tricube, and Gaussian kernels.用于平滑的常用核包括抛物型(Epanechnikov)、三立方型和高斯型核。</p>
+
+<p>Let
+<code>${\hat {y}}(\vec{x}):\mathbb {R} ^{p}\to \mathbb {R}$</code>
+be a continuous function of <code>$\vec{x}$</code>. For each
+<code>$\vec{x}_{0}\in \mathbb {R} ^{p}$</code>
+, the Nadaraya-Watson kernel-weighted average (smooth <code>$y(\vec{x})$</code> estimation) is defined by:设<code>${\hat {y}}(\vec{x}):\mathbb {R} ^{p}\to \mathbb {R}$</code>是<code>$\vec{x}$</code>的一个连续函数。对任意<code>$\vec{x}_{0}\in \mathbb {R} ^{p}$</code>，Nadaraya-Watson核加权平均（平滑的<code>$y(\vec{x})$</code>估计）定义如下：
+<code>$${\hat {y}}(\vec{x}_{0})={\frac {\sum \limits _{i=1}^{N}{K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})y(\vec{x}_{i})}}{\sum \limits _{i=1}^{N}{K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})}}}  \tag{14}$$</code>
+where:其中：</p>
+
+<ul>
+<li><code>$N$</code> is the number of observed points  <code>$N$</code>是观测点的数量</li>
+<li><code>$y(\vec{x}_i)$</code> are the observations at <code>$\vec{x}_i$</code> points. <code>$y(\vec{x}_i)$</code>是在<code>$\vec{x}_i$</code>的观测值</li>
+</ul>
+
+<p>In the following sections, we describe some particular cases of kernel smoothers.接下来介绍一些具体的核平滑器。</p>
+
+<h4 id="4-9-1-gaussian-kernel-smoother-高斯核平滑器">4.9.1 Gaussian kernel smoother:高斯核平滑器：</h4>
+
+<p>The Gaussian kernel is one of the most widely used kernels, and is expressed with the equation below:高斯核应用最广泛的核之一，表达式如下：
+<code>$$K(\vec{x}^{*},\vec{x}_{i})=\exp \left(-{\frac {(\vec{x}^{*}-\vec{x}_{i})^{2}}{2b^{2}}}\right)  \tag{15}$$</code>
+Here, <code>$b$</code> is the length scale for the input space.这里<code>$b$</code>是为输入空间的长度标度。
+Example:例子：
+<img src="/km/Gaussian_kernel_regression.png" alt="Gaussian kernel regression" /></p>
+
+<h4 id="4-9-2-nearest-neighbor-smoother-最邻近平滑器">4.9.2 Nearest neighbor smoother:最邻近平滑器：</h4>
+
+<p>The idea of the nearest neighbor smoother is the following. For each point <code>$\vec{x}_0$</code>, take <code>$m$</code> nearest neighbors and estimate the value of <code>$y(\vec{x}_0)$</code> by averaging the values of these neighbors.
+Formally,
+<code>$h_{m}(\vec{x}_{0})=\left\|\vec{x}_{0}-\vec{x}_{[m]}\right\|$</code>
+, where
+<code>$\vec{x}_{[m]}$</code>
+is the <code>$m$</code>th closest to <code>$\vec{x}_0$</code> neighbor, and:最近邻平滑器的概念如下。对于每个点<code>$\vec{x}_0$</code>，取<code>$m$</code>最近的邻居，并通过平均这些邻居的值来估计<code>$y(\vec{x}_0)$</code>的值。正式地，<code>$h_{m}(\vec{x}_{0})=\left\|\vec{x}_{0}-\vec{x}_{[m]}\right\|$</code>，其中<code>$\vec{x}_{[m]}$</code>是离<code>$\vec{x}_0$</code>最近的第<code>$m$</code>位，并且：
+<code>$$D(t)={\begin{cases}1/m&amp;{\text{if }}|t|\leq 1\\0&amp;{\text{otherwise}}\end{cases}}  \tag{16}$$</code></p>
+
+<p><strong>这里<code>$t$</code>是两点之间的距离。上式要求距离小于1是举了一个例子，并不是非得1。其实<code>$D(t)$</code>就是核函数，比如我们考虑取最邻近的16个点，那么就会取到核函数的16个值，代入式子(4.9.2)将求出<code>$y(\vec{x}_0)$</code>。</strong></p>
+
+<p>Example:例子：
+<img src="/km/NNSmoother.png" alt="NNSmoother" />
+<strong>图像中标注与公式矛盾，<code>$X$</code>其实该写成<code>$\vec{x}$</code>,<code>$Y$</code>其实该写成<code>$y$</code>,<code>$X_0$</code>其实该写成<code>$\vec{x}_0$</code>，<code>$Y(X)$</code>其实该写成<code>$y(\vec{x})$</code>，<code>${\hat {Y}}(X)$</code>其实该写成<code>${\hat {y}}(\vec{x})$</code>,<code>${\hat {Y}}(X_0)$</code>其实该写成<code>${\hat {y}}(\vec{x}_0)$</code>。后续图片相同情况。</strong></p>
+
+<p>In this example, <code>$\vec{x}$</code> is one-dimensional. For each <code>$\vec{x}_0$</code>, the
+<code>${\hat {y}}(\vec{x}_{0})$</code>
+is an average value of 16 closest to <code>$\vec{x}_0$</code> points (denoted by red). The result is not smooth enough.此例中，<code>$\vec{x}$</code>是一维向量（数据点、行向量）。对每个数据点<code>$\vec{x}_0$</code>，<code>${\hat {y}}(\vec{x}_{0})$</code>是16个最邻近<code>$\vec{x}_0$</code>的点（标记为红点）的平均的值。结果不够平滑。</p>
+
+<h4 id="4-9-3-kernel-average-smoother-核平均平滑器">4.9.3 Kernel average smoother:核平均平滑器：</h4>
+
+<p>The idea of the kernel average smoother is the following. For each data point <code>$\vec{x}_0$</code>, choose a constant distance size <code>$\lambda$</code> (kernel radius, or window width for <code>$p = 1$</code> dimension), and compute a weighted average for all data points that are closer than
+<code>$\lambda$</code>
+to <code>$\vec{x}_0$</code> (the closer to <code>$\vec{x}_0$</code> points get higher weights).
+Formally,
+<code>$h_{\lambda }(\vec{x}_{0})=\lambda ={\text{constant}}$</code>,
+and <code>$D(t)$</code> is one of the popular kernels.核平均平滑器的思想如下。对于每个数据点<code>$\vec{x}_0$</code>，选择一个固定的距离大小<code>$\lambda$</code>(内核半径，或<code>$p = 1$</code>维度的窗口宽度)，并计算一个加权平均值，为所有比<code>$\lambda$</code>更接近<code>$\vec{x}_0$</code>的数据点(越接近<code>$\vec{x}_0$</code>的点获得更高的权重)。正式地，<code>$h_{\lambda }(\vec{x}_{0})=\lambda ={\text{constant}}$</code>，并且<code>$D(t)$</code>是最受欢迎的核之一。</p>
+
+<p>Example:例子：
+<img src="/km/KernelSmoother.png" alt="KernelSmoother" />
+For each <code>$\vec{x}_0$</code> the window width is constant, and the weight of each point in the window is schematically denoted by the yellow figure in the graph. It can be seen that the estimation is smooth, but the boundary points are biased. The reason for that is the non-equal number of points (from the right and from the left to the <code>$\vec{x}_0$</code>) in the window, when the <code>$\vec{x}_0$</code> is close enough to the boundary.对每个点<code>$\vec{x}_0$</code>窗口宽度是常数，窗口中每个点的权重用图中黄色的图形表示。可以看出，该估计是平滑的，但边界点（<strong>这里边界点是所有<code>$\vec{x}$</code>的头尾</strong>）是有偏差的。原因是当<code>$\vec{x}_0$</code>足够接近边界时，窗口中的点(从右到<code>$\vec{x}_0$</code>和从左到<code>$\vec{x}_0$</code>)数量不相等。</p>
+
+<h4 id="4-9-4-local-linear-regression-局部线性回归">4.9.4 Local linear regression:局部线性回归</h4>
+
+<p>In the two previous sections we assumed that the underlying <code>$y(\vec{x})$</code> function is locally constant, therefore we were able to use the weighted average for the estimation. The idea of local linear regression is to fit locally a straight line (or a hyperplane for higher dimensions), and not the constant (horizontal line). After fitting the line, the estimation
+<code>${\hat {y}}(\vec{x}_{0})$</code>
+is provided by the value of this line at <code>$\vec{x}_0$</code> point. By repeating this procedure for each <code>$\vec{x}_0$</code>, one can get the estimation function
+<code>${\hat {y}}(\vec{x})$</code>
+. Like in previous section, the window width is constant
+<code>$h_{\lambda }(\vec{x}_{0})=\lambda ={\text{constant}}$</code>.
+Formally, the local linear regression is computed by solving a weighted least square problem.在前两节（4.9.2和4.9.3）中，我们假设底层的<code>$y(\vec{x})$</code>函数是局部常量，因此我们可以使用加权平均值进行估计。局部线性回归的思想是在局部拟合一条直线(或高维的超平面)，而不是常数(水平线)。拟合直线后，由直线在<code>$\vec{x}_0$</code>点处的值提供估算值<code>${\hat {y}}(\vec{x}_{0})$</code>。通过对每个<code>$\vec{x}_0$</code>重复这个过程，可以得到估计函数<code>${\hat {y}}(\vec{x})$</code>。与前一节（4.9.3）一样，窗体宽度是常数<code>$h_{\lambda }(\vec{x}_{0})=\lambda ={\text{constant}}$</code>。在形式上，局部线性回归是通过求解加权最小二乘问题来计算的。</p>
+
+<p>For one dimension (<code>$p = 1$</code>):对一维情况（<code>$p = 1$</code>）：
+<code>$${\begin{aligned}&amp;\min _{\alpha (\vec{x}_{0}),\beta (\vec{x}_{0})}\sum \limits _{i=1}^{N}{K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})\left(y(\vec{x}_{i})-\alpha (\vec{x}_{0})-\beta (\vec{x}_{0})\vec{x}_{i}\right)^{2}}\\&amp;\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\Downarrow \\&amp;\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,{\hat {y}}(\vec{x}_{0})=\alpha (\vec{x}_{0})+\beta (\vec{x}_{0})\vec{x}_{0}\\\end{aligned}}  \tag{17}$$</code>
+The closed form solution is given by:封闭形式的解由下式给出：
+<code>$${\hat {y}}(\vec{x}_{0})=\left(1,\vec{x}_{0}\right)\left(B^{T}W(\vec{x}_{0})B\right)^{-1}B^{T}W(\vec{x}_{0})y  \tag{18}$$</code>
+where:其中：</p>
+
+<ul>
+<li><code>$y=\left(y(\vec{x}_{1}),\dots ,y(\vec{x}_{n})\right)^{T}$</code></li>
+<li><code>$W(\vec{x}_{0})=\operatorname {diag} \left(K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})\right)_{n\times n}$</code></li>
+<li><code>$B^{T}=\left({\begin{matrix}1&amp;1&amp;\dots &amp;1\\\vec{x}_{1}&amp;\vec{x}_{2}&amp;\dots &amp;\vec{x}_{n}\\\end{matrix}}\right)$</code></li>
+</ul>
+
+<p><strong>注意到：上式是在普通线性回归中增加了局部核函数作为权值。</strong></p>
+
+<p>Example:例子：
+<img src="/km/Localregressionsmoother.png" alt="Localregressionsmoother" />
+The resulting function is smooth, and the problem with the biased boundary points is solved.结果是平滑的，边界点偏差问题也不存在了。</p>
+
+<p>Local linear regression can be applied to any-dimensional space, though the question of what is a local neighborhood becomes more complicated. It is common to use k nearest training points to a test point to fit the local linear regression. This can lead to high variance of the fitted function. To bound the variance, the set of training points should contain the test point in their convex hull (see Gupta et al. reference).局部线性回归可以应用于任何维空间，尽管什么是局部邻域的问题变得更加复杂。通常使用距离测试点最近的k个训练点来拟合局部线性回归。这可能导致拟合函数的方差很大。要约束方差，训练点集应该在其凸包中包含测试点(参见Gupta等人的参考文献)。</p>
+
+<h4 id="4-9-5-local-polynomial-regression-局部多项式回归">4.9.5 Local polynomial regression:局部多项式回归：</h4>
+
+<p>Instead of fitting locally linear functions, one can fit polynomial functions.除了拟合局部线性函数，还可以拟合多项式函数。</p>
+
+<p>For <code>$p=1$</code>, one should minimize: 对于<code>$p=1$</code>，应最小化：
+<code>$${\underset {\alpha (\vec{x}_{0}),\beta _{j}(\vec{x}_{0}),j=1,...,d}{\mathop {\min } }}\,\sum \limits _{i=1}^{N}{K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})\left(y(\vec{x}_{i})-\alpha (\vec{x}_{0})-\sum \limits _{j=1}^{d}{\beta _{j}(\vec{x}_{0})\vec{x}_{i}^{j}}\right)^{2}}  \tag{19}$$</code></p>
+
+<p>with：有：
+<code>$${\hat {y}}(\vec{x}_{0})=\alpha (\vec{x}_{0})+\sum \limits _{j=1}^{d}{\beta _{j}(\vec{x}_{0})\vec{x}_{0}^{j}}  \tag{20}$$</code></p>
+
+<p>In general case (<code>$p&gt;1$</code>), one should minimize:总体上（<code>$p&gt;1$</code>），应最小化：
+<code>$${\begin{aligned}&amp;{\hat {\beta }}(\vec{x}_{0})={\underset {\beta (\vec{x}_{0})}{\mathop {\arg \min } }}\,\sum \limits _{i=1}^{N}{K_{h_{\lambda }}(\vec{x}_{0},\vec{x}_{i})\left(y(\vec{x}_{i})-b(\vec{x}_{i})^{T}\beta (\vec{x}_{0})\right)}^{2}\\&amp;b(\vec{x})=\left({\begin{matrix}1,&amp;\vec{x}_{1},&amp;\vec{x}_{2},...&amp;\vec{x}_{1}^{2},&amp;\vec{x}_{2}^{2},...&amp;\vec{x}_{1}\vec{x}_{2}\,\,\,...\\\end{matrix}}\right)\\&amp;{\hat {y}}(\vec{x}_{0})=b(\vec{x}_{0})^{T}{\hat {\beta }}(\vec{x}_{0})\\\end{aligned}}  \tag{21}$$</code></p>
+
+<p><strong>注意到：上式是在普通多项式回归中增加了局部核函数作为权值。</strong></p>
+
+<p><strong>关于Kernel smoother的具体例子以后再掌握。有监督学习是用不上的。</strong></p>
+
+<p>参考：</p>
+
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/Kernel_method">维基Kernel method</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/metrics.html#">slearn文档</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Fisher_kernel">维基Fisher kernel</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Kernel_smoother">维基Kernel smoother</a></li>
+<li><a href="https://www.zhihu.com/question/26561604">知乎-费雪信息 (Fisher information) 的直观意义是什么？</a></li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

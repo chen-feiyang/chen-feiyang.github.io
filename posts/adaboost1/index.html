@@ -1,0 +1,997 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Adaboost1 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Adaboost1</h1>
+
+
+<p>sklearn文档介绍AdaBoostClassifier采用的算法是SAMME和SAMME.R，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有优势，下文全文翻译SAMME和SAMME.R发明人论文，当然，遇有不懂的我将找资料再去了解。</p>
+
+<h1 id="1-introduction介绍">1 Introduction介绍</h1>
+
+<p>Boosting has been a very successful technique for solving the two-class classiﬁcation problem. It was ﬁrst introduced by Freund &amp; Schapire (1997), with their AdaBoost algorithm. In going from two-class to multi-class classiﬁcation, most boosting algorithms have been restricted to reducing the multi-class classiﬁcation problem to multiple two-class problems, e.g. Freund &amp; Schapire (1997), Schapire (1997), Schapire &amp; Singer (1999), Allwein, Schapire &amp; Singer (2000), Friedman, Hastie &amp; Tibshirani (2000), Friedman (2001).增强法是解决两分类分类问题的一种非常成功的方法。它最初是由Freund &amp; Schapire(1997)和他们的AdaBoost算法引入的。在从两分类分类到多分类分类的过程中，大多数的推进算法都局限于将多分类分类问题简化为多个两分类问题，如Freund &amp; Schapire (1997)， Schapire (1997)， Schapire &amp; Singer (1999)， Allwein, Schapire &amp; Singer (2000)， Friedman, Hastie &amp; Tibshirani (2000)， Friedman(2001)。</p>
+
+<p>In this paper, we develop a new algorithm that directly extends the AdaBoost algorithm to the multi-class case without reducing it to multiple two-class problems. Similar to AdaBoost in the two-class case, this new algorithm combines weak classiﬁers and only requires the performance of each weak classiﬁer be better than random guessing (rather than 1/2).在本文中，我们开发了一种新的算法，它直接将AdaBoost算法扩展到多分类情况下，而不将其缩减为多个两分类问题。与两分类情况下的AdaBoost类似，该算法结合了弱分类器，只要求每个弱分类器的性能优于随机猜测(比1/2好)。</p>
+
+<p>We believe this new algorithm covers a signiﬁcant gap in the literature, as it is statistically motivated by a novel multi-class exponential loss function. In addition, similar to the original AdaBoost algorithm for the two-class classiﬁcation, it ﬁts a forward stagewise additive model.我们相信这个新算法在文献中有很大的空白，因为它是由一个新颖的多分类指数损失函数驱动的。此外，与原有的两分类分类AdaBoost算法相似，该算法适用于向前递归叠加模型。</p>
+
+<p>As we will see, the new algorithm is extremely easy to implement, and is highly competitive with the best currently available multi-class classiﬁcation methods, in terms of both practical performance and computational cost.正如我们将看到的，新算法非常容易实现，并且在实际性能和计算成本方面与当前可用的最佳多分类分类方法相比具有很强的竞争力。</p>
+
+<h2 id="1-1-adaboost">1.1 AdaBoost</h2>
+
+<p>Before delving into the new algorithm for multi-class boosting, we brieﬂy review the multi-class classiﬁcation problem and the AdaBoost algorithm (Freund &amp; Schapire 1997). Suppose we are given a set of training data <code>$(\vec{x}_1,c_1),\ldots,(\vec{x}_n,c_n)$</code>, where the input (predictor variable) <code>$\vec{x}_i \in \mathbb{R}^p$</code>, and the output (response variable) <code>$c_i$</code> is qualitative and assumes values in a ﬁnite set, e.g. <code>$\{1,2,\ldots,K\}$</code>. <code>$K$</code> is the number of classes. The goal is to ﬁnd a classiﬁcation rule <code>$C(\vec{x})$</code> from the training data, so that when given a new input <code>$\vec{x}$</code>, we can assign it a class label <code>$c$</code> from <code>$\{1,2,\ldots,K\}$</code>.在深入研究多分类增强的新算法之前，我们简要回顾了多分类分类问题和AdaBoost算法(Freund &amp; Schapire 1997)。假设有训练数据<code>$(\vec{x}_1,c_1),\ldots,(\vec{x}_n,c_n)$</code>，其中输入（用于预测的变量）<code>$\vec{x}_i \in \mathbb{R}^p$</code>，和输出（回馈变量）<code>$c_i$</code>是定性的，并假设值在一个有限的集合，如<code>$\{1,2,\ldots,K\}$</code>。<code>$K$</code>是分类数。我们的目标是从训练数据中找到一个分类规则<code>$C(\vec{x})$</code>，这样当有一个新的输入<code>$\vec{x}$</code>时，我们就可以从<code>$\{1,2,\ldots,K\}$</code>中给它分配一个类标签<code>$c$</code>。</p>
+
+<p>The question, then, is what is the best possible classiﬁcation rule. To answer this question, we need to deﬁne what we mean by best. A common deﬁnition of best is to achieve the lowest misclassiﬁcation error rate. Usually it is assumed that the training data are independently and identically distributed samples from an unknown probability distribution <code>$Prob(\mathbf{X},C)$</code>. Then the misclassiﬁcation error rate for <code>$C(\vec{x})$</code> is:那么，问题是什么是最好的分类规则。为了回答这个问题，我们需要定义什么是最好。常将达到最低误分类错误率定义为“好”。通常假设训练数据是来自未知概率分布<code>$Prob(\mathbf{X},C)$</code>的独立同分布样本。则<code>$C(\vec{x})$</code>的误分类错误率为：<br />
+<code>$$\begin{align}
+E_{\mathbf{X},C} \mathbb{I}_{C(\mathbf{X}) \ne C} &amp;=E_{\mathbf{X}}Prob(C(\mathbf{X}) \ne C|\mathbf{X}) \\
+&amp;=1 −E_{\mathbf{X}} Prob(C(\mathbf{X})=C|\mathbf{X}) \\
+&amp;=1 − \sum_{k=1}^{K} E_{\mathbf{X}} [\mathbb{I}_{C(\mathbf{X})=k} Prob(C = k|\mathbf{X})]
+\end{align} \tag{1}$$</code>
+<strong>即误分类率=1-正确分类率</strong></p>
+
+<p>It is clear that明显有
+<code>$$C^{∗}(\vec{x}) = \arg \max_{k} Prob(C = k|\mathbf{X} = \vec{x}) \tag{2}$$</code>
+will minimize this quantity with the misclassiﬁcation error rate equal to <code>$1−E_{\mathbf{X}} max_{k} Prob(C = k|\mathbf{X})$</code>. This classiﬁer is known as the Bayes classiﬁer, and the error rate it achieves is the Bayes error rate.将最小化这个量使误分类错误率等于<code>$1−E_{\mathbf{X}} max_{k} Prob(C = k|\mathbf{X})$</code>。这个分类器被称为贝叶斯分类器，它所达到的错误率就是贝叶斯错误率。</p>
+
+<p><strong>贝叶斯分类器，依据<code>$Prob(C = k|\mathbf{X} = \vec{x})$</code>的最大概率分类数据点<code>$\vec{x}$</code>。同时，这等价于最小化误分类概率。</strong></p>
+
+<p>The AdaBoost algorithm is an iterative procedure that combines many weak classiﬁers to approximate the Bayes classiﬁer <code>$C^{∗}(\vec{x})$</code>. Starting with the unweighted training sample, the AdaBoost builds a classiﬁer, for example a classiﬁcation tree (Breiman, Friedman, Olshen &amp; Stone 1984), that produces class labels. If a training data point is misclassiﬁed, the weight of that training data point is increased (boosted). A second classiﬁer is built using the new weights, which are no longer equal. Again, misclassiﬁed training data have their weights boosted and the procedure is repeated. Typically, one may build 500 or 1000 classiﬁers this way. A score is assigned to each classiﬁer, and the ﬁnal classiﬁer is deﬁned as the linear combination of the classiﬁers from each stage. Speciﬁcally, let <code>$T(\vec{x})$</code> denote a weak multi-class classiﬁer that assigns a class label to <code>$\vec{x}$</code>, then the AdaBoost algorithm proceeds as follows: AdaBoost算法是一个迭代过程,结合许多弱分类器来近似贝叶斯分类器<code>$C^{∗}(\vec{x})$</code>。从未加权的训练样本开始，AdaBoost构建一个分类器，例如生成类标签的分类树(Breiman, Friedman, Olshen &amp; Stone 1984)。如果一个训练数据点分类错误，那么该训练数据点的权重就会增加。第二个分类器是使用不再相等的新权重构建的。再次，错误分类的训练数据会增加它们的权重，然后重复这个过程。通常，可以用这种方式构建500或1000个分类器。每个分类器都有一个分数，最终的分类器定义为每个阶段分类器的线性组合。具体地说，让<code>$T(\vec{x})$</code>表示一个弱的多分类分类器，该分类器将一个类标签赋给<code>$\vec{x}$</code>，然后AdaBoost算法进行如下操作：</p>
+
+<p><strong>Algorithm 1 AdaBoost</strong> (Freund &amp; Schapire 1997)</p>
+
+<ul>
+<li>1 Initialize the observation weights <code>$w_i =1/n, i =1 ,2,\ldots,n$</code> .</li>
+<li>2 For <code>$m =1$</code> to <code>$M$</code>:
+
+<ul>
+<li>(a) Fit a classiﬁer <code>$T^{(m)}(\vec{x})$</code> to the training data using weights <code>$w_i$</code>.</li>
+<li>(b) Compute <code>$$err^{(m)} = \sum_{i=1}^{n}w_i \mathbb{I}(c_i \ne T^{(m)}(\vec{x}_i))/{\sum_{i=1}^{n}w_i} \tag{3}$$</code>; if <code>$err^{(m)} \ge 0.5$</code>, stop and set <code>$M = m − 1$</code>.</li>
+<li>(c) Compute <code>$$\alpha^{(m)} = \log \frac{1−err^{(m)}} {err^{(m)}} \tag{4}$$</code> .</li>
+<li>(d) Set <code>$$w_i \leftarrow w_i \cdot exp(\alpha^{(m)} \cdot \mathbb{I}(c_i \ne T^{(m)}(\vec{x}_i))), \\ i=1,2,\ldots,n \tag{5}$$</code>.</li>
+<li>(e) Re-normalize <code>$w_i$</code>.</li>
+</ul></li>
+<li>3 Output
+<code>$$C(\vec{x}) = \arg \max_{k} \sum_{m=1}^{M} \alpha^{(m)} \cdot \mathbb{I}(T^{(m)}(\vec{x})=k) \tag{6}$$</code>
+<strong>由(4)，分步分类器<code>$f_k(\vec{x})$</code>的权值<code>$\alpha^{(m)}$</code>取决于含权值<code>$w_i$</code>的样本的错误率<code>$err^{(m)}$</code>（注意错误率的计算不是根据这步的分类器本身，而是根据<code>$1,\ldots,m$</code>个分类器加权投票的集成分类器），错误率越大者，分步分类器的权值越大。从输出公式来看，分步分类器记为<code>$\mathbb{I}(T^{(m)}(\vec{x})=k)$</code>，说明其输出是分类本身而不是其概率，那么集成后的总分类器是通过加权投票的方式获得总的最终分类结果（权值为<code>$\alpha^{(m)}$</code>）。</strong></li>
+</ul>
+
+<p>When applied to two-class classiﬁcation problems, AdaBoost has been proved to be extremely successful in producing accurate classiﬁers. In fact, Breiman (1996) called AdaBoost with trees the “best oﬀ-the-shelf classiﬁer in the world.” However, it is not the case for multi-class problems, although AdaBoost was also proposed to be used in the multi-class case (Freund &amp; Schapire 1997). Notice that in order for the misclassiﬁed training data to be boosted, it is required that the error of each weak classiﬁer <code>$err^{(m)}$</code> be less than 1/2 (with respect to the distribution on which it was trained), otherwise <code>$\alpha^{(m)}$</code> will be negative and the weights of the training samples will be updated in the wrong direction in Algorithm 1 (2d). For two-class classiﬁcation problems, this requirement is about the same as random guessing, but when K&gt;2, accuracy 1/2 may be much harder to achieve than the random guessing accuracy rate 1/K. Hence, AdaBoost may fail if the weak classiﬁer <code>$T(\vec{x})$</code> is not chosen appropriately. To illustrate this point, we consider a simple three-class simulation example. Each input <code>$\vec{x} \in \mathbb{R}^{10}$</code>, and the ten input variables for all training examples are randomly drawn from a ten-dimensional standard normal distribution. The three classes are deﬁned as:将AdaBoost算法应用于两分类分类问题中，取得了极好的分类效果。事实上，Breiman(1996)称树作为弱分类器的AdaBoost是世界上最好的现成分类器。然而，对于多分类问题却不是这样，尽管AdaBoost也被建议用于多分类问题(Freund &amp; Schapire 1997)。需要注意的是，为了提高误分类的训练数据，需要每个弱分类器<code>$err^{(m)}$</code>的误差小于1/2（关于熟练数据的分布），否则<code>$\alpha^{(m)}$</code>将为负值并且算法1 (2d)中训练样本的权重将沿着错误的方向更新。对于两分类分类问题，这一要求与随机猜测差不多，但是当K&gt;2时，准确率1/2可能比随机猜测准确率1/K更难达到。因此，如果弱分类器<code>$T(\vec{x})$</code>选择不当，AdaBoost可能会失败。为了说明这一点，我们考虑一个简单的三分类模拟示例。每个输入<code>$\vec{x} \in \mathbb{R}^{10}$</code>，以及所有训练例子的十个输入变量都是从一个十维标准正态分布中随机抽取的。
+<code>$$c = \begin{cases} 1, &amp; \text{if $0 \le \sum x_{j}^{2} &lt; \chi_{10,1/3}^{2}$,} \\ 2, &amp; \text{if $\chi_{10,1/3}^{2} \le \sum x_{j}^{2} &lt; \chi_{10,2/3}^{2},$} \\ 3, &amp; \text{if $\chi_{10,2/3}^{2} \le \sum x_{j}^{2}$} \end{cases} \tag{7}$$</code>
+where <code>$\chi_{10,k/3}^{2}$</code> is the (k/3)100% quantile of the <code>$\chi_{10}^{2}$</code> distribution, so as to put approximately equal numbers of observations in each class. In short, the decision boundaries separating successive classes are nested concentric ten-dimensional spheres. The training sample size is 3000 with approximately 1000 training observations in each class. An independently drawn test set of 10000 observations is used to estimate the error rate.其中<code>$\chi_{10,k/3}^{2}$</code>是<code>$\chi_{10}^{2}$</code>分布的(k/3)100%分位数，所以在每一分类上都有大约相等的观察值。简而言之，分隔连续类的决策边界是嵌套的同心十维球体。训练样本量为3000，每个分类约1000个。采用独立抽样的10000个观测值的测试集来估计错误率。</p>
+
+<p>Figure 1 (upper row) shows how AdaBoost breaks using ten-terminal node trees as weak classiﬁers. The results are averaged over ten independently drawn training-test set combinations. As we can see (upper left panel), the test error of AdaBoost decreases for a few iterations, then levels oﬀ around 0.53. What has happened can be understood from the upper middle and upper right panels: the <code>$err^{(m)}$</code> starts below 0.5; after a few iterations, it overshoots 0.5(<code>$\alpha^{(m)}$</code> below 0), then quickly hinges onto 0.5. Once <code>$err^{(m)}$</code> is equal to 0.5, the weights of the training samples do not get updated (<code>$\alpha^{(m)}=0$</code>), hence the same weak classiﬁer is ﬁtted over and over again but is not added to the existing ﬁt, and the test error rate stays the same.图1（上行）显示了使用10个终端节点的树作为弱分类器的AdaBoost如何崩溃。结果平均自10个独立抽样的训练-测试集组合。正如我们所看到的(左上角的面板)，AdaBoost的测试误差在几次迭代后会降低，然后在0.53左右趋于平稳。所发生的情况可以从上中和上右面板了解：<code>$err^{(m)}$</code>从0.5以下开始;经过一系列的迭代,它超过了0.5（<code>$\alpha^{(m)}$</code>低于0），然后迅速固定到0.5。一旦<code>$err^{(m)}$</code>等于0.5，不更新训练样本的权重（<code>$\alpha^{(m)}=0$</code>），因此相同的弱分类器训练一遍又一遍，但不能添加到现有的训练，并且测试错误率保持不变。
+<img src="/ab/1.png" alt="Figure 1. 示例图片" />
+Figure 1: Comparison of AdaBoost and the new algorithm SAMME on a simple three-classsimulation example. The training sample size is 3000, and the testing sample size is 10000. Ten-terminal node trees are used as weak classiﬁers. The results are averaged over ten independently drawn training-test set combinations. The upper row is for AdaBoost and the lower row is for SAMME.AdaBoost算法与SAMME算法在一个简单的三分类实例上的比较。训练样本量为3000，测试样本量为10000。采用十个端节点的树作为弱分类器。结果来自对10个独立抽样的训练-测试集组合的平均。上行是AdaBoost结果，下行是SAMME结果。</p>
+
+<h2 id="1-2-multi-class-adaboost多分类adaboost">1.2 Multi-class AdaBoost多分类AdaBoost</h2>
+
+<p>Before delving into technical details, we propose our new algorithm for multi-class boosting and compare it with AdaBoost. We refer to our algorithm as SAMME — Stagewise Additive Modeling using a Multi-class Exponential loss function — this choice of name will be clear in Section 2. Given the same setup as that of AdaBoost, SAMME proceeds as follows:在深入研究技术细节之前，我们提出了新的多分类增强算法，并与AdaBoost算法进行了比较。将算法命名为SAMME——使用多分类指数损失函数进行逐级加性建模，名字的选择将在第二节阐述。在与AdaBoost相同的步骤下，SAMME进行如下操作：</p>
+
+<p>其权重更新公式根据Littlestone and Warmuth's weighted majority algorithm，见参考1第3页，推导过程见参考3第9页。严格说起来，因为权重更新公式不同，这不是完全意义上Freund &amp; Schapire的算法。</p>
+
+<p><strong>Algorithm 2. SAMME</strong> (SAMME — Stagewise Additive Modeling using a Multi-class Exponential loss function)</p>
+
+<ul>
+<li>1 Initialize the observation weights <code>$w_i =1/n, i =1 ,2,\ldots,n$</code>.</li>
+<li>2 For <code>$m =1$</code> to <code>$M$</code>:
+
+<ul>
+<li>(a) Fit a classiﬁer <code>$T^{(m)}(\vec{x})$</code> to the training data using weights <code>$w_i$</code>.</li>
+<li>(b) Compute
+<code>$$err^{(m)} = \sum_{i=1}^{n}w_i \mathbb{I}(c_i \ne T^{(m)}(\vec{x}_i))/{\sum_{i=1}^{n}w_i}$$</code>; if <code>$err^{(m)} \ge 0.5$</code>, stop and set <code>$M = m − 1$</code>.</li>
+<li>(c) Compute
+<code>$$\alpha^{(m)} = \log \frac{1−err^{(m)}} {err^{(m)}} + \log (K-1) \tag{8}$$</code>.</li>
+<li>(d) Set
+<code>$$w_i \leftarrow w_i \cdot exp(\alpha^{(m)} \cdot \mathbb{I}(c_i \ne T^{(m)}(\vec{x}_i))), \\ i=1,2,\ldots,n$$</code> .</li>
+<li>(e) Re-normalize <code>$w_i$</code>.</li>
+</ul></li>
+<li>3 Output
+<code>$$C(\vec{x}) = \arg \max_{k} \sum_{m=1}^{M} \alpha^{(m)} \cdot \mathbb{I}(T^{(m)}(\vec{x})=k)$$</code>
+<strong>由(8)，分步分类器<code>$f_k(\vec{x})$</code>的权值<code>$\alpha^{(m)}$</code>取决于含权值<code>$w_i$</code>的样本的错误率<code>$err^{(m)}$</code>（注意错误率的计算不是根据这步的分类器本身，而是根据<code>$1,\ldots,m$</code>个分类器加权投票的集成分类器），错误率越大者，分步分类器的权值越大。从输出公式来看，分步分类器记为<code>$\mathbb{I}(T^{(m)}(\vec{x})=k)$</code>，说明其输出是分类本身而不是其概率，那么集成后的总分类器是通过加权投票的方式获得总的最终分类结果（权值为<code>$\alpha^{(m)}$</code>）。</strong></li>
+</ul>
+
+<p>Notice Algorithm 2 (SAMME) is very similar to AdaBoost with a major diﬀerence in (8). Now in order for <code>$\alpha^{(m)}$</code> to be positive, we only need <code>$(1−err^{(m)}) &gt; 1/K$</code>, or the accuracy of each weak classiﬁer be better than random guessing rather than 1/2. As a consequence, the new algorithm puts more weight on the misclassiﬁed data points in (2d) than AdaBoost, and the new algorithm also combines weak classiﬁers a little diﬀerently from AdaBoost, i.e. diﬀer by <code>$\log (K −1) \sum_{m=1}^{M} \mathbb{I}(T^{(m)}(\vec{x})=k)$</code>. It is worth noting that when <code>$K = 2$</code>, SAMME reduces to AdaBoost. As we will see in Section 2, the extra term <code>$\log (K −1)$</code> in (8) is not artiﬁcial; it makes the new algorithm equivalent to ﬁtting a forward stagewise additive model using a multi-class exponential loss function. The diﬀerence between AdaBoost and SAMME (when <code>$K = 3$</code>) is also illustrated in Figure 1. As we have seen (upper left panel), AdaBoost breaks after the <code>$err^{(m)}$</code> goes above 1/2. However this is not the case for SAMME (lower row): although <code>$err^{(m)}$</code> can be bigger than 1/2 (or equal to 1/2), the <code>$\alpha^{(m)}$</code> is still positive; hence, the mis-classiﬁed training samples get more weights, and the test error keeps decreasing even after 600 iterations.注意算法2 (SAMME)与AdaBoost非常相似，但在(8)方面有很大的不同。现为使<code>$\alpha^{(m)}$</code>为正值，只需<code>$(1−err^{(m)}) &gt; 1/K$</code>（<strong>在(8)中直接令<code>$\alpha^{(m)}&gt;0$</code>即可得到。</strong>），或者每个弱分类器的准确率都优于随机猜测而不是1/2（<strong>当<code>$K = 2$</code>时，在(8)中直接令<code>$\alpha^{(m)}&gt;0$</code>即可得到<code>$(1−err^{(m)}) &gt; 1/K = 1/2$</code>。</strong>）。随即，新算法在(2d)比AdaBoost对误分类的数据点赋予更多权值，而且新算法组合弱分类器也与AdaBoost稍有不同，也就是差异为<code>$\log (K −1) \sum_{m=1}^{M} \mathbb{I}(T^{(m)}(\vec{x})=k)$</code>。值得注意的是，当<code>$K = 2$</code>时，SAMME会退化为AdaBoost。正如我们将在第2节中看到的，(8)中的额外项<code>$\log (K −1)$</code>不是人工的;它使得新算法等价于使用一个多分类指数损失函数拟合一个向前递归叠加模型。AdaBoost和SAMME(当<code>$K = 3$</code>)之间的区别也如图1所示。正如我们所看到的(上左面板)，<code>$err^{(m)}$</code>大于1/2之后，AdaBoost崩溃。然而对SAMME(下行)情况并非如此：虽然<code>$err^{(m)}$</code>可以大于1/2(或等于1/2)，<code>$\alpha^{(m)}$</code>仍然是正值；因此，分类错误的训练样本得到了更多的权重，即使经过600次迭代，测试误差也在不断减小。</p>
+
+<p>The rest of the paper is organized as follows: In Section 2 and 3, we give theoretical justiﬁcation for our new algorithm SAMME. In Section 4, we present numerical results on both simulation and real-world data. Summary and discussion regarding the implications of the new algorithm are in Section 5.本文的其余部分组织如下:在第2节和第3节中，我们对我们的新算法SAMME进行了理论论证。在第4节中，我们给出了模拟数据和真实数据的数值结果。关于新算法的含义的总结和讨论在第5节中。</p>
+
+<h1 id="2-theoretical-justiﬁcation理论依据">2 Theoretical Justiﬁcation理论依据</h1>
+
+<p>In this section, we are going to show that the extra term log(K − 1) in (8) is not artiﬁcial; it makes Algorithm 2 equivalent to ﬁtting a forward stagewise additive model using a multi-class exponential loss function. Friedman et al. (2000) developed a statistical perspective on the original two-class AdaBoost algorithm, which ultimately leads to viewing the two-class AdaBoost algorithm as forward stagewise additive modeling using the exponential loss function在这一节中，我们将证明(8)中的额外项log(K − 1)不是人工的;这使得算法2等价于使用一个多分类指数损失函数来拟合一个向前递归叠加模型。Friedman et al.(2000)对原有的两分类AdaBoost算法进行了统计分析，最终将两分类AdaBoost算法视为使用指数损失函数的向前递归叠加建模
+<code>$$L(y,f)=e^{−yf(\vec{x})} \tag{9}$$</code>,
+where <code>$y =(\mathbb{I}(c = 1)− \mathbb{I}(c = 2)) \in \{− 1,1\}$</code> in a two-class classiﬁcation setting. It is not diﬃcult to show that the population minimizer of this exponential loss function is one half of the logit transform其中对两分类设定有<code>$y =(\mathbb{I}(c = 1)− \mathbb{I}(c = 2)) \in \{− 1,1\}$</code>。不难看出，这个指数损失函数的总体最小值是logit变换的一半
+<code>$$\begin{align} 
+f^*(\vec{x}) &amp; = \arg\min_{f(\vec{x})} L(y,f) \\
+&amp; = \frac{1} {2} \log \frac{Prob(c =1 |\vec{x})} {Prob(c =2 |\vec{x})} 
+\end{align} \tag{10}$$</code>
+<strong><code>$$\begin{align} 
+f^*(\vec{x}) &amp; = \arg\min_{f(\vec{x})} L(y,f) \\
+&amp; = \frac{1} {2} \log \frac{Prob(c =1 |\vec{x})} {Prob(c =2 |\vec{x})} \\
+&amp; = \frac{1} {2} \left(\log Prob(c =1 |\vec{x}) - \log Prob(c =2 |\vec{x})\right)
+\end{align}$$</code>？？？？？？？？？</strong></p>
+
+<p>. The Bayes optimal classiﬁcation rule then agrees with the sign of <code>$f^∗(\vec{x})$</code>, i.e.则贝叶斯最优分类规则与<code>$f^∗(\vec{x})$</code>符号一致，即
+<code>$$\arg \max_{y} Prob(Y = y|\vec{X} = \vec{x}) = sign(f^∗(\vec{x})) \tag{11}$$</code>
+. We note that besides Friedman et al. (2000), Breiman (1999) and Schapire &amp; Singer (1999) also made connections between the original two-class AdaBoost algorithm and the exponential loss function. We acknowledge that these views have been inﬂuential in our thinking for this paper.我们注意到，除了Friedman et al. (2000)， Breiman(1999)和Schapire &amp; Singer(1999)也将原来的两分类AdaBoost算法与指数损失函数联系起来。我们承认这些观点对我们撰写本文的思路产生了影响。</p>
+
+<h2 id="2-1-a-new-multi-class-exponential-loss-function新的多分类指数损失函数">2.1 A new multi-class exponential loss function新的多分类指数损失函数</h2>
+
+<p>In the multi-class classiﬁcation setting, we can recode the output <code>$c$</code> with a <code>$k$</code>-dimensional vector <code>$\vec{y}$</code>, with all entries equal to <code>$− \frac{1} {K−1}$</code> except a 1 in position <code>$k$</code> if <code>$c = k$</code>, i.e. <code>$\vec{y} =( y_1,\ldots,y_K)^T$</code>, and:在多分类分类设置中，我们可以用<code>$k$</code>维向量<code>$\vec{y}$</code>来重新编码输出<code>$c$</code>。如果<code>$c = k$</code>，那么位置<code>$k$</code>为1，除此以外所有位置都等于<code>$− \frac{1} {K−1}$</code>，即<code>$\vec{y} =( y_1,\ldots,y_K)^T$</code>，并且
+<code>$$y_k = \begin{cases} 1, &amp; \text{if $c=k$} \\ − \frac{1} {K−1}, &amp; \text{if $c \ne k$} \end{cases} \tag{12}$$</code> ,
+Lee, Lin &amp; Wahba (2004) used the same coding for a version of the multi-class support vector machine. A generalization of the exponential loss function to the multi-class case then follows naturally: Lee, Lin和Wahba(2004)对多分类支持向量机的一个版本使用了相同的编码。指数损失函数在多分类情况下的自然推广为
+<code>$$L(\vec{y},\vec{f}) = \exp \left(− \frac{1} {K} (y_1f_1 +\dots+ y_Kf_K)\right)= \exp \left(− \frac{1} {K} \vec{y} \vec{f}\right) \tag{13}$$</code>
+where <code>$f_k$</code> corresponds to class <code>$k$</code>, and its meaning will be clear shortly. Notice that we need some constraint on <code>$\vec{f}$</code> in order for it to be estimable, otherwise adding any constant to all <code>$f_k$</code>’s does not change the loss. We choose to use the symmetric constraint: <code>$f_1 +\dots+ f_K = 0$</code>, so when <code>$K = 2$</code>, this multi-class exponential loss function reduces to the two-class exponential loss.其中<code>$f_k$</code>对应分类<code>$k$</code>，其含义很快就会清楚。注意，我们需要对<code>$\vec{f}$</code>进行一些约束，以使其可估计，否则在所有<code>$f_k$</code>中添加任何常数都不会改变损失。我们选择使用对称约束:<code>$f_1 +\dots+ f_K = 0$</code>，因此当<code>$K = 2$</code>时，这个多分类指数损失函数会退化为两分类指数损失。</p>
+
+<p>Similar to the two-class case, it is of interest to investigate what this multi-class exponential loss function estimates. This can be answered by seeking its population minimizer. Speciﬁcally, we are interested in与两分类情况类似，研究这个多分类指数损失函数的估计值也很有趣。这可以通过寻求其总体最小值来解决。具体来说，我们感兴趣的是
+<code>$$\begin{align} 
+\arg \min_{\vec{f}(\vec{x})} &amp; \quad E_{\mathbf{Y}|\vec{x}} \exp \left(− \frac{1} {K} (y_1f_1 +\dots+ y_Kf_K)\right) \\ 
+\text{subject to} &amp; \quad f_1 +\dots+ f_K =0 .  
+\end{align} \tag{14}$$</code>
+The Lagrange of this constrained optimization problem can be written as:这个约束优化问题的拉格朗日函数可以写成：
+<code>$$\exp \left(−\frac {f_1(\vec{x})} {K −1}\right)Prob(c =1 |\vec{x})+\dots+\exp \left(−\frac {f_K(\vec{x})} {K−1}\right)Prob(c =K |\vec{x}) \\−\lambda(f_1(\vec{x})+\dots+ f_K(\vec{x})), \tag{15}$$</code>
+<strong>也就是<code>$$E_{\mathbf{Y}|\vec{x}} \exp \left(− \frac{1} {K} (y_1f_1 +\dots+ y_Kf_K)\right)−\lambda(f_1(\vec{x})+\dots+ f_K(\vec{x}))$$</code>，详情请百度拉格朗日乘子法。</strong></p>
+
+<p>where <code>$\lambda$</code> is the Lagrange multiplier. Taking derivatives with respect to <code>$f_k$</code> and <code>$\lambda$</code>, we reach其中，<code>$\lambda$</code>是拉格朗日乘子。对<code>$f_k$</code>和<code>$\lambda$</code>求导，我们得到
+<code>$$\begin{align}
+\frac{1}{K −1}\exp \left(−\frac {f_1(\vec{x})} {K −1}\right)Prob(c =1 |\vec{x})−\lambda &amp;=0,\\
+\vdots \\
+\frac{1}{K −1}\exp \left(−\frac {f_K(\vec{x})} {K −1}\right)Prob(c =K |\vec{x})−\lambda &amp;=0,\\
+f_1(\vec{x})+\dots+f_K(\vec{x}) &amp;=0.
+\end{align} \tag{16}$$</code>
+Solving this set of equations, we obtain the population minimizer解这组方程，我们得到总体最小值
+<code>$$f_k^∗(\vec{x})=(K −1)\left(\log Prob(c = k|\vec{x})− \frac{1} {K} \sum_{k'=1}^{K} \log Prob(c = k'|\vec{x})\right),\\ \quad k=1,...,K. \tag{17}$$</code>
+<strong>解联立等式组(46)得<code>$$\frac{1} {K} \sum_{k'=1}^{K} \log Prob(c = k'|\vec{x})=\log [(K-1)\lambda]$$</code>然后可以得到上式。</strong></p>
+
+<p>Thus,因此
+<code>$$\arg \max_k f_k^∗(\vec{x}) = \arg \max_k Prob(c = k|\vec{x}) \tag{18}$$</code>
+<strong>(17)可改写为<code>$$f_k^∗(\vec{x})=(K −1)\left(\frac{K-1} {K}\log Prob(c = k|\vec{x})− \frac{1} {K} (\log Prob(c = 1|\vec{x})+\cdots\\
++\log Prob(c = k-1|\vec{x})+\log Prob(c = k+1|\vec{x})+\cdots+\log Prob(c = K|\vec{x}))\right)$$</code>显然，<code>$Prob(c = k|\vec{x})$</code>与<code>$f_k^∗(\vec{x})$</code>最大化将取得相同的<code>$k$</code>。</strong></p>
+
+<p>which is the Bayes optimal classiﬁcation rule in terms of minimizing the misclassiﬁcation error. This justiﬁes the use of this multi-class exponential loss function. Equation (17) also provides a way to recover the class probability <code>$Prob(c = k|\vec{x})$</code> once <code>$f_k^∗(\vec{x})$</code>’s are estimated, i.e.这是最小化误分类误差的贝叶斯最优分类规则。这证明了使用多分类指数损失函数的合理性。等式(17)也提供了根据<code>$f_k^∗(\vec{x})$</code>概率得到<code>$Prob(c = k|\vec{x})$</code>的一个方法，即
+<code>$$Prob(c = k|\vec{x})= \frac{e ^ {\frac{1} {K−1} f_k^∗(\vec{x})}} {e ^ {\frac{1} {K−1} f_1^∗(\vec{x})}+\dots+e ^ {\frac{1} {K−1} f_K^∗(\vec{x})}},k=1,...,K. \tag{19}$$</code>
+<strong>显然联立(17)无法得到(19)。但是，当<code>$\vec{x}$</code>被正确分类到某个<code>$k$</code>，那么<code>$\log Prob(c = k|\vec{x})$</code>远大于其余log概率，也远大于<code>$\frac{1} {K} \sum_{k'=1}^{K} \log Prob(c = k'|\vec{x})$</code>，那么<code>$f_k^∗(\vec{x}) \approx (K −1)\left(\log Prob(c = k|\vec{x})\right)$</code>。即<code>$Prob(c = k|\vec{x})= e ^ {\frac{1} {K−1} f_k^∗(\vec{x})}$</code>，显然<code>$\sum_{k=1}^{K}Prob(c = k|\vec{x})=1$</code>，归一化即得到(19)。</strong></p>
+
+<h2 id="2-2-forward-stagewise-additive-modeling前项逐步叠加模型">2.2 Forward stagewise additive modeling前项逐步叠加模型</h2>
+
+<p>We now show that Algorithm 2 is equivalent to forward stagewise additive modeling using the loss function (32). We start with the forward stagewise additive modeling using a general loss function <code>$L(·,·)$</code>, then apply it to the multi-class exponential loss function (32). Given the training data, we wish to ﬁnd <code>$\vec{f}(\vec{x})=( f_1(\vec{x}),\ldots,f_K(\vec{x}))^T$</code> such that我们现在证明算法2等价于使用损失函数(32)进行向前递归叠加建模。我们从使用一般损失函数<code>$L(·,·)$</code>的正向前递归叠加建模开始，然后将其应用于多分类指数损失函数(32)。给定训练数据，我们希望找到<code>$\vec{f}(\vec{x})=( f_1(\vec{x}),\ldots,f_K(\vec{x}))^T$</code>以使
+<code>$$\begin{align}
+\min_{f(\vec{x})} &amp; \quad \sum_{i=1}^{n} L(\vec{y}_i,\vec{f}(\vec{x}_i)) \tag{20}\\
+\text{subject to} &amp; \quad f_1(\vec{x})+\dots+ f_K(\vec{x})=0 . \tag{21}
+\end{align}$$</code>
+We consider <code>$\vec{f}(\vec{x})$</code> that has the following form:我们考虑<code>$\vec{f}(\vec{x})$</code>具有以下形式：
+<code>$$\vec{f}(\vec{x})= \sum_{m=1}^{M} \beta^{(m)}\vec{g}^{(m)}(\vec{x}), \tag{22}$$</code>
+where <code>$\beta^{(m)} \in \mathbb{R}$</code> are coeﬃcients, and <code>$\vec{g}^{(m)}(\vec{x})$</code> are basis functions. We require <code>$\vec{g}(\vec{x})$</code> to satisfy the symmetric constraint: <code>$g_1(\vec{x})+\dots+ g_K(\vec{x})=0$</code>其中<code>$\beta^{(m)} \in \mathbb{R}$</code>是系数，并且<code>$\vec{g}^{(m)}(\vec{x})$</code>是基函数。要求<code>$\vec{g}(\vec{x})$</code>满足对称约束
+<code>$$g_1(\vec{x})+\dots+g_K(\vec{x})=0 \tag{23}$$</code>
+For example, the <code>$\vec{g}(\vec{x})$</code> that we consider in this paper takes value in one of the <code>$K$</code> possible <code>$K$</code>-dimensional vectors in (31); speciﬁcally, at a given <code>$\vec{x}$</code>, <code>$\vec{g}(\vec{x})$</code> mapps <code>$\vec{x}$</code> onto <code>$\mathbf{Y}$</code>:例如，本文考虑的<code>$\vec{g}(\vec{x})$</code>取值等式(31)中<code>$K$</code>维向量中的<code>$K$</code>个可能值中的一个；进一步，对一给定<code>$\vec{x}$</code>，<code>$\vec{g}(\vec{x})$</code>映射<code>$\vec{x}$</code>到<code>$\mathbf{Y}$</code>：
+<code>$$\vec{g} : \vec{x} \in \mathbb{R}^p \rightarrow \mathbf{Y}$$</code>
+<strong>注意，每个<code>$\vec{x}$</code>其实只映射到<code>$\mathbf{Y}$</code>中其中一个行向量。</strong></p>
+
+<p>, where <code>$\mathbf{Y}$</code> is the set containing <code>$K$</code> <code>$K$</code>-dimensional vectors:其中<code>$\mathbf{Y}$</code>是一包含<code>$K$</code>个<code>$K$</code>维向量的集合：
+<code>$$\mathbf{Y} = \begin{Bmatrix} 
+\left(1,-\frac{1}{K-1},\ldots,-\frac{1}{K-1}\right)^T \\ 
+\left(-\frac{1}{K-1},1,\ldots,-\frac{1}{K-1}\right)^T \\
+\vdots \\
+\left(-\frac{1}{K-1},-\frac{1}{K-1},\ldots,1\right)^T
+\end{Bmatrix} \tag{24}$$</code>
+Forward stagewise modeling approximates the solution to (20) – (21) by sequentially adding new basis functions to the expansion without adjusting the parameters and coeﬃcients of those that have already been added. Speciﬁcally, the algorithm starts with <code>$\vec{f}^{(0)}(\vec{x}) = 0$</code>, sequentially selecting new basis functions from a dictionary and adding them to the current ﬁt:向前逐步模型通过在展开中依次添加新的基函数，而不调整已经添加的基函数的参数和系数，近似于(20)-(21)的解（为什么是近似，因为基函数是弱分类器，其并不要求无限发育的树从而得到全局最优。）。具体来说,算法从<code>$\vec{f}^{(0)}(\vec{x}) = \vec{0}$</code>开始,从字典中顺序选择新基函数并将之加进当前训练：</p>
+
+<p><strong>Algorithm 3 Forward stagewise additive modeling</strong></p>
+
+<ul>
+<li>1 Initialize <code>$\vec{f}^{(0)}(\vec{x}) = \vec{0}$</code> .</li>
+<li>2 For <code>$m=1$</code> to <code>$M$</code>:
+
+<ul>
+<li>(a) Compute <code>$$(\beta^{(m)},\vec{g}^{(m)}(\vec{x})) = \arg \min_{\beta,\vec{g}} \sum_{i=1}^{n} L(\vec{y}_i,\vec{f}^{(m-1)}(\vec{x}_i)+\beta \vec{g}(\vec{x}_i)) \tag{25}$$</code>.</li>
+<li>(b) Set <code>$$\vec{f}^{(m)}(\vec{x})=\vec{f}^{(m-1)}(\vec{x})+\beta^{(m)}\vec{g}^{(m)}(\vec{x}) \tag{26}$$</code>.</li>
+</ul></li>
+</ul>
+
+<p>The crucial step in the above algorithm is (2a). Now, using the multi-class exponential loss function (32), one wants to ﬁnd <code>$\vec{g}^{(m)}(\vec{x})$</code> (and <code>$\beta^{(m)}$</code>) to solve:上述算法的关键步骤是(2a)。现在,使用多分类指数损失函数(32),解如下方程来找到<code>$\vec{g}^{(m)}(\vec{x})$</code>（还有<code>$\beta^{(m)}$</code>）：
+<code>$$\begin{align}
+(\beta^{(m)},\vec{g}^{(m)}(\vec{x})) &amp; = \arg \min_{\beta,\vec{g}} \sum_{i=1}^{n} \exp \left(− \frac{1} {K} \vec{y}_i^T (\vec{f}^{(m-1)}(\vec{x}_i)+\beta \vec{g}(\vec{x}_i))\right) \tag{27} \\ 
+&amp; = \arg \min_{\beta,\vec{g}} \sum_{i=1}^{n} w_i \exp \left(− \frac{1} {K} \beta \vec{y}_i^T \vec{g}(\vec{x}_i)\right), \tag{28}
+\end{align}$$</code>
+where <code>$w_i = \exp \left(− \frac{1} {K} \vec{y}_i^T \vec{f}^{(m-1)}(\vec{x}_i)\right)$</code> are the unnormalized observation weights.其中<code>$w_i = \exp \left(− \frac{1} {K} \vec{y}_i^T \vec{f}^{(m-1)}(\vec{x}_i)\right)$</code>为未归一化观测权值。</p>
+
+<p>Notice that every <code>$\vec{g}(\vec{x})$</code> as in (24) has a one-to-one correspondence with a multi-class classiﬁer <code>$T(\vec{x})$</code> in the following way:注意，(24)中的每一个<code>$\vec{g}(\vec{x})$</code>都以以下方式与多分类分类器<code>$T(\vec{x})$</code>一一对应：
+<code>$$T(\vec{x})=k,\ if \ g_k(\vec{x})=1 \tag{29}$$</code>
+and vice versa:反之亦然：
+<code>$$g_k(\vec{x}) = \begin{cases} 1, &amp; \text{if $T(\vec{x})=k$,} \\ -\frac{1}{K−1}, &amp; \text{if $T(\vec{x}) \ne k$.} \end{cases} \tag{30}$$</code>
+Hence, solving for <code>$\vec{g}^{(m)}(\vec{x})$</code> in (28) is equivalent to ﬁnding the multi-class classiﬁer <code>$T^{(m)}(\vec{x})$</code> that can generate <code>$\vec{g}^{(m)}(\vec{x})$</code>.因此，求解(28)中的<code>$\vec{g}^{(m)}(\vec{x})$</code>等价于找到能够生成<code>$\vec{g}^{(m)}(\vec{x})$</code>的多分类分类器<code>$T^{(m)}(\vec{x})$</code>。</p>
+
+<p><strong>Lemma 1</strong> The solution to (28) is引理1 (28)的解是
+<code>$$\begin{align}
+T^{(m)}(\vec{x}) &amp;= \arg \min \sum_{i=1}^{n}
+w_i \mathbb{I}(c_i \ne T(\vec{x}_i)), \tag{31} \\
+\beta^{(m)} &amp;=
+\frac{(K −1)^2} {K} \left(\log \frac{1−err^{(m)}} {err^{(m)}}
++\log(K −1)\right), \tag{32}
+\end{align}$$</code>
+where <code>$err^{(m)}$</code> is deﬁned as其中<code>$err^{(m)}$</code>定义如下：
+<code>$$err^{(m)} = \sum_{i=1}^{n} \mathbb{I}(c_i \ne T(\vec{x}_i)) / \sum_{i=1}^{n} w_i \tag{33}$$</code>
+Proof First, for any ﬁxed value of <code>$\beta &gt; 0$</code>, using the deﬁnition (29), one can express the criterion in (28) as:先证明，对于<code>$\beta &gt; 0$</code>的任何固定值，使用定义(29)，可以将(28)中的标准表示为：
+<code>$$\begin{align}
+&amp; \sum_{c_i = T(\vec{x}_i)} w_i e^{-\frac{\beta}{K-1}} + \sum_{c_i \ne T(\vec{x}_i)} w_i e^{\frac{\beta}{(K-1)^2}} \\
+= &amp; e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i + (e^{\frac{\beta}{(K-1)^2}} - e^{-\frac{\beta}{K-1}}) \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i))
+\end{align} \tag{34}$$</code>
+<strong>根据(12)和(30)可以从(28)得到(34)第一行，然后
+<code>$$\begin{align}
+&amp; \sum_{c_i = T(\vec{x}_i)} w_i e^{-\frac{\beta}{K-1}} + \sum_{c_i \ne T(\vec{x}_i)} w_i e^{\frac{\beta}{(K-1)^2}} \\
+= &amp; e^{-\frac{\beta}{K-1}} \sum_{c_i = T(\vec{x}_i)} w_i + e^{\frac{\beta}{(K-1)^2}} \sum_{c_i \ne T(\vec{x}_i)} w_i \\
+= &amp; e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i - e^{-\frac{\beta}{K-1}} \sum_{c_i \ne T(\vec{x}_i)} w_i + e^{\frac{\beta}{(K-1)^2}} \sum_{c_i \ne T(\vec{x}_i)} w_i \\
+= &amp; e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i + (e^{\frac{\beta}{(K-1)^2}} - e^{-\frac{\beta}{K-1}}) \sum_{c_i \ne T(\vec{x}_i)} w_i \\
+= &amp; e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i + (e^{\frac{\beta}{(K-1)^2}} - e^{-\frac{\beta}{K-1}}) \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i))
+\end{align}$$</code></strong></p>
+
+<p>Since only the last sum depends on the classiﬁer <code>$T(\vec{x})$</code>, we get that (31) holds. Now plugging (31) into (28) and solving for <code>$\beta$</code>, we obtain (32) (note that (34) is a convex function of <code>$\beta$</code>).既然只有后项求和依赖分类器<code>$T(\vec{x})$</code>，我们知道(31)成立。现将(31)插入(28)中来求解<code>$\beta$</code>，我们得到(32)(注意(34)是<code>$\beta$</code>的凸函数)。</p>
+
+<p><strong>对(34)关于<code>$\beta$</code>求偏导并令偏导数为0，得：<code>$$[\frac{1}{(K-1)^2} e^{\frac{\beta}{(K-1)^2}} + \frac{1}{K-1} e^{-\frac{\beta}{K-1}}] \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i)) - \frac{1}{K-1} e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i = 0$$</code>乘以<code>${(K-1)}^2$</code>得<code>$$[e^{\frac{\beta}{(K-1)^2}} + (K-1) e^{-\frac{\beta}{K-1}}] \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i)) - (K-1) e^{-\frac{\beta}{K-1}} \sum_{i=1}^{n} w_i = 0$$</code>乘以<code>$e^{\frac{\beta}{K-1}}$</code>得<code>$$[e^{\frac{\beta}{(K-1)^2} + \frac{\beta}{K-1}} + (K-1)] \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i)) - (K-1) \sum_{i=1}^{n} w_i = 0$$</code>移项得<code>$$\begin{align} &amp; e^{\frac{K\beta}{(K-1)^2}}\\ = &amp;\frac{(K-1)(\sum_{i=1}^{n} w_i - \sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i)))}{\sum_{i=1}^{n} w_i \mathbb{I}(c_i \ne T(\vec{x}_i))}\\=&amp;\frac{(K-1)(1-err^{(m)})}{err^{(m)}}\end{align}$$</code>再两边取对数即可得到(32)。</strong></p>
+
+<p>The model is then updated然后模型更新
+<code>$$\vec{f}^{(m)}(\vec{x})=\vec{f}^{(m-1)}(\vec{x})+\beta^{(m)}\vec{g}^{(m)}(\vec{x}) \tag{35}$$</code>
+, and the weights for the next iteration will be并且下一轮迭代的权值将会是
+<code>$$w_i \leftarrow w_i \cdot \exp \left(-\frac{1}{K}\beta^{(m)} \vec{y}_i^T \vec{g}^{(m)}(\vec{x})\right) \tag{36}$$</code>
+<strong>(36)是求<code>$m+1$</code>步基函数所需的样本权值，从中我们得出这样的结论：权值更新系数就是标签和上步基函数对应的损失，权值就是标签和上步为止的集成函数对应的损失。</strong></p>
+
+<p>. This is equal to这等于
+<code>$$w_i \cdot e^ {-\frac{(K-1)^2}{K^2}\alpha^{(m)} \vec{y}_i^T \vec{g}^{(m)}(\vec{x})} = \begin{cases} w_i \cdot e^ {-\frac{K-1}{K}\alpha^{(m)}}, &amp; \text{if $c_i = T(\vec{x}_i)$} \\ w_i \cdot e^ {\frac{1}{K}\alpha^{(m)}}, &amp; \text{if $c_i \ne T(\vec{x}_i)$} \end{cases} \tag{37}$$</code>
+<strong>根据(12)和(30)即可得到上式。</strong></p>
+
+<p>where <code>$\alpha^{(m)}$</code> is deﬁned as in (8) with the extra term <code>$\log (K−1)$</code>, and the new weight (37) is equivalent to the weight updating scheme in Algorithm 2 (2d) after normalization.其中<code>$\alpha^{(m)}$</code>在(8)中已定义并包含额外项<code>$\log (K−1)$</code>，新的权值(37)相当于算法2 (2d)更新的权值经过归一化。</p>
+
+<p><strong>考虑(37)中两种情况同时乘以<code>$N^{(m)}$</code>,并按SAMME算法，正确分类的不更新权值。即<code>$w_i \cdot e^ {-\frac{K-1}{K}\alpha^{(m)}} \cdot N^{(m)}=w_i$</code>，则<code>$N^{(m)}=e^ {\frac{K-1}{K}\alpha^{(m)}}$</code>，那么<code>$w_i \cdot e^ {\frac{1}{K}\alpha^{(m)}} \cdot N^{(m)}=w_i \cdot e^ {\alpha^{(m)}}$</code>，即(8)成立。</strong></p>
+
+<p>It is also a simple task to check that <code>$\arg \max_{k} \vec{f}^{(m)}(\vec{x}) = \arg \max_{k} (f_{1}^{(m)}(\vec{x}),...,f_{K}^{(m)}(\vec{x}))^T$</code> is equivalent to the output <code>$C(\vec{x}) = \arg \max_{k} \sum_{m=1}^{M} \alpha^{(m)} \cdot \mathbb{I}(T^{(m)}(\vec{x})=k)$$</code> in Algorithm 2. Hence, Algorithm 2 can be considered as forward stagewise additive modeling using the multi-class exponential loss function.检查<code>$\arg \max_{k} \vec{f}^{(m)}(\vec{x}) = \arg \max_{k} (f_{1}^{(m)}(\vec{x}),...,f_{K}^{(m)}(\vec{x}))^T$</code>等价于算法2的输出<code>$C(\vec{x}) = \arg \max_{k} \sum_{m=1}^{M} \alpha^{(m)} \cdot \mathbb{I}(T^{(m)}(\vec{x})=k)$</code>也是容易的（贝叶斯规则，正确分类取概率最大者。）。因此，可以将算法2考虑为使用多分类指数损失函数的向前递归叠加建模。</p>
+
+<h2 id="2-3-computational-cost计算复杂度">2.3 Computational cost计算复杂度</h2>
+
+<p>Suppose one uses a classiﬁcation tree as the weak learner, which is the most popular choice, and the depth of each tree is ﬁxed as <code>$d$</code>, then the computational cost for building each tree is <code>$O(dpnlog(n))$</code>, where <code>$p$</code> is the dimension of the input <code>$\vec{x}$</code>. The computational cost for our SAMME algorithm is then <code>$O(dpnlog(n)M)$</code> since there are <code>$M$</code> iterations. As a comparison, the computational cost for either the one vs. rest scheme or the pairwise scheme (Friedman 2004) is <code>$O(dpnlog(n)MK)$</code>, which is <code>$K$</code> times larger than the computational cost of SAMME.假设使用分类树作为弱学习器，这是最流行的选择，每棵树的深度固定为<code>$d$</code>，那么构建每棵树的计算成本为<code>$O(dpnlog(n))$</code>，其中<code>$p$</code>是输入<code>$\vec{x}$</code>的维度。我们的SAMME算法的计算成本是<code>$O(dpnlog(n)M)$</code>，因为有<code>$M$</code>迭代。作为比较，对于一对多方案或成对方案(Friedman 2004)，计算成本都是<code>$O(dpnlog(n)MK)$</code>，即比SAMME的计算成本大<code>$K$</code>倍。</p>
+
+<h1 id="3-a-variant-of-the-samme-algorithm-samme算法的一个变体">3 A Variant of the SAMME Algorithm  SAMME算法的一个变体</h1>
+
+<p>The SAMME algorithm expects the weak learner to deliver a classiﬁer <code>$T(\vec{x}) \in \{ 1,\ldots,K\}$</code>. An alternative is to use real-valued conﬁdence-rated predictions such as weighted probability estimates, to update the additive model, rather than the classiﬁcations themselves.SAMME算法期望从弱学习器得到一个分类器<code>$T(\vec{x}) \in \{ 1,\ldots,K\}$</code>。另一种方法是使用实值信心评级预测(如加权概率估计)来更新叠加模型，而不是使用分类本身。</p>
+
+<p>Section 2.2 is based on the empirical loss, this time we consider the population version of the loss, derive the update for the additive model using the weighted probability, and then apply it to data.第2.2节基于经验损失，本次我们考虑损失的总体版本，利用加权概率对叠加模型进行更新，并将其应用于数据。</p>
+
+<p>Suppose we have a current estimate <code>$\vec{f}^{(m−1)}(\vec{x})$</code> and seek an improved estimate <code>$\vec{f}^{(m−1)}(\vec{x})+\vec{h}(\vec{x})$</code> by minimizing the loss at each <code>$\vec{x}$</code>:假设目前估计器为<code>$\vec{f}^{(m−1)}(\vec{x})$</code>，通过每个<code>$\vec{x}$</code>来最小化损失以得到一个改进的估计器：
+<code>$$\begin{align}
+min_{\vec{h}(\vec{x})} &amp; \quad E\left(exp\left(-\frac{1}{K} \vec{y}^T (\vec{f}^{(m−1)}(\vec{x})+\vec{h}(\vec{x}))\right)|\vec{x}\right) \\
+\text{subject to} &amp; \quad h_1(\vec{x})+\dots+h_K(\vec{x})=0
+\end{align} \tag{38}$$</code>
+The above expectation can be re-written as上式期望可改写为<br />
+<code>$$\begin{align}
+&amp; e^{-\frac{h_1(\vec{x})}{K-1}} E\left(e^{-\frac{1}{K} \vec{y}^T \vec{f}^{(m−1)}(\vec{x})} \mathbb{I}_{c=1}|\vec{x}\right)+\dots+e^{-\frac{h_K(\vec{x})}{K-1}} E\left(e^{-\frac{1}{K} \vec{y}^T \vec{f}^{(m−1)}(\vec{x})} \mathbb{I}_{c=K}|\vec{x}\right) \\
+= &amp; e^{-\frac{h_1(\vec{x})}{K-1}} Prob_w(c=1|\vec{x})+\dots+e^{-\frac{h_1(\vec{x})}{K-1}} Prob_w(c=K|\vec{x})
+\end{align} \tag{39}$$</code>
+where <code>$w(\vec{x},\vec{y}) = \exp (− \frac{1} {K} \vec{y}^T \vec{f}^{(m−1)}(\vec{x}))$</code>, and其中<code>$w(\vec{x},\vec{y}) = \exp (− \frac{1} {K} \vec{y}^T \vec{f}^{(m−1)}(\vec{x}))$</code>，并且：<br />
+<code>$$Prob_w(c = k|\vec{x})=E\left(e^{− \frac{1} {K} \vec{y}^T \vec{f}^{(m−1)}(\vec{x})} \mathbb{I}_{c=k}|\vec{x}\right) \tag{40}$$</code>
+Taking the symmetric constraint into consideration and optimizing the Lagrange will lead to the solution (details skipped)考虑对称约束并优化拉格朗日方程将得到解决方案(跳过细节)<br />
+<code>$$h_k(\vec{x})=(K −1)\left(\log Prob_w(c = k|\vec{x})− \frac{1} {K} \sum_{k'=1}^{K} \log Pro_w(c = k'|\vec{x})\right) \tag{41}$$</code>
+<strong>联合(38)和(39)并运用拉格朗日乘子法得（类比(46)）：
+<code>$$\begin{align}
+\frac{1}{K −1}\exp \left(−\frac {h_1(\vec{x})} {K −1}\right)Prob_w (c =1 |\vec{x})−\lambda &amp;=0,\\
+\vdots \\
+\frac{1}{K −1}\exp \left(−\frac {h_K(\vec{x})} {K −1}\right)Prob_w (c =K |\vec{x})−\lambda &amp;=0,\\
+h_1(\vec{x})+\dots+h_K(\vec{x}) &amp;=0.
+\end{align}$$</code>联立上述方程组即可得到(41)。</strong></p>
+
+<p>The algorithm as presented would stop after one iteration. In practice, we can use approximations to the conditional expectation, such as probability estimates from decision trees, and hence many steps are required. It naturally leads to a variant of the SAMME algorithm, which we call SAMME.R (R for Real).所提出的算法在一次迭代后将停止。在实践中，我们可以使用条件期望的近似，例如决策树的概率估计，因此需要许多步骤。它自然会导致SAMME算法的一种变体，我们称之为SAMME。R (R代表真实)。</p>
+
+<p>其权重更新公式根据Littlestone and Warmuth's weighted majority algorithm，见参考1第3页，推导过程见参考3第9页。严格说起来，因为权重更新公式不同，这不是完全意义上Freund &amp; Schapire的算法。</p>
+
+<p><strong>Algorithm 4 SAMME.R</strong></p>
+
+<ul>
+<li><p>1 Initialize the observation weights <code>$w_i =1/n, i =1 ,2,\ldots,n$</code> .</p></li>
+
+<li><p>2 For <code>$m =1$</code> to <code>$M$</code>:</p>
+
+<ul>
+<li><p>(a) Fit a classiﬁer <code>$T^{(m)}(\vec{x})$</code> to the training data using weights <code>$w_i$</code>.</p></li>
+
+<li><p>(b) Obtain the weighted class probability estimates
+<code>$$p_{k}^{(m)}(\vec{x}) = Prob_{w}(c = k|\vec{x}), \\k=1,\ldots,K \tag{42}$$</code>.</p></li>
+
+<li><p>(c) Set
+<code>$$h_{k}^{(m)}(\vec{x}) \leftarrow (K-1)\left(\log p_{k}^{(m)}(\vec{x}) - \frac{1}{K}\sum_{k'=1}^{K}\log p_{k'}^{(m)}(\vec{x})\right), \\ k=1,\ldots,K \tag{43}$$</code></p></li>
+
+<li><p>(d) Set
+<code>$$w_i \leftarrow w_i \cdot exp\left(-\frac{K-1}{K}\vec{y}_{i}^{T} \log \vec{p}_{}^{(m)}(\vec{x}_i)\right), \\ i=1,2,\ldots,n \tag{44}$$</code>.</p></li>
+
+<li><p>(e) Re-normalize <code>$w_i$</code></p></li>
+</ul></li>
+
+<li><p>3 Output
+<code>$$C(\vec{x}) = \arg \max_{k} \sum_{m=1}^{M} h_{k}^{(m)}(\vec{x}) \tag{45}$$</code>
+<strong>关于(44)，样本权值的更新，其实跟(36)是一回事，都依赖损失函数、标签和上步基函数。需要说明的是(44)本该使用(43)组成的基函数向量，(43)取值按(38)可正可负，也就是(43)中第一项不一定大于第二项，不存在<code>$h_{k}^{(m)}(\vec{x}) \approx (K-1)\left(\log p_{k}^{(m)}(\vec{x})\right)$</code>，因此(44)是错误的。无论如何，(44)写成如下式子肯定是正确的<code>$$w_i \leftarrow w_i \cdot exp\left(-\frac{K-1}{K}\vec{y}_{i}^{T} \vec{h}_{}^{(m)}(\vec{x}_i)\right), \\ i=1,2,\ldots,n \tag{44}$$</code>关于(45)，集成方式中基函数前为什么没有系数？SAMME中基函数的取值为(24)中其中一个向量，其内部值要么1要么<code>$-\frac{1}{K-1}$</code>，不带基函数权值进行集成的话其实只是在投票。带上基函数权值则是加权投票。SAMME.R中基函数的取值如(43)，并不固定为1和<code>$-\frac{1}{K-1}$</code>。再通过(45)集成，显然某一基函数能很好分类也就是<code>$h_{k}^{(m)}(\vec{x})$</code>远大于其余，那么这个基函数显然更重要。既然集成是求和，<code>$h_{k}^{(m)}(\vec{x})$</code>与其余的差异将在集成函数中继续得到反映。</strong></p></li>
+</ul>
+
+<p>The lower row of Figure 1 (left panel) shows the result of SAMME.R on the simple three-class simulation example. As we can see, for this particular simulation example, SAMME.R converges more quickly than SAMME and also performs slightly better than SAMME.图1的下一行(左侧面板)显示了SAMME.R的结果。关于简单的三分类仿真实例。我们可以看到，对于这个特定的模拟示例，SAMME.R比SAMME收敛得更快，也比SAMME稍微好一点。</p>
+
+<h1 id="4-numerical-results数学结果">4 Numerical Results数学结果</h1>
+
+<p>In this section, we use both simulation data and real-world data to demonstrate our algorithms.在本节中，我们将使用模拟数据和真实数据来演示我们的算法。</p>
+
+<p>For comparison, a single decision tree (CART; Breiman et al. (1984)) and AdaBoost.MH (Schapire &amp; Singer 1999) are also ﬁt. We have chosen to compare with the AdaBoost.MH algorithm since it seemed to have dominated other proposals in empirical studies (Schapire &amp; Singer 1999). The AdaBoost.MH algorithm converts the K-class problem into that of estimating a two-class classiﬁer on a training set K times as large, with an additional feature deﬁned by the set of class labels. It is essentially the same as the one vs. rest scheme (Friedman et al. 2000), hence the computational cost is <code>$O(dpnlog(n)MK)$</code>, which can be K times larger than the computational cost of SAMME.为对比，也训练了单个决策树（CART; Breiman et al. (1984)）和AdaBoost.MH（Schapire &amp; Singer 1999）。我们选择与AdaBoost.MH算法进行比较，因为它似乎主导了实证研究中的其他建议(Schapire &amp; Singer 1999)。AdaBoost.MH算法将K类问题转换为在训练集上估计一个两分类分类器的问题，这个两分类分类器的大小是训练集的K倍，并且类标签集定义了一个额外的特性。它本质上与一对多方案相同(Friedman et al. 2000)，因此计算成本为<code>$O(dpnlog(n)MK)$</code>，它比SAMME的计算成本大K倍。</p>
+
+<p>We note that there have been many other multi-class extensions of the boosting idea, for example, the ECOC in Schapire (1997), the uniform approach in Allwein et al. (2000), the logitboost in Friedman et al. (2000), and the MART in Friedman (2001). We do not intend to make a full comparison with all these approaches. We would like to emphasize that the purpose of our numerical experiments is not to argue that SAMME is the ultimate multi-class classiﬁcation tool, but rather to illustrate it is a sensible algorithm, and it is the natural extension of the AdaBoost algorithm to the multi-class case.我们注意到，boost思想还有许多其他多分类扩展，例如，Schapire (1997)的ECOC，Allwein et al. (2000)的统一方法，Friedman et al. (2000)的logitboost，Friedman (2001)的MART。我们不打算对所有这些方法进行充分的比较。我们想强调的是，我们的数值实验的目的并不是证明SAMME是最终的多分类分类工具，而是说明它是一种合理的算法，是AdaBoost算法对多分类情况的自然延伸。</p>
+
+<h2 id="4-1-simulation模拟">4.1 Simulation模拟</h2>
+
+<p>We mimic a popular simulation example found in Breiman et al. (1984). This is a three-class problem with twenty one variables, and it is considered to be a diﬃcult pattern recognition problem with Bayes error equal to 0.140. The predictors are deﬁned by我们模拟了Breiman et al.(1984)中发现的一个流行的模拟示例。这是一个包含21个变量的三分类问题，它被认为是一个贝叶斯误差为0.140的模式识别难题。预测因子定义为
+<code>$$f(n) = \begin{cases} u \cdot v_1(j)+(1−u) \cdot v_2(j)+\epsilon_j, &amp; \text{Class 1} \\ u \cdot v_1(j)+(1−u) \cdot v_3(j)+\epsilon_j, &amp; \text{Class 2} \\ u \cdot v_2(j)+(1−u) \cdot v_3(j)+\epsilon_j, &amp; \text{Class 3} \end{cases} \tag{46}$$</code>
+where <code>$j=1,\ldots,21$</code>, <code>$u$</code> is uniform on (0,1), <code>$\epsilon_j$</code> are standard normal variables, and the <code>$v_l$</code> are the shifted triangular waveforms: <code>$v_1(j) = \max (6-|j-11|,0)$</code>, <code>$v_2(j)=v_1(j-4)$</code> and <code>$v_3(j)=v_1(j+4)$</code>.Figure 2 shows some example waveforms from each class with <code>$\epsilon_j=0$</code>. The training sample size is 300 so that approximately 100 training observations are in each class. We use the classiﬁcation tree as the weak classiﬁer for SAMME and SAMME.R. The trees are built using a greedy, top-down recursive partitioning strategy, and we restrict all trees within其中<code>$j=1,\ldots,21$</code>，<code>$u$</code>服从(0,1)均匀分布，<code>$\epsilon_j$</code>是标准正态分布变量，<code>$v_l$</code>是移位的三角形波形：<code>$v_1(j) = \max (6-|j-11|,0)$</code>，<code>$v_2(j)=v_1(j-4)$</code>和<code>$v_3(j)=v_1(j+4)$</code>。图2显示了来自每个类的示例波形，每个类都有<code>$\epsilon_j=0$</code>训练样本量为300，每个分类大约有100个训练观察值。我们使用分类树作为SAMME和SAMME.R的弱分类器。这些树是使用贪婪的、自顶向下递归的分区策略构建的，我们在其中限制所有树
+<img src="/ab/2.png" alt="Figure 2. 示例图片" />
+Figure 2: Some examples of the waveforms generated from model (46) before the Gaussian noise is added. The horizontal axis corresponds to the 21 predictor variables, and the vertical axis corresponds to the values of 21 predictor variables.加入高斯噪声之前由模型(46)产生的波形的一些例子。横轴对应21个预测变量，纵轴对应21个预测变量的值。</p>
+
+<p>each method to have the same number of terminal nodes. This number is chosen via ﬁve-fold crossvalidation. We use an independent test sample of size 5000 to estimate the error rate. Averaged results over ten such independently drawn training-test set combinations are shown in Figure 3 and Table 1. As we can see, for this particular simulation example, SAMME performs slightly better than the AdaBoost.MH algorithm. A paired t-test across the ten independent comparisons indicates a signiﬁcant diﬀerence with p-value around 0.003. We can also see that the SAMME.R algorithm performs closely to the SAMME algorithm.每个方法都有相同数量的终端节点。这个数字是通过5折交叉验证选择的。我们使用一个大小为5000的独立测试样本来估计错误率。十个独立抽样的训练-测试集组合的平均结果如图3和表1所示。我们可以看到，对于这个特定的模拟示例，SAMME的性能略优于AdaBoost.MH算法。10个独立组合比较的t检验表明有显著差异对应p值在0.003左右。也可看出SAMME.R和SAMME算法表现接近。</p>
+
+<p><center>Table 1: Test error rates % of diﬀerent methods on the waveform data. The results are averaged over ten independently drawn datasets. For comparison, a single decision tree is also ﬁt.在波形数据上测试不同方法的错误率%。结果平均自10个独立抽样的数据集。单一决策树也被加入比较。</center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Method</th>
+<th align="left">200 Iterations</th>
+<th align="left">400</th>
+<th align="left">600</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">DT.CART</td>
+<td align="left">28.4 (1.8)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left">Ada.MH</td>
+<td align="left">17.1 (0.6)</td>
+<td align="left">17.0 (0.5)</td>
+<td align="left">17.0 (0.6)</td>
+</tr>
+
+<tr>
+<td align="left">SAMME</td>
+<td align="left">16.7 (0.8)</td>
+<td align="left">16.6 (0.7)</td>
+<td align="left">16.6 (0.6)</td>
+</tr>
+
+<tr>
+<td align="left">SAMME.R</td>
+<td align="left">16.8 (0.3)</td>
+<td align="left">16.6 (0.4)</td>
+<td align="left">16.6 (0.4)</td>
+</tr>
+</tbody>
+</table>
+
+<p><img src="/ab/3.png" alt="Figure 3. 示例图片" />
+Figure 3: Test errors for SAMME, SAMME.R and AdaBoost.MH on the waveform simulation example. The training sample size is 300, and the testing sample size is 5000. The results are averages over ten independently drawn training-test set combinations.波形仿真实例的SAMME、SAMME.R和SAMME.R算法测试误差。训练样本量为300，测试样本量为5000。结果是平均自10个独立抽样的训练-测试集组合。</p>
+
+<h2 id="4-2-real-data实际数据">4.2 Real data实际数据</h2>
+
+<p>In this section, we show the results of running SAMME and SAMME.R on a collection of datasets from the UC-Irvine machine learning archive (Merz &amp; Murphy 1998). Seven datasets were used: Letter, Nursery, Pendigits, Satimage, Segmentation, Thyroid and Vowel. These datasets come with pre-speciﬁed training and testing sets, and are summarized in Table 2. They cover a wide range of scenarios: the number of classes ranges from 3 to 26, and the size of the training data ranges from 210 to 16,000 data points. The types of input variables include both numerical and categorical, for example, in the Nursery dataset, all input variables are categorical variables. We used a classiﬁcation tree as the weak classiﬁer in each case. Again, the trees were built using a greedy, top-down recursive partitioning strategy. We restricted all trees within each method to have the same number of terminal nodes, and this number was chosen via ﬁve-fold cross-validation.在本节中，我们将展示运行SAMME和SAMME.R，这些数据集集合来自加州大学欧文分校机器学习档案（Merz &amp; Murphy 1998）。所使用的七个数据集：Letter，Nursery，Pendigits，Satimage，Segmentation，Thyroid和Vowel。这些数据集带有预先指定的训练和测试集，总结在表2中。它们涵盖了广泛的场景:分类的数量从3到26个不等，培训数据的大小从210到16000个数据点不等。输入变量的类型包括数值变量和类别变量，例如在Nursery数据集中，所有输入变量都是类别变量。我们使用分类树作为每种情况下的弱分类器。同样，这些树是使用贪婪的、自顶向下递归的分区策略构建的。我们将每个方法中的所有树都限制为具有相同数量的终端节点，这个数量是通过5折交叉验证选择的。</p>
+
+<p>Figure 4 compares SAMME and AdaBoost.MH. Since the SAMME.R algorithm performs closely to the SAMME algorithm, for exposition clarity, the test error curves for the SAMME.R algorithm are not shown. The test error rates are summarized in Table 4. The standard errors are approximated by <code>$\sqrt{te.err·(1−te.err)/n.te}$</code>, where <code>$te.err$</code> is the test error, and <code>$n.te$</code> is the size of the testing data.图4比较SAMME和AdaBoost.MH。由于SAMME.R算法的性能与SAMME算法非常接近，为了便于说明，没有显示SAMME.R算法的测试误差曲线。表4总结了测试错误率。误差标准差近似为<code>$\sqrt{te.err·(1−te.err)/n.te}$</code>，其中<code>$te.err$</code>为测试误差，<code>$n.te$</code>为测试数据的大小。</p>
+
+<p>The most interesting result is on the Vowel dataset. This is a diﬃcult classiﬁcation problem, and the best methods achieve around 40% errors on the test data (Hastie, Tibshirani &amp; Friedman 2001). The data was collected by Deterding (1989), who recorded examples of the eleven steady state vowels of English spoken by ﬁfteen speakers for a speaker normalization study. The International Phonetic Association (IPA) symbols that represent the vowels and the words in which the eleven vowel sounds were recorded are given in the following table:最有趣的结果是Vowel数据集。这是一个很难分类的问题，最好的方法在测试数据上可以达到40%左右的误差(Hastie, Tibshirani &amp; Friedman 2001)。这些数据是由Deterding(1989)收集的，他记录了15个说英语的人所说的11个稳定元音的例子，用于说话人的标准化研究。国际音标协会(IPA)下表列出了代表元音的符号以及记录了这11个元音的单词：</p>
+
+<p><center>Table 2: Summary of seven benchmark datasets七个基准数据集的摘要</center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Dataset</th>
+<th align="left">#Train</th>
+<th align="left">#Test</th>
+<th align="left">#Variables</th>
+<th align="left">#Classes</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Letter</td>
+<td align="left">16000</td>
+<td align="left">4000</td>
+<td align="left">16</td>
+<td align="left">26</td>
+</tr>
+
+<tr>
+<td align="left">Nursery</td>
+<td align="left">8840</td>
+<td align="left">3790</td>
+<td align="left">8</td>
+<td align="left">3</td>
+</tr>
+
+<tr>
+<td align="left">Pendigits</td>
+<td align="left">7494</td>
+<td align="left">3498</td>
+<td align="left">16</td>
+<td align="left">10</td>
+</tr>
+
+<tr>
+<td align="left">Satimage</td>
+<td align="left">4435</td>
+<td align="left">2000</td>
+<td align="left">36</td>
+<td align="left">6</td>
+</tr>
+
+<tr>
+<td align="left">Segmentation</td>
+<td align="left">210</td>
+<td align="left">2100</td>
+<td align="left">19</td>
+<td align="left">7</td>
+</tr>
+
+<tr>
+<td align="left">Thyroid</td>
+<td align="left">3772</td>
+<td align="left">3428</td>
+<td align="left">21</td>
+<td align="left">3</td>
+</tr>
+
+<tr>
+<td align="left">Vowel</td>
+<td align="left">528</td>
+<td align="left">462</td>
+<td align="left">10</td>
+<td align="left">11</td>
+</tr>
+</tbody>
+</table>
+
+<p><center>Table 3: The International Phonetic Association (IPA) symbols that represent the eleven vowels</center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+<th align="left">vowel</th>
+<th align="left">word</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">i:</td>
+<td align="left">heed</td>
+<td align="left">O</td>
+<td align="left">hod</td>
+<td align="left">I</td>
+<td align="left">hid</td>
+<td align="left">C:</td>
+<td align="left">hoard</td>
+</tr>
+
+<tr>
+<td align="left">E</td>
+<td align="left">head</td>
+<td align="left">U</td>
+<td align="left">hood</td>
+<td align="left">A</td>
+<td align="left">had</td>
+<td align="left">u:</td>
+<td align="left">who’d</td>
+</tr>
+
+<tr>
+<td align="left">a:</td>
+<td align="left">hard</td>
+<td align="left">3:</td>
+<td align="left">heard</td>
+<td align="left">Y</td>
+<td align="left">hud</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<p>Four male and four female speakers were used to train the classiﬁer, and another four male and three female speakers were used for testing the performance. Each speaker yielded six frames of speech from eleven vowels. This gave 528 frames from the eight speakers used as the training data and 462 frames from the seven speakers used as the testing data. The ten predictors are derived from the digitized speech in a rather complicated way, but standard in the speech recognition world. As we can see from Figure 4 and Table 3, for this particular dataset, the SAMME algorithm performs almost 15% better than the AdaBoost.MH algorithm.使用4男4女说话者对分类器进行训练，使用4男3女说话者对分类器进行性能测试。每个说话者重复6遍这11个元音。这给了8个说话人528帧作为训练数据，来自7个说话人的462帧作为测试数据。这十个预测因子（特征变量）是由数字化语音以一种相当复杂的方式推导出来的，但在语音识别领域是标准的。从图4和表3可以看出，对于这个特定的数据集，SAMME算法的性能几乎比AdaBoost.MH算法好15%。</p>
+
+<p>For other datasets, the SAMME algorithm performs slightly better than the AdaBoost.MH algorithm on Letter, Pendigits, and Thyroid, while slightly worse on Segmentation. In the Segmentation data, there are only 210 training data points, so the diﬀerence might be just due to randomness. It is also worth noting that for the Nursery data, both the SAMME algorithm and the AdaBoost.MH algorithm are able to reduce the test error to zero, while a single decision tree has about 0.8% test error rate. Overall, we are comfortable to say that the performance of SAMME is comparable with that of the AdaBoost.MH.在Letter、Pendigits和Thyroid数据集上，SAMME算法比AdaBoost.MH算法稍好，而在Segmentation数据集上则SAMME算法比AdaBoost.MH算法稍差。Segmentation只有210个训练样本，所以出现SAMME算法不如AdaBoost.MH算法可能是因为随机性。同样值得注意的是，对于Nursery数据，SAMME算法和AdaBoost.MH算法均能够将测试误差降至零，而单棵决策树的测试错误率约为0.8%。的来说，我们可以放心地说SAMME的性能不差于AdaBoost.MH。</p>
+
+<p>For the purpose of further investigation, we also merged the training and the testing sets, and randomly split them into new training and testing sets. We then applied diﬀerent methods on these new training and testing sets. The procedure was repeated ten times. The means of the test errors and the corresponding standard errors (in parentheses) are summarized in Table 5 and Figure 5. Again, the performance of SAMME is comparable with that of the AdaBoost.MH. We can see that for the Vowel data, the SAMME algorithm performs about 10% better than the AdaBoost.MH algorithm. A paired t-test across the ten independent comparisons indicates a signiﬁcant diﬀerence with p-value around 0.001. For the Segmentation data, the test error rates are reversed: SAMME performs slightly better than AdaBoost.MH for this dataset. It is also interesting to note that the test error rate for the Pendigits data drops dramatically from 3% to about 0.6%. It turns out that in the original training-test split, the training digits were written by 30 writers, while the testing digits were written by 14 diﬀerent writers. Unfortunately, who wrote which digits in the original data was not recorded. Therefore, in the re-split data, the 44 writers were mixed in both the training and testing data, which caused the drop in the test error rate.为了进一步的研究，我们还将训练集和测试集进行了合并，并将它们随机分为新的训练集和测试集。然后我们对这些新的训练和测试集应用了不同的方法。这个过程重复了十次。表5（遗憾这个表格没有见到）和图5总结了测试误差的均值和相应的误差标准差(括号内)。再次，SAMME的性能不差于AdaBoost.MH。可以看到，对Vowel数据，SAMME算法表现比AdaBoost.MH好10%。0个独立比较的配对t检验表明p值在0.001左右有显著差异。对于Segmentation数据，测试错误率颠倒过来（相对于原划分下的比较）:SAMME的性能略优于AdaBoost.MH。有趣的是，Pendigits数据的测试错误率从3%急剧下降到0.6%左右。原来在原来的训练-测试分割中，训练数字是由30位作者编写的，而测试数字是由14位不同的作者编写的。不幸的是，谁写的哪些数字在原始数据中没有被记录。因此，在重新分割的数据中，训练数据和测试数据中混合了44位作者，导致了测试错误率的下降。</p>
+
+<p><center>Table 4. Test error rates % on seven benchmark real datasets. The datasets come with pre-speciﬁed training and testing splits. For comparison, a single decision tree was also ﬁt, and the tree size was determined by ﬁve-fold cross-validation</center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Dataset</th>
+<th align="left">Method</th>
+<th align="left">200 Iterations</th>
+<th align="left">400</th>
+<th align="left">600</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Letter</td>
+<td align="left">DT.CART</td>
+<td align="left">13.5 (0.5)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">3.0 (0.3)</td>
+<td align="left">2.8 (0.3)</td>
+<td align="left">2.6 (0.3)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">2.6 (0.3)</td>
+<td align="left">2.4 (0.2)</td>
+<td align="left">2.3 (0.2)</td>
+</tr>
+
+<tr>
+<td align="left">Nursery</td>
+<td align="left">DT.CART</td>
+<td align="left">0.79 (0.14)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">0</td>
+<td align="left">0</td>
+<td align="left">0</td>
+</tr>
+
+<tr>
+<td align="left">Pendigits</td>
+<td align="left">DT.CART</td>
+<td align="left">8.3 (0.5)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">3.0 (0.3)</td>
+<td align="left">3.0 (0.3)</td>
+<td align="left">2.8 (0.3)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">2.5 (0.3)</td>
+<td align="left">2.5 (0.3)</td>
+<td align="left">2.5 (0.3)</td>
+</tr>
+
+<tr>
+<td align="left">Satimage</td>
+<td align="left">DT.CART</td>
+<td align="left">13.8.4 (0.8)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">8.7 (0.6)</td>
+<td align="left">8.4 (0.6)</td>
+<td align="left">8.5 (0.6)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">8.6 (0.6)</td>
+<td align="left">8.2 (0.6)</td>
+<td align="left">8.5 (0.6)</td>
+</tr>
+
+<tr>
+<td align="left">Segmentation</td>
+<td align="left">DT.CART</td>
+<td align="left">9.3 (0.6)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">4.5 (0.5)</td>
+<td align="left">4.5 (0.5)</td>
+<td align="left">4.5 (0.5)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">4.9 (0.5)</td>
+<td align="left">5.0 (0.5)</td>
+<td align="left">5.1 (0.5)</td>
+</tr>
+
+<tr>
+<td align="left">Thyroid</td>
+<td align="left">DT.CART</td>
+<td align="left">0.64 (0.14)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">0.67 (0.14)</td>
+<td align="left">0.67 (0.14)</td>
+<td align="left">0.67 (0.14)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">0.58 (0.13)</td>
+<td align="left">0.61 (0.13)</td>
+<td align="left">0.58 (0.13)</td>
+</tr>
+
+<tr>
+<td align="left">Vowel</td>
+<td align="left">DT.CART</td>
+<td align="left">53.0 (2.3)</td>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">Ada.MH</td>
+<td align="left">52.8 (2.3)</td>
+<td align="left">51.5 (2.3)</td>
+<td align="left">51.5 (2.3)</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left">SAMME</td>
+<td align="left">43.9 (2.3)</td>
+<td align="left">43.3 (2.3)</td>
+<td align="left">43.3 (2.3)</td>
+</tr>
+</tbody>
+</table>
+
+<p><img src="/ab/4.png" alt="Figure 4. 示例图片" />
+Figure 4: Test errors for SAMME and AdaBoost.MH on six benchmark datasets. These datasets come with pre-speciﬁed training and testing splits, and they are summarized in Table 2. The results for the Nursery data are not shown for the test error rates are reduced to zero for both methods. For exposition clarity, the results for SAMME.R are not shown because they are very close to SAMME.在6个基准数据集上测试SAMME和AdaBoost.MH的错误误差。这些数据集带有预先指定的训练和测试分支，表2总结了这些数据集。Nursery数据的结果没有显示，因为两种方法的测试错误率都降低到了零。为说明清楚，没有显示SAMME.R，因为它们与SAMME非常接近。
+<img src="/ab/5.png" alt="Figure 5. 示例图片" />
+Figure 5: Test error for SAMME and AdaBoost.MH on six benchmark datasets. The results are averages over ten random training-test splits. The results for the Nursery data are not shown for the test error rates are reduced to zero for both methods. For exposition clarity, the results for SAMME.R are not shown because they are very close to SAMME.在6个基准数据集上测试SAMME和AdaBoost.MH的错误误差。结果平均自10次随机训练-测试集划分。Nursery数据的结果没有显示，因为两种方法的测试错误率都降低到了零。为说明清楚，没有显示SAMME.R，因为它们与SAMME非常接近。</p>
+
+<h1 id="5-discussion讨论">5 Discussion讨论</h1>
+
+<p>The statistical view of boosting, as illustrated in Friedman et al. (2000), shows that the two-class AdaBoost builds an additive model to approximate the two-class Bayes rule. Following the same statistical principle, we have derived SAMME, the natural and clean multi-class extension of the two-class AdaBoost algorithm, and we have shown that Friedman等(2000)对boost的统计观点表明，两分类AdaBoost建立了一个叠加模型来近似两分类贝叶斯规则。根据同样的统计原理，我们推导出了SAMME，两分类AdaBoost算法的自然干净的多分类扩展，我们已经证明了</p>
+
+<ul>
+<li>SAMME adaptively implements the multi-class Bayes rule by ﬁtting a forward stagewise additive model for multi-class problems;SAMME自适应地实现了多分类贝叶斯规则，它拟合了一个针对多分类问题的向前递归叠加模型；</li>
+<li>SAMME follows closely to the philosophy of boosting, i.e. adaptively combining weak classiﬁers (rather than regressors as in logit-boost (Friedman et al. 2000) and MART (Friedman 2001)) into a powerful one;SAMME紧跟boost的哲学，即自适应地将弱分类器（而不是logit-boost中的回归器 (Friedman et al. 2000)和MART (Friedman 2001)）组合成强大的分类器；</li>
+<li>at each stage, SAMME returns only one weighted classiﬁer (rather than <code>$K$</code>), and the weak classiﬁer only needs to be better than <code>$K$</code>-class random guessing;在每个阶段，SAMME只返回一个加权分类器（而不是<code>$K$</code>个），而弱分类器只需要比<code>$K$</code>类随机猜测更好；</li>
+<li>SAMME shares the same simple modular structure of AdaBoost.SAMME采用了与AdaBoost相同的简单模块化结构。</li>
+</ul>
+
+<p>We note that although AdaBoost was proposed to solve both the two-class and the multi-class problems (Freund &amp; Schapire 1997), it sometimes can fail in the multi-class case. AdaBoost.MH is an approach to convert the <code>$K$</code>-class problem into <code>$K$</code> two-class problems. As we have seen, AdaBoost.MH in general performs very well on both simulation and real-world data. SAMME’s performance is comparable with that of the AdaBoost.MH, and sometimes slightly better. However, we would like to emphasize that our goal is not to argue that SAMME is the ultimate multi-class classiﬁcation tool, but rather to illustrate it is the natural extension of the AdaBoost algorithm to the multi-class case. We believe our numerical and theoretical results make SAMME an interesting and useful addition to the toolbox of multi-class methods. The SAMME algorithm has been implemented in the R computing environment, and will be publicly available from the ﬁrst author’s website.我们注意到，虽然AdaBoost被提出来同时解决两分类和多分类问题(Freund &amp; Schapire 1997)，但它在多分类情况下有时会失败。AdaBoost.MH是一种将<code>$K$</code>类问题转换为<code>$K$</code>个两分类问题的方法。正如我们所看到的，AdaBoost.MH通常在模拟和真实数据上都表现得非常好。SAMME的性能与AdaBoost.MH相当，有时稍好一些。然而，我们想强调的是，我们的目标并不是证明SAMME是最终的多分类分类工具，而是说明它是AdaBoost算法对多分类情况的自然扩展。我们相信我们的数值和理论结果使SAMME成为多分类方法工具箱中一个有趣和有用的补充。SAMME算法已经在R计算环境中实现，并将在第一作者的网站上公开。</p>
+
+<p>The multi-class exponential loss function (32) is a natural generalization of the two-class exponential loss function. Using the symmetry in <code>$\vec{y}$</code> and <code>$\vec{f}$</code>, we can further simplify (32) as多分类指数损失函数(32)是两分类指数损失函数的自然推广。使用<code>$\vec{y}$</code>和<code>$\vec{f}$</code>的对称性，我们可以进一步简化(32)为<br />
+<code>$$\exp \left(− \frac{1} {K −1} \sum_{k=1}^{K} \mathbb{I}(c = k)f_k\right)= \exp \left(− \frac{1} {K −1} f_c\right) \tag{47}$$</code>
+This naturally leads us to consider a general multi-class loss function that has the form:这自然会导致我们考虑具有这种形式的一般多分类损失函数：
+<code>$$\sum_{k=1}^{K} \mathbb{I}(c = k) \phi(f_k) \text{ or equivalently } \phi(f_c) \tag{48}$$</code>
+Hence, there are several interesting directions where our work can be extended: (8) For this general loss function to be sensible, we would like to ﬁnd conditions on <code>$\phi$</code> such that the classiﬁcation rule given by the population minimizer agrees with the Bayes optimal rule. Lin (2004) studied a similar problem for the two-class classiﬁcation case, and proposed very general conditions (Theorem 3.1). Along the lines of Lin (2004), we plan to design more multi-class loss functions that can be used in practice. (31) The principal attraction of the multi-class exponential loss function in the context of additive modeling is computational; it leads to our simple modular reweighting SAMME algorithm. We intend to develop algorithms for other members of the multi-class loss functions family as well.因此，有几个有趣的方向可以扩展我们的工作：(8)为了使这个一般的损失函数有意义，我们希望找到<code>$\phi$</code>的条件，使总体最小化给出的分类规则与贝叶斯最优规则一致。Lin(2004)研究了两分类分类情况下的一个类似问题，并提出了非常一般的条件(Theorem 3.1)。按照Lin(2004)的思路，我们计划设计更多可用于实践的多分类损失函数。(31)多分类指数损失函数在叠加建模中的主要吸引力是计算性的;这就引出了我们简单的模块化加权SAMME算法。我们还打算为多分类损失函数族的其他成员开发算法。</p>
+
+<p>One example is the multi-class logit loss, which can be more robust to outliers and misspeciﬁed data. However, other multi-class loss functions may not lead to a simple closed form reweighting scheme. The computational trick used in Friedman (2001) and Buhlmann &amp; Yu (2003) should prove useful here.个例子是多分类logit损失，它对异常值和具体错误的数据更加健壮。然而，其他多分类损失函数可能不会导致简单的封闭式重加权方案。Friedman(2001)和Buhlmann &amp; Yu(2003)使用的计算技巧在这里应该是有用的。</p>
+
+<h1 id="acknowledgments致谢">Acknowledgments致谢</h1>
+
+<p>The authors would like to dedicate this work to the memory of Leo Breiman, who passed away while we were ﬁnalizing this manuscript. Leo Breiman has made tremendous contributions to the study of statistics and machine learning. His work has greatly inﬂuenced us. Zhu is partially supported by grant DMS-0505432 from the National Science Foundation. Hastie is partially supported by grant DMS-0204162 from the National Science Foundation.作者们想把这部作品献给Leo Breiman，他在我们完成手稿的时候去世了。Leo Breiman在统计学和机器学习方面做出了巨大的贡献。他的工作对我们影响很大。Zhu的研究得到了国家科学基金的部分资助。Hastie部分由国家科学基金会拨款DMS-0204162支持。</p>
+
+<p>关于该选什么损失函数，参考6约10.5和10.6节有所介绍。</p>
+
+<p>参考：</p>
+
+<ul>
+<li>1.<a href="https://ac.els-cdn.com/S002200009791504X/1-s2.0-S002200009791504X-main.pdf?_tid=b3d3a67b-fbd3-4475-9208-0cb65a2788fd&amp;acdnat=1545817889_13392c5a97f5e578f84f3ee5268bd5b8">Y. Freund, and R. Schapire, “A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting”, 1997.</a>；</li>
+<li>2.<a href="https://web.stanford.edu/~hastie/Papers/SII-2-3-A8-Zhu.pdf">J. Zhu, H. Zou, S. Rosset, T. Hastie. “Multi-class AdaBoost”, 2009.</a>；</li>
+<li>3.<a href="https://web.stanford.edu/~hastie/Papers/samme.pdf">J. Zhu, S. Rosset, H. Zou, T. Hastie. “Multi-class AdaBoost”, 2005.</a>；</li>
+<li>4.<a href="https://pdfs.semanticscholar.org/8d49/e2dedb817f2c3330e74b63c5fc86d2399ce3.pdf?_ga=2.51142880.874713034.1547538541-1408230639.1547538541">H. Drucker. “Improving Regressors using Boosting Techniques”, 1997.</a>；</li>
+<li>5.<a href="https://www.cs.utexas.edu/~dpardoe/papers/ICML10.pdf">David Pardoe and Peter Stone, “Boosting for Regression Transfer
+”, 2010.</a>；</li>
+<li>6.<a href="https://web.stanford.edu/~hastie/ElemStatLearn//">T. Hastie, R. Tibshirani and J. Friedman, “Elements of Statistical Learning Ed. 2”, Springer, 2009.</a>；</li>
+<li>7.<a href="https://blog.csdn.net/tyh70537/article/details/76675098">adaboost.M1与adaboost.M2差别比较</a>；</li>
+<li>8.<a href="https://scikit-learn.org/stable/modules/ensemble.html#adaboost">sklearn文档1.11.3. AdaBoost
+</a>；</li>
+<li>8.<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.5148&amp;rep=rep1&amp;type=pdf">A Short Introduction to Boosting
+</a>；</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

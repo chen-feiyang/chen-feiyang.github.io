@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>data_mining数据挖掘 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>data_mining数据挖掘</h1>
+
+
+<p><strong>Data mining</strong> is the process of discovering patterns in large data sets involving methods at the intersection of machine learning, statistics, and database systems.[1] Data mining is an interdisciplinary subfield of computer science with an overall goal to extract information (with intelligent methods) from a data set and transform the information into a comprehensible structure for further use.[1][2][3][4] Data mining is the analysis step of the &quot;knowledge discovery in databases&quot; process, or KDD.[5] Aside from the raw analysis step, it also involves database and data management aspects, data pre-processing, model and inference considerations, interestingness metrics, complexity considerations, post-processing of discovered structures, visualization, and online updating.[1]</p>
+
+<p>数据挖掘是在涉及机器学习、统计和数据库系统交叉的方法的大型数据集中发现模式的过程。数据挖掘是计算机科学的一个跨学科的子领域，其总体目标是从数据集中提取信息(使用智能方法)，并将信息转换为可理解的结构，以供进一步使用。数据挖掘是“数据库中的知识发现”过程(KDD)的分析步骤。除了原始的分析步骤，它还涉及数据库和数据管理方面、数据预处理、模型和推理考虑、兴趣度度量、复杂性考虑、发现的结构的后处理、可视化和在线更新。</p>
+
+<p>The term &quot;data mining&quot; is in fact a misnomer, because the goal is the extraction of patterns and knowledge from large amounts of data, not the extraction (mining) of data itself.[6] It also is a buzzword[7] and is frequently applied to any form of large-scale data or information processing (collection, extraction, warehousing, analysis, and statistics) as well as any application of computer decision support system, including artificial intelligence (e.g., machine learning) and business intelligence. The book Data mining: Practical machine learning tools and techniques with Java<a href="which covers mostly machine learning material">8</a> was originally to be named just Practical machine learning, and the term data mining was only added for marketing reasons.[9] Often the more general terms (large scale) data analysis and analytics – or, when referring to actual methods, artificial intelligence and machine learning – are more appropriate.</p>
+
+<p>“数据挖掘”一词实际上用词不当，因为其目标是从大量数据中提取模式和知识，而不是提取(挖掘)数据本身。它也是一个流行词，经常用于任何形式的大规模数据或信息处理(收集、提取、仓储、分析和统计)，以及任何计算机决策支持系统的应用，包括人工智能(例如机器学习)和商业智能。《数据挖掘:使用Java的实用机器学习工具和技术》(主要涉及机器学习材料)这本书最初只是被命名为《实用机器学习》，数据挖掘这个术语只是因为市场原因才被添加进来的。通常，更通用的术语(大规模)数据分析和分析，或者，在涉及实际方法时，人工智能和机器学习更合适。</p>
+
+<p>The actual data mining task is the semi-automatic or automatic analysis of large quantities of data to extract previously unknown, interesting patterns such as groups of data records (cluster analysis), unusual records (anomaly detection), and dependencies (association rule mining, sequential pattern mining). This usually involves using database techniques such as spatial indices. These patterns can then be seen as a kind of summary of the input data, and may be used in further analysis or, for example, in machine learning and predictive analytics. For example, the data mining step might identify multiple groups in the data, which can then be used to obtain more accurate prediction results by a decision support system. Neither the data collection, data preparation, nor result interpretation and reporting is part of the data mining step, but do belong to the overall KDD process as additional steps.</p>
+
+<p>实际的数据挖掘任务是对大量数据进行半自动或自动分析，以提取以前未知的、有趣的模式，例如数据记录组(集群分析)、异常记录(异常检测)和依赖关系(关联规则挖掘、顺序模式挖掘)。这通常涉及到使用数据库技术，例如空间索引。然后，这些模式可以被看作是输入数据的一种总结，可以用于进一步的分析，或像用于机器学习和预测分析。例如，数据挖掘步骤可以识别数据中的多个组，然后使用这些组通过决策支持系统获得更准确的预测结果。数据收集、数据准备、结果解释和报告都不是数据挖掘步骤的一部分，但是作为附加步骤属于整个数据库中的知识发现(KDD)过程。</p>
+
+<p>The related terms data dredging, data fishing, and data snooping refer to the use of data mining methods to sample parts of a larger population data set that are (or may be) too small for reliable statistical inferences to be made about the validity of any patterns discovered. These methods can, however, be used in creating new hypotheses to test against the larger data populations.</p>
+
+<p>相关术语“数据挖掘”、“数据钓鱼”和“数据窥探”指的是使用数据挖掘方法对较大的群体数据集的某些部分进行采样，这些采样数据集太小(或可能太小)，无法对所发现的任何模式的有效性作出可靠的统计推断。然而，这些方法可以用于创建新的假设，以测试更大的数据群体。</p>
+
+<h2 id="1-etymology语源">1 Etymology语源</h2>
+
+<p>In the 1960s, statisticians and economists used terms like data fishing or data dredging to refer to what they considered the bad practice of analyzing data without an a-priori hypothesis. The term &quot;data mining&quot; was used in a similarly critical way by economist Michael Lovell in an article published in the Review of Economic Studies 1983. Lovell indicates that the practice &quot;masquerades under a variety of aliases&quot;, ranging from &quot;experimentation&quot; (positive) to &quot;fishing&quot; or &quot;snooping&quot; (negative).[10]</p>
+
+<p>在20世纪60年代，统计学家和经济学家使用数据钓鱼或数据捕捞等术语来指代他们认为的在没有先验假设的情况下分析数据的糟糕做法。经济学家迈克尔•洛弗尔(Michael Lovell)在1983年《经济研究评论》(Review of Economic Studies)上发表的一篇文章中以类似的批评方式使用了“数据挖掘”一词。洛弗尔指出，这种做法“在各种别名下伪装”，从“实验”(积极的)到“钓鱼”或“窥探”(消极的)。</p>
+
+<p>The term data mining appeared around 1990 in the database community, generally with positive connotations. For a short time in 1980s, a phrase &quot;database mining&quot;™, was used, but since it was trademarked by HNC, a San Diego-based company, to pitch their Database Mining Workstation;[11] researchers consequently turned to data mining. Other terms used include data archaeology, information harvesting, information discovery, knowledge extraction, etc. Gregory Piatetsky-Shapiro coined the term &quot;knowledge discovery in databases&quot; for the first workshop on the same topic (KDD-1989) and this term became more popular in AI and machine learning community. However, the term data mining became more popular in the business and press communities.[12] Currently, the terms data mining and knowledge discovery are used interchangeably.</p>
+
+<p>数据挖掘这个术语出现在1990年左右的数据库社区中，通常具有积极的含义。在20世纪80年代的一段短时间内，人们使用了“数据库挖掘”一词，但由于HNC(一家位于圣地亚哥的公司)注册了这个词的商标，他们便开始推销他们的数据库挖掘工作站;研究人员因此转向使用术语数据挖掘。其他使用的术语包括数据考古学、信息获取、信息发现、知识提取等。Gregory Piatetsky-Shapiro为同一主题的第一次研讨会(KDD-1989)创造了“数据库中的知识发现”这个术语，这个术语在人工智能和机器学习社区中越来越流行。目前，数据挖掘和知识发现这两个术语可以互换使用。</p>
+
+<p>In the academic community, the major forums for research started in 1995 when the First International Conference on Data Mining and Knowledge Discovery (KDD-95) was started in Montreal under AAAI sponsorship. It was co-chaired by Usama Fayyad and Ramasamy Uthurusamy. A year later, in 1996, Usama Fayyad launched the journal by Kluwer called Data Mining and Knowledge Discovery as its founding editor-in-chief. Later he started the SIGKDDD Newsletter SIGKDD Explorations.[13] The KDD International conference became the primary highest quality conference in data mining with an acceptance rate of research paper submissions below 18%. The journal Data Mining and Knowledge Discovery is the primary research journal of the field.</p>
+
+<p>在学术界，主要的研究论坛始于1995年，当时在AAAI赞助下在蒙特利尔召开了第一次数据挖掘和知识发现国际会议(KDD-95)。会议由Usama Fayyad和Ramasamy Uthurusamy共同主持。一年后，也就是1996年，Usama Fayyad创办了Kluwer公司的《数据挖掘与知识发现》杂志，并担任主编。后来他创办了SIGKDDD时事通讯。KDD国际会议成为数据挖掘领域的主要高质量会议，研究论文的录取率低于18%。数据挖掘与知识发现是该领域的主要研究期刊。</p>
+
+<h2 id="2-background背景">2 Background背景</h2>
+
+<p>The manual extraction of patterns from data has occurred for centuries. Early methods of identifying patterns in data include Bayes' theorem (1700s) and regression analysis (1800s). The proliferation, ubiquity and increasing power of computer technology has dramatically increased data collection, storage, and manipulation ability. As data sets have grown in size and complexity, direct &quot;hands-on&quot; data analysis has increasingly been augmented with indirect, automated data processing, aided by other discoveries in computer science, such as neural networks, cluster analysis, genetic algorithms (1950s), decision trees and decision rules (1960s), and support vector machines (1990s). Data mining is the process of applying these methods with the intention of uncovering hidden patterns[14] in large data sets. It bridges the gap from applied statistics and artificial intelligence (which usually provide the mathematical background) to database management by exploiting the way data is stored and indexed in databases to execute the actual learning and discovery algorithms more efficiently, allowing such methods to be applied to ever larger data sets.</p>
+
+<p>从数据中手工提取模式已经发生了几个世纪。早期识别数据模式的方法包括贝叶斯定理(18世纪)和回归分析(19世纪)。计算机技术的扩散、普及和日益增强的能力极大地提高了数据收集、存储和操作能力。随着数据集的大小和复杂性的增加，直接的“动手”数据分析越来越多地通过间接的、自动化的数据处理来增强，计算机科学的其他发现也提供了帮助，例如神经网络、集群分析、遗传算法(1950年)、决策树和决策规则(1960年)以及支持向量机(1990年)。数据挖掘是应用这些方法的过程，目的是在大数据集中发现隐藏的模式。应用统计学和人工智能(通常提供的数学背景)到利用数据存储和索引在数据库中执行实际的学习和发现算法更有效,允许这些方法被应用到更大的数据集等数据库管理之间存在差距，数据挖掘弥补了之一差距。</p>
+
+<h2 id="3-process过程">3 Process过程</h2>
+
+<p>The knowledge discovery in databases (KDD) process is commonly defined with the stages:数据库知识挖掘（KDD）过程通常定义为如下阶段：
+1. Selection选择
+2. Pre-processing预处理
+3. Transformation转换
+4. Data mining数据挖掘
+5. Interpretation/evaluation.[5]解释/教育</p>
+
+<p>It exists, however, in many variations on this theme, such as the Cross Industry Standard Process for Data Mining (CRISP-DM) which defines six phases: 然而，在于这个主题的许多变体中，例如定义了六个阶段的跨行业数据挖掘标准过程(crispr - dm)包括的步骤：
+1. Business understanding业务理解
+2. Data understanding数据理解
+3. Data preparation数据准备
+4. Modeling建模
+5. Evaluation评估
+6. Deployment部署</p>
+
+<p>or a simplified process such as (1) Pre-processing, (2) Data Mining, and (3) Results Validation.</p>
+
+<p>或将过程简化为(1)预处理、(2)数据挖掘、(3)结果验证。</p>
+
+<p>Polls conducted in 2002, 2004, 2007 and 2014 show that the CRISP-DM methodology is the leading methodology used by data miners.[15] The only other data mining standard named in these polls was SEMMA. However, 3–4 times as many people reported using CRISP-DM. Several teams of researchers have published reviews of data mining process models,[16][17] and Azevedo and Santos conducted a comparison of CRISP-DM and SEMMA in 2008.[18]</p>
+
+<p>2002年、2004年、2007年和2014年的调查显示，crispr - dm方法是数据挖掘人员使用的主要方法。在这些调查中唯一命名的其他数据挖掘标准是SEMMA。然而，使用crispr - dm的人数是SEMMA的3至4倍。几个研究小组发表了对数据挖掘过程模型的评论，Azevedo和Santos在2008年对crispr-dm和SEMMA进行了比较。</p>
+
+<h3 id="3-1-pre-processing预处理">3.1 Pre-processing预处理</h3>
+
+<p>Before data mining algorithms can be used, a target data set must be assembled. As data mining can only uncover patterns actually present in the data, the target data set must be large enough to contain these patterns while remaining concise enough to be mined within an acceptable time limit. A common source for data is a data mart or data warehouse. Pre-processing is essential to analyze the multivariate data sets before data mining. The target set is then cleaned. Data cleaning removes the observations containing noise and those with missing data.</p>
+
+<p>在使用数据挖掘算法之前，必须装配目标数据集。由于数据挖掘只能发现数据中实际存在的模式，因此目标数据集必须足够大，以包含这些模式，同时保持足够简洁，以便在可接受的时限内进行挖掘。数据的一个常见来源是数据集市或数据仓库。对数据挖掘前的多变量数据集进行预处理是必要的。然后清理目标集。数据清洗去除包含噪声、缺失值的观测值。</p>
+
+<h3 id="3-2-data-mining数据挖掘">3.2 Data mining数据挖掘</h3>
+
+<p>Data mining involves six common classes of tasks:[5] 数据挖掘涉及6个主要任务：
+ - Anomaly detection (outlier/change/deviation detection) – The identification of unusual data records, that might be interesting or data errors that require further investigation.异常检测（域外值/改变/偏差分析）-不寻常的数据记录的识别,这可能是有趣的或数据错误,需要进一步调查。
+ - Association rule learning (dependency modelling) – Searches for relationships between variables. For example, a supermarket might gather data on customer purchasing habits. Using association rule learning, the supermarket can determine which products are frequently bought together and use this information for marketing purposes. This is sometimes referred to as market basket analysis.关联规则学习（依赖模型）-搜索变量之间的关系。例如，超市可能收集顾客购买习惯的数据。通过关联规则学习，超市可以确定哪些产品经常一起购买，并将这些信息用于营销目的。这有时被称为市场篮子分析。
+ - Clustering – is the task of discovering groups and structures in the data that are in some way or another &quot;similar&quot;, without using known structures in the data.聚类分析-是一种尝试，尝试在数据中以某种方式或另一种“相似”的方式发现组和结构，而不使用数据中的已知结构。
+ - Classification – is the task of generalizing known structure to apply to new data. For example, an e-mail program might attempt to classify an e-mail as &quot;legitimate&quot; or as &quot;spam&quot;.分类法-分类是将已知结构推广到新数据的任务。例如，电子邮件程序可能试图将电子邮件归类为“合法的”或“垃圾邮件”。
+ - Regression – attempts to find a function which models the data with the least error that is, for estimating the relationships among data or datasets.回归-试图找到一个对数据建模误差最小的函数，即估计数据或数据集之间的关系。
+ - Summarization – providing a more compact representation of the data set, including visualization and report generation.摘要提供数据集更紧凑的表示，包括可视化和报表生成。</p>
+
+<h3 id="3-3-results-validation结果验证">3.3 Results validation结果验证</h3>
+
+<p>Data mining can unintentionally be misused, and can then produce results which appear to be significant; but which do not actually predict future behaviour and cannot be reproduced on a new sample of data and bear little use. Often this results from investigating too many hypotheses and not performing proper statistical hypothesis testing. A simple version of this problem in machine learning is known as overfitting, but the same problem can arise at different phases of the process and thus a train/test split - when applicable at all - may not be sufficient to prevent this from happening.[19]</p>
+
+<p>数据挖掘可以在无意中被滥用，然后可以产生看似重要的结果;但它们实际上无法预测未来的行为，无法在新的数据样本上重现，而且用处不大。这通常是由于调查了太多的假设而没有进行适当的统计假设检验。机器学习中这个问题的一个简单版本被称为过拟合，但同样的问题可能会在过程的不同阶段出现，因此训练/测试集划分-如果适用的话-可能还不足以阻止这种情况的发生。</p>
+
+<p>The final step of knowledge discovery from data is to verify that the patterns produced by the data mining algorithms occur in the wider data set. Not all patterns found by the data mining algorithms are necessarily valid. It is common for the data mining algorithms to find patterns in the training set which are not present in the general data set. This is called overfitting. To overcome this, the evaluation uses a test set of data on which the data mining algorithm was not trained. The learned patterns are applied to this test set, and the resulting output is compared to the desired output. For example, a data mining algorithm trying to distinguish &quot;spam&quot; from &quot;legitimate&quot; emails would be trained on a training set of sample e-mails. Once trained, the learned patterns would be applied to the test set of e-mails on which it had not been trained. The accuracy of the patterns can then be measured from how many e-mails they correctly classify. A number of statistical methods may be used to evaluate the algorithm, such as ROC curves.</p>
+
+<p>从数据中发现知识的最后一步是验证数据挖掘算法产生的模式是否出现在更广泛的数据集中。数据挖掘算法发现的模式不一定都是有效的。往往挖掘算法在训练集上找到的模式却不能在一般数据集上呈现。这种现象叫做过拟合。为克服过拟合，评估使用了一组数据未用来训练挖掘算法的测试数据。所学习的模式应用于这个测试集，并将结果输出与所需输出进行比较。例如，一种试图区分“垃圾邮件”和“合法”电子邮件的数据挖掘算法将在样本邮件训练集上训练。一旦训练完成，习得的模式就会应用到没有用于训练的电子邮件测试集上。这些模式的准确性可以通过它们正确分类的电子邮件数量来衡量。多种统计方法可用于评估算法，如ROC曲线。</p>
+
+<p>If the learned patterns do not meet the desired standards, subsequently it is necessary to re-evaluate and change the pre-processing and data mining steps. If the learned patterns do meet the desired standards, then the final step is to interpret the learned patterns and turn them into knowledge.</p>
+
+<p>如果所学习的模式不满足所需的标准，那么就需要重新评估和更改预处理和数据挖掘步骤。如果所学习的模式确实符合所期望的标准，那么最后一步就是解释所学习的模式并将其转化为知识。</p>
+
+<h2 id="4-research研究">4 Research研究</h2>
+
+<p>The premier professional body in the field is the Association for Computing Machinery's (ACM) Special Interest Group (SIG) on Knowledge Discovery and Data Mining (SIGKDD).[20][21] Since 1989, this ACM SIG has hosted an annual international conference and published its proceedings,[22] and since 1999 it has published a biannual academic journal titled &quot;SIGKDD Explorations&quot;.[23]</p>
+
+<p>该领域的主要专业机构是计算机械协会(ACM)知识发现和数据挖掘(SIGKDD)特别兴趣小组(SIG)。自1989年以来，ACM SIG主办了一年一度的国际会议并发表了会议记录，自1999年以来，它还出版了一份名为《SIGKDD探索》的半年度学术期刊。</p>
+
+<p>Computer science conferences on data mining include: 关于数据挖掘的计算机科学会议包括：
+ - CIKM Conference – ACM Conference on Information and Knowledge ManagementCIKM会议-ACM信息与知识管理会议
+ - European Conference on Machine Learning and Principles and Practice of Knowledge Discovery in Databases数据库知识发现的机器学习、原理、实践的欧洲会议。
+ - KDD Conference – ACM SIGKDD Conference on Knowledge Discovery and Data Mining KDD会议-ACM SIGKDD知识发现和数据挖掘会议</p>
+
+<p>Data mining topics are also present on many data management/database conferences such as the ICDE Conference, SIGMOD Conference and International Conference on Very Large Data Bases</p>
+
+<p>数据挖掘主题也出现在许多数据管理/数据库会议上，如ICDE会议，SIGMOD会议和关于非常大的数据库的国际会议。</p>
+
+<h2 id="5-standards标准">5 Standards标准</h2>
+
+<p>There have been some efforts to define standards for the data mining process, for example the 1999 European Cross Industry Standard Process for Data Mining (CRISP-DM 1.0) and the 2004 Java Data Mining standard (JDM 1.0). Development on successors to these processes (CRISP-DM 2.0 and JDM 2.0) was active in 2006, but has stalled since. JDM 2.0 was withdrawn without reaching a final draft.</p>
+
+<p>已经有一些努力为数据挖掘过程定义标准，例如1999年的欧洲跨行业数据挖掘标准过程(crispr - dm 1.0)和2004年的Java数据挖掘标准(JDM 1.0)。这些过程的后继程序(crispr - dm 2.0和JDM 2.0)的开发在2006年很活跃，但此后一直停滞不前。JDM 2.0未达成最终稿就被撤回。</p>
+
+<p>For exchanging the extracted models – in particular for use in predictive analytics – the key standard is the Predictive Model Markup Language (PMML), which is an XML-based language developed by the Data Mining Group (DMG) and supported as exchange format by many data mining applications. As the name suggests, it only covers prediction models, a particular data mining task of high importance to business applications. However, extensions to cover (for example) subspace clustering have been proposed independently of the DMG.[24]</p>
+
+<p>交换提取的模型-特别是用于预测分析的-关键标准是预测模型标记语言(PMML)，它是数据挖掘组(DMG)开发的一种基于xml的语言，被许多数据挖掘应用程序作为交换格式支持。顾名思义，它只涵盖预测模型，这是对业务应用程序非常重要的数据挖掘任务。然而，（例如）子空间集群的扩展是独立于DMG提出的。</p>
+
+<h2 id="6-notable-uses值得注意的用途">6 Notable uses值得注意的用途</h2>
+
+<blockquote>
+<p>Main article: Examples of data mining
+See also: Category:Applied data mining.</p>
+</blockquote>
+
+<p>Data mining is used wherever there is digital data available today. Notable examples of data mining can be found throughout business, medicine, science, and surveillance.</p>
+
+<p>现在只要有数字数据可用，就可以使用数据挖掘。数据挖掘的显著例子可以在商业、医学、科学和监视中找到。</p>
+
+<h2 id="7-privacy-concerns-and-ethics隐私与道德">7 Privacy concerns and ethics隐私与道德</h2>
+
+<p>While the term &quot;data mining&quot; itself may have no ethical implications, it is often associated with the mining of information in relation to peoples' behavior (ethical and otherwise).[25]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<p>The ways in which data mining can be used can in some cases and contexts raise questions regarding privacy, legality, and ethics.[26] In particular, data mining government or commercial data sets for national security or law enforcement purposes, such as in the Total Information Awareness Program or in ADVISE, has raised privacy concerns.[27][28]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<p>Data mining requires data preparation which can uncover information or patterns which may compromise confidentiality and privacy obligations. A common way for this to occur is through data aggregation. Data aggregation involves combining data together (possibly from various sources) in a way that facilitates analysis (but that also might make identification of private, individual-level data deducible or otherwise apparent).[29] This is not data mining per se, but a result of the preparation of data before – and for the purposes of – the analysis. The threat to an individual's privacy comes into play when the data, once compiled, cause the data miner, or anyone who has access to the newly compiled data set, to be able to identify specific individuals, especially when the data were originally anonymous.[30][31][32]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<p>It is recommended that an individual is made aware of the following before data are collected:[29]
+ - the purpose of the data collection and any (known) data mining projects;
+ - how the data will be used;
+ - who will be able to mine the data and use the data and their derivatives;
+ - the status of security surrounding access to the data;
+ - how collected data can be updated.</p>
+
+<p>（暂略，有空再学习）</p>
+
+<p>Data may also be modified so as to become anonymous, so that individuals may not readily be identified.[29] However, even &quot;de-identified&quot;/&quot;anonymized&quot; data sets can potentially contain enough information to allow identification of individuals, as occurred when journalists were able to find several individuals based on a set of search histories that were inadvertently released by AOL.[33]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<p>The inadvertent revelation of personally identifiable information leading to the provider violates Fair Information Practices. This indiscretion can cause financial, emotional, or bodily harm to the indicated individual. In one instance of privacy violation, the patrons of Walgreens filed a lawsuit against the company in 2011 for selling prescription information to data mining companies who in turn provided the data to pharmaceutical companies.[34]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<h3 id="7-1-situation-in-europe欧洲情况">7.1 Situation in Europe欧洲情况</h3>
+
+<p>Europe has rather strong privacy laws, and efforts are underway to further strengthen the rights of the consumers. However, the U.S.-E.U. Safe Harbor Principles currently effectively expose European users to privacy exploitation by U.S. companies. As a consequence of Edward Snowden's global surveillance disclosure, there has been increased discussion to revoke this agreement, as in particular the data will be fully exposed to the National Security Agency, and attempts to reach an agreement have failed.[citation needed]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<h3 id="7-2-situation-in-the-united-states美国情况">7.2 Situation in the United States美国情况</h3>
+
+<p>In the United States, privacy concerns have been addressed by the US Congress via the passage of regulatory controls such as the Health Insurance Portability and Accountability Act (HIPAA). The HIPAA requires individuals to give their &quot;informed consent&quot; regarding information they provide and its intended present and future uses. According to an article in Biotech Business Week, &quot;'[i]n practice, HIPAA may not offer any greater protection than the longstanding regulations in the research arena,' says the AAHC. More importantly, the rule's goal of protection through informed consent is approach a level of incomprehensibility to average individuals.&quot;[35] This underscores the necessity for data anonymity in data aggregation and mining practices.
+U.S. information privacy legislation such as HIPAA and the Family Educational Rights and Privacy Act (FERPA) applies only to the specific areas that each such law addresses. Use of data mining by the majority of businesses in the U.S. is not controlled by any legislation.</p>
+
+<p>（暂略，有空再学习）</p>
+
+<h2 id="8-copyright-law版权法律">8 Copyright law版权法律</h2>
+
+<h3 id="8-1-situation-in-europe欧洲情况">8.1 Situation in Europe欧洲情况</h3>
+
+<p>Due to a lack of flexibilities in European copyright and database law, the mining of in-copyright works such as web mining without the permission of the copyright owner is not legal. Where a database is pure data in Europe there is likely to be no copyright, but database rights may exist so data mining becomes subject to regulations by the Database Directive. On the recommendation of the Hargreaves review this led to the UK government to amend its copyright law in 2014[36] to allow content mining as a limitation and exception. Only the second country in the world to do so after Japan, which introduced an exception in 2009 for data mining. However, due to the restriction of the Copyright Directive, the UK exception only allows content mining for non-commercial purposes. UK copyright law also does not allow this provision to be overridden by contractual terms and conditions. The European Commission facilitated stakeholder discussion on text and data mining in 2013, under the title of Licences for Europe.[37] The focus on the solution to this legal issue being licences and not limitations and exceptions led to representatives of universities, researchers, libraries, civil society groups and open access publishers to leave the stakeholder dialogue in May 2013.[38]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<h3 id="8-2-situation-in-the-united-states美国情况">8.2 Situation in the United States美国情况</h3>
+
+<p>By contrast to Europe, the flexible nature of US copyright law, and in particular fair use means that content mining in America, as well as other fair use countries such as Israel, Taiwan and South Korea is viewed as being legal. As content mining is transformative, that is it does not supplant the original work, it is viewed as being lawful under fair use. For example, as part of the Google Book settlement the presiding judge on the case ruled that Google's digitisation project of in-copyright books was lawful, in part because of the transformative uses that the digitisation project displayed - one being text and data mining.[39]</p>
+
+<p>（暂略，有空再学习）</p>
+
+<h2 id="9-software软件">9 Software软件</h2>
+
+<blockquote>
+<p>See also: Category:Data mining and machine learning software.</p>
+</blockquote>
+
+<h3 id="9-1-free-open-source-data-mining-software-and-applications开源数据挖掘软件和应用程序">9.1 Free open-source data mining software and applications开源数据挖掘软件和应用程序</h3>
+
+<p>The following applications are available under free/open source licenses. Public access to application source code is also available.
+ - Carrot2: Text and search results clustering framework.
+ - Chemicalize.org: A chemical structure miner and web search engine.
+ - ELKI: A university research project with advanced cluster analysis and outlier detection methods written in the Java language.
+ - GATE: a natural language processing and language engineering tool.
+ - KNIME: The Konstanz Information Miner, a user friendly and comprehensive data analytics framework.
+ - Massive Online Analysis (MOA): a real-time big data stream mining with concept drift tool in the Java programming language.
+ - MEPX - cross platform tool for regression and classification problems based on a Genetic Programming variant.
+ - ML-Flex: A software package that enables users to integrate with third-party machine-learning packages written in any programming language, execute classification analyses in parallel across multiple computing nodes, and produce HTML reports of classification results.
+ - mlpack: a collection of ready-to-use machine learning algorithms written in the C++ language.
+ - NLTK (Natural Language Toolkit): A suite of libraries and programs for symbolic and statistical natural language processing (NLP) for the Python language.
+ - OpenNN: Open neural networks library.
+ - Orange: A component-based data mining and machine learning software suite written in the Python language.
+ - R: A programming language and software environment for statistical computing, data mining, and graphics. It is part of the GNU Project.
+ - scikit-learn is an open source machine learning library for the Python programming language
+ - Torch: An open source deep learning library for the Lua programming language and scientific computing framework with wide support for machine learning algorithms.
+ - UIMA: The UIMA (Unstructured Information Management Architecture) is a component framework for analyzing unstructured content such as text, audio and video – originally developed by IBM.
+ - Weka: A suite of machine learning software applications written in the Java programming language.</p>
+
+<h3 id="9-2-proprietary-data-mining-software-and-applications专有数据挖掘软件和应用程序">9.2 Proprietary data-mining software and applications专有数据挖掘软件和应用程序</h3>
+
+<p>The following applications are available under proprietary licenses.
+ - Angoss KnowledgeSTUDIO: data mining tool
+ - Clarabridge: text analytics product.
+ - KXEN Modeler: data mining tool provided by KXEN Inc..
+ - LIONsolver: an integrated software application for data mining, business intelligence, and modeling that implements the Learning and Intelligent OptimizatioN (LION) approach.
+ - Megaputer Intelligence: data and text mining software is called PolyAnalyst.
+ - Microsoft Analysis Services: data mining software provided by Microsoft.
+ - NetOwl: suite of multilingual text and entity analytics products that enable data mining.
+ - OpenText Big Data Analytics: Visual Data Mining &amp; Predictive Analysis by Open Text Corporation
+ - Oracle Data Mining: data mining software by Oracle Corporation.
+ - PSeven: platform for automation of engineering simulation and analysis, multidisciplinary optimization and data mining provided by DATADVANCE.
+ - Qlucore Omics Explorer: data mining software.
+ - RapidMiner: An environment for machine learning and data mining experiments.
+ - SAS Enterprise Miner: data mining software provided by the SAS Institute.
+ - SPSS Modeler: data mining software provided by IBM.
+ - STATISTICA Data Miner: data mining software provided by StatSoft.
+ - Tanagra: Visualisation-oriented data mining software, also for teaching.
+ - Vertica: data mining software provided by Hewlett-Packard.</p>
+
+<h3 id="9-3-marketplace-surveys市场调研">9.3 Marketplace surveys市场调研</h3>
+
+<p>Several researchers and organizations have conducted reviews of data mining tools and surveys of data miners. These identify some of the strengths and weaknesses of the software packages. They also provide an overview of the behaviors, preferences and views of data miners. Some of these reports include:
+ - Hurwitz Victory Index: Report for Advanced Analytics as a market research assessment tool, it highlights both the diverse uses for advanced analytics technology and the vendors who make those applications possible.Recent-research
+ - Rexer Analytics Data Miner Surveys (2007–2015)[40]
+2011 Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery[41]
+ - Forrester Research 2010 Predictive Analytics and Data Mining Solutions report[42]
+ - Gartner 2008 &quot;Magic Quadrant&quot; report[43]
+ - Robert A. Nisbet's 2006 Three Part Series of articles &quot;Data Mining Tools: Which One is Best For CRM?&quot;[44]
+ - Haughton et al.'s 2003 Review of Data Mining Software Packages in The American Statistician[45]
+ - Goebel &amp; Gruenwald 1999 &quot;A Survey of Data Mining a Knowledge Discovery Software Tools&quot; in SIGKDD Explorations[46]</p>
+
+<p>一些研究人员和组织对数据挖掘工具进行了审查，并对数据挖掘人员进行了调查。它们确定了软件包的一些优点和缺点。它们还概述了数据挖掘器的行为、首选项和视图。其中一些报告包括：
+ - Hurwitz Victory索引:报告高级分析作为一个市场研究评估工具，它强调了高级分析技术的不同用途以及使这些应用程序成为可能的供应商
+ - 雷克斯分析数据挖掘者调查（2007-2015）
+ - 2011年威利跨学科评论:数据挖掘和知识发现
+ - 福雷斯特研究公司2010年预测分析与数据挖掘解决方案报告
+ - 高德纳2008年“神奇象限”报告
+ - 罗伯特·尼斯贝特的2006年的三部分系列文章“数据挖掘工具:哪个最适合CRM”
+ - Haughton等人在《美国统计学家》2003年对数据挖掘软件包的回顾
+ - Goebel &amp; Gruenwald 1999“数据挖掘知识发现软件工具的调查”，发表于SIGKDD探索</p>
+
+<h2 id="10-see-also请参阅">10 See also请参阅</h2>
+
+<p><strong>Methods</strong>方法
+ - Agent mining代理挖掘
+ - Anomaly/outlier/change detection异常/域外值/改变的检测
+ - Association rule learning关联规则学习
+ - Bayesian networks贝叶斯网络
+ - Classification分类
+ - Cluster analysis聚类分析
+ - Decision trees决策树
+ - Ensemble learning集成学习
+ - Factor analysis因子分析
+ - Genetic algorithms基因算法
+ - Intention mining意图挖掘
+ - Learning classifier system学习分类器
+ - Multilinear subspace learning多重线性子空间学习
+ - Neural networks神经网络
+ - Regression analysis回归分析
+ - Sequence mining序列挖掘
+ - Structured data analysis结构化数据分析
+ - Support vector machines支持向量机
+ - Text mining文本挖掘
+ - Time series analysis时序分析
+<strong>Application domains</strong>应用领域
+ - Analytics解析法
+ - Behavior informatics行为信息学
+ - Big data大数据
+ - Bioinformatics生物信息学
+ - Business intelligence商业智能
+ - Data analysis数据分析
+ - Data warehouse数据仓库
+ - Decision support system决策支持系统
+ - Domain driven data mining领域驱动数据挖掘
+ - Drug discovery新药研发
+ - Exploratory data analysis探索性数据分析
+ - Predictive analytics预测分析
+ - Web mining网络挖掘
+<strong>Application examples</strong>应用实例</p>
+
+<blockquote>
+<p>Main article: Examples of data mining
+See also: Category:Applied data mining.</p>
+</blockquote>
+
+<ul>
+<li>Automatic number plate recognition in the United Kingdom自动车牌识别在英国</li>
+<li>Customer analytics顾客分析</li>
+<li>Educational data mining教育数据挖掘</li>
+<li>National Security Agency国家安全局</li>
+<li>Quantitative structure–activity relationship定量结构活性关系</li>
+<li>Surveillance / Mass surveillance (e.g., Stellar Wind)监测/大规模监测（如恒星风）
+<strong>Related topics</strong>有关主题
+Data mining is about analyzing data; for information about extracting information out of data, see:数据挖掘就是分析数据;有关从数据中提取信息的信息，请参阅：</li>
+<li>Data integration数据集成</li>
+<li>Data transformation数据变换</li>
+<li>Electronic discovery电子举证</li>
+<li>Information extraction信息提取</li>
+<li>Information integration信息集成</li>
+<li>Named-entity recognition命名实体识别</li>
+<li>Profiling (information science)性能分析（信息科学）</li>
+<li>Psychometrics心理测量学</li>
+<li>Social media mining社交媒体挖掘</li>
+<li>Surveillance capitalism监控资本主义</li>
+<li>Web scraping网络爬虫
+<strong>Other resources</strong>其他资源</li>
+<li>International Journal of Data Warehousing and Mining国际数据仓库与挖掘杂志</li>
+</ul>
+
+<h2 id="11-references参考资料">11 References参考资料</h2>
+
+<p>^
+Jump up to:
+a b c &quot;Data Mining Curriculum&quot;. ACM SIGKDD. 2006-04-30. Retrieved 2014-01-27.
+Jump up
+^ Clifton, Christopher (2010). &quot;Encyclopædia Britannica: Definition of Data Mining&quot;. Retrieved 2010-12-09.
+Jump up
+^ Hastie, Trevor; Tibshirani, Robert; Friedman, Jerome (2009). &quot;The Elements of Statistical Learning: Data Mining, Inference, and Prediction&quot;. Archived from the original on 2009-11-10. Retrieved 2012-08-07.
+Jump up
+^ Han, Kamber, Pei, Jaiwei, Micheline, Jian (June 9, 2011). Data Mining: Concepts and Techniques (3rd ed.). Morgan Kaufmann. ISBN 978-0-12-381479-1.
+^
+Jump up to:
+a b c Fayyad, Usama; Piatetsky-Shapiro, Gregory; Smyth, Padhraic (1996). &quot;From Data Mining to Knowledge Discovery in Databases&quot; (PDF). Retrieved 17 December 2008.
+Jump up
+^ Han, Jiawei; Kamber, Micheline (2001). Data mining: concepts and techniques. Morgan Kaufmann. p. 5. ISBN 978-1-55860-489-6. Thus, data mining should have been more appropriately named &quot;knowledge mining from data,&quot; which is unfortunately somewhat long
+Jump up
+^ OKAIRP 2005 Fall Conference, Arizona State University Archived 2014-02-01 at the Wayback Machine.
+Jump up
+^ Witten, Ian H.; Frank, Eibe; Hall, Mark A. (30 January 2011). Data Mining: Practical Machine Learning Tools and Techniques (3 ed.). Elsevier. ISBN 978-0-12-374856-0.
+Jump up
+^ Bouckaert, Remco R.; Frank, Eibe; Hall, Mark A.; Holmes, Geoffrey; Pfahringer, Bernhard; Reutemann, Peter; Witten, Ian H. (2010). &quot;WEKA Experiences with a Java open-source project&quot;. Journal of Machine Learning Research. 11: 2533–2541. the original title, &quot;Practical machine learning&quot;, was changed ... The term &quot;data mining&quot; was [added] primarily for marketing reasons.
+Jump up
+^ Lovell, Michael C. (1983). &quot;Data Mining&quot;. The Review of Economics and Statistics. 65 (1): 1–12. doi:10.2307/1924403. JSTOR 1924403.
+Jump up
+^ Mena, Jesús (2011). Machine Learning Forensics for Law Enforcement, Security, and Intelligence. Boca Raton, FL: CRC Press (Taylor &amp; Francis Group). ISBN 978-1-4398-6069-4.
+Jump up
+^ Piatetsky-Shapiro, Gregory; Parker, Gary (2011). &quot;Lesson: Data Mining, and Knowledge Discovery: An Introduction&quot;. Introduction to Data Mining. KD Nuggets. Retrieved 30 August 2012.
+Jump up
+^ Fayyad, Usama (15 June 1999). &quot;First Editorial by Editor-in-Chief&quot;. SIGKDD Explorations. 13 (1): 102. doi:10.1145/2207243.2207269. Retrieved 27 December 2010.
+Jump up
+^ Kantardzic, Mehmed (2003). Data Mining: Concepts, Models, Methods, and Algorithms. John Wiley &amp; Sons. ISBN 978-0-471-22852-3. OCLC 50055336.
+Jump up
+^ Gregory Piatetsky-Shapiro (2002) KDnuggets Methodology Poll, Gregory Piatetsky-Shapiro (2004) KDnuggets Methodology Poll, Gregory Piatetsky-Shapiro (2007) KDnuggets Methodology Poll, Gregory Piatetsky-Shapiro (2014) KDnuggets Methodology Poll
+Jump up
+^ Óscar Marbán, Gonzalo Mariscal and Javier Segovia (2009); A Data Mining &amp; Knowledge Discovery Process Model. In Data Mining and Knowledge Discovery in Real Life Applications, Book edited by: Julio Ponce and Adem Karahoca, ISBN 978-3-902613-53-0, pp. 438–453, February 2009, I-Tech, Vienna, Austria.
+Jump up
+^ Lukasz Kurgan and Petr Musilek (2006); A survey of Knowledge Discovery and Data Mining process models. The Knowledge Engineering Review. Volume 21 Issue 1, March 2006, pp 1–24, Cambridge University Press, New York, NY, USA doi:10.1017/S0269888906000737
+Jump up
+^ Azevedo, A. and Santos, M. F. KDD, SEMMA and CRISP-DM: a parallel overview Archived 2013-01-09 at the Wayback Machine.. In Proceedings of the IADIS European Conference on Data Mining 2008, pp 182–185.
+Jump up
+^ Hawkins, Douglas M (2004). &quot;The problem of overfitting&quot;. Journal of Chemical Information and Computer Sciences. 44 (1): 1–12. doi:10.1021/ci0342472. PMID 14741005.
+Jump up
+^ &quot;Microsoft Academic Search: Top conferences in data mining&quot;. Microsoft Academic Search.
+Jump up
+^ &quot;Google Scholar: Top publications - Data Mining &amp; Analysis&quot;. Google Scholar.
+Jump up
+^ Proceedings Archived 2010-04-30 at the Wayback Machine., International Conferences on Knowledge Discovery and Data Mining, ACM, New York.
+Jump up
+^ SIGKDD Explorations, ACM, New York.
+Jump up
+^ Günnemann, Stephan; Kremer, Hardy; Seidl, Thomas (2011). &quot;An extension of the PMML standard to subspace clustering models&quot;. Proceedings of the 2011 workshop on Predictive markup language modeling - PMML '11. p. 48. doi:10.1145/2023598.2023605. ISBN 978-1-4503-0837-3.
+Jump up
+^ Seltzer, William (2005). &quot;The Promise and Pitfalls of Data Mining: Ethical Issues&quot; (PDF). ASA Section on Government Statistics. American Statistical Association.
+Jump up
+^ Pitts, Chip (15 March 2007). &quot;The End of Illegal Domestic Spying? Don't Count on It&quot;. Washington Spectator. Archived from the original on 2007-10-29.
+Jump up
+^ Taipale, Kim A. (15 December 2003). &quot;Data Mining and Domestic Security: Connecting the Dots to Make Sense of Data&quot;. Columbia Science and Technology Law Review. 5 (2). OCLC 45263753. SSRN 546782.
+Jump up
+^ Resig, John. &quot;A Framework for Mining Instant Messaging Services&quot; (PDF). Retrieved 16 March 2018.
+^
+Jump up to:
+a b c Think Before You Dig: Privacy Implications of Data Mining &amp; Aggregation Archived 2008-12-17 at the Wayback Machine., NASCIO Research Brief, September 2004
+Jump up
+^ Ohm, Paul. &quot;Don't Build a Database of Ruin&quot;. Harvard Business Review.
+Jump up
+^ Darwin Bond-Graham, Iron Cagebook - The Logical End of Facebook's Patents, Counterpunch.org, 2013.12.03
+Jump up
+^ Darwin Bond-Graham, Inside the Tech industry's Startup Conference, Counterpunch.org, 2013.09.11
+Jump up
+^ AOL search data identified individuals, SecurityFocus, August 2006
+Jump up
+^ Kshetri, Nir (2014). &quot;Big data׳s impact on privacy, security and consumer welfare&quot; (PDF). Telecommunications Policy. 38 (11): 1134–1145. doi:10.1016/j.telpol.2014.10.002.
+Jump up
+^ Biotech Business Week Editors (June 30, 2008); BIOMEDICINE; HIPAA Privacy Rule Impedes Biomedical Research, Biotech Business Week, retrieved 17 November 2009 from LexisNexis Academic
+Jump up
+^ UK Researchers Given Data Mining Right Under New UK Copyright Laws. Archived June 9, 2014, at the Wayback Machine. Out-Law.com. Retrieved 14 November 2014
+Jump up
+^ &quot;Licences for Europe - Structured Stakeholder Dialogue 2013&quot;. European Commission. Retrieved 14 November 2014.
+Jump up
+^ &quot;Text and Data Mining:Its importance and the need for change in Europe&quot;. Association of European Research Libraries. Retrieved 14 November 2014.
+Jump up
+^ &quot;Judge grants summary judgment in favor of Google Books — a fair use victory&quot;. Lexology.com. Antonelli Law Ltd. Retrieved 14 November 2014.
+Jump up
+^ Karl Rexer, Heather Allen, &amp; Paul Gearan (2011); Understanding Data Miners, Analytics Magazine, May/June 2011 (INFORMS: Institute for Operations Research and the Management Sciences).
+Jump up
+^ Mikut, Ralf; Reischl, Markus (September–October 2011). &quot;Data Mining Tools&quot;. Wiley Interdisciplinary Reviews: Data Mining and Knowledge Discovery. 1 (5): 431–445. doi:10.1002/widm.24.
+Jump up
+^ Kobielus, James; The Forrester Wave: Predictive Analytics and Data Mining Solutions, Q1 2010, Forrester Research, 1 July 2008
+Jump up
+^ Herschel, Gareth; Magic Quadrant for Customer Data-Mining Applications, Gartner Inc., 1 July 2008
+Jump up
+^ Nisbet, Robert A. (2006); Data Mining Tools: Which One is Best for CRM? Part 1, Information Management Special Reports, January 2006
+Jump up
+^ Haughton, Dominique; Deichmann, Joel; Eshghi, Abdolreza; Sayek, Selin; Teebagy, Nicholas; and Topi, Heikki (2003); A Review of Software Packages for Data Mining, The American Statistician, Vol. 57, No. 4, pp. 290–309
+Jump up
+^ Goebel, Michael; Gruenwald, Le (June 1999). &quot;A Survey of Data Mining and Knowledge Discovery Software Tools&quot; (PDF). SIGKDD Explorations. 1 (1): 20–33.</p>
+
+<h2 id="12-further-reading延伸阅读">12 Further reading延伸阅读</h2>
+
+<ul>
+<li>Cabena, Peter; Hadjnian, Pablo; Stadler, Rolf; Verhees, Jaap; Zanasi, Alessandro (1997); Discovering Data Mining: From Concept to Implementation, Prentice Hall, ISBN 0-13-743980-6</li>
+<li>M.S. Chen, J. Han, P.S. Yu (1996) &quot;Data mining: an overview from a database perspective&quot;. Knowledge and data Engineering, IEEE Transactions on 8 (6), 866–883</li>
+<li>Feldman, Ronen; Sanger, James (2007); The Text Mining Handbook, Cambridge University Press, ISBN 978-0-521-83657-9</li>
+<li>Guo, Yike; and Grossman, Robert (editors) (1999); High Performance Data Mining: Scaling Algorithms, Applications and Systems, Kluwer Academic Publishers</li>
+<li>Han, Jiawei, Micheline Kamber, and Jian Pei. Data mining: concepts and techniques. Morgan kaufmann, 2006.</li>
+<li>Hastie, Trevor, Tibshirani, Robert and Friedman, Jerome (2001); The Elements of Statistical Learning: Data Mining, Inference, and Prediction, Springer, ISBN 0-387-95284-5</li>
+<li>Liu, Bing (2007); Web Data Mining: Exploring Hyperlinks, Contents and Usage Data, Springer, ISBN 3-540-37881-2</li>
+<li>Murphy, Chris (16 May 2011). &quot;Is Data Mining Free Speech?&quot;. InformationWeek: 12.</li>
+<li>Nisbet, Robert; Elder, John; Miner, Gary (2009); Handbook of Statistical Analysis &amp; Data Mining Applications, Academic Press/Elsevier, ISBN 978-0-12-374765-5</li>
+<li>Poncelet, Pascal; Masseglia, Florent; and Teisseire, Maguelonne (editors) (October 2007); &quot;Data Mining Patterns: New Methods and Applications&quot;, Information Science Reference, ISBN 978-1-59904-162-9</li>
+<li>Tan, Pang-Ning; Steinbach, Michael; and Kumar, Vipin (2005); Introduction to Data Mining, ISBN 0-321-32136-7</li>
+<li>Theodoridis, Sergios; and Koutroumbas, Konstantinos (2009); Pattern Recognition, 4th Edition, Academic Press, ISBN 978-1-59749-272-0</li>
+<li>Weiss, Sholom M.; and Indurkhya, Nitin (1998); Predictive Data Mining, Morgan Kaufmann</li>
+<li>Witten, Ian H.; Frank, Eibe; Hall, Mark A. (30 January 2011). Data Mining: Practical Machine Learning Tools and Techniques (3 ed.). Elsevier. ISBN 978-0-12-374856-0. (See also Free Weka software)</li>
+<li>Ye, Nong (2003); The Handbook of Data Mining, Mahwah, NJ: Lawrence Erlbaum</li>
+</ul>
+
+<h2 id="13-external-links扩展链接">13 External links扩展链接</h2>
+
+<ul>
+<li>Knowledge Discovery Software at Curlie</li>
+<li>Data Mining Tool Vendors at Curlie</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

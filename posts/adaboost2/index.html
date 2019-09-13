@@ -1,0 +1,853 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Adaboost2 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Adaboost2</h1>
+
+
+<p>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。</p>
+
+<h1 id="abstract摘要">Abstract摘要</h1>
+
+<p>In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.在回归中，增强和装袋是回归器组合的技术，组合后的结果可能由于单个回归器。我们使用回归树作为装袋组合机器和增强组合机器的基本构件。在三个非线性函数和波士顿住房数据库上进行了性能分析。在所有情况下，增强至少是等效的，在大多数情况下，在预测误差方面优于装袋。</p>
+
+<h1 id="1-introduction引言">1. INTRODUCTION引言</h1>
+
+<p>Both bagging [Breiman (1996a,1996b)] and boosting [Drucker et. al. (1994, 1996, 1993), Freund and Schapire (1996a,1996b), Schapire (1990)] are techniques to obtain smaller prediction errors (in regression) and lower error rates (in classification) using multiple predictors. Several studies of boosting and bagging in classification [Breiman (1996b), Freund and Schapire (1996a) have shown the superiority of boosting over bagging but this is the first experimental study of combining regressors using boosting techniques. In both boosting and bagging, each regressor machine is trained on different subsets of the training set. In bagging, each machine is independently trained on <code>$N_1$</code> samples picked with replacement from the <code>$N_1$</code>, original samples of the training set. Each machine is thereby trained on different (but overlapping) subsets of the original training set and will therefore give different predictions. Since each machine can be trained independently, the task of training each individual predictor may be assigned to different CPU’s or a parallel processor. In bagging regressors, the ensemble prediction is the average of the predictions of all the machines.装袋和增强都是采用多预测器以获得低预测误差（回归中）和低误差率（分类中）。有许多关于装袋和增强的研究，Freund和Schapire已论证在分类问题中增强算法要优于装袋，但这是第一次将增强与回归结合起来。增强和装袋中，每台机器对训练集的<code>$N_1$</code>个原始样本进行独立训练。装袋中，从训练集的<code>$N_1$</code>个原始样本中取出并替换。每台机器在原始训练集的不同(但重叠)子集上进行训练，因此将给出不同的预测。由于每台机器都可以单独训练，因此训练每个预测器的任务可以分配给不同的CPU或并行处理器。在装袋回归中，集合预测是所有机器预测的平均值。</p>
+
+<p>In boosting, machines are trained sequentially. As in bagging, the first machine is trained on examples picked with replacement (of size <code>$N_1$</code>) from the original training set. We then pass all the training patterns through this first machine and note which ones are most in error. For regression machines, those patterns whose predicted values differ most from their observed values are defined to be “most” in error (this will be defined rigorously later). For those patterns most in error, their sampling probabilities are adjusted so that they are more likely to be picked as members of the training set for the second machine. Therefore, as we proceed in constructing machines, patterns that are difﬁcult are more likely to appear in the training sets. Thus, different machines are better in different parts of the observation space. Regressors are combined using the weighted median, whereby those predictors that are more &quot;conﬁdent&quot; about their predictions are weighted more heavily. The details of this weighting scheme are discussed later.增强中，机器是按顺序训练的。就像装袋，第一个机器按照从原始训练集中选择的替换样本(大小为<code>$N_1$</code>)进行训练。然后，我们通过这台机器传递所有的训练模式，并注意哪些是误差最多的。对于回归机，那些预测值与观察值相差最大的模式被定义为误差最大(稍后将严格定义)。对于那些误差最大的模式，它们的抽样概率被调整，以便更有可能被选为第二机器的训练集的成员。因此，当我们在构建机器时，困难的模式更有可能出现在训练集中。因此，不同的机器在观测空间的不同部分效果更好。回归器使用加权中值进行组合，其中那些对自己的预测更“自信”的预测器权重更大。稍后将讨论此加权方案的细节。</p>
+
+<p><strong>对预测更自信的预测器权重更大？是的，基础学习器的权重为<code>$\ln (1/\beta_t)$</code>，<code>$\overline{L}$</code>越小则<code>$\beta_t$</code>越小，则基础学习器的权重越大。</strong></p>
+
+<p>Suppose we are given a set of observations, <code>$(y_i,\vec{x}_i) \quad i=1,\ldots,N_1$</code>, where <code>$N_1$</code> is the number of training set observations, and <code>$\vec{x}$</code> is an M-variate vector. The probability density function of <code>$(y,\vec{x})$</code> is fixed but unknown. Based on these observations, we form a predictor <code>$y^{(p)}(\vec{x})$</code>. We define a sample modeling error (ME) and prediction error (PE):假设有一观测的集合<code>$(y_i,\vec{x}_i) \quad i=1,\ldots,N_1$</code>，其中<code>$N_1$</code>是训练集观测数量，且<code>$\vec{x}$</code>是M个变量的向量。<code>$(y,\vec{x})$</code>的概率密度函数是固定的，但未知。基于这些观测形成预测器<code>$y^{(p)}(\vec{x})$</code>。我们定义了一个样本建模误差(ME)和预测误差(PE)：
+<code>$$PE = \frac{1}{N_2}\sum_{i=1}^{N_2}(y_i-y_i^{(p)}(\vec{x}_i))^2 \tag{1}$$</code>
+<code>$$ME = \frac{1}{N_2}\sum_{i=1}^{N_2}(y_i^{(t)}-y_i^{(p)}(\vec{x}_i))^2 \tag{2}$$</code>
+<strong>上面两个式子分别对测试集求ME和PE。</strong></p>
+
+<p>where <code>$y_i^{(p)}(\vec{x}_i)$</code> is the prediction for the <code>$i$</code>’th test example, <code>$y_i$</code> is the <code>$i$</code>’th observation, and <code>$y_i^{(t)}$</code> is the “truth”. The parameters of <code>$y^{(p)}(\vec{x})$</code> are obtained from the <code>$N_1$</code> training set observations but the <code>$y_i$</code> and <code>$\vec{x}_i$</code> in the above summations are obtained from a set of <code>$N_2$</code> observations (the test set) never seen before. If the noise is additive, then <code>$y_i=y_i^{(t)}+n_i$</code> where <code>$n_i$</code> is the <code>$i$</code>’th sample of the noise. Furthermore, if <code>$E[n] = 0$</code> and <code>$E[n_in_j]=\delta_{ij}\sigma^2$</code>, then we may take the expectation with respect to <code>$(y,\vec{x})$</code> and obtain (Breiman and Spector, 1992):其中<code>$y_i^{(p)}(\vec{x}_i)$</code>是对第<code>$i$</code>个样本的预测，<code>$y_i$</code>是第<code>$i$</code>个观测，且<code>$y_i^{(t)}$</code>是真实值。<code>$y^{(p)}(\vec{x})$</code>的参数从<code>$N_1$</code>个训练集观测获得，但在上面求和中的<code>$y_i$</code>和<code>$\vec{x}_i$</code>是从未见过的<code>$N_2$</code>个观测（测试集）获得的。如果加上噪声，那么<code>$y_i=y_i^{(t)}+n_i$</code>其中<code>$n_i$</code>是第<code>$i$</code>个样本的噪声。而且，如<code>$E[n] = 0$</code>并<code>$E[n_in_j]=\delta_{ij}\sigma^2$</code>，那么将得到对应<code>$(y,\vec{x})$</code>的期望并得到：
+<code>$$E[PE] = \sigma^2+E[ME] \tag{3}$$</code>
+<strong>残差或者说噪声服从<code>$N(0,\sigma^2)$</code>正态分布,具有随机性(random)和不可预测性(unpredictable)。<code>$$\begin{align}E[PE] &amp;= E[\frac{1}{N_2}\sum_{i=1}^{N_2}(y_i-y_i^{(p)}(\vec{x}_i))^2] \\ &amp; = E[\frac{1}{N_2}\sum_{i=1}^{N_2}(y_i^{(t)}+n_i-y_i^{(p)}(\vec{x}_i))^2] \\ &amp; = E[\frac{1}{N_2}\sum_{i=1}^{N_2}(y_i^{(t)}-y_i^{(p)}(\vec{x}_i))^2] + E[\frac{1}{N_2}\sum_{i=1}^{N_2}2n_i(y_i^{(t)}-y_i^{(p)}(\vec{x}_i))]+ E[\frac{1}{N_2}\sum_{i=1}^{N_2}n_i^2] \end{align}$$</code>第二项中由于残差的随机性，其显然与其后乘数变量独立，那么第二项的期望为零。那么，上式得证。</strong></p>
+
+<p>This shows us that even if we know the model exactly, there is a minimum prediction error due to the noise. Our problem will be that the modeling error is also nonzero because we have to determine the model in the presence of noise. Since we don’t know the probability distributions, we approximate the expectation of the ME and PE using the sample ME (if the truth is known) and sample PE and then average over multiple experiments.这表明，即使我们准确地知道模型，由于噪声的影响，预测误差也是最小的（即PE和ME将同时取得最小值）。我们的问题是，建模误差也是非零的，因为我们必须在存在噪声的情况下确定模型。由于我们不知道概率分布，我们用样本ME(如果真实值是已知的)和样本PE近似ME和PE的期望，然后在多个实验中求平均值。</p>
+
+<p>In the following discussion, we detail both bagging and boosting. We then discuss how to build trees which are the basic building blocks of our regression machines and use these ensembles on some standard test functions.在下面的讨论中，我们将详细讨论装袋和增强。然后我们讨论如何构建树，这些树是我们的回归机的基本构建块，并在一些标准测试函数上使用这些集合。</p>
+
+<h1 id="2-bagging装袋">2. BAGGING装袋</h1>
+
+<p>The following is a paraphrase of Breiman (1996b) with some difference in notation. Suppose we pick with replacement <code>$N_1$</code> examples from the training set of size <code>$N_1$</code> and call the <code>$k$</code>’th set of observations <code>$O_k$</code>. Based on these observations, we form a predictor <code>$y^{(p)}(\vec{x},O_k)$</code>. Because we are sampling with replacement, we may have multiple observations or no observations of a particular training example. Sampling with replacement is sometimes termed bootstrap sampling [Efron and Tibshirani (1993)] and therefore this method is called bootstnp aggregating or bagging for short. The ensemble predictor is formed from the approximation to the expectation over all the observation sets, i.e. <code>$E_{O}[y^{(p)}(\vec{x},O)]$</code> by using the average of the outputs of all the predictors. Breiman discusses which algorithms are good candidates for predictors and concludes that the best predictors are unstable, i.e., a small change in the training set <code>$O_k$</code> causes a large change in the predictor <code>$y^{p}(\vec{x},O_k)$</code>. Good candidates are regression trees and neural nets.如下是带不同标记的Breiman的语句。假设我们从大小为<code>$N_1$</code>的训练集中选择替换的<code>$N_1$</code>样本，并将第<code>$k$</code>组观察值称为<code>$O_k$</code>。基于观测，形成预测器<code>$y^{(p)}(\vec{x},O_k)$</code>。因为我们使用的是替换抽样，所以我们可能有多个观察值，或者对某个特定的训练样本没有观察值。带有替换的抽样有时被称为自举抽样，因此这种方法被称为自举聚合或简单称为装袋。集成预测器形成自对所有集合中所有观测的期望的拟合，例如<code>$E_{O}[y^{(p)}(\vec{x},O)]$</code>采用所有预测器输出的平均。Breiman讨论了什么算法是预测器的好候选，他发现最好的预测器不稳定，例如，训练集<code>$O_k$</code>的小变动导致预测器<code>$y^{p}(\vec{x},O_k)$</code>的大变动。好的预测器是回归树和神经网络。</p>
+
+<p><strong>作者这里意思是说装袋结果平均自基函数，结果有很大随机性。</strong></p>
+
+<h1 id="3-boosting增强">3. BOOSTING增强</h1>
+
+<p>In bagging, each training example is equally likely to be picked. In boosting, the probability of a particular example being in the training set of a particular machine depends on the performance of the prior machines on that example. The following is a modification of Adaboost.R [Freund and Schapire (1996a)].装袋中，每个训练样本等可能被抽取。增强中，特定样本位于特定机器的训练集中的概率取决于该样本上的先前机器此样本的性能。以下是Adaboost.R的修改版。</p>
+
+<p>Initially, to each training pattern we assign a weight <code>$w_i=1 \quad i=l,\ldots,N_1$</code>最初，我们给每个训练模式分配一个权重<code>$w_i=1 \quad i=l,\ldots,N_1$</code></p>
+
+<p>Repeat the following while the average loss <code>$\overline{L}$</code> defined below is less than 0.5.当下面定义的平均损失<code>$\overline{L}$</code>小于0.5时，重复下面的操作。</p>
+
+<ol>
+<li><p>The probability that training sample <code>$i$</code> is in the training set is <code>$p_i=w_i/\sum_{i=1}^{N_1} w_i$</code> where the summation is over all members of the training set. Pick <code>$N_1$</code> samples (with replacement) to form the training set. This may be implemented by marking a line of length <code>$\sum_{i=1}^{N_1} w_i$</code> and subsections of length <code>$w_i$</code>. A uniform number picked from the range <code>$[O,\sum_{i=1}^{N_1} w_i]$</code> and landing in section <code>$i$</code> corresponds to picking pattern <code>$i$</code>.训练样本<code>$i$</code>在训练集中的概率是<code>$p_i=w_i/\sum_{i=1}^{N_1} w_i$</code>，其中求和是对训练集中所有成员的求和。选取<code>$N_1$</code>样本（采用重复方式），以构成训练集。这可以通过标记长度为<code>$\sum_{i=1}^{N_1} w_i$</code>的行和长度为<code>$w_i$</code>的子段来实现。从范围<code>$[O,\sum_{i=1}^{N_1} w_i]$</code>中选择一个统一的数字，并在第<code>$i$</code>段着陆，对应于选择模式<code>$i$</code>。</p></li>
+
+<li><p>Construct a regression machine <code>$t$</code> from that training set. Each machine makes a hypothesis: <code>$h_t:\vec{x} \rightarrow y$</code>从训练集构建回归机<code>$t$</code>，每个机器作假设<code>$h_t:\vec{x} \rightarrow y$</code></p></li>
+
+<li><p>Pass every member of the training set through this machine to obtain a prediction <code>$y_i^{(p)}(\vec{x}_i) \quad i=1,\ldots,N_1$</code>将训练集所有成员传入机器以获得预测<code>$y_i^{(p)}(\vec{x}_i) \quad i=1,\ldots,N_1$</code></p></li>
+
+<li><p>Calculate a loss for each training sample <code>$L_i = L(|y_i^{(p)}(\vec{x}_i)-y_i|)$</code>. The loss <code>$L$</code> may be of any functional form as long as <code>$L \in [O, 1]$</code>. If we let为每个训练样本计算损失<code>$L_i = L(|y_i^{(p)}(\vec{x}_i)-y_i|)$</code>。损失可为任何形式只要<code>$L \in [O, 1]$</code>。如果让
+<code>$$D=\max_{i=1}^{N_1} |y_i^{(p)}(\vec{x}_i)-y_i| \tag{4}$$</code>
+then we have three candidate loss functions:那么有三个候选损失函数：
+<code>$$L_i=\frac{|y_i^{(p)}(\vec{x}_i)-y_i|}{D} \tag{linear,5}$$</code>
+<code>$$L_i=\frac{|y_i^{(p)}(\vec{x}_i)-y_i|^2}{D^2} \tag{square law,6}$$</code>
+<code>$$L_i=1-\exp (\frac{-|y_i^{(p)}(\vec{x}_i)-y_i|}{D}) \tag{exponential,7}$$</code></p></li>
+
+<li><p>Calculate an average loss: <code>$\overline{L}=\sum_{i=1}^{N_1}L_ip_i$</code>计算平均损失<code>$\overline{L}=\sum_{i=1}^{N_1}L_ip_i$</code><strong>（需要加权平均损失小于0.5，否则基函数应停止迭代。）</strong></p></li>
+
+<li><p>Form <code>$\beta = \frac{\overline{L}}{1-\overline{L}}$</code>. <code>$\beta$</code> is a measure of confidence in the
+predictor. Low <code>$\beta$</code> means high confidence in the prediction.形成<code>$\beta = \frac{\overline{L}}{1-\overline{L}}$</code>。<code>$\beta$</code>是对预测器置信度的一个度量。低<code>$\beta$</code>意味着对预测的高置信。<strong>（<code>$\frac{\mathrm{d}\beta}{\mathrm{d}\overline{L}}=\frac{1}{(1-\overline{L})^2}$</code>，那么<code>$\beta$</code>随<code>$\overline{L}$</code>增加而增加，低<code>$\beta$</code>对应低<code>$\overline{L}$</code>意味着高置信。）</strong></p></li>
+
+<li><p>Update the weights: <code>$w_i \rightarrow w_i \beta^{[1-L_i]}$</code>. The smaller the loss, the more the weight is reduced making the probability smaller that this pattern will be picked as a member of the training set for the next machine in the ensemble.更新权值：<code>$w_i \rightarrow w_i \beta^{[1-L_i]}$</code>。损失越小，模式权重减小越多，因此集成下一轮机器越小可能抽取对应样本作为训练集成员。<strong>（对一个合格的基分类器而言，集成进去应使<code>$\overline{L} \le \frac{1}{2}$</code>，那么<code>$\beta \le 1$</code>。损失<code>$L_i$</code>越小，<code>$\beta$</code>的幂指数<code>$1-L_i$</code>越大，由于<code>$\beta \le 1$</code>，那么<code>$\beta^{[1-L_i]}$</code>越小，即模式权重减少越多。）</strong></p></li>
+
+<li><p>For a particular input <code>$\vec{x}_i$</code>, each of the <code>$T$</code> machines makes a prediction <code>$h_t \quad t=1,\ldots,T$</code>. Obtain the cumulative prediction <code>$h_f$</code> using the <code>$T$</code> predictors:对特定输入<code>$\vec{x}_i$</code>，<code>$T$</code>个机器中的每一个都作预测<code>$h_t \quad t=1,\ldots,T$</code>。使用<code>$T$</code>个预测器获得累积预测<code>$h_f$</code>：
+<code>$$h_f = \inf \left\{y \in Y: \sum_{t:h_t \le y}\left(\log(1/\beta_t) \ge \frac{1}{2}\sum_{t}\log(1/\beta_t)\right)\right\} \tag{8}$$</code>
+<strong>（上式在扯什么淡，暂时不清楚，猜测可能于迭代停止条件有关？准确说应该是与集成包含的基础学习器的选择有关，上式表示的是：仅将满足括号内条件的基础学习器进行集成。为什么不仅以平均损失<code>$\overline{L}&gt;0.5$</code>作为选择基础学习器条件呢，按YoavFreund等A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting第19页，无法得到损失函数值为0.5的假设。类比adaboost分类算法，学习器权重其实就是<code>$\frac{1}{2}\log(1/\beta_t)$</code> 。）</strong></p></li>
+</ol>
+
+<p>This is the weighted median. Equivalently, each machine <code>$h_t$</code> has a prediction <code>$y_i^{(t)}$</code> on the <code>$i$</code>’th pattern and an associated <code>$\beta_t$</code>. For pattern <code>$i$</code> the predictions are relabeled such that for pattern <code>$i$</code> we have:这是加权中值。等价地，每台机器<code>$h_t$</code>在第<code>$i$</code>个模式上都有一个预测<code>$y_i^{(t)}$</code>和一个相关的<code>$\beta_t$</code>。对于模式<code>$i$</code>，预测被重新标记，因此对于模式<code>$i$</code>，我们有：
+<code>$$y_i^{(1)} &lt; y_i^{(2)} &lt; \ldots &lt; y_i^{(T)} \tag{9}$$</code><strong>（什么道理？同一数据点预测值随基函数迭代越来越大？因为<code>$y_i^{(t)}$</code>是<code>$y_i \ge h_i^{(t)}(\vec{x}_1)$</code>的概率，而概率是非负的，<code>$y_i^{(1)}$</code>、<code>$y_i^{(2)}$</code>、<code>$y_i^{(T)}$</code>等是对应非负概率的和。）</strong></p>
+
+<p>(retain the association of the <code>$\beta_t$</code> with its <code>$y_i^{(t)}$</code>). Then sum the <code>$\log (1/\beta_t)$</code> until we reach the smallest <code>$t$</code> so that the inequality is satisﬁed. The prediction from that machine <code>$t$</code> we take as the ensemble prediction. If the <code>$\beta_t$</code> were all equal, this would be the median.（保留<code>$\beta_t$</code>和<code>$y_i^{(t)}$</code>的联系）。然后对<code>$\log (1/\beta_t)$</code>求和直到得到最小的<code>$t$</code>这样不等式成立<strong>（为什么是最小t？t再大将无法满足条件，这里就是这么一个意思。）</strong>。我们把来自那台机器的<code>$t$</code>的预测作为集成预测（的一部分）。如果<code>$\beta_t$</code>都相等，这就是中值。</p>
+
+<p>Intuitively, the effect of varying the weight <code>$w_i$</code> to give more emphasis to &quot;difﬁcult&quot; examples means that each subsequent machine has a disproportionately harder set of examples to train on. Thus, the average loss tends to increase as we iterate through the algorithm and ultimately the bound on <code>$\overline{L}$</code> is not satisﬁed and the algorithm terminates.直观地说，改变<code>$w_i$</code>的权重以更加强调“困难的”样本的效果意味着后续的每台机器都有一组异常困难的样本来进行训练。因此，当我们遍历算法时，平均损失趋于增加，最终不满足<code>$\overline{L}$</code>的界限，算法终止。</p>
+
+<p>Although the above algorithm is similar to Adaboost.R, we have no proof that it will terminate in a ﬁnite number of steps to zero training error. Convergence to zero training error depends on obtaining a learning machine such that <code>$\overline{L} &lt; 0.5$</code>. On real data and with real learning machines, as the number of hard training examples increases in the training set, it becomes more difﬁcult to meet this bound. It should be noted that even if we could ﬁnd a real learning machine that always meets this bound, boosting algorithms state nothing about performance on a separate test set. Therefore, we must insure that as we decrease the training error, we are not overﬁtting to the idiosyncrasies of a training set and that there will be good generatization to the test data. How this is done depends on the particular implementation of the learning machine and will be discussed in the sections on the construction of trees.虽然上述算法类似Adaboost.R，我们没有证据证明它会在有限的步骤中终止到零训练误差。收敛到零训练误差依赖于获得这样一个使<code>$\overline{L} &lt; 0.5$</code>的学习机。在真实的数据和真实的学习机器上，随着训练集中困难训练样本的数量增加，满足这个界限变得更加困难。应该注意的是，即使我们可以找到一个真正的学习机器，它总是满足这个界限，增强算法在单独的测试集上不会声明任何关于性能的内容（<strong>损失是目前已有的基函数的集成上计算的。</strong>）。因此，我们必须保证在减少训练误差的同时，不过度拟合训练集的特性，使测试数据具有良好的通用性。如何做到这一点取决于学习机器的具体实现，并将在有关树的构造的章节中进行讨论。</p>
+
+<p>From now on <code>$y_i^{(p)}(\vec{x}_i)$</code> refers to the ensemble prediction for pattern <code>$i$</code> when we are referring to multiple (committee) machines.从现在开始，当我们提到多机器时，<code>$y_i^{(p)}(\vec{x}_i)$</code>是指模式<code>$i$</code>的集合预测。</p>
+
+<h1 id="4-trees树">4. TREES树</h1>
+
+<h2 id="4-1-construction构建">4.1 Construction构建</h2>
+
+<p>We basically use Breiman’s Classiﬁcation and Regression Trees with acronym CART [Breiman, el. al (1984)] with a pruning modiﬁcation. To simplify this discussion, we ﬁrst assume that <code>$\vec{x}$</code> is univariate and we have <code>$N_1$</code> training examples arranged so that <code>$x_1 \le x_2 \le \ldots \le x_{N_1}$</code>. Because we sample with replacement, some of the samples may be identical. We ﬁrst ask ourselves, that given a set of observations of the dependent variable <code>$y$</code>, what is the one number <code>$y_A$</code> that best characterizes those <code>$N_1$</code> values of <code>$y$</code>. If we are to minimize <code>$E[y−y_A]^2$</code>, then the value that minimizes this is <code>$y_A=E[y]$</code>. Our approximation to <code>$E[y]$</code> is the sample mean which is <code>$\overline{y}_A$</code>, and the A indicates &quot;Above&quot; where the tree is to be constructed so that the initial root node is at the top. The root node becomes a parent node which spawns two children. Each of the children becomes a parent node which in turn spawn two more children. Hence a parent node is always &quot;above&quot; its children. Thus, given an input <code>$\vec{x}$</code>, and using only the root node, we would make a prediction <code>$\overline{y}_A$</code>, (independent of the value of <code>$\vec{x}$</code>). and this is the value assigned to the root node.使用Breiman的分类和回归树（缩写为）的修改版。为简化讨论，假设<code>$\vec{x}$</code>是单变量并有<code>$N_1$</code>个排序的训练样本<code>$x_1 \le x_2 \le \ldots \le x_{N_1}$</code>。由于采用有放回的抽样，有些样本可能是相同的。首先，我们问自己，根据对因变量<code>$y$</code>的一系列观察，哪一个数<code>$y_A$</code>最能描述<code>$y$</code>的<code>$N_1$</code>个值。如果我们要使<code>$E[y−y_A]^2$</code>最小化，那么使这个最小化的值就是<code>$y_A=E[y]$</code>。我们对<code>$E[y]$</code>的近似是样本均值，即<code>$\overline{y}_A$</code>，其中的A表示初始根节点位于树的顶部。根节点成为生成两个子节点的父节点。每个子节点都成为父节点，而父节点又派生出两个以上的子节点。因此，父节点总是“高于”其子节点。因此，给定一个输入<code>$\vec{x}$</code>，并且只使用根节点，我们将预测<code>$\overline{y}_A$</code>(独立于<code>$\vec{x}$</code>的值)。这是分配给根节点的值。</p>
+
+<p>After the root node is constructed, we generate two children node in the following manner: We determine a &quot;split&quot; value of <code>$\vec{x}$</code>, termed <code>$x_s$</code> so that if <code>$x \le x_s$</code> we predict <code>$y^{(p)}=\overline{y}_L$</code> and if <code>$x &gt; x_s$</code>, we predict <code>$y^{(p)}=\overline{y}_R$</code> (L for &quot;left&quot; and R for &quot;right&quot;). It would be delightful if that split on <code>$\vec{x}$</code> simultaneously split <code>$y$</code> such that all the sample values of <code>$y$</code> that arrive in the left node are identical (standard deviation is zero) and all the values of <code>$y$</code> in the right node were a different value of <code>$y$</code>, but again with a standard deviation of zero. This is probably not going to happen so we ﬁnd the value of <code>$x_s$</code> such that the total squared error is minimized:在构建根节点之后，我们按照以下方式生成两个子节点：我们确定<code>$\vec{x}$</code>的一个“分割”值，称为<code>$x_s$</code>，如果<code>$x \le x_s$</code>我们预测<code>$y^{(p)}=\overline{y}_L$</code>；如果<code>$x &gt; x_s$</code>预测<code>$y^{(p)}=\overline{y}_R$</code>（L代表左和R代表右）。分裂<code>$\vec{x}$</code>同时将分裂<code>$y$</code>，如果到达左节点<code>$y$</code>值是相同的(标准偏差为零)并且到达右节点的是不同的<code>$y$</code>值而这个<code>$x_s$</code>值标准差为零，这是理想结果。这个理想结果很可能达不到，所以找寻<code>$x_s$</code>值以使平方误差最小化：
+ <code>$$TSE=
+\sum_{i:x \le x_s} (y_i−\overline{y}_L)^2 +
+\sum_{i:x &gt; x_s} (y_i−\overline{y}_R)^2 \tag{10}$$</code>
+This is equivalent to minimizing <code>$TSE=n_L\sigma_L^2 + n_R\sigma_R^2$</code> where <code>$n_L$</code> is the number of training samples that end up in the left node and <code>$\sigma_L$</code> is the sample standard deviation (with <code>$n_L$</code> in the denominator) and <code>$\sigma_R$</code> and <code>$n_R$</code> refer to the right hand node. At this stage, all the training examples sit in one of the two children nodes and the predicted value of the examples in each of the nodes is the mean of the samples in that node. For a new test example, depending on whether the value of the independent variable is less than or greater than the split value of the root node, the predicted value would either <code>$\overline{y}_R$</code> or <code>$\overline{y}_L$</code>.这等价于最小化<code>$TSE=n_L\sigma_L^2 + n_R\sigma_R^2$</code>，其中<code>$n_L$</code>是左节点训练样本数， <code>$\sigma_L$</code>是左节点标准差，<code>$\sigma_R$</code>和<code>$n_R$</code>则代表右节点。在这个阶段，所有的训练样本都位于两个子节点中的一个，每个节点中样本的预测值就是该节点中样本的平均值。对于一个新的测试样本，根据自变量的值是否小于或大于根节点的分割值，预测值将是<code>$\overline{y}_R$</code>或<code>$\overline{y}_L$</code>。</p>
+
+<p>For univariate <code>$\vec{x}$</code>, we would recursively split at each node, generating two children nodes from each parent node until the variance within each node is zero. This could happen if there is only a single sample in a node or all the samples have the same value of the dependent variable. If <code>$\vec{x}$</code> is multivariate, then at each node, we examine each feature of <code>$\vec{x}$</code>, and determine its best split value. That feature with the minimum TSE becomes the feature to split on. Every time we determine two new nodes from a parent node, the TSE decreases until we decrease to zero. However, this is done on the training set, and there is no guarantee that we will do as well on a separate test set. Therefore we prune the tree to improve generalization.对于单变量<code>$\vec{x}$</code>，我们将在每个节点上递归地分割，从每个父节点生成两个子节点，直到每个节点内的方差为零。如果节点中只有一个样本，或者所有样本的因变量值相同，就会出现这种情况。如果<code>$\vec{x}$</code>是多元的，那么在每个节点上，我们检验<code>$\vec{x}$</code>的每个特征，并确定其最佳分割值。具有最小TSE的特性成为要拆分的特性。每当我们从父节点确定两个新节点时，TSE就会减小，直到减小到零。但是，这是在训练集上完成的，并且不能保证我们在单独的测试集上也能做得很好。因此，我们修剪这棵树来提高泛化。（<strong>按此，修剪集的作用正是为了提高泛化能力。</strong>）</p>
+
+<h2 id="4-2-pruning修剪">4.2 Pruning修剪</h2>
+
+<p>CART does pruning using cross-validation. However, we prefer a separate pruning set that is 20% of the training set size. The value of 20% is somewhat ad hoc but is based on considerations of the best training-test split for classiﬁcation [Kearns (1996)]. The primary rationale for a separate pruning set is as follows: In boosting, each machine is constructed on a different probability distribution space because the probability of a particular pattern being in the training set has been altered by the weighting process. We would like to prune on a data set that has similar statistics. For the ﬁrst machine, the probability of any member of the original pruning set being in the pruning set for that machine are equal. Subsequent to the ﬁrst machine, we alter the weights similar to that of the training set. That is, the weight <code>$w_i$</code> for a member of the pruning set is <code>$w_i \rightarrow w_i \beta^{(1−L_i)}$</code> where <code>$L_i$</code> is the loss of that pruning pattern (but <code>$\beta$</code> is calculated from the average loss of the training patterns).CART使用交叉验证进行修剪。然而，我们更喜欢一个单独的修剪集，它是训练集大小的20%。20%的值有些特殊，但它是基于对分类的最佳训练-测试分割的考虑。单独剪枝集的基本原理如下:在增强中，每台机器都构建在不同的概率分布空间上，因为某个特定模式出现在训练集中的概率已被加权过程改变。我们希望对具有类似统计信息的数据集进行修剪。对于第一个机器，原始修剪集的任何成员在该机器的修剪集中的概率是相等的。在第一个机器之后，我们改变训练集类似的权重。也就是说，修剪集合中一个成员的权值<code>$w_i$</code>是<code>$w_i \rightarrow w_i \beta^{(1−L_i)}$</code>，其中<code>$L_i$</code>是修剪模式的损失(但是<code>$\beta$</code>是从训练模式的平均损失计算出来的)。</p>
+
+<p>Because pruning tends to severely reduce the number of nodes in a tree, there is no point in building the tree until terminal nodes only have one member. (A terminal node may have more than one sample if all the samples have the same value of the dependent variable). Therefore, we modify our building process as follows: Recursively, build (using the training set ) to minimize TSE until one of the following happens: (a) there are less than six samples in a node (b) the variance of the samples in the node is zero or (c) the TSE obtained by generating two children nodes from a parent node does not reduce the TSE (from the parent node) by at least 5%. These conditions prevent building nodes that would have been eliminated by pruning anyhow. Pruning takes place as follow: pass all the pruning examples through the tree and store the observed value of <code>$y_i$</code> at every node it passes through, including the terminal nodes. Starting at parent nodes which have at least one child as a terminal node, make that parent node (called &quot;A&quot; for Above node here) a terminal node if:因为修剪会严重减少树中的节点数量，所以终端节点只含一个成员才有意义（如果所有样本的因变量值相同，则终端节点可以有多个样本。<strong>因变量值相同的多个样本。</strong>）。因此，我们按照以下方式修改构建过程:递归地构建(使用训练集)以最小化TSE，直到发生以下情况之一：(a)一个节点中只有不到6个样本；(b) 节点内样本方差为0； (c) 从父节点生成两个子节点所获得的TSE减少小于5%。这些条件阻止了构建本该被删除的节点。修剪过程如下所示:将所有修剪样本传递到树中，并在它所经过的每个节点(包括终端节点)上存储<code>$y_i$</code>的观察值。从至少有一个子节点作为终端节点的父节点开始，如果满足下列条件则将父节点(上面的节点称为“A”)当作终端节点：
+<code>$$\sum_{A node}(y_i−\overline{y}_A)^2 &lt; \sum_{L node}(y_i−\overline{y}_L)^2 + \sum_{R node}(y_i−\overline{y}_R)^2 \tag{11}$$</code>
+<strong>误差增大的枝杈需要被剪除，注意观测值来自修剪集而修剪节点来自adaboost算法。</strong></p>
+
+<p>Note that the <code>$y_i$</code> are from the pruning set while the <code>$y$</code>’s are from the training set. If the <code>$y_i$</code> were from the training set, the above condition would never be true. Each parent node which becomes a terminal node is in turn examined to see if its parent should be made a terminal node. We recursively repeat this, working our way towards the root node at the top of the tree. Let us deﬁne a generic mean square error (MSE):注意<code>$y_i$</code>来自修剪集而<code>$\overline{y}_A$</code>、<code>$\overline{y}_L$</code>和<code>$\overline{y}_R$</code>来自训练集。如果<code>$y_i$</code>来自训练集，上面条件不可能成立（<strong>因为若<code>$y_i$</code>来自训练集，除非某节点只含一个值，否则引入新的枝杈总能进一步降低误差。</strong>）。每个成为终端节点的父节点依次被检查，看它的父节点是否应该成为终端节点。我们递归地重复这个过程，一直向树顶部的根节点前进（<strong>自底到顶的方式修剪。</strong>）。让我们定义一个通用均方误差(MSE)：
+<code>$$MSE = \frac{1}{N}\left(\sum_{i=1}^{N}(y_i - y_i^{(p)}(\vec{x}_i))^2\right) \tag{12}$$</code>
+If the <code>$(y,\vec{x})$</code> come from the training set and <code>$N$</code> refers to the number of training set examples, then this is the training MSE. Similarly, if we sum over the pruning set examples and <code>$N$</code> refers to the number of members of the pruning set, then this is the pruning MSE. Summing over the test set gives us the test MSE (and is identical to the PE). In all these cases, the parameters of <code>$y^{(p)}$</code> are obtained from the training set. After the tree is initially built, the training MSE is smaller than the pruning MSE on this unpruned tree. If the tree is built until each node has a variance (on the training data) of zero, then the training MSE is zero. After pruning, the training MSE on the pruned tree is larger than the training MSE on the unpruned tree. However, after pruning, the pruning MSE on the pruned tree is lower than the pruning MSE on the unpruned tree. Thus pruning not only makes the tree smaller but also improves the generalization to examples never trained on (that is, the pruning set). In step 2 of the algorithm, when we construct a tree, we refer to the pruned tree.如果<code>$(y,\vec{x})$</code>来自训练集并<code>$N$</code>指代训练集样本数量，那么这就是训练MSE。类似地，如果我们对修剪集的例子求和，<code>$N$</code>表示修剪集的成员数，那么这就是修剪MSE。对测试集求和得到测试MSE（与PE相同）。在所有这些情况下,参数<code>$y^{(p)}$</code>来自训练集。树初建后，训练MSE小于未修剪树的修剪MSE（<strong>模型是根据训练集构建的，那么训练集上的MSE一般小于修剪集上的MSE。</strong>）。如果树被构建到每个节点(在训练数据上)方差为零时（<strong>也即每个节点上只含一个数值</strong>），那么训练MSE为零。修剪后，修剪后的树的训练MSE大于未修剪的树的训练MSE。但修剪后，修剪后的修剪MSE低于未修剪的修剪MSE。因此，修剪不仅使树变小，而且改进了对从未训练过的样本(即修剪集)的泛化。在算法的第2步中，当我们构造一棵树时，我们引用修剪过的树。<strong>（按这句话的意思，独立于训练集的一个修剪集专门来寻找合适的树，这个树用来形成训练集里的基函数。）</strong></p>
+
+<p>Another advantage of pruned trees are that they are faster than unpruned trees. In some cases, during the pruning process trees have been noted to prune to depth two (one root node and two terminal nodes).修剪过的树的另一优势是速度快于未修剪的树。在某些情况下，在修剪过程中，树深度为2(一个根节点和两个终端节点)。</p>
+
+<p><strong>用训练集训练AdaBoostRegressor，其中base_estimator的选取根据AdaBoostRegressor在修剪集上的表现来选取。但是怎么通过sklearn实现？可以根据训练集训练得到的adaboost集成机器的效果确定base_estimator的枝杈合适形状。</strong></p>
+
+<h2 id="4-3-advantages-and-disadvantages优劣">4.3 Advantages and Disadvantages优劣</h2>
+
+<p>The primary advantages of trees are that they can be quickly trained (say, as compared to neural networks), and are non-parametric. The main disadvantages are that the decision space has boundaries that are parallel to the features axes and do not allow modeling based on powers or products of features. It is possible to make decision surfaces that are oblique to the axes, using socalled oblique decision trees [Brodley and Utgoff (1995), Ittner and Schlosser (1996), Murthy et. al. (1993), Mruth et. al. (1994)] and in fact CART has that option. Also, instead of the input to the tree being the features, we could have as inputs both products of features and features raised to some powers. All these options make the building of trees much slower.树的主要优点是它们可以快速训练(比如，与神经网络相比)，而且是非参数的。主要缺点是决策空间具有与特征轴平行的边界，不允许基于特征的幂或乘积进行建模。利用所谓的斜向决策树，可以做出斜向轴的决策曲面，并且CART真实值上有这些选项。同样的，可以不树输入特征，而把特征的乘积和特征的某些次方都作为输入。所有这些选项将使构建树更慢。</p>
+
+<h2 id="5-prediction-problems预测问题">5. PREDICTION PROBLEMS预测问题</h2>
+
+<p>There are four sets of problems we considered. The ﬁrst three problems were used by Friedman (1991) in his work on multivariate adaptive regression splines (MARS):我们考虑了四组问题。前三组问题由Friedman(1991)在他的多变量自适应回归样条(MARS)的研究中使用：
+Friedman #1 is a nonlinear prediction problem which has 10 independent variables that are uniform in <code>$[0,1]$</code>.Friedman #1是一非线性预测问题，其全部10个独立变量均匀分布在<code>$[0,1]$</code>。
+<code>$$y=10sin(\pi x_1 x_2)+20(x_3−0.5)^2+10x_4+5x_5+n \tag{13}$$</code>
+where <code>$n$</code> is <code>$N(0,1)$</code>. Therefore, only ﬁve predictor variables are really needed, but the predictor is faced with the problem of trying to distinguish the variables that have no prediction ability (<code>$x_6$</code> to <code>$x_{10}$</code>) from those that have predictive ability ( <code>$x_1$</code> to <code>$x_5$</code>).其中<code>$n$</code>是<code>$N(0,1)$</code>。因此，实际只需要5个预测变量，但预测器面临的问题是如何区分没有预测能力（<code>$x_6$</code>到<code>$x_{10}$</code>）的变量和有预测能力（<code>$x_1$</code>到<code>$x_5$</code>）的变量。
+Friedman #2,#3 have four independent variables and are respectively:Friedman #2和#3都有4个独立变量，分别为：
+<code>$$\begin{align} \text{#2} \quad y=(x_1^2+(x_2x_3−(1/(x_2x_4)))^2)^{1/2}+n  \tag{14}\\
+\text{#3} \quad y=\tan^{−1}\left(\frac{x_2x_3−(1/ x_2x_4)}{x_1}\right)+n \tag{15}\end{align}$$</code>
+where the noise is adjusted to give 3:1 ratio of signal power to noise power and the variables are uniformly distributed in the following ranges:其中噪声调整为信噪比为3:1，变量均匀分布在以下范围内:
+<code>$$0 \le x_1 \le 100  \\
+20 \le (x_2 /2π) \le 280 \\
+0 \le x_3 \le 1 \\
+1 \le x_4 \le 11 \tag{16}$$</code>
+We use 200 training examples, 40 pruning samples, and 5000 test examples per run and 10 runs to determine the best loss function. We follow the ten runs with 100 runs using the best loss function for each of the three prediction problems. The reason for the large number of test examples is to get a reliable estimate of the modeling and prediction error. Because we have access to the truth, we report both the modeling and prediction error.我们使用200个训练样本，40个修剪样本，每次运行5000个测试样本和10次运行来确定最佳损失函数。我们使用三个预测问题的最佳损失函数跟踪10次运行和100次运行。大量测试实例的原因是为了得到建模和预测误差的可靠估计。因为我们访问了真实值，我们报告建模和预测误差。</p>
+
+<p>Boston Housing: This has 506 cases with the dependent variable being the median price of housing in the Boston area. There are twelve continuous predictor variables. This data was obtaining from the UCI database (anonymous ftp at ftp.ics.uci.edu in directory /pub/machine-learning-databases). In this case, we have no &quot;truth&quot;, only the observations. Thus we report only the prediction error. We use 25 test cases. Of the remaining 481 cases, 80 are used for pruning and 401 for training. We repeat the boosting and bagging procedures 100 times, each time picking (without replacement) a different training, pruning, and test set.波斯顿房价：这里有506个案例因变量是波士顿地区的房价中值。有12个连续预测变量。这些数据是从UCI数据库获得的（匿名ftp在ftp.ics.uci.edu路径/pub/machine-learning-databases）。这个例子没有“真实值”，只有观测值。因此，我们只报告预测误差。我们使用25个测试例子。其余481例中，剪枝80例，训练401例。我们重复增强和装袋程序100次，每次挑选(不更换)不同的培训、修剪和测试集。</p>
+
+<h1 id="6-boosting-and-bagging-results增强和装袋结果">6. BOOSTING AND BAGGING RESULTS增强和装袋结果</h1>
+
+<h2 id="6-1-trees-on-nonlinear-functions在非线性方程上的树">6.1 Trees on Nonlinear Functions在非线性方程上的树</h2>
+
+<p>We report the results on the Friedman functions (Tables I-III) using either a single tree, or bagging (using 50 trees), or boosting (maximum of 75 trees or when the average loss exceeds 0.5) with three loss functions. The rationale for using these two choices of maximum number of trees is that asymptotic behavior has been reached when the number of trees is substantially less than these two choices. Averages are over ten runs. As we increase the number of trees in an ensemble, the prediction and modeling errors reach a minimum and it is an average of those minima for the 10 runs that is reported under ME and PE. In other simulations, we can’t determine the ME because the truth is unknown. Therefore, it would be comforting to know that when the PE reaches a minimum, the minimum of the ME is reached. This is ME2, the value of the modeling error when the minimum of the prediction error is reached. It is comforting to see that ME2 and ME are close or identical.我们使用单棵树、装袋（使用50棵树）或增强（最多75棵树，或当平均损失超过0.5时停止）来报告Friedman函数(表I-III)的结果。使用最大树数这两种选择（<strong>最多树数量、平均损失超过0.5</strong>）的理由是，当树的数量明显小于这两种选择时，就达到了渐近行为。结果来自10次运行平均。当我们在一个集成中增加树的数量时，预测和建模误差会达到最小值，最小值是10次运行的这些最小值的平均值，标记为ME和PE。在其他的模拟中，我们不能确定ME，因为真实值是未知的。因此，当PE达到最小值时，ME达到最小值，这是令人欣慰的。预测误差达到最小时的建模误差值，也就是ME2。看到ME2和ME很接近或完全相同，很感欣慰。</p>
+
+<p>It may be the case that the standard deviation of the ME or PE is such that a clear winner for boosting against bagging cannot be determined. Experiments were therefore done as follows. We always used the same <strong>test set</strong> of size 5000. There were 10 sets of <strong>training</strong> and <strong>pruning</strong> data. In the ﬁrst experiment, we used the same <strong>training</strong> (size 200) and <strong>validation</strong> set (size 40) on both the boosting machines and bagging machines and then compared the results on the <strong>test set</strong>. We call an experiment a success if boosting is better than bagging on the same <strong>test set</strong> when <strong>trained</strong> and <strong>pruned</strong> on the same data. We then used the second set of <strong>training</strong> and <strong>pruning</strong> data and then compared the test results on the original <strong>test data</strong>. This was iterated for the rest of the ten training and validation sets. If boosting and bagging are approximately equal in performance , then one would expect boosting to win half the time and lose half the time of the total ten experiments. Let <code>$p$</code> be the probability of boosting beating bagging. If we make the hypothesis that <code>$p=0.5$</code>, then we have a binomial experiment with the probabilities:很多时候，ME或PE的标准偏差如此之大，以至于无法确定增强和装袋谁是赢家。因此，实验如下所示。总使用相同大小为5000的测试集。有10组训练和修剪数据。在第一个实验中，我们在增强机和装袋机上都使用了相同的训练(大小为200)和验证集(大小为40)，然后对比测试集上的结果（<strong>显然，按作者意思，验证集就是修剪集。</strong>）。如果在相同的测试集上对相同的数据进行训练和修剪时，增强优于装袋，那么我们称实验为成功。然后我们使用第二组训练和修剪数据，然后将测试结果与原始测试数据进行比较。在剩下的10个训练和验证集中，都进行了迭代。如果增强和装袋在性能上近似相等，那么可以期望增强在10次实验中有一半的时间是成功的，一半的时间是失败的。令<code>$p$</code>是增强打败装袋的概率。如果我们假设<code>$p=0.5$</code>，那么我们就得到了概率的二项实验：
+<code>$$P[\text{#successes} \ge 8] \le \text{5%} \\ P[\text{#successes}=10] \le \text{1%} \tag{17}$$</code>
+Therefore, if the number of times boosting is better than bagging is 8 or better, we can reject the hypothesis that the two algorithms are equal (with reject level of 5%). Similarly, if in all the 10 experiments, boosting is better than bagging, than this could happen with probability less than 1% under this hypothesis that the performances are equal. As can be seen in the tables, boosting is better than bagging if the best loss function is used for the ﬁrst and third Friedman functions. In function #2, there is no clear winner if the best loss function is used. Function #2 is unusual in that the contribution to the prediction error is primarily due to noise.因此，如果增强优于装袋的次数为8次或8次以上，我们可以拒绝两种算法相等的假设(拒绝水平为5%)。同样的，如果在10个实验中，增强优于装袋，那么在性能相同的假设下，增强的概率小于1%。从表中可以看出，如果对第一个和第三个Friedman函数使用最好的损失函数，则增强优于装袋。在函数2中，如果使用最好的损失函数，则没有明确的赢家（<strong>如表2所示</strong>）。函数2的不同寻常之处在于预测误差主要是由噪声引起的。</p>
+
+<p>Subsequent to the original set of ten runs, we did 100 runs on the best results from these ﬁrst three tables. We used 100 sets of training data (size 200), 100 sets of validation data (size 40) and one set of test data (size 5000). If using the same training and validation data, boosting was better than bagging on the test set, we count it as a win for boosting (Table IV). We reach the same conclusions as we did using only ten runs.在最初的10次运行之后，我们对前三个表的最佳结果运行了100次。我们使用了100组训练数据(大小200)，100组验证数据(大小40)和一组测试数据(大小5000)。如果使用相同的训练和验证数据，则增强优于测试集上的装袋，我们将其视为增强的胜利(表IV)。我们得到的结论与仅使用10次运行得到的结论相同。</p>
+
+<p>Breiman has results on these three functions using bagging. Our bagging results are much better than his. The major difference in procedure is that he used a total of 200 training examples, while we used 200 training examples plus 40 pruning examples. Therefore, we did another ten runs on function #1 using bagging with 166 training examples and 34 pruning examples. Our modeling error for bagging is 2.58 which is still substantially less than Breiman’s results of 6.2. We can only attribute the difference to the fact that we use a separate pruning set which tends to give better generalization.Breiman使用装袋对这三种函数得到结果。我们的结果比他（Breiman）的更好。程序上的主要区别是他总共使用了200个训练样本，而我们使用了200个训练样本加上40个修剪样本（对2、3函数）。因此，我们使用包含166个训练样本和34个修剪样本的装袋对函数1进行了另外10次运行（对1函数）。我们装袋的建模误差是2.58，仍然大大低于Breiman的结果6.2。我们只能将这种差异归因于我们使用了一个单独的剪枝集，它可以提供更好的泛化。</p>
+
+<h2 id="6-2-stacking-trees-on-nonlinear-functions非线性方程上的堆叠树">6.2 Stacking Trees on Nonlinear Functions非线性方程上的堆叠树</h2>
+
+<p>Stacking [Wolpert (1992)] is not a particular algorithm but a generic name for the following observation: if we train on part of the training set, then the performance of the learning machine on training data that was not part of the training set for that particular machine gives us additional information.堆叠不是一个特定的算法，而是下面观察的一个通用名称：如果我们在训练集的一部分上训练，那么学习机器在不是那个特定机器的训练集的一部分的训练数据上的表现，会给我们额外的信息。</p>
+
+<p><strong>搞明白什么叫stacking？？？？？？？？？？？？？？？？？？将新开一博文学习stacking，现暂不很清晰其概念。</strong></p>
+
+<p>Table I. Results of ten runs on single trees, bagged trees and boosted trees on Friedman #1. #better indicates how many times (out of ten runs) that boosting is better than bagging on the same training, pruning, and test sets. ME2 is the average modeling error at the minimum of the prediction error单一树、装袋树和增强树在Friedman函数1上运行10次的结果。#better指示在相同的训练、修剪和测试集上使用增强比使用装袋要好多少次(10次运行中)。ME2是预测误差最小时的平均建模误差。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">#better</th>
+<th align="left">ME2</th>
+<th align="left">prediction error</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">single</td>
+<td align="left">3.58</td>
+<td align="left"></td>
+<td align="left">3.20</td>
+<td align="left">4.65</td>
+</tr>
+
+<tr>
+<td align="left">bagging</td>
+<td align="left">2.20</td>
+<td align="left"></td>
+<td align="left">2.20</td>
+<td align="left">3.31</td>
+</tr>
+
+<tr>
+<td align="left">boost (linear loss)</td>
+<td align="left">1.65</td>
+<td align="left">10</td>
+<td align="left">1.65</td>
+<td align="left">2.75</td>
+</tr>
+
+<tr>
+<td align="left">boost (exponential)</td>
+<td align="left">1.67</td>
+<td align="left">9</td>
+<td align="left">1.68</td>
+<td align="left">2.79</td>
+</tr>
+
+<tr>
+<td align="left">boost (square law)</td>
+<td align="left">1.73</td>
+<td align="left">8</td>
+<td align="left">1.77</td>
+<td align="left">2.84</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table II. Results of ten runs on Friedman #2 Friedman函数2的10次运行结果</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">#better</th>
+<th align="left">ME2</th>
+<th align="left">prediction error</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">single</td>
+<td align="left">29310</td>
+<td align="left"></td>
+<td align="left">2910</td>
+<td align="left">77511</td>
+</tr>
+
+<tr>
+<td align="left">bagging</td>
+<td align="left">11463</td>
+<td align="left"></td>
+<td align="left">11463</td>
+<td align="left">65316</td>
+</tr>
+
+<tr>
+<td align="left">boost (linear loss)</td>
+<td align="left">11684</td>
+<td align="left">3</td>
+<td align="left">11708</td>
+<td align="left">68622</td>
+</tr>
+
+<tr>
+<td align="left">boost (exponential)</td>
+<td align="left">10980</td>
+<td align="left">5</td>
+<td align="left">11108</td>
+<td align="left">64703</td>
+</tr>
+
+<tr>
+<td align="left">boost (square law)</td>
+<td align="left">15615</td>
+<td align="left">0</td>
+<td align="left">15660</td>
+<td align="left">69585</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table III. Results of ten runs on Friedman #3 Friedman函数3的10次运行结果</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">#better</th>
+<th align="left">ME2</th>
+<th align="left">prediction error</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">single</td>
+<td align="left">0.0491</td>
+<td align="left"></td>
+<td align="left">0.0491</td>
+<td align="left">0.0840</td>
+</tr>
+
+<tr>
+<td align="left">bagging</td>
+<td align="left">0.0312</td>
+<td align="left"></td>
+<td align="left">0.0312</td>
+<td align="left">0.0697</td>
+</tr>
+
+<tr>
+<td align="left">boost (linear loss)</td>
+<td align="left">0.0218</td>
+<td align="left">8</td>
+<td align="left">0.0218</td>
+<td align="left">0.0604</td>
+</tr>
+
+<tr>
+<td align="left">boost (exponential)</td>
+<td align="left">0.0213</td>
+<td align="left">9</td>
+<td align="left">0.0214</td>
+<td align="left">0.0602</td>
+</tr>
+
+<tr>
+<td align="left">boost (square law)</td>
+<td align="left">0.0202</td>
+<td align="left">10</td>
+<td align="left">0.0202</td>
+<td align="left">0.058</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table IV. Results of 100 runs on bagged trees and boosted trees on the three Friedman functions. #better indicates how many times (out of 100 runs) that boosting is better than bagging on the same training, pruning, and test sets. The loss functions used were the best of Tables I, II and III.装袋树和增强树在Friedman函数上运行100次的结果。#better指示在相同的训练、修剪和测试集上多少次（总共100次）增强好于装袋。使用表I、II和III中最好的损失函数。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">ME-bagging</th>
+<th align="left">ME-boosting</th>
+<th align="left"># better</th>
+<th align="left">PE-bagging</th>
+<th align="left">PE-boosting</th>
+<th align="left">loss-type</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">#1</td>
+<td align="left">2.26</td>
+<td align="left">1.74</td>
+<td align="left">94</td>
+<td align="left">3.36</td>
+<td align="left">2.84</td>
+<td align="left">linear</td>
+</tr>
+
+<tr>
+<td align="left">#2</td>
+<td align="left">10,093</td>
+<td align="left">10,446</td>
+<td align="left">43</td>
+<td align="left">66,077</td>
+<td align="left">65,955</td>
+<td align="left">exponential</td>
+</tr>
+
+<tr>
+<td align="left">#3</td>
+<td align="left">0.0303</td>
+<td align="left">0.0206</td>
+<td align="left">90</td>
+<td align="left">0.0677</td>
+<td align="left">0.0596</td>
+<td align="left">square law</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table V. Stacking on Friedman #1 (boosting uses linear loss function))在Friedman函数1上堆叠（增强采用线性损失函数）</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">prediction error</th>
+<th align="left">#trees</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">bagging (no stacking)</td>
+<td align="left">2.20</td>
+<td align="left">3.31</td>
+<td align="left">50.0</td>
+</tr>
+
+<tr>
+<td align="left">bagging (stacking)</td>
+<td align="left">1.91</td>
+<td align="left">3.02</td>
+<td align="left">14.4</td>
+</tr>
+
+<tr>
+<td align="left">boosting (no stacking)</td>
+<td align="left">1.65</td>
+<td align="left">2.75</td>
+<td align="left">59.2</td>
+</tr>
+
+<tr>
+<td align="left">boosting (stacking)</td>
+<td align="left">1.43</td>
+<td align="left">2.56</td>
+<td align="left">10.4</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table VI. Stacking on Friedman #2 (boosting uses exponential loss)在Friedman函数2上堆叠（增强采用指数损失函数）</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">prediction error</th>
+<th align="left">#trees</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">bagging (no stacking)</td>
+<td align="left">11463</td>
+<td align="left">65316</td>
+<td align="left">50.0</td>
+</tr>
+
+<tr>
+<td align="left">bagging (stacking)</td>
+<td align="left">13702</td>
+<td align="left">67795</td>
+<td align="left">14.3</td>
+</tr>
+
+<tr>
+<td align="left">boosting (no stacking)</td>
+<td align="left">10980</td>
+<td align="left">64703</td>
+<td align="left">58.4</td>
+</tr>
+
+<tr>
+<td align="left">boosting (stacking)</td>
+<td align="left">13129</td>
+<td align="left">67110</td>
+<td align="left">22.2</td>
+</tr>
+</tbody>
+</table>
+
+<p>Table VII. Stacking on Friedman #3 (boosting uses square loss)在Friedman函数3上堆叠（增强采用平方损失函数）</p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left">modeling error</th>
+<th align="left">prediction error</th>
+<th align="left">#trees</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">bagging (no stacking)</td>
+<td align="left">0.0312</td>
+<td align="left">0.0697</td>
+<td align="left">50.0</td>
+</tr>
+
+<tr>
+<td align="left">bagging (stacking)</td>
+<td align="left">0.0256</td>
+<td align="left">0.0644</td>
+<td align="left">8.9</td>
+</tr>
+
+<tr>
+<td align="left">boosting (no stacking)</td>
+<td align="left">0.0203</td>
+<td align="left">0.0604</td>
+<td align="left">46.3</td>
+</tr>
+
+<tr>
+<td align="left">boosting (stacking)</td>
+<td align="left">0.0202</td>
+<td align="left">0.0590</td>
+<td align="left">15.6</td>
+</tr>
+</tbody>
+</table>
+
+<p>Suppose we are now given the individual machines, whether obtained from boosting or bagging and ask the best way to combine them rather than using averaging (for bagging) or the weighted median (for boosting). Breiman (1996a) suggests the following stacking technique: Suppose that once again pattern <code>$i$</code> has an observed value <code>$y_i$</code> on the training set. Suppose machine <code>$k$</code> has a predicted value <code>$y_i^{(k)}$</code> for pattern <code>$i$</code> on the training set where there are a total of <code>$K$</code> machines. Then ﬁnd the <code>$\gamma_k$</code> that minimizes:假设有个体机器，不论来自增强还是装袋并问联合这些个体机器的最好方式而不是使用平均（对装袋）或加权平均（对增强）。Breiman建议以下堆叠技术：仍假设训练集的模式<code>$i$</code>有观测值<code>$y_i$</code>。假设机器<code>$k$</code>对训练集上模式<code>$i$</code>的预测为<code>$y_i^{(k)}$</code>，全部有<code>$K$</code>个机器。那么，找到<code>$\gamma_k$</code>以最小化如下：
+<code>$$W = \sum_{i=1}^{N_1} \left(y_i-\sum_{k=1}^{K}\gamma_k y_i^{(k)}\right)^2 \quad \gamma_k \ge 0 \tag{18}$$</code>
+This is a constrained quadratic optimization problem for which the use of standardized quadratic programming packages is recommended. The above is equivalent to minimizing (with respect to <code>$\gamma$</code> ):这是一个约束二次优化问题，推荐使用标准化的二次规划软件包。上面等价于根据<code>$\gamma$</code>最小化：
+<code>$$W = \vec{c}^{T} \vec{\gamma} + \frac{1}{2} \vec{\gamma}^{T} \mathbf{H} \vec{\gamma} \tag{19}$$</code><br />
+where <code>$\vec{c}$</code> is a vector and <code>$\mathbf{H}$</code> is a Hessian whose elements are:其中<code>$\vec{c}$</code>是一向量且<code>$\mathbf{H}$</code>是海赛矩阵，两者的元素为：
+<code>$$c_k = -2 \sum_{i=1}^{N_1} y_i y_i^{(k)} \quad k=1,\ldots,K \tag{19}$$</code>
+<code>$$h_{jk} = 2\sum_{i=1}^{N_1} y_i^{(j)} y_i^{(k)} \quad j,k=1,\ldots,K \ and \ h_{jk}=h_{kj} \tag{20}$$</code>
+<strong>由上式可知<code>$\vec{c}$</code>为<code>$1 \times K$</code>或<code>$K \times 1$</code>向量，<code>$\mathbf{H}$</code>为<code>$K \times K$</code>矩阵。又根据上下文，<code>$\vec{\gamma}$</code>是<code>$K \times 1$</code>向量。综上，<code>$\vec{c}$</code>和<code>$\vec{\gamma}$</code>为<code>$K \times 1$</code>向量，而<code>$\mathbf{H}$</code>为<code>$K \times K$</code>矩阵。(18)推导(19)很容易，展开即可。</strong></p>
+
+<p>Tables V, VI, and VII show the results of using stacking using the best loss functions (for boosting, from Tables I-III). Note that if <code>$\gamma_k=0$</code>, machine <code>$k$</code> is not needed. The last column of these tables indicate the number of trees in the stacked or unstacked implementation. There are mixed results. On Friedman #1, both bagging and boosting improve over their unstacked results at a 5% signiﬁcance level, but boosting still is better than bagging. For Freidman #2, stacking makes both boosting and bagging worse while for Friedman #3, stacking makes bagging better but boosting is still better than stacking.表V、VI和VII显示了使用最佳损失函数（对增强，最佳损失函数来自表I到III）、使用堆叠的结果。注意如果<code>$\gamma_k=0$</code>，那么机器<code>$k$</code>没必要存在。这些表的最后一列堆叠和不堆叠情况下揭示树的数量。结果喜忧参半。对Friedman 1号函数，增强和装袋加上堆叠均有5%的显著提升，堆叠后增强仍优于装袋。对Friedman 2号函数，堆叠使增强和装袋均变差。而对Friedman 3号函数，堆叠更有利于装袋，但增强仍优于装袋。</p>
+
+<p><strong>关于堆叠，这里并没介绍很详细，但其提到堆叠可与增强结合。关于怎么结合，恐怕要弄懂堆叠后方可弄清楚。</strong></p>
+
+<h2 id="6-3-trees-on-boston-housing波士顿房价上的树">6.3 Trees on Boston Housing波士顿房价上的树</h2>
+
+<p>For Boston housing, using 100 runs, and the normal approximation to the binomial, we ﬁnd since <code>$\sigma=\sqrt{100 \times 0.5 \times 0.5}=5$</code>, that <code>$P[\text{#succesess} \ge 61.65]&lt;\text{1%}$</code>. Therefore, if boosting beats bagging more than 61.65% of the time, we can reject the hypothesis that the two algorithms are equally good. Over 100 runs, we get an average prediction error of 12.4 using bagging and 10.7 using boosting. Boosting is better than bagging 72% of the time. On this data Breiman (1996a) obtained 11.7 while we obtained 12.4. Without knowing the error bars on his results, we have no way of telling whether our results on bagging are signiﬁcantly different. There is a procedural difference: Breiman uses a training set of size 481 and a test set of size 25, while we use a training set of size 401, a pruning set of size 80,and a test set of size 25. Stacking on top of boosting or bagging does not improve results.对波士顿房价数据集，运行100次，二项的正态逼近，既然<code>$\sigma=\sqrt{100 \times 0.5 \times 0.5}=5$</code>，那么<code>$P[\text{#succesess} \ge 61.65]&lt;\text{1%}$</code>。因此，如果增强打败装袋次数超过61.65%，我们可以拒绝两种算法同样好的假设。超过100次运行，装袋平均预测误差12.4，增强平均预测误差10.7。在72%的情况下，增强比装袋好。在此数据集，Breiman得到11.7而我们12.4。如果不知道他的结果上的误差栏，我们就无法判断我们在装袋方面的结果是否有显著差异。有一个程序上的区别:Breiman使用大小为481的训练集和大小为25的测试集，而我们使用大小为401的训练集、大小为80的修剪集和大小为25的测试集。堆叠在增强或装袋的顶部并不能改善效果。</p>
+
+<h1 id="8-conclusions结论">8. CONCLUSIONS结论</h1>
+
+<p>Boosting is a viable approach to reducing prediction error. It gives statistically signiﬁcant improvement in most cases and never is statistically worse than bagging. In constructing trees, it is important to generate a pruning set of data whose statistics are similar to those of the training set. Pruning improves generalization and increases speed. Stacking sometimes helps, sometimes hurts.增强是减少预测误差的一种可行方法。在大多数情况下，它在统计上有显著的改善，而且从来没有比装袋统计上更差。在构造树时，生成统计量与训练集相似的剪枝数据集是很重要的。剪枝提高泛化和速度。堆叠有时有用，有时有害。</p>
+
+<p>Futhure studies will examine the use of neural networks or oblique decision tree as learning machines, and the feasibility of using nonlinear functions of features as inputs to decision trees.未来的研究将检验使用神经网络或斜向决策树作为学习机，以及使用非线性函数的特征作为决策树的输入的可行性。</p>
+
+<h1 id="acknowledgements致谢">Acknowledgements致谢</h1>
+
+<p>（略）</p>
+
+<h1 id="references引用">References引用</h1>
+
+<p>（略）</p>
+
+<p><strong>Algorithm AdaBoost.R</strong></p>
+
+<p><strong>Input:</strong> sequence of <code>$N$</code> examples <code>$((x_1, y_1),\ldots, (x_N, y_N))$</code> with labels <code>$y_i \in Y=\{0,1\}$</code> distribution <code>$D$</code> over the examples weak learning algorithm <strong>WeakLearn</strong> integer <code>$T$</code> specifying number of iterations</p>
+
+<p><strong>Initialize</strong> the weight vector:
+<code>$w_{i,y}^{1}=\frac{D(i)|y-y_i|}{Z}$</code>
+for <code>$i=1, \ldots, N, y \in Y$</code>, where
+<code>$Z=\sum_{i=1}^{N}D(i)\int_{0}^{1}|y-y_i|dy$</code>.
+<strong>Do for</strong> <code>$t=1, 2, \ldots, T$</code></p>
+
+<ol>
+<li><p>Set
+<code>$p^{t}=\frac{w^t}{\sum_{i=1}^{N}\int_{0}^{1}w_{i,y}^{t}dy}$</code>
+.</p></li>
+
+<li><p>Call <strong>WeakLearn</strong>, providing it with the density <code>$p_tt$</code>; get back a hypothesis <code>$h_t: X \times Y$</code>.</p></li>
+
+<li><p>Calculate the loss of <code>$h_t$</code>:
+<code>$\varepsilon_t=\sum_{i=1}^{N}|\int_{y_i}^{h_t(x_i)}p_{i,y}^{t}dy|$</code>.
+If <code>$\varepsilon_t &gt; 1/2$</code>, then set <code>$T=t-1$</code> and abort the loop.</p></li>
+
+<li><p>Set <code>$\beta_t={\varepsilon_t}/{(1-\varepsilon_t)}$</code>.</p></li>
+
+<li><p>Set the new weights vector to be <code>$w_{i,y}^{t+1} = \begin{cases} w_{i,y}^{t}, &amp; \text{if $y_i \le y \le h_t(x_i)$ or $h_t(x_i) \le y \le y_i$} \\ w_{i,y}^{t}\beta_t, &amp; \text{otherwise} \end{cases}$</code>
+for <code>$i=1, \ldots, N, y \in Y$</code>.</p></li>
+</ol>
+
+<p><strong>Output</strong> the hypothesis <code>$h_f(x)=\inf \left\{y \in Y: \sum_{t:h_t(x) \le y}\log(1/\beta_t) \ge \frac{1}{2}\sum_{t}\log(1/\beta_t)\right\}$</code>.</p>
+
+<p><strong>Algorithm 1 AdaBoost.R2</strong> (Drucker, 1997)</p>
+
+<p>Input the labeled target data set <code>$T$</code> of size <code>$n$</code>, the maximum number of iterations <code>$N$</code>, and a base learning algorithm Learner. Unless otherwise speciﬁed, set the initial weight vector <code>$\vec{w}^{(1)}$</code> such that <code>$\vec{w}_{i}^{(1)} = 1/n $</code> for <code>$1 \le i \le n$</code>.</p>
+
+<p>For <code>$t = 1, \ldots, N$</code>:</p>
+
+<ol>
+<li><p>Call Learner with the training set <code>$T$</code> and the distribution <code>$\vec{w}^{(t)}$</code>, and get a hypothesis <code>$h_t : \mathbf{X} \rightarrow \mathbb{R}$</code>.</p></li>
+
+<li><p>Calculate the adjusted error <code>$e_{i}^{(t)}$</code> for each instance: let <code>$$D_t = \max_{j=1}^{n}|y_j − h_t(x_j)|$$</code> then <code>$$e_{i}^{(t)} = |y_i − h_t(x_i)|/D_t$$</code></p></li>
+
+<li><p>Calculate the adjusted error of <code>$h_t$</code>: <code>$$\varepsilon_t = \sum_{i=1}^{n} e_{i}^{(t)} w_{i}^{(t)}$$</code>; if <code>$\varepsilon_t \ge 0.5$</code>, stop and set <code>$N = t − 1$</code>.</p></li>
+
+<li><p>Let <code>$$\beta_t = \varepsilon_t/(1 − \varepsilon_t)$$</code>.</p></li>
+
+<li><p>Update the weight vector: <code>$$w_{i}^{(t+1)} = w_{i}^{(t)} \beta_{i}^{1-e_i^{(t)}} /Z_t$$</code> (<code>$Z_t$</code> is a normalizing constant)</p></li>
+</ol>
+
+<p>Output the hypothesis: <code>$h_f(x) =$</code> the weighted median of <code>$h_t(x)$</code> for <code>$1 \le t \le N$</code>, using <code>$\ln(1/\beta_t)$</code> as the weight for hypothesis <code>$h_t$</code>.</p>
+
+<p>sup：函数上界，inf：函数下界。</p>
+
+<p>参考：</p>
+
+<ul>
+<li>1.<a href="https://ac.els-cdn.com/S002200009791504X/1-s2.0-S002200009791504X-main.pdf?_tid=b3d3a67b-fbd3-4475-9208-0cb65a2788fd&amp;acdnat=1545817889_13392c5a97f5e578f84f3ee5268bd5b8">Y. Freund, and R. Schapire, “A Decision-Theoretic Generalization of On-Line Learning and an Application to Boosting”, 1997.</a>；</li>
+<li>2.<a href="https://web.stanford.edu/~hastie/Papers/SII-2-3-A8-Zhu.pdf">J. Zhu, H. Zou, S. Rosset, T. Hastie. “Multi-class AdaBoost”, 2009.</a>；</li>
+<li>3.<a href="https://web.stanford.edu/~hastie/Papers/samme.pdf">J. Zhu, S. Rosset, H. Zou, T. Hastie. “Multi-class AdaBoost”, 2005.</a>；</li>
+<li>4.<a href="https://pdfs.semanticscholar.org/8d49/e2dedb817f2c3330e74b63c5fc86d2399ce3.pdf?_ga=2.51142880.874713034.1547538541-1408230639.1547538541">H. Drucker. “Improving Regressors using Boosting Techniques”, 1997.</a>；</li>
+<li>5.<a href="https://www.cs.utexas.edu/~dpardoe/papers/ICML10.pdf">David Pardoe and Peter Stone, “Boosting for Regression Transfer
+”, 2010.</a>；</li>
+<li>6.<a href="https://web.stanford.edu/~hastie/ElemStatLearn//">T. Hastie, R. Tibshirani and J. Friedman, “Elements of Statistical Learning Ed. 2”, Springer, 2009.</a>；</li>
+<li>7.<a href="https://blog.csdn.net/tyh70537/article/details/76675098">adaboost.M1与adaboost.M2差别比较</a>；</li>
+<li>8.<a href="https://scikit-learn.org/stable/modules/ensemble.html#adaboost">sklearn文档1.11.3. AdaBoost
+</a>；</li>
+<li>8.<a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.93.5148&amp;rep=rep1&amp;type=pdf">A Short Introduction to Boosting
+</a>；</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

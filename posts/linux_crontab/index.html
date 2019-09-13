@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>linux定时执行 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>linux定时执行</h1>
+<p>目前工作需要我运维爬虫，在集群上爬取速度会更快。由于爬虫代码很多时候是不变动的。但需要按照时间、周期等有规律爬取数据。故根据公司要求学习linux定时执行命令，以便按时完成爬虫排期规定的爬虫任务。</p>
+
+<p>没怎么接触过linux操作，所以笔记以备忘。</p>
+
+<p>给我的文件crontab.txt文件，含有同格式命令28条，其中第一条为<code>0 6 * * * sh /home/chenfy/crawl/tt/crontab.sh</code>。这是linux的crontab定时任务命令。参考(linux （ crontab 定时任务命令）)[<a href="https://www.cnblogs.com/shizhengquan/p/10876386.html]，其格式为`minute">https://www.cnblogs.com/shizhengquan/p/10876386.html]，其格式为`minute</a> hour day month week command<code>。时间代表触发自动执行的时间条件，</code>command<code>可指定</code>command<code>所在位置。详见此网址。关于命令本身，此示例的命令为sh，即运行脚本，后跟脚本的绝对地址（或者也可相对地址吧，暂未验证）。脚本内部命令可看同事给的linux计划执行/crontab.sh.example文件，其实这就是crontab.sh脚本，只不过希望运维人员根据具体版本环境修改后重命名为</code>crontab.sh`再运行。脚本里面内容为：</p>
+
+<pre><code>cd /home/chenfy/crawls/tt
+nohup /home/chenfy/.local/bin/scrapy crawl fang &gt;&gt; fang_zu.log 2&gt;&amp;1 &amp;
+</code></pre>
+
+<p><code>cd</code>后的内容即具体的爬虫代码，公司为了保证采用最新版本的代码，将代码放在gitlab仓库。遇到有代码更新（或为保险起见），<code>git clone xxx</code>加<code>git pull original</code>以让代码保鲜。<code>nohup</code>是为了保证在你退出帐户/关闭终端之后继续运行相应的进程，这些细节详见(nohup 详解)[<a href="https://www.cnblogs.com/jinxiao-pu/p/9131057.html]。">https://www.cnblogs.com/jinxiao-pu/p/9131057.html]。</a>
+但是这些计划执行命令不可以直接在Xshell prompt执行，需要放入用户的crontab文件中（关于crontab文件的位置，暂未找到。但可通过<code>crontab -l</code>查看，并可通过<code>crontab -e</code>进入编辑。编辑时候采用linux的vim命令，按i可插入，再按esc将退出，再输入&quot;:&quot;可选择退出与否保存与否。“:wq”代表保存并退出。</p>
+
+<p>这些计划执行命令将根据设定的时间点开始执行，并不能限定执行完成时间。</p>
+
+<p>注意以上细节应该就可以定时执行计划命令了，爬取的文件或在计划命令的工作路径或在爬虫代码设置的具体输出路径。将爬取的文件发给对应的爬虫项目负责人。</p>
+
+<p>关于爬虫计划，暂不知道放在什么位置。仅计划了周期而没更严格的时间规定的话，可选择集群负荷较小的深夜凌晨。</p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,5463 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>mysql笔记 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>mysql笔记</h1>
+
+
+<p>MySQL有点生疏了，现在重新复习以下。</p>
+
+<p>不同版本可能稍有不同，本文具体对应mysql-8.0.13-winx64（MySQL Community Server 8.0.13）。</p>
+
+<p>笔记框架将按照《深入浅出MySQL-数据库开发、优化与管理维护第2版本》，当然，此书是数据库工程师的技能的视角写的，数据分析人士不需要掌握这么多。暂时认为熟悉基本增删改查即可，对应书中基础篇吧。再深入可学开发篇。</p>
+
+<p>1-6章为基础篇，7-17为开发篇，18-23为优化篇，24-30为管理维护篇，31-33为架构篇。</p>
+
+<h2 id="1-mysql安装">1 MySQL安装</h2>
+
+<h3 id="1-1-mysql下载">1.1 MySQL下载</h3>
+
+<p>官网 社区版免费 Community</p>
+
+<h3 id="1-2-mysql安装">1.2 MySQL安装</h3>
+
+<p>以下为在win10下安装过程：</p>
+
+<p>参考<a href="https://www.cnblogs.com/laumians-notes/p/9069498.html">小楼札记-MySQL-mysql 8.0.11安装教程</a></p>
+
+<ol>
+<li><p>下载zip安装包：
+mysql-8.0.15-winx64（MySQL Community Server 8.0.15）</p></li>
+
+<li><p>解压zip
+解压zip包到安装目录，我的解压在了E:\mysql（因为e盘为固态，设想数据库应很需要性能）。</p></li>
+
+<li><p>配置环境变量
+将解压文件夹下的bin路径添加到Path的变量值中。</p></li>
+
+<li><p>初始化数据库
+在安装时，必须以管理员身份运行cmd，否则在安装时会报错，会导致安装失败的情况。</p></li>
+</ol>
+
+<p>在MySQL安装目录的 bin 目录下执行命令：</p>
+
+<pre><code>mysqld --initialize --console
+</code></pre>
+
+<p>执行完成后，会打印 root 用户的初始默认密码，比如：</p>
+
+<pre><code>E:\mysql\bin&gt;mysqld --initialize --console
+2019-02-22T12:11:47.907225Z 0 [System] [MY-013169] [Server] E:\mysql\bin\mysqld.exe (mysqld 8.0.15) initializing of server in progress as process 9912
+2019-02-22T12:11:52.279958Z 5 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: 7;KRrrw/72H!
+2019-02-22T12:11:53.515708Z 0 [System] [MY-013170] [Server] E:\mysql\bin\mysqld.exe (mysqld 8.0.15) initializing of server has completed
+
+E:\mysql\bin&gt;
+</code></pre>
+
+<p>注意！执行输出结果里面有一段： [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: 7;KRrrw/72H!。其中root@localhost:后面的“7;KRrrw/72H!”就是初始密码（不含首位空格）。在没有更改密码前，需要记住这个密码，后续登录需要用到。</p>
+
+<p>要是关快了，或者没记住，那也没事，删掉初始化的 datadir目录，再执行一遍初始化命令，又会重新生成的。当然，也可以使用安全工具，强制改密码，用什么方法，自己随意。</p>
+
+<ol>
+<li><p>安装服务
+在MySQL安装目录的 bin 目录下执行命令：</p>
+
+<pre><code class="language-mysqld">
+后面的服务名可以不写，默认的名字为 mysql。当然，如果你的电脑上需要安装多个MySQL服务，就可以用不同的名字区分了，比如 mysql5 和 mysql8。
+</code></pre></li>
+</ol>
+
+<p>E:\mysql\bin&gt;mysqld --install
+Service successfully installed.
+E:\mysql\bin&gt;</p>
+
+<pre><code>安装完成之后，就可以通过命令`net start mysql`启动MySQL的服务了。通过命令`net stop mysql`停止服务。通过命令`sc delete MySQL/mysqld -remove`卸载 MySQL 服务:
+（注：**`net start mysql`和`net stop mysql`应在“以管理员身份运行”的cmd命令行运行。装好的mysql并不会在程序列表里存在，可以在“服务”中查看是否存在“MySQL”来判断。**）
+</code></pre>
+
+<p>E:\mysql\bin&gt;net start mysql
+MySQL 服务正在启动 .
+MySQL 服务已经启动成功。</p>
+
+<p>E:\mysql\bin&gt;</p>
+
+<pre><code>
+关闭服务:为安全退出，一定要确保已从mysql语句命令环境退出（mysql命令环境下运行`exit;`）之后再运行`net stop mysql`。
+
+</code></pre>
+
+<p>C:\WINDOWS\system32&gt;net stop mysql
+MySQL 服务正在停止..
+MySQL 服务已成功停止。</p>
+
+<p>C:\WINDOWS\system32&gt;</p>
+
+<pre><code>
+6. 更改密码
+在MySQL安装目录的 bin 目录下执行命令：
+</code></pre>
+
+<p>mysql -u root -p</p>
+
+<pre><code>
+这时候会提示输入密码，记住了上面第3.1步安装时的密码，填入即可登录成功，进入MySQL命令模式。
+（注：**`mysql -u root -p`命令应在mysql安装目录下的bin文件夹下运行。比如，我将mysql装在e盘根目录下，那么此命令应在`E:\mysql\bin&gt;`下运行，我的root账户为123456，备忘。**）
+
+</code></pre>
+
+<p>E:\mysql\bin&gt;mysql -u root -p
+Enter password: ************
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.13</p>
+
+<p>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.</p>
+
+<p>Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.</p>
+
+<p>Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>在MySQL中执行命令：
+</code></pre>
+
+<p>ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '新密码';</p>
+
+<pre><code>修改密码，注意命令尾的“；”一定要有，这是mysql的语法
+</code></pre>
+
+<p>mysql&gt; ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '88888888';
+Query OK, 0 rows affected (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+到此，安装部署就完成了。官方说测试速度MySQL8比5快两倍。
+### 1.3 MySQL配置
+即my.ini
+
+我们发现解压后的目录并没有my.ini文件，没关系可以自行创建。在安装根目录下添加 my.ini（新建文本文件，将文件类型改为.ini），写入基本配置：
+
+</code></pre>
+
+<p>[mysqld]</p>
+
+<h1 id="设置3306端口">设置3306端口</h1>
+
+<p>port=3306</p>
+
+<h1 id="设置mysql的安装目录">设置mysql的安装目录</h1>
+
+<p>basedir=E:\software\mysql\mysql-8.0.11-winx64   # 切记此处一定要用双斜杠\，单斜杠我这里会出错，不过看别人的教程，有的是单斜杠。自己尝试吧</p>
+
+<h1 id="设置mysql数据库的数据的存放目录">设置mysql数据库的数据的存放目录</h1>
+
+<p>datadir=E:\software\mysql\mysql-8.0.11-winx64\Data   # 此处同上</p>
+
+<h1 id="允许最大连接数">允许最大连接数</h1>
+
+<p>max_connections=200</p>
+
+<h1 id="允许连接失败的次数-这是为了防止有人从该主机试图攻击数据库系统">允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统</h1>
+
+<p>max_connect_errors=10</p>
+
+<h1 id="服务端使用的字符集默认为utf8">服务端使用的字符集默认为UTF8</h1>
+
+<p>character-set-server=utf8</p>
+
+<h1 id="创建新表时将使用的默认存储引擎">创建新表时将使用的默认存储引擎</h1>
+
+<p>default-storage-engine=INNODB</p>
+
+<h1 id="默认使用-mysql-native-password-插件认证">默认使用“mysql_native_password”插件认证</h1>
+
+<p>default_authentication_plugin=mysql_native_password
+[mysql]</p>
+
+<h1 id="设置mysql客户端默认字符集">设置mysql客户端默认字符集</h1>
+
+<p>default-character-set=utf8
+[client]</p>
+
+<h1 id="设置mysql客户端连接服务端时默认使用的端口">设置mysql客户端连接服务端时默认使用的端口</h1>
+
+<p>port=3306
+default-character-set=utf8</p>
+
+<pre><code>注：配置文件示例复制自[小楼札记-MySQL-mysql 8.0.11安装教程](https://www.cnblogs.com/laumians-notes/p/9069498.html)，但我就不弄这些设置了，直接采用软件默认。
+
+### 1.4 启动和关闭MySQL
+cmd的bin目录下通过命令`net start mysql`启动MySQL的服务了。通过命令`net stop mysql`停止服务。
+
+深入浅出MySQL中介绍cmd的bin目录下通过命令`mysql --console`启动MySQL的服务了。通过命令`mysqladmin -uroot shutdown`停止服务。
+
+暂时不知后者还能不能使用，也不知道两者有什么区别。
+
+## 2 SQL基础
+MySQL适用的SQL语法应阅读[Chapter 13 SQL Statement Syntax](https://dev.mysql.com/doc/refman/8.0/en/sql-syntax.html)。
+### 2.1 SQL简介
+结构化查询语言(Structured Query Language)简称SQL(发音：/ˈes kjuː ˈel/ &quot;S-Q-L&quot;)，是一种特殊目的的编程语言，是一种数据库查询和程序设计语言，用于存取数据以及查询、更新和管理关系数据库系统；同时也是数据库脚本文件的扩展名。
+
+结构化查询语言包含6个部分：
+
+一：数据查询语言（DQL:Data Query Language）：
+其语句，也称为“数据检索语句”，用以从表中获得数据，确定数据怎样在应用程序给出。保留字SELECT是DQL（也是所有SQL）用得最多的动词，其他DQL常用的保留字有WHERE，ORDER BY，GROUP BY和HAVING。这些DQL保留字常与其他类型的SQL语句一起使用。
+
+二：数据操作语言（DML：Data Manipulation Language）：
+其语句包括动词INSERT，UPDATE和DELETE。它们分别用于添加，修改和删除表中的行。也称为动作查询语言。
+
+三：事务处理语言（TPL）：
+它的语句能确保被DML语句影响的表的所有行及时得以更新。TPL语句包括BEGIN TRANSACTION，COMMIT和ROLLBACK。
+
+四：数据控制语言（DCL）：
+它的语句通过GRANT或REVOKE获得许可，确定单个用户和用户组对数据库对象的访问。某些RDBMS可用GRANT或REVOKE控制对表单个列的访问。
+
+五：数据定义语言（DDL）：
+其语句包括动词CREATE和DROP。在数据库中创建新表或删除表（CREAT TABLE 或 DROP TABLE）；为表加入索引等。DDL包括许多与人数据库目录中获得数据有关的保留字。它也是动作查询的一部分。
+
+六：指针控制语言（CCL）：
+它的语句，像DECLARE CURSOR，FETCH INTO和UPDATE WHERE CURRENT用于对一个或多个表单独行的操作。
+
+### 2.2 SQL使用入门
+DDL是数据定义语言的缩写，简单来说就是对数据库内部的对象进行创建、删除、修改等操作的语言。它和DML语句的最大差别是DML只是对表内部数据操作，而不涉及表的定义、结构的修改，更不涉及其他对象。DDL语句更多是由数据库管理员（DBA）使用，开发人员一般很少使用。
+
+**注意任何SQL语句均应以`;`结尾。**
+#### 2.2.1 DDL语句
+1. 创建数据库
+
+创建数据库的语法：
+
+</code></pre>
+
+<p>CREATE DATABASE dbname</p>
+
+<pre><code>
+启动MySQL数据库后，输入语句：
+</code></pre>
+
+<p>create database test1;</p>
+
+<pre><code>这将创建数据库test1：
+</code></pre>
+
+<p>mysql&gt; create database test1;
+Query OK, 1 row affected (0.06 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>再一次输入上面语句，将会：
+
+</code></pre>
+
+<p>mysql&gt; create database test1;
+Query OK, 1 row affected (0.06 sec)</p>
+
+<p>mysql&gt; create database test1;
+ERROR 1007 (HY000): Can't create database 'test1'; database exists
+mysql&gt;</p>
+
+<pre><code>这是对数据库名字重复的报错。
+
+如想知道含有那些数据库，可使用如下命令：
+
+</code></pre>
+
+<p>mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test1              |
++--------------------+
+5 rows in set (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+要对某数据库操作，第一步需要执行以下命令去选择数据库：
+
+</code></pre>
+
+<p>mysql&gt; use test1;
+Database changed
+mysql&gt;</p>
+
+<pre><code>
+然后再利用如下命令可以查看test1数据库中含有的数据表：
+
+</code></pre>
+
+<p>mysql&gt; show tables;
+Empty set (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>可以看出，test1数据库没有任何数据表。
+
+2. 删除数据库
+
+删除数据库的语法为：
+
+</code></pre>
+
+<p>DROP DATABASE dbname</p>
+
+<pre><code>
+3. 创建表
+
+创建表语法为：
+
+</code></pre>
+
+<p>CREATE TABLE tablename (
+column_name_1 column_type_1 constrains,
+column_name_2 column_type_2 constrains,
+...
+column_name_n column_type_n constrains)</p>
+
+<pre><code>因为MySQL的表名是以目录形式存在于磁盘上的，所以表名的字符可以用任何目录名允许的字符（比如，win10将不区分大小写，这点请注意）。column_name是列名；column_type是列的数据类型；constrains是这个列的约束条件（约束条件见后面章节）。
+
+例如，创建一名为emp的表，表中含ename、hiredate、sal和deptno三个字段，字段类型分别为varchar(10)、date、decimal(10,2)、int(2)（字段类型下一章介绍）：
+
+</code></pre>
+
+<p>mysql&gt; create table emp(ename varchar(10),hiredate date,sal decimal(10,2),deptno int(2));
+Query OK, 0 rows affected (0.14 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可使用如下命令查看表格：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(10)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>desc命令得到的信息很简略，有时需要查看创建表格的命令：
+
+</code></pre>
+
+<p>mysql&gt; show create table emp \G;
+*************************** 1. row ***************************
+       Table: emp
+Create Table: CREATE TABLE <code>emp</code> (
+  <code>ename</code> varchar(10) DEFAULT NULL,
+  <code>hiredate</code> date DEFAULT NULL,
+  <code>sal</code> decimal(10,2) DEFAULT NULL,
+  <code>deptno</code> int(2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.01 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>从上面创建表的SQL语句中，除了可以看到表定义外，还可以看到表的engine（存储引擎）和charset（字符集）等信息。“\G”选项的含义是使得记录能够按字段竖向排列，以便更好显示内容较长的记录。
+
+4. 修改表
+
+ * 4.1 修改表字段类型的语法：
+
+</code></pre>
+
+<p>ALTER TABLE tablename MODIFY [COLUMN] col_name column_definition [FIRST | AFTER col_name]</p>
+
+<pre><code>
+例如，修改表emp的ename字段定义，将varchar(10)改为varchar(20)：
+
+</code></pre>
+
+<p>mysql&gt; alter table emp modify ename varchar(20);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.2 增加表字段的语法：
+
+</code></pre>
+
+<p>ALTER TABLE tablename ADD [COLUMN] col_name column_definition [FIRST | AFTER col_name]</p>
+
+<pre><code>
+例如，在表emp中新增加字段age，类型为int(3)：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; alter table emp add column age int(3);
+Query OK, 0 rows affected (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age      | int(3)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+ * 4.3 删除表字段的语法：
+
+</code></pre>
+
+<p>ALTER TABLE tablename DROP [COLUMN] col_name</p>
+
+<pre><code>
+例如，在表emp中新增加字段age，类型为int(3)：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age      | int(3)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; alter table emp drop column age;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.4 字段改名的语法：
+
+</code></pre>
+
+<p>ALTER TABLE tablename CHANGE [COLUMN] old_col_name new_col_name column_definition [FIRST | AFTER col_name]</p>
+
+<pre><code>
+例如，将age改名为age1，同时修改字段类型为int(4)：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age      | int(3)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; alter table emp change age age1 int(4);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age1     | int(4)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.5 更改字段排序的语法：
+
+前面介绍的字段增加和修改语法（ADD/CHANGE/MODIFY）中，都有可选项FIRST | AFTER col_name，这个选项可以用来修改字段在表中的位置，ADD增加的新字段默认是加在表的最后位置，而CHANGE/MODIFY默认都不会改变字段的位置。
+
+例如，新增字段birth类型为date，加在ename之后：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age      | int(3)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; alter table emp change age age1 int(4);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age1     | int(4)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+修改age1为age，且类型由int(4)改回int(3)：
+
+</code></pre>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| birth    | date          | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
+| age1     | int(4)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; alter table emp change age1 age int(3) first;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc emp;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| age      | int(3)        | YES  |     | NULL    |       |
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| birth    | date          | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.6 更改表名的语法：
+
+</code></pre>
+
+<p>ALTER TABLE tablename RENAME [TO] new_tablename</p>
+
+<pre><code>
+例如，将表emp改名为emp1：
+
+</code></pre>
+
+<p>mysql&gt; alter table emp rename emp1;
+Query OK, 0 rows affected (0.11 sec)</p>
+
+<p>mysql&gt; desc emp;
+ERROR 1146 (42S02): Table 'test1.emp' doesn't exist
+mysql&gt; desc emp1;
++----------+---------------+------+-----+---------+-------+
+| Field    | Type          | Null | Key | Default | Extra |
++----------+---------------+------+-----+---------+-------+
+| age      | int(3)        | YES  |     | NULL    |       |
+| ename    | varchar(20)   | YES  |     | NULL    |       |
+| birth    | date          | YES  |     | NULL    |       |
+| hiredate | date          | YES  |     | NULL    |       |
+| sal      | decimal(10,2) | YES  |     | NULL    |       |
+| deptno   | int(2)        | YES  |     | NULL    |       |
++----------+---------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+5. 删除表
+
+删除表的语法：
+</code></pre>
+
+<p>DROP TABLE tablename</p>
+
+<pre><code>
+#### 2.2.2 DML语句
+DML操作是指对数据库中表记录的操作，主要包括表记录的插入（insert）、更新（update）、删除（delete）、和查询（select），是开发人员的日常操作。
+
+1. 插入（insert）
+
+表创建好后，就可以往里插入记录了，插入记录的基本语法是：
+</code></pre>
+
+<p>INSERT INTO tablename (field1,field2,feild3,...,fieldn) VALUEES(value1,value2,...,valuen)</p>
+
+<pre><code>例如，向表emp中插入以下记录：ename为zzx1，hiredate为2000-01-01，sal为2000，deptno为1，命令如下：
+</code></pre>
+
+<p>mysql&gt; insert into emp (ename,hiredate,sal,deptno) values('zzx1','2000-01-01','2000',1);
+Query OK, 1 row affected (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>也可以不用指定字段名称，但是values后面的顺序应该和字段的排列顺序一致：
+
+</code></pre>
+
+<p>mysql&gt; insert into emp values('lisa','2003-02-01','3000',2);
+Query OK, 1 row affected (0.04 sec)</p>
+
+<p>mysql&gt; insert into emp values('bjguan','2004-04-02','1000',1);
+Query OK, 1 row affected (0.02 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>含有可空字段、非空但含有默认值的字段，自增字段，可以不用在insert后的字段列表里面出现，values后面只写对应字段名称的value。这些没写的字段可以自动设置为NULL、默认值、自增的下一个数字，这样在某些情况下可以大大缩短SQL语句的复杂性。
+
+</code></pre>
+
+<p>mysql&gt; insert into emp (ename,sal) values('dony',1000);
+Query OK, 1 row affected (0.09 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>实际插入结果为：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx1   | 2000-01-01 | 2000.00 |      1 |
+| lisa   | 2003-02-01 | 3000.00 |      2 |
+| bjguan | 2004-04-02 | 1000.00 |      1 |
+| dony   | NULL       | 1000.00 |   NULL |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+果然，hiredate和deptno为可空字段，dony的这两个字段显示为NULL。insert语句还有一个很好的特性，可以一次插入多条记录，语法如下：
+
+</code></pre>
+
+<p>INSERT INTO tablename (field1,field2,...fieldn)
+VALUES
+(record1_value1,record1_value2,...,record1_valuen),
+(record2_value1,record2_value2,...,record2_valuen),
+...
+(recordn_value1,recordn_value2,...,recordn_valuen)</p>
+
+<pre><code>
+可以看出，每条记录都用逗号进行了分隔。下面的例子中，对表dept一次插入两条记录：
+
+</code></pre>
+
+<p>mysql&gt; insert into emp (ename,deptno) values ('x',5),('y',6);
+Query OK, 2 rows affected (0.07 sec)
+Records: 2  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx1   | 2000-01-01 | 2000.00 |      1 |
+| lisa   | 2003-02-01 | 3000.00 |      2 |
+| bjguan | 2004-04-02 | 1000.00 |      1 |
+| dony   | NULL       | 1000.00 |   NULL |
+| x      | NULL       |    NULL |      5 |
+| y      | NULL       |    NULL |      6 |
++--------+------------+---------+--------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+2. 更新（update）记录
+
+更新记录的语法：
+
+</code></pre>
+
+<p>UPDATE tablename SET field1=value1,field2=value2,...,fieldn=valuen [WHERE CONDITION]</p>
+
+<pre><code>
+例如，将表emp中ename为lisa的薪水改为4000：
+
+</code></pre>
+
+<p>mysql&gt; update emp set sal=4000 where ename='lisa';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0</p>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx1   | 2000-01-01 | 2000.00 |      1 |
+| lisa   | 2003-02-01 | 4000.00 |      2 |
+| bjguan | 2004-04-02 | 1000.00 |      1 |
+| dony   | NULL       | 1000.00 |   NULL |
+| x      | NULL       |    NULL |      5 |
+| y      | NULL       |    NULL |      6 |
++--------+------------+---------+--------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+甚至可以同时更新多个表中的数据，在下例中，update命令同时更新多个表中数据：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  200.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; update emp a,dept b set a.sal=a.sal*b.deptno,b.deptname=a.ename where a.deptno=b.deptno;
+Query OK, 3 rows affected (0.03 sec)
+Rows matched: 5  Changed: 3  Warnings: 0</p>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | zzx      |
+|      2 | lisa     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+**只是任何字段均应指明是来自哪个表；为简洁，可以为表设置代号（只在当时语句有效）；更新记录值可以用表达式表示。**
+
+3. 删除（delete）记录
+
+删除记录的语法为：
+
+</code></pre>
+
+<p>DELETE FROM tablename [WHERE CONDITION]</p>
+
+<pre><code>
+例如，在emp中将ename为“dony”的记录全部删除，命令如下：
+
+</code></pre>
+
+<p>delete from emp wwhere ename='dony';</p>
+
+<pre><code>
+还可以一次删除多个表中的记录，例如：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
+| bzshen | 2005-04-01 |  300.00 |      3 |
++--------+------------+---------+--------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
+|      3 | hr       |
++--------+----------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; delete a,b from emp a,dept b where a.deptno=b.deptno and a.deptno=3;
+Query OK, 2 rows affected (0.11 sec)</p>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+4. 查询（select）记录
+select的语法很复杂，这里只介绍基本的语法：
+
+</code></pre>
+
+<p>SELECT * FROM tablename [WHERE CONDITION]</p>
+
+<pre><code>
+ * 4.1 简单查询：
+
+查询最简单的方式是将记录全部选出。下例将表emp中的记录全部查询出来：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+其中星号代表要将所有记录都选出来，也可用逗号分隔的所有字段来代替，上面语句与紧下的语句等效：
+
+</code></pre>
+
+<p>mysql&gt; select ename,hiredate,sal,deptno from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+ * 4.2 查询不重复记录：
+
+可用distinct关键字实现：
+
+</code></pre>
+
+<p>mysql&gt; select ename,hiredate,sal,deptno from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select distinct deptno from emp;
++--------+
+| deptno |
++--------+
+|      1 |
+|      2 |
+|      4 |
++--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+ * 4.3 条件查询：
+
+用where关键字可实现查询条件。下例查询表emp中deptno=1的记录：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from emp where deptno=1;
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+条件可以很复杂，涉及=、&gt;、&lt;、、&gt;=、&lt;=、!=等比较运算符；多个条件之间还可以使用or、and等逻辑运算符进行多条件联合查询，运算符详见具体章节。
+
+以下是一个使用多字段条件查询的例子：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp where deptno=1 and sal&lt;3000;
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.4 排序和限制：
+
+我们经常会有这样的需求，取出按照某个字段进行排序后的记录结果集，这就用到了数据库的排序操作，用关键字ORDER BY来实现，语法如下：
+
+</code></pre>
+
+<p>SELECT * FROM tablename [WHERE CONDITION] [ORDER BY fileld1 [DESC | ASC], field2 [DESC | ASC],..., field2 [DESC | ASC]]</p>
+
+<pre><code>
+其中，DESC和ASC是排序顺序关键字，DESC表示按照字段进行降序排序，ASC则表示升序排序，如果不写此关键字默认是升序排序。ORDER BY后面可以跟多个不同的排序字段，并且每个排序字段可以有不同的排序顺序。
+
+例如，把表emp中的记录按照工资高低进行显示：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp order by sal;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+如果排序字段的值一样，则值相同的字段按照第二个排序字段进行排序，以此类推。如果只有一个排序字段，则这些字段相同的记录将会无序排列。
+
+对于排序后的记录，如果希望只显示一部分，而不是全部，这时，就可以使用LIMIT关键字，语法如下：
+
+</code></pre>
+
+<p>SELECT ...[LIMIT offset_sart,row count]</p>
+
+<pre><code>
+其中offset_start表示记录的起始偏移量，row_count表示显示的行数。
+
+在默认情况下，起始偏移量为0，只需要写记录行数就可以，这时，实际显示的就是前n条记录。例如，显示emp表中按照sal排序后的前3条记录：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp order by sal limit 3;
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
+| lisa   | 2003-02-01 | 400.00 |      2 |
++--------+------------+--------+--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+如果要显示表emp中按照sal排序后从第二条记录开始的3条记录，可以使用如下命令：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp order by sal limit 1,3;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+注意：limit属于MySQL扩展SQL92后的语法，在其他数据库不一定通用。
+
+ * 4.5 聚合：
+
+很多情况下，用户需要进行一些汇总操作，比如统计整个公司的人数或者统计每个部门的人数，这时2就要用到SQL的聚合操作。聚合操作的语法如下：
+
+</code></pre>
+
+<p>SELECT [field1,field2,...,fieldn] fun_name
+FROM tablename
+[WHERE where_conditon]
+[GROUP BY field1,field2,...,fieldn
+[WITH ROLLUP]]
+[HAVING where_condition]</p>
+
+<pre><code>
+参数说明：
+ * fun_name表示要做的聚合操作，也就是聚合函数，常用的有sum、count、max、min。
+
+ * GROUP BY关键字表示要进行分类聚合的字段，比如要按照部门分类统计员工数量，部门就应该写在group by后面。
+
+ * WITH ROLLUP是可选语法，表明是否对分类聚合后的结果进行再汇总。
+
+ * HAVING关键字表示对分类后的结果再进行条件的过滤。
+
+注意：having和where的区别在于，having是对聚合后的结果进行条件过滤，而where是在聚合前就对记录进行过滤，如果逻辑允许，我们尽可能用where先过滤记录，这样因为结果集减小，将对聚合的效率大大提高，最后再根据逻辑看是否用having进行再过滤。
+
+例如，要再表emp中统计公司的总人数：
+
+</code></pre>
+
+<p>mysql&gt; select count(1) from emp;
++----------+
+| count(1) |
++----------+
+|        4 |
++----------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>在此基础上，要统计各部门的人数：
+
+</code></pre>
+
+<p>mysql&gt; select deptno,count(1) from emp group by deptno;
++--------+----------+
+| deptno | count(1) |
++--------+----------+
+|      1 |        2 |
+|      2 |        1 |
+|      4 |        1 |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+更细一些，既要统计各部门人数，又要统计总人数：
+
+</code></pre>
+
+<p>mysql&gt; select deptno,count(1) from emp group by deptno with rollup;
++--------+----------+
+| deptno | count(1) |
++--------+----------+
+|      1 |        2 |
+|      2 |        1 |
+|      4 |        1 |
+|   NULL |        4 |
++--------+----------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+统计人数大于1人的部门：
+
+</code></pre>
+
+<p>mysql&gt; select deptno,count(1) from emp group by deptno having count(1)&gt;1;
++--------+----------+
+| deptno | count(1) |
++--------+----------+
+|      1 |        2 |
++--------+----------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+统计公司所有员工的薪水总额、最高和最低薪水
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select sum(sal), max(sal), min(sal) from emp;
++----------+----------+----------+
+| sum(sal) | max(sal) | min(sal) |
++----------+----------+----------+
+|  1600.00 |  1000.00 |   100.00 |
++----------+----------+----------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.6 表连接：
+
+当需要同时显示多个表中的字段时，就可以用表连接来实现这样的功能。从大类上分，表连接分为内连接和外连接，他们之间最主要的区别是，内连接仅选出两张表中互相匹配的记录，而外连接会选出其他不匹配的记录。
+
+例如，查询除所有雇员的名字和所在部门名称，因为雇员名称和部门分别存放再表emphedept中，因此，需要使用表连接来进行查询：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select ename,deptname from emp,dept where emp.deptno=dept.deptno;
++--------+----------+
+| ename  | deptname |
++--------+----------+
+| zzx    | tech     |
+| lisa   | sale     |
+| bjguan | tech     |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+外连接又分左连接和右连接，具体定义如下：
+
+ * 左连接：包含所有的左边表中的记录甚至是右边表中没有和它匹配的记录。
+
+ * 右连接：包含所有的右边表中的记录甚至是左边表中没有和它匹配的记录。
+
+例如，查询表emp中所有用户所在部门名称：
+
+</code></pre>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select ename,deptname from emp left join dept on emp.deptno=dept.deptno;
++--------+----------+
+| ename  | deptname |
++--------+----------+
+| zzx    | tech     |
+| bjguan | tech     |
+| lisa   | sale     |
+| dony   | NULL     |
++--------+----------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+比较这个查询和上例的查询，都是查询用户名和部门和名，两者的区别在于本例中列出了所有的用户名，即使有的用户名（dony）并不存在合法的部门名称（部门号为4，在dept中没有这个部门名称（部门号是4，在dept中没有这个部门）；而上列中仅列出了存在合法部门的用户名和部门名称。
+
+右连接和左连接类似，两者可相互转化。例如上例也可写成：
+
+</code></pre>
+
+<p>mysql&gt; select ename,deptname from dept right join emp on dept.deptno=emp.deptno;
++--------+----------+
+| ename  | deptname |
++--------+----------+
+| zzx    | tech     |
+| bjguan | tech     |
+| lisa   | sale     |
+| dony   | NULL     |
++--------+----------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 4.7 子查询：
+
+某些情况下，当进行查询的时候，需要的条件是另一个select语句的结果，这个时候就要用到子查询。用于子查询的关键字主要包括in、not in、=、！=、exists、not exists等。
+
+例如，从表emp中查询出所有部门在dept表中的所有记录：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from emp where deptno in (select deptno from dept);
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| lisa   | 2003-02-01 | 400.00 |      2 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+如果子查询记录数唯一，还可以用=代替in：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp where deptno = (select deptno from dept);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql&gt; select * from emp where deptno = (select deptno from dept limit 1);
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+某些情况下，子查询可转化为表连接，例如：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp where deptno in (select deptno from dept);
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| lisa   | 2003-02-01 | 400.00 |      2 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>转换为表连接：
+
+</code></pre>
+
+<p>mysql&gt; select emp.* from emp,dept where emp.deptno=dept.deptno;
++--------+------------+--------+--------+
+| ename  | hiredate   | sal    | deptno |
++--------+------------+--------+--------+
+| zzx    | 2000-01-01 | 100.00 |      1 |
+| lisa   | 2003-02-01 | 400.00 |      2 |
+| bjguan | 2004-04-02 | 100.00 |      1 |
++--------+------------+--------+--------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+注意：子查询和表连接之间转换主要用在两个方面：
+
+ * MySQL4.1以前的版本不支持子查询，需要用表连接来实现子查询。
+
+ * 表连接在很多情况下用于优化子查询。
+
+ * 4.8 记录联合：
+
+我们经常会碰到这样的应用，将两个表的数据按照一定的查询条件查询出来后，将结果合并到一起显示出来，这个时候，就需要用union和union all关键字来实现这样的功能，具体语法如下：
+
+</code></pre>
+
+<p>SELECT * FROM t1
+UNION | UNION ALL
+SELECT * FROM t2
+...
+UNION | UNION ALL
+SELECT * FROM tn</p>
+
+<pre><code>UNION和UNION ALL的主要区别是UNION ALL是把结果集直接合并在一起，而UNION是将UNION ALL后的结果进行一次DISTINCT，去除重复记录后的结果。
+
+来看看下面的例子，将表emp和dept表中的部门编号的集合显示出来：
+
+</code></pre>
+
+<p>mysql&gt; select * from emp;
++--------+------------+---------+--------+
+| ename  | hiredate   | sal     | deptno |
++--------+------------+---------+--------+
+| zzx    | 2000-01-01 |  100.00 |      1 |
+| lisa   | 2003-02-01 |  400.00 |      2 |
+| bjguan | 2004-04-02 |  100.00 |      1 |
+| dony   | 2005-02-05 | 1000.00 |      4 |
++--------+------------+---------+--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from dept;
++--------+----------+
+| deptno | deptname |
++--------+----------+
+|      1 | tech     |
+|      2 | sale     |
+|      5 | fin      |
++--------+----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select deptno from emp
+    -&gt; union all
+    -&gt; select deptno from dept;
++--------+
+| deptno |
++--------+
+|      1 |
+|      2 |
+|      1 |
+|      4 |
+|      1 |
+|      2 |
+|      5 |
++--------+
+7 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+将结果去掉重复记录后显示如下：
+
+</code></pre>
+
+<p>mysql&gt; select deptno from emp
+    -&gt; union
+    -&gt; select deptno from dept;
++--------+
+| deptno |
++--------+
+|      1 |
+|      2 |
+|      4 |
+|      5 |
++--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>#### 2.2.3 DCL语句
+
+DCL语句主要是DBA用来管理系统中的对象权限时使用，一般开发人员很少用到。略。
+
+### 2.3 SQL帮助的使用
+
+####  2.3.1 按照层次查看帮助
+
+如果不知道帮助能给我们提供什么，可以使用`? contents`来显示所有可供查询的分类，层层细查。
+
+####  2.3.2 快速查阅帮助
+
+当然上述介绍的查看帮助，不必非得从顶端开始，只要知道确定无疑的关键字可直接`? keyword`。
+
+####  2.3.3 常用网络资源
+
+略
+
+### 2.4 查询元数据信息
+
+在日常工作中，我们常会遇到类似下面的应用场景：
+
+ * 删除数据库test1下所有前缀为tmp的表；
+
+ * 将数据库test1下所有存储引擎为myisam的表改为innodb。
+
+MySQL5.0后，提供了一个新的数据库information_schema，用来记录MySQL中的各种元数据信息。元数据指的是数据的数据，比如表名、列名、列类型、索引名等表的各种属性名称。这个库比较特殊，它是个虚拟数据库，物理上并不存在相关的目录和文件；库里show tables显示的各种“表”也并不是实际存在的物理表，而全部是视图。对于上面的两个需求，可以简单地通过两个命令得到需要的SQL语句：
+
+</code></pre>
+
+<p>mysql&gt; select concat ('drop table test1.',table_name,';') from tables where table_schema='test1' and table_name like 'tmp%';
+ERROR 1146 (42S02): Table 'test1.tables' doesn't exist
+mysql&gt; select concat ('alter table test1.',table_name,'engine=innodb;') from tables where table_schema='test1' and engine='MyISAM';
+ERROR 1146 (42S02): Table 'test1.tables' doesn't exist
+mysql&gt;</p>
+
+<pre><code>
+上面语句报错是因为确实不存在相应类型的表。
+
+下面列出一些比较常用的视图（全部视图可见于infromation_schema数据库下面的表格）。
+
+ * SCHEMATA：该表提供了当前mysql实例中所有数据库的信息，show databases的结果取之此表。
+
+ * TABLES：该表提供了关于数据库中表的信息（包括视图），详细表述了某个表属于哪个schema、表类型、表引擎、创建时间等信息。show tables from schemaname的结果取之此表。**schemaname需要指明到底是哪个database，比如show tables from test1将返回dept和emp两表，这结果来自TABLES。**
+
+ * COLUMNS：该表提供了表中的列信息，详细表述了某张表的所有列以及每个列的信息。show columns from schemaname.tablename的结果取之此表。**schemaname需要指明到底是哪个database且tablename需指明到底是哪个table，比如show tables from test1.dept将返回dept表的列信息，这结果来自COLUMNS。**
+
+ * STATISTICS：该表提供了关于表索引的信息，show index from schemaname.tablename的结果取之此表。**schemaname需要指明到底是哪个database且tablename需指明到底是哪个table，比如show index from test1.dept将返回dept表的索引信息，这结果来自COLUMNS。**
+
+### 2.5 小结
+
+## 3 MySQL支持的数据类型
+
+### 3.1 数值类型
+
+MySQL中的数值类型
+
+**注意：位与字节是不同的。一个字节含有8位，位是在计算机内的二进制存储单位。比如，TINYINT的字节是1，那么位数是8，可存储2^8=256个数，如果存储为无符号形式就是0~255，如果存储为有符号形式就是-128~127。**
+
+|整数类型|字节|最小值|最大值|
+|:------|:------|:------|:------|
+|TINYINT|1|有符号-128 &lt;br&gt; 无符号0|有符号127 &lt;br&gt; 无符号255|
+|SMALLINT|2|有符号-32768 &lt;br&gt; 无符号0|有符号32767 &lt;br&gt; 无符号65536|
+|MEDIUMINT|3|有符号-8388608 &lt;br&gt; 无符号0|有符号8388608 &lt;br&gt; 无符号1677215|
+|INT、INTEGER|4|有符号-2147483648 &lt;br&gt; 无符号0|有符号2147483647 &lt;br&gt; 无符号4294967295|
+|BIGINT|8|有符号-9223372036854775808 &lt;br&gt; 无符号0|有符号9223372036854775807 &lt;br&gt; 无符号18446744073709551615|
+
+|浮点数类型|字节|最小值|最大值|
+|:------|:------|:------|:------|
+|FLOAT|4|$\pm 1.175494351E-38$|$\pm 3.402823466E+38$|
+|DOUBLE|8|$\pm 2.2250738585072014E-308$|$\pm 1.7976931348623157E+308$|
+
+|定点数类型|字节|描述|
+|:------|:------|:------|
+|DEC(M,D) &lt;br&gt; DECIMAL(M,D)|M+2|最大取值范围与DOUBLE相同，给定DECIMAL的有效取值范围由M和D决定|
+
+|位类型|字节|最小值|最大值|
+|:------|:------|:------|:------|
+|BIT(M)|1~8|BIT(1)|BIT(64)|
+
+ * 例1
+
+创建表t1，有id1和id2两个字段，指定其数值宽度分别为int和int(5)：
+
+</code></pre>
+
+<p>mysql&gt; create table t1 (id1 int, id2 int(5));
+Query OK, 0 rows affected (0.16 sec)</p>
+
+<p>mysql&gt; desc t1;
++-------+---------+------+-----+---------+-------+
+| Field | Type    | Null | Key | Default | Extra |
++-------+---------+------+-----+---------+-------+
+| id1   | int(11) | YES  |     | NULL    |       |
+| id2   | int(5)  | YES  |     | NULL    |       |
++-------+---------+------+-----+---------+-------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>可以发现int默认为int(11)。
+
+在id1和id2中都插入数值1，可以发现格式没有异常：
+
+</code></pre>
+
+<p>mysql&gt; insert into t1 values (1,1);
+Query OK, 1 row affected (0.02 sec)</p>
+
+<p>mysql&gt; select * from t1;
++------+------+
+| id1  | id2  |
++------+------+
+|    1 |    1 |
++------+------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+分别修改id1和id2的字段类型，加入zerofill参数：
+
+</code></pre>
+
+<p>mysql&gt; alter table t1 modify id1 int zerofill;
+Query OK, 1 row affected (0.14 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; alter table t1 modify id2 int(5) zerofill;
+Query OK, 1 row affected (0.17 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from t1;
++------------+-------+
+| id1        | id2   |
++------------+-------+
+| 0000000001 | 00001 |
++------------+-------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现，在数值前面用字符“0”填充了剩余的宽度。观察下面的插入：
+
+</code></pre>
+
+<p>mysql&gt; insert into t1 values (1,1111111);
+Query OK, 1 row affected (0.02 sec)</p>
+
+<p>mysql&gt; select * from t1;
++------------+---------+
+| id1        | id2     |
++------------+---------+
+| 0000000001 |   00001 |
+| 0000000001 | 1111111 |
++------------+---------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>可以发现是能正常插入的，int(5)只是表示指定显示宽度为5，并不改变int的字节数和支持的数值的范围！
+
+
+ * 例2
+
+整数类型还有一个属性AUTO_INCREMENT。在需要产生唯一标识符或顺序值时，可利用此属性，这个属性只用于整数类型。AUTO_INCREMENT值一般从1开始，每行增加1。在插入NULL到AUTO_INCREMENT列时，MySQL自动插入一个比该中当前最大值大1的值。一个表最多只能有一个AUTO_INCREMENT列。对于任何想要使用AUTO_INCREMENT的列，应定义为NOT NULL，并定义PRIMARY KEY或定义为UNIQUE键。例如可按下列任何一种方式定义AUTO_INCREMENT列：
+</code></pre>
+
+<p>mysql&gt; create table auto_increment_table1 (id int auto_increment not null primary key);
+Query OK, 0 rows affected (0.07 sec)</p>
+
+<p>mysql&gt; desc auto_increment_table1;
++-------+---------+------+-----+---------+----------------+
+| Field | Type    | Null | Key | Default | Extra          |
++-------+---------+------+-----+---------+----------------+
+| id    | int(11) | NO   | PRI | NULL    | auto_increment |
++-------+---------+------+-----+---------+----------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; create table auto_increment_table2 (id int auto_increment not null, primary key(id));
+Query OK, 0 rows affected (0.07 sec)</p>
+
+<p>mysql&gt; desc auto_increment_table2;
++-------+---------+------+-----+---------+----------------+
+| Field | Type    | Null | Key | Default | Extra          |
++-------+---------+------+-----+---------+----------------+
+| id    | int(11) | NO   | PRI | NULL    | auto_increment |
++-------+---------+------+-----+---------+----------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; create table auto_increment_table3 (id int auto_increment not null, unique(id));
+Query OK, 0 rows affected (0.16 sec)</p>
+
+<p>mysql&gt; desc auto_increment_table3;
++-------+---------+------+-----+---------+----------------+
+| Field | Type    | Null | Key | Default | Extra          |
++-------+---------+------+-----+---------+----------------+
+| id    | int(11) | NO   | PRI | NULL    | auto_increment |
++-------+---------+------+-----+---------+----------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 例3
+
+MySQL使用两种方式：**浮点数**和**定点数**表示小数。定点数在MySQL内部以字符串形式存放，比浮点数更精确，适合用来表示货币等精度要求高的数据。
+
+浮点数和定点数均可用类型名称后加“(M,D)”表示，M和D分别称为**精度**和**标度**。但否点数不推荐后面加“(M,D)”表示，因为可能影响数据库迁移。
+
+</code></pre>
+
+<p>mysql&gt; desc t2;
+ERROR 1146 (42S02): Table 'test1.t2' doesn't exist
+mysql&gt; create table t2 (
+    -&gt; id1 float(5,2) default null,
+    -&gt; id2 double(5,2) default null,
+    -&gt; id3 decimal(5,2) default null
+    -&gt; );
+Query OK, 0 rows affected (0.15 sec)</p>
+
+<p>mysql&gt; insert into t2 values (1.23,1.23,1.23);
+Query OK, 1 row affected (0.11 sec)</p>
+
+<p>mysql&gt; insert into t2 values (1.234, 1.234, 1.23);
+Query OK, 1 row affected (0.06 sec)</p>
+
+<p>mysql&gt; insert into t2 values (1.234, 1.234, 1.234);
+Query OK, 1 row affected, 1 warning (0.06 sec)</p>
+
+<p>mysql&gt; select * from t2;
++------+------+------+
+| id1  | id2  | id3  |
++------+------+------+
+| 1.23 | 1.23 | 1.23 |
+| 1.23 | 1.23 | 1.23 |
+| 1.23 | 1.23 | 1.23 |
++------+------+------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以看到，由于标度的限制，1.234舍去最后一位变成了1.23，而且decimal类型的舍去位数会抛出警告。
+
+将三个字段的精度和标度全部去掉，再次插入1.23：
+
+</code></pre>
+
+<p>mysql&gt; alter table t2 modify id1 float;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; alter table t2 modify id2 double;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; alter table t2 modify id3 decimal;
+Query OK, 3 rows affected, 3 warnings (0.19 sec)
+Records: 3  Duplicates: 0  Warnings: 3</p>
+
+<p>mysql&gt; desc t2;
++-------+---------------+------+-----+---------+-------+
+| Field | Type          | Null | Key | Default | Extra |
++-------+---------------+------+-----+---------+-------+
+| id1   | float         | YES  |     | NULL    |       |
+| id2   | double        | YES  |     | NULL    |       |
+| id3   | decimal(10,0) | YES  |     | NULL    |       |
++-------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; insert into t2 values (1.234, 1.234, 1.234);
+Query OK, 1 row affected, 1 warning (0.07 sec)</p>
+
+<p>mysql&gt; show warnings;
++-------+------+------------------------------------------+
+| Level | Code | Message                                  |
++-------+------+------------------------------------------+
+| Note  | 1265 | Data truncated for column 'id3' at row 1 |
++-------+------+------------------------------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; select * from t2;
++-------+-------+------+
+| id1   | id2   | id3  |
++-------+-------+------+
+|  1.23 |  1.23 |    1 |
+|  1.23 |  1.23 |    1 |
+|  1.23 |  1.23 |    1 |
+| 1.234 | 1.234 |    1 |
++-------+-------+------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+这时还是插入1.234，对float和double不会截断，但decimal变成了decimal(10,0)，将按decimal(10,0)截断数字并抛出警告。
+
+
+ * 例4
+
+对于BIT(位)，用于存放位字段值，BIT(M)可以用来存放多位二进制数，M范围从1到64，如果不写则默认为1位。对于位字段，直接使用SELECT命令将不会看到结果，可以用bin()（显示为二进制格式）或者hex()（显示为十六进制格式）函数进行读取。
+
+下面例子中，对测量表t3中的bit类型字段id做insert和select操作：
+
+</code></pre>
+
+<p>mysql&gt; create table t3 (id bit(1));
+Query OK, 0 rows affected (0.07 sec)</p>
+
+<p>mysql&gt; desc t3;
++-------+--------+------+-----+---------+-------+
+| Field | Type   | Null | Key | Default | Extra |
++-------+--------+------+-----+---------+-------+
+| id    | bit(1) | YES  |     | NULL    |       |
++-------+--------+------+-----+---------+-------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; insert into t3 values (1);
+Query OK, 1 row affected (0.09 sec)</p>
+
+<p>mysql&gt; select * from t3;
++------+
+| id   |
++------+
+|     |
++------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现，select * 命令不能正确显示。改用bin()或者hex()函数再试试：
+
+</code></pre>
+
+<p>mysql&gt; select bin(id), hex(id) from t3;
++---------+---------+
+| bin(id) | hex(id) |
++---------+---------+
+| 1       | 1       |
++---------+---------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+看到确实现在可正常显示了。
+
+</code></pre>
+
+<p>mysql&gt; insert into t3 values (2);
+ERROR 1406 (22001): Data too long for column 'id' at row 1
+mysql&gt; alter table t3 modify id bit(3);
+Query OK, 1 row affected (0.10 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; insert into t3 values (2);
+Query OK, 1 row affected (0.05 sec)</p>
+
+<p>mysql&gt; select bin(id),hex(id) from t3;
++---------+---------+
+| bin(id) | hex(id) |
++---------+---------+
+| 1       | 1       |
+| 10      | 2       |
++---------+---------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+当超出bit类型的范围时不能成功插入，需修改范围。
+
+
+datetime 2018/11/30 0:18
+
+### 3.2 日期时间类型
+
+MySQL中的日期和时间类型
+
+|日期和时间类型|字节|最小值|最大值|
+|:------|:------|:------|:------|
+|DATE|4|1000-01-01|9999-12-31|
+|DATETIME|8|1000-01-01 00:00:00|9999-12-31 23:59:59|
+|TIMESTAMP|4|19700101080001|2038年某个时刻|
+|TIME|3|-838:59:59|838:59:59|
+|YEAR|1|1901|2155|
+
+日期和时间数据类型的主要区别：
+
+ * 表示年月日用DATE。
+
+ * 表示年月日时分秒用DATETIME。
+
+ * 表示时分秒用TIME。
+
+ * 如果需经常插入或者更新日期为当前时间系统时间，则通常使用TIMESTAMP来表示。TIMESTAMP值返回后显示为“YYYY-MM-DD HH:MM:SS”格式的字符串，显示宽度固定为19个字符。如果想要获得数字值，应在TIMESTAMP列添加“0+”。
+
+ * 如果只是表示年份，可用YEAR来表示，它比DATE占用更少的空间。YEAR为4位格式的年允许值为1901 ~ 2155和0000。
+
+上表可知每个日期和时间类型都有取值范围，如果超出范围，在默认SQLModel下，系统会提示错误，并将以零值来进行存储。
+
+MySQL中的日期和时间类型的零值表示
+
+|日期和时间类型|字节|
+|:------|:------|
+|DATETIME|0000-00-00 00:00:00|
+|DATE|0000-00-00|
+|TIMESTAMP|00000000000000|
+|TIME|00:00:00|
+|YEAR|0000|
+
+ * 例1
+
+首先创建表t4，字段分别为date、time、datetime三种日期类型：
+
+</code></pre>
+
+<p>mysql&gt; create table t4 (d date,t time,dt datetime);
+Query OK, 0 rows affected (0.10 sec)</p>
+
+<p>mysql&gt; desc t4;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| d     | date     | YES  |     | NULL    |       |
+| t     | time     | YES  |     | NULL    |       |
+| dt    | datetime | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+用now()函数插入当前日期和时间：
+
+</code></pre>
+
+<p>mysql&gt; insert into t4 values (now(),now(),now());
+Query OK, 1 row affected, 1 warning (0.09 sec)</p>
+
+<p>mysql&gt; select * from t4;
++------------+----------+---------------------+
+| d          | t        | dt                  |
++------------+----------+---------------------+
+| 2018-11-30 | 10:32:47 | 2018-11-30 10:32:47 |
++------------+----------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+显而易见，DATETIME是DATE和TIME的组合。
+
+ * 例2
+
+创建表t5，字段id为TIMESTAMP类型：
+
+</code></pre>
+
+<p>mysql&gt; desc t5;
++-------+-----------+------+-----+---------+-------+
+| Field | Type      | Null | Key | Default | Extra |
++-------+-----------+------+-----+---------+-------+
+| id1   | timestamp | YES  |     | NULL    |       |
++-------+-----------+------+-----+---------+-------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现8.0版本不会将TIMESTAMP类型的字段设置默认值为CURRENT_TIMESTAMP（系统日期）。将id1字段默认值修改为CURRENT_TIMESTAMP以观察特性：
+
+</code></pre>
+
+<p>mysql&gt; alter table t5 modify id1 timestamp default current_timestamp;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc t5;
++-------+-----------+------+-----+-------------------+-------------------+
+| Field | Type      | Null | Key | Default           | Extra             |
++-------+-----------+------+-----+-------------------+-------------------+
+| id1   | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------+-----------+------+-----+-------------------+-------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+插入一个NULL值试试：
+
+</code></pre>
+
+<p>mysql&gt; insert into t5 values(null);
+Query OK, 1 row affected (0.05 sec)</p>
+
+<p>mysql&gt; select * from t5;
++------+
+| id1  |
++------+
+| NULL |
++------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+果然t5中正确插入了系统日期。下面再看看第二个字段也是timestamp的情况：
+
+</code></pre>
+
+<p>mysql&gt; alter table t5 add id2 timestamp;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; show create table t5 \G;
+*************************** 1. row ***************************
+       Table: t5
+Create Table: CREATE TABLE <code>t5</code> (
+  <code>id1</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  <code>id2</code> timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+
+</code></pre>
+
+<p>mysql&gt; alter table t5 modify id2 timestamp default current_timestamp;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; desc t5;
++-------+-----------+------+-----+-------------------+-------------------+
+| Field | Type      | Null | Key | Default           | Extra             |
++-------+-----------+------+-----+-------------------+-------------------+
+| id1   | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
+| id2   | timestamp | YES  |     | CURRENT_TIMESTAMP | DEFAULT_GENERATED |
++-------+-----------+------+-----+-------------------+-------------------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以看出，8.0版本允许多个timestamp默认CURRENT_TIMESTAMP。
+
+ * 例3
+
+TIMESTAMP与时区有关。当插入日期时，会转换为本地时区后存放；而从数据库里面取出时，也同样需要将日期转换为本地时区后显示。这样，不同时区看到的日期时间是不同的。而datetime不受时区影响。
+
+创建表t6，包含字段id1（TIMESTAMP）和id2（DATETIME），设置id2的目的是为了与id1对比：
+
+</code></pre>
+
+<p>mysql&gt; create table t6 (
+    -&gt; id1 timestamp not null default current_timestamp,
+    -&gt; id2 datetime default null
+    -&gt; );
+Query OK, 0 rows affected (0.13 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+查看当前时区：
+
+</code></pre>
+
+<p>mysql&gt; show variables like 'time_zone';
++---------------+--------+
+| Variable_name | Value  |
++---------------+--------+
+| time_zone     | SYSTEM |
++---------------+--------+
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现时区的值为“SYSTEM”，即主机时区东八区。
+
+</code></pre>
+
+<p>mysql&gt; insert into t6 values (now(),now());
+Query OK, 1 row affected (0.10 sec)</p>
+
+<p>mysql&gt; select * from t6;
++---------------------+---------------------+
+| id1                 | id2                 |
++---------------------+---------------------+
+| 2018-12-02 12:13:33 | 2018-12-02 12:13:33 |
++---------------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+用now()函数插入当前日期：
+
+</code></pre>
+
+<p>mysql&gt; set time_zone='+9:00';
+Query OK, 0 rows affected (0.00 sec)</p>
+
+<p>mysql&gt; select * from t6;
++---------------------+---------------------+
+| id1                 | id2                 |
++---------------------+---------------------+
+| 2018-12-02 13:13:33 | 2018-12-02 12:13:33 |
++---------------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; set time_zone=system;
+Query OK, 0 rows affected (0.00 sec)</p>
+
+<p>mysql&gt; show variables like 'time_zone';
++---------------+--------+
+| Variable_name | Value  |
++---------------+--------+
+| time_zone     | SYSTEM |
++---------------+--------+
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt; select * from t6;
++---------------------+---------------------+
+| id1                 | id2                 |
++---------------------+---------------------+
+| 2018-12-02 12:13:33 | 2018-12-02 12:13:33 |
++---------------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现id1确实受时区影响。
+
+ * 例4
+
+TIMESTAMP的取值范围为19700101080001到2038年的某天，因此不适合存放比较久的远的日期，下面简单测试一下这个范围：
+
+</code></pre>
+
+<p>mysql&gt; create table t7 (t timestamp);
+Query OK, 0 rows affected (0.10 sec)</p>
+
+<p>mysql&gt; desc t7;
++-------+-----------+------+-----+---------+-------+
+| Field | Type      | Null | Key | Default | Extra |
++-------+-----------+------+-----+---------+-------+
+| t     | timestamp | YES  |     | NULL    |       |
++-------+-----------+------+-----+---------+-------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; insert into t7 values (19700101080001);
+Query OK, 1 row affected (0.08 sec)</p>
+
+<p>mysql&gt; select * from t7;
++---------------------+
+| t                   |
++---------------------+
+| 1970-01-01 08:00:01 |
++---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; insert into t7 values (19700101080000);
+ERROR 1292 (22007): Incorrect datetime value: '19700101080000' for column 't' at row 1
+mysql&gt; select * from t7;
++---------------------+
+| t                   |
++---------------------+
+| 1970-01-01 08:00:01 |
++---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可知，19700101080001为TIMESTAMP下限。
+
+</code></pre>
+
+<p>mysql&gt; insert into t7 values (20380119111407);
+Query OK, 1 row affected (0.07 sec)</p>
+
+<p>mysql&gt; select * from t7;
++---------------------+
+| t                   |
++---------------------+
+| 1970-01-01 08:00:01 |
+| 2038-01-19 11:14:07 |
++---------------------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; insert into t7 values (20380119111408);
+ERROR 1292 (22007): Incorrect datetime value: '20380119111408' for column 't' at row 1
+mysql&gt; select * from t7;
++---------------------+
+| t                   |
++---------------------+
+| 1970-01-01 08:00:01 |
+| 2038-01-19 11:14:07 |
++---------------------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>可见，20380119111407为TIMESTAMP上限。
+
+ * 例5
+
+</code></pre>
+
+<p>mysql&gt; create table t8 (dt datetime);
+Query OK, 0 rows affected (0.11 sec)</p>
+
+<p>mysql&gt; insert into t8 values ('2007-9-3 12:10:10');
+Query OK, 1 row affected (0.02 sec)</p>
+
+<p>mysql&gt; insert into t8 values ('2007/9/3 12+10+10');
+Query OK, 1 row affected (0.06 sec)</p>
+
+<p>mysql&gt; insert into t8 values ('20070903121010');
+Query OK, 1 row affected (0.10 sec)</p>
+
+<p>mysql&gt; insert into t8 values (20070903121010);
+Query OK, 1 row affected (0.06 sec)</p>
+
+<p>mysql&gt; select * from t8;
++---------------------+
+| dt                  |
++---------------------+
+| 2007-09-03 12:10:10 |
+| 2007-09-03 12:10:10 |
+| 2007-09-03 12:10:10 |
+| 2007-09-03 12:10:10 |
++---------------------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+发现这样均能插入。
+
+### 3.3 字符串类型
+
+MySQL中的字符类型
+
+|字符串类型|字节|描述及存储需求|
+|:------|:------|:------|
+|CHAR(M)|M|M为0~255之间的整数|
+|VARCHAR(M)||M为0~65535之间的整数，存储需求为值的长度+1个字节|
+|TINYBLOB||允许0~255字节，存储需求为值的长度+1个字节|
+|BLOB||允许0~65535字节，存储需求为值的长度+2个字节|
+|MEDIUMBLOB||允许0~167772150字节，存储需求为值的长度+3个字节|
+|LONGBLOB||允许0~4294967295字节，存储需求为值的长度+4个字节|
+|TINYTEXT||允许0~255字节，存储需求为值的长度+2个字节|
+|TEXT||允许0~65535字节，存储需求为值的长度+2个字节|
+|MEDIUMTEXT||允许0~167772150字节，存储需求为值的长度+3个字节|
+|LONGTEXT||允许0~4294967295字节，存储需求为值的长度+4个字节|
+|VARBINARY(M)||允许0~M个字节的变长字节字符串，存储需求为值的长度+1个字节|
+|BINARY(M)|M|允许0~M个字节的定长字节字符串|
+|ENUM||最小值|
+|SET||最小值|
+
+
+当含有长字符时应该采用VARCHAR(M)，这样可显著降低存储负担。
+
+#### 3.3.1 CHAR和VARCHAR类型
+
+两者相同点：都是用来保存字符串；两者不同点：CHAR列的长度固定为创建表时申明的长度，VARCHAR则为可变长度。
+
+ * 例1
+
+创建测试表vc，并定义两个字段v VARCHAR(4)和c CHAR(4)：
+
+</code></pre>
+
+<p>mysql&gt; create table vc (v varchar(4),c char(4));
+Query OK, 0 rows affected (0.08 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+v和c列同时插入‘ab  ’：
+
+</code></pre>
+
+<p>mysql&gt; insert into vc values ('ab  ','ab  ');
+Query OK, 1 row affected (0.07 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+显示查询结果：
+
+</code></pre>
+
+<p>mysql&gt; select length(v),length(c) from vc;
++-----------+-----------+
+| length(v) | length(c) |
++-----------+-----------+
+|         4 |         2 |
++-----------+-----------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现，c字段的length只有2。给两个字段分别追加一个“+”字符看得更清楚：
+
+</code></pre>
+
+<p>mysql&gt; select concat(v,'+'),concat(c,'+') from vc;
++---------------+---------------+
+| concat(v,'+') | concat(c,'+') |
++---------------+---------------+
+| ab  +         | ab+           |
++---------------+---------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+#### 3.3.2 BINARY和VARBINARY类型
+
+两者相同点：都是用来保存字符串；两者不同点：BINARY列的长度固定为创建表时申明的长度，VARBINARY则为可变长度。与CHAR和VARCHAR的不同点：包含二进制字符串而不包含非二进制字符串。
+
+ * 例2
+
+创建测试表bv，并定义两个字段v VARBINARY(3)和b BINARY(3)：
+
+</code></pre>
+
+<p>mysql&gt; create table vb (v varbinary(3), b binary(3));
+Query OK, 0 rows affected (0.09 sec)</p>
+
+<p>mysql&gt; insert into vb values ('a  ','a  ');
+Query OK, 1 row affected (0.03 sec)</p>
+
+<p>mysql&gt; insert into vb values ('a', 'a');
+Query OK, 1 row affected (0.04 sec)</p>
+
+<p>mysql&gt; select length(v),length(b) from vb;
++-----------+-----------+
+| length(v) | length(b) |
++-----------+-----------+
+|         3 |         3 |
+|         1 |         3 |
++-----------+-----------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; select concat(v,'+'),concat(b,'+') from vb;
++---------------+---------------+
+| concat(v,'+') | concat(b,'+') |
++---------------+---------------+
+| a  +          | a  +          |
+| a+            | a  +          |
++---------------+---------------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现，二进制字符BINARY和VARBINARY会录入空位。这与CHAR和VARCHAR不同。
+
+</code></pre>
+
+<p>mysql&gt; select *,hex(v),v='a',v='a\0',v='a\0\0',hex(b),b='a',b='a\0',b='a\0\0' from vb;
++------+------+--------+-------+---------+-----------+--------+-------+---------+-----------+
+| v    | b    | hex(v) | v='a' | v='a\0' | v='a\0\0' | hex(b) | b='a' | b='a\0' | b='a\0\0' |
++------+------+--------+-------+---------+-----------+--------+-------+---------+-----------+
+| a    | a    | 612020 |     0 |       0 |         0 | 612020 |     0 |       0 |         0 |
+| a    | a    | 61     |     1 |       0 |         0 | 610000 |     0 |       0 |         1 |
++------+------+--------+-------+---------+-----------+--------+-------+---------+-----------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>可以发现，当保存为BINARY时，若包括空格的字符长度不够，将在值的最后通过填充“0x00”（零字节）以达到指定的字段定义长度，上例中看出，对于一个BINARY(3)列，当插入“a”将变为“a\0\0”，而VARBINARY将是变长的，不会填充。
+
+
+#### 3.3.3 ENUM类型
+
+ENUM中文叫枚举类型。1 ~ 255个成员需要1个字节存储；256 ~ 65535个成员需要2个字节存储；最多允许65535个成员。
+
+ * 例3
+
+创建测试表t9，定义gender字段为枚举类型，成员为“M”和“F”：
+
+</code></pre>
+
+<p>mysql&gt; create table t9 (gender enum('M','F'));
+Query OK, 0 rows affected (0.11 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+插入4条不同记录：
+
+</code></pre>
+
+<p>mysql&gt; insert into t9 values ('M'), ('1'), ('f'),(NULL);
+Query OK, 4 rows affected (0.10 sec)
+Records: 4  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from t9;
++--------+
+| gender |
++--------+
+| M      |
+| M      |
+| F      |
+| NULL   |
++--------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以看出，ENUM忽略大小写；还有，若插入不在指定范围的，不返回警告，而是理解成第一个，本例中“1”将理解成“M”；插入字符应加单引号，否则报错。
+
+
+#### 3.3.4 SET类型
+
+与ENUM类似，也是字符串对象，里面可包含0 ~ 64个成员，存储上：1 ~ 8个成员占1个字节；9 ~ 16个成员占2个字节；以此类推。与ENUM的区别：SET类型一次可选取多个成员，而ENUM只可以选一个。
+
+ * 例4
+
+</code></pre>
+
+<p>mysql&gt; create table t10 (col set ('a','b','c','d'));
+Query OK, 0 rows affected (0.08 sec)</p>
+
+<p>mysql&gt; insert into t10 values ('a,b'),('a,d,a'),('a,c'),('a');
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from t10;
++------+
+| col  |
++------+
+| a,b  |
+| a,d  |
+| a,c  |
+| a    |
++------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+### 3.4 小结
+
+datetime: 2018/12/2 19:08
+
+## 4 MySQL中的运算符
+### 4.1 算术运算符
+
+MySQL支持的算术运算符
+
+|运算符|作用|
+|:------|:------|
+|+|加法|
+|-|减法|
+|*|乘法|
+|/ &lt;br&gt; DIV|除法，返回商|
+|% &lt;br&gt; MOD|除法，返回余数|
+
+### 4.2 比较运算符
+
+MySQL支持的比较运算符
+
+|运算符|作用|
+|:------|:------|
+|=|等于|
+|&lt;&gt; &lt;br&gt; !=|不等于|
+|&lt;=&gt;|NULL安全的等于（NULL-safe）|
+|&lt;|小于|
+|&lt;=|小于等于|
+|&gt;|大于|
+|&gt;=|大于等于|
+|BETWEEN|存在于指定范围|
+|IN|存在于指定集合|
+|IS NULL|为NULL|
+|IS NOT NULL|不为NULL|
+|LIKE|通配符匹配|
+|REGEXP &lt;br&gt; RLIKE|正则表达式匹配|
+
+**&lt;=&gt;和=类似，在操作数相等时值为1，不同之处在于即使操作的值为NULL也可正确比较。**
+
+### 4.3 逻辑运算符
+
+MySQL支持的逻辑运算符
+
+|运算符|作用|
+|:------|:------|
+|NOT &lt;br&gt; !|逻辑非|
+|AND &lt;br&gt; &amp;&amp;|逻辑与|
+|OR &lt;br&gt; \|\||逻辑或|
+|XOR|逻辑异或|
+
+### 4.4 位运算符
+
+MySQL支持的位运算符
+
+|运算符|作用|
+|:------|:------|
+|&amp;|位与（位AND）|
+|\||位或（位OR）|
+|^|位异或（位XOR）|
+|~|位取反|
+|&gt;&gt;|位右移|
+|&lt;&lt;|位左移|
+
+**位有移对左操作数向右移动右操作数指定的位数，如100&gt;&gt;3，就是对100的二进制数0001100100右移3位，左边补零，结果是0000001100，转换成十进制为12。位左移同理。**
+
+### 4.5 运算符优先级
+
+MySQL的位运算符优先级
+
+|优先级顺序|运算符|
+|:------|:------|
+|1|:=|
+|2|\|\|、OR、XOR|
+|3|&amp;&amp;、AND|
+|4|NOT|
+|5|BETWEEN、CASE、WHEN、THEN、ELSE|
+|6|=、&lt;=&gt;、&gt;=、&gt;、&lt;=、&lt;、&lt;&gt;、!=、IS、LIKE、REGEXPIN|
+|7|\||
+|8|&amp;|
+|9|&lt;&lt;、&gt;&gt;|
+|10|-、+|
+|11|*、/、DIV、%、MOD|
+|12|^|
+|13|-（一元减号，也就是取负值）、~（一元比特反转）|
+|14|!|
+
+**实际上，不需细究，可用“()”将需要优先的运算操作括起来，这样也便于理解。**
+
+
+## 5 MySQL常用函数
+
+### 5.1 字符串函数
+
+MySQL中常用的字符串函数
+
+|函数|功能|
+|:------|:------|
+|CONCAT(S1,S2,...,Sn)|连接S1,S2,...Sn为一个字符串|
+|INSERT(str,x,y,instr)|将字符串str从第x位置开始，y个字符长的字串替换为字符串instr|
+|LOWER(str)|所以字符小写|
+|UPPER(str)|所以字符大写|
+|LEFT(str,x)|返回最左x个字符|
+|RIGHT(str,x)|返回最右x个字符|
+|LPAD(str,n,pad)|用字符串pad对str最左边进行填充，直到填充后的字符串长度为n|
+|RPAD(str,n,pad)|用字符串pad对str最右边进行填充，直到填充后的字符串长度为n|
+|LTRIM(str)|去掉左侧空格|
+|RTRIM(str)|去掉右侧空格|
+|REPEAT(str,x)|str重复x次|
+|REPLACE(str,a,b)|用字符串b替换str中的所有字符a|
+|STRCMP(S1,S2)|比较两字符串|
+|TRIM(str)|去掉首尾空格|
+|SUBSTRING(str,x,y)|返回字符串str从x开始y个字符长度的字串|
+
+### 5.2 数值函数
+
+MySQL中常用的数值函数
+
+|函数|功能|
+|:------|:------|
+|ABS(x)|取绝对值|
+|CEIL(x)|向上取整|
+|FLOOR(x)|向下取整|
+|MOD(x,y)|返回x/y的模|
+|RAND()|返回（0，1）间随机值|
+|ROUND(x,y)|对x四舍五入，保留y位小数|
+|TRUNCATE(x,y)|截断x，保留y位小数|
+
+
+### 5.3 日期和时间函数
+
+MySQL中常用的日期和时间函数
+
+|函数|功能|
+|:------|:------|
+|CURDATE()|返回当前日期|
+|CURTIME()|返回当前时间|
+|NOW()|返回当前日期和时间|
+|UNIX_TIMESTAMP(date)|返回日期date的UNIX时间戳|
+|FROM_UNIXTIME|返回UNIX时间戳的日期值|
+|WEEK(date)|返回日期date为一年第多少周|
+|YEAR(date)|返回日期date的年份|
+|HOUR(time)|返回时间time的小时值|
+|MINUTE(time)|返回时间time的分钟值|
+|MONTHNAME(date)|返回日期date的月份名|
+|DATE_FORMAT(date,fmt)|按字符串fmt格式化日期时间|
+|DATE_ADD(date,INTERVAL expr type)|返回日期的和值|
+|DATEDIFF(expr1,expr2)|返回起始日期expr1和结束日期expr2之间的天数|
+
+fmt格式见MySQL中的日期和时间格式（此部分略），INTERVAL expr type见MySQL中的日期间隔类型（此部分略）。
+
+### 5.4 流程函数
+
+MySQL中常用的流程函数
+
+|函数|功能|
+|:------|:------|
+|IF(value,t,f)|如果value为真，返回t；否则返回f|
+|IFNULL(value1,value2)|如果value1不为空，返回value1，否则返回value2。这个函数一般用来替换NULL值。|
+|CASE WHEN [value1] THEN [result1]...ELSE [default] END|如果value1是真，返回result1，否则返回default|
+|CASE [expr] WHEN [value1] THEN [result1]...ELSE [default] END|如果expr等于value1，返回result1，否则返回default|
+
+下面举例说明以上函数：
+
+</code></pre>
+
+<p>mysql&gt; create table salary (userid int,salary decimal(9,2));
+Query OK, 0 rows affected (0.09 sec)</p>
+
+<p>mysql&gt; insert into salary values (1,1000),(2,2000),(3,3000),(4,4000),(5,5000),(1,null);
+Query OK, 6 rows affected (0.03 sec)
+Records: 6  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from salary;
++--------+---------+
+| userid | salary  |
++--------+---------+
+|      1 | 1000.00 |
+|      2 | 2000.00 |
+|      3 | 3000.00 |
+|      4 | 4000.00 |
+|      5 | 5000.00 |
+|      1 |    NULL |
++--------+---------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+IF(value,t,f)：
+
+</code></pre>
+
+<p>mysql&gt; select if(salary&gt;2000,'high','low') from salary;
++------------------------------+
+| if(salary&gt;2000,'high','low') |
++------------------------------+
+| low                          |
+| low                          |
+| high                         |
+| high                         |
+| high                         |
+| low                          |
++------------------------------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+IFNULL(value1,value2)：
+
+</code></pre>
+
+<p>mysql&gt; select ifnull(salary,0) from salary;
++------------------+
+| ifnull(salary,0) |
++------------------+
+|          1000.00 |
+|          2000.00 |
+|          3000.00 |
+|          4000.00 |
+|          5000.00 |
+|             0.00 |
++------------------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+CASE WHEN [value1] THEN [result1]...ELSE [default] END：
+
+</code></pre>
+
+<p>mysql&gt; select case when salary&lt;=2000 then 'low' else 'high' end from salary;
++---------------------------------------------------+
+| case when salary&lt;=2000 then 'low' else 'high' end |
++---------------------------------------------------+
+| low                                               |
+| low                                               |
+| high                                              |
+| high                                              |
+| high                                              |
+| high                                              |
++---------------------------------------------------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+CASE [expr] WHEN [value1] THEN [result1]...ELSE [default] END：
+
+</code></pre>
+
+<p>mysql&gt; select case salary when 1000 then 'low' when 2000 then 'mid' else 'high' end from salary;
++-----------------------------------------------------------------------+
+| case salary when 1000 then 'low' when 2000 then 'mid' else 'high' end |
++-----------------------------------------------------------------------+
+| low                                                                   |
+| mid                                                                   |
+| high                                                                  |
+| high                                                                  |
+| high                                                                  |
+| high                                                                  |
++-----------------------------------------------------------------------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+### 5.5 其他常用函数
+
+MySQL中其他常用函数
+
+|函数|功能|
+|:------|:------|
+|DATABASE()|返回当前数据库名|
+|VERSION()|返回当前数据库版本|
+|USER()|返回当前登陆用户名|
+|INET_ATON(IP)|返回IP地址的数字表示|
+|INET_NTOA(num)|返回的数字代表的IP地址|
+|PASSWORD(str)|返回字符串str的加密版本|
+|MD5(str)|返回字符串str的MD5值|
+
+## 6 图形化工具的使用
+## 7 表类型（存储引擎的选择）
+
+### 7.1 MySQL存储引擎概述
+
+Table 16.1 Storage Engines Feature Summary存储引擎特征总结
+
+|Feature &lt;br&gt; 特征|MyISAM|Memory|InnoDB|Archive|NDB|
+|:------|:------|:------|:------|:------|:------|
+|**B-tree indexes** &lt;br&gt; B树索引|Yes|Yes|Yes|No|No|
+|**Backup/point-in-time recovery** (note 1) &lt;br&gt; 时点恢复（见备注1）|Yes|Yes|Yes|Yes|Yes|
+|**Cluster database support** &lt;br&gt; 集群数据库支持|No|No|No|No|**Yes**|
+|**Clustered indexes** &lt;br&gt; 集群索引|No|No|**Yes**|No|No|
+|**Compressed data** &lt;br&gt; 数据可压缩|Yes (note 2)|No|Yes|Yes|No|
+|**Data caches** &lt;br&gt; 数据缓存|No|N/A|Yes|No|Yes|
+|**Encrypted data** (note 3) &lt;br&gt; 加密数据（见备注3）|Yes|Yes|Yes|Yes|Yes|
+|**Foreign key support** &lt;br&gt; 支持外键|No|No|Yes|No|Yes (note 4)|
+|**Full-text search indexes** &lt;br&gt; 全文索引|Yes|No|Yes (note 5)|No|No|
+|**Geospatial data type support** &lt;br&gt; 地理空间数据类型支持|Yes|**No**|Yes|Yes|Yes|
+|**Geospatial indexing support** &lt;br&gt; 地理空间索引支持|Yes|No|Yes (note 6)|No|No|
+|**Hash indexes** &lt;br&gt; 哈希索引|No|Yes|No (note 7)|No|Yes|
+|**Index caches** &lt;br&gt; 索引缓存|Yes|N/A|Yes|No|Yes|
+|**Locking granularity** &lt;br&gt; 锁级别|Table|Table|Row|Row|Row|
+|**MVCC** &lt;br&gt; 多版本并发控制|No|No|**Yes**|No|No|
+|**Replication support** (note 1) &lt;br&gt; 复制支持（见备注1）|Yes|**Limited** (note 8)|Yes|Yes|Yes|
+|**Storage limits** &lt;br&gt; 存储限制|256TB|**RAM**|64TB|None|384EB|
+|**T-tree indexes** &lt;br&gt; T树索引|No|No|No|No|**Yes**|
+|**Transactions** &lt;br&gt; 事务安全表|No|No|Yes|No|Yes|
+|**Update statistics for data dictionary** &lt;br&gt; 更新数据字典的统计信息|Yes|Yes|Yes|Yes|Yes|
+
+Notes:
+
+1. Implemented in the server, rather than in the storage engine.看服务器支持与否，反正存储引擎都支持时点恢复。
+2. Compressed MyISAM tables are supported only when using the compressed row format. Tables using the compressed row format with MyISAM are read only.压缩MyISAM表只支持行压缩，行压缩MyISAM表是只读的。
+3. Implemented in the server via encryption functions. Data-at-rest tablespace encryption is available in MySQL 5.7 and later.由服务器通过加密方程实现，数据静态表空间加密在MySQL 5.7和更高版本中可用。
+4. Support for foreign keys is available in MySQL Cluster NDB 7.3 and later.在7.3和更高版本MySQL集群NDB中支持外键。
+5. InnoDB support for FULLTEXT indexes is available in MySQL 5.6 and later.5.7及之后版本InnoDB支持全文索引。
+6. InnoDB support for geospatial indexing is available in MySQL 5.7 and later.5.7及之后版本InnoDB支持地理空间索引。
+7. InnoDB utilizes hash indexes internally for its Adaptive Hash Index feature.nnoDB内部利用哈希索引来实现自适应哈希索引特性。
+8. See the discussion later in this section.
+
+查看默认存储引擎可使用如下命令，可知当前默认存储引擎为InnoDB：
+
+</code></pre>
+
+<p>mysql&gt; show variables like '%storage_engine%';
++----------------------------------+-----------+
+| Variable_name                    | Value     |
++----------------------------------+-----------+
+| default_storage_engine           | InnoDB    |
+| default_tmp_storage_engine       | InnoDB    |
+| disabled_storage_engines         |           |
+| internal_tmp_disk_storage_engine | InnoDB    |
+| internal_tmp_mem_storage_engine  | TempTable |
++----------------------------------+-----------+
+5 rows in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+查询当前数据库版本支持的存储引擎：
+
+</code></pre>
+
+<p>mysql&gt; show engines;
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| Engine             | Support | Comment                                                        | Transactions | XA   | Savepoints |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+| MEMORY             | YES     | Hash based, stored in memory, useful for temporary tables      | NO           | NO   | NO         |
+| MRG_MYISAM         | YES     | Collection of identical MyISAM tables                          | NO           | NO   | NO         |
+| CSV                | YES     | CSV storage engine                                             | NO           | NO   | NO         |
+| FEDERATED          | NO      | Federated MySQL storage engine                                 | NULL         | NULL | NULL       |
+| PERFORMANCE_SCHEMA | YES     | Performance Schema                                             | NO           | NO   | NO         |
+| MyISAM             | YES     | MyISAM storage engine                                          | NO           | NO   | NO         |
+| InnoDB             | DEFAULT | Supports transactions, row-level locking, and foreign keys     | YES          | YES  | YES        |
+| BLACKHOLE          | YES     | /dev/null storage engine (anything you write to it disappears) | NO           | NO   | NO         |
+| ARCHIVE            | YES     | Archive storage engine                                         | NO           | NO   | NO         |
++--------------------+---------+----------------------------------------------------------------+--------------+------+------------+
+9 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; show variables like 'have%';
++------------------------+----------+
+| Variable_name          | Value    |
++------------------------+----------+
+| have_compress          | YES      |
+| have_dynamic_loading   | YES      |
+| have_geometry          | YES      |
+| have_openssl           | YES      |
+| have_profiling         | YES      |
+| have_query_cache       | NO       |
+| have_rtree_keys        | YES      |
+| have_ssl               | YES      |
+| have_statement_timeout | YES      |
+| have_symlink           | DISABLED |
++------------------------+----------+
+10 rows in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+在创建表时，可通过ENGINE关键字设置新建表的存储引擎，例如下例，新建表ai的存储引擎是MyISAM，新建表country的存储引擎是InnoBD。
+
+</code></pre>
+
+<p>mysql&gt; create table ai (
+    -&gt; i bigint(20) not null auto_increment,
+    -&gt; primary key (i)
+    -&gt; ) engine=MyISAM default charset=utf8;
+Query OK, 0 rows affected, 1 warning (0.06 sec)</p>
+
+<p>mysql&gt; create table country (
+    -&gt; country_id smallint unsigned not null auto_increment,
+    -&gt; country varchar(50) not null,
+    -&gt; last_update timestamp not null default current_timestamp on update current_timestamp,
+    -&gt; primary key (country_id)
+    -&gt; ) engine=InnoDB default charset=utf8;
+Query OK, 0 rows affected, 1 warning (0.14 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+使用ALTER TABLE语句，可修改已有表的存储引擎。下例子将表ai从MyISAM存储引擎修改为InnoBD。
+
+</code></pre>
+
+<p>mysql&gt; alter table ai engine=innodb;
+Query OK, 0 rows affected (0.18 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; show create table ai \G;
+*************************** 1. row ***************************
+       Table: ai
+Create Table: CREATE TABLE <code>ai</code> (
+  <code>i</code> bigint(20) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (<code>i</code>)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+### 7.2 各种存储引擎的特性
+
+#### 7.2.1 MyISAM
+MyISAM不支持事务、也不支持外键，其优势是访问速度快，对事务没有完整性要求或者以SELECT、INSERT为主的应用基本上都可以使用这个引擎来建表。
+
+</code></pre>
+
+<p>mysql&gt; create myisam_char (name char(10)) engine=myisam;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'myisam_char (name char(10)) engine=myisam' at line 1
+mysql&gt; create table myisam_char (name char(10)) engine=myisam;
+Query OK, 0 rows affected (0.09 sec)</p>
+
+<p>mysql&gt; insert into myisam_char values ('abcde'),('abcde   '),('   abcde'),('   abcde   ');
+Query OK, 4 rows affected (0.01 sec)
+Records: 4  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select name,length(name) from myisam_char;
++----------+--------------+
+| name     | length(name) |
++----------+--------------+
+| abcde    |            5 |
+| abcde    |            5 |
+|    abcde |            8 |
+|    abcde |            8 |
++----------+--------------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+从上面例子可以看出，插入记录后面的空格都被去掉了，前面的空格保留了。MyISAM表支持3种不同的存储格式：静态（固定长度）表、动态表、压缩表，静态表是默认存储格式。插入记录前面空格保留后面空格去除正是静态表的特点。
+
+ * 静态表：**字段有固定长度**，例如：char(20)。如果使用gbk字符集存储中文username，将占用40byte，如果username的实际内容没有达到 40byte，将会填充空格，以达到40byte。速度很快，因为mysql知道username总是从第41个字节开始，容易缓存，出现问题后也容易恢 复（mysql知道记录的确切位置），需要更多的硬盘空间（如果有三个上面的字段，一条记录就会占120字节，即使实际只用了其中一部分）。
+
+ * 动态表：**字段不定长**（变长），这种表格式比较节省空间，但是复杂度更高，每条记录都有一个header，作用就是表明该记录有多长，所有的字符串列都是动态的（除非 小于4个字节，这种情况下，节省的空间可以忽略不计，增加的复杂度会反而会导致性能丢失），通常占用比静态表少的多地空间，但是必须经常维护（避免碎 片），例如：更新了用户名somebody为somebodyt，t不能立刻就出现在y的后面，因为空间被其他记录占用，对于出现碎片的列，每个新连接会 损失6个字节。而且出现问题后不容易重建（前面我说的静态表正好相反），如果碎片严重，有可能出现库爆炸。不包括连接的动态记录的空间消耗可以用下面的公式计算：3+(列数+7)/8+（字符列数）+数字列的打包尺寸+字符串长度+（空列的数量+7）/8。每条记录的header可以表明那个字符串列是空的，那个数字列包含0（非空），在那种情况下不向磁盘存储，非空字符串包含一个长度字节加上字符串内容。
+
+ * 压缩表：只读，使用很少的空间，用**myisampack工具**创建，表要少得多，每条记录分开压缩，所以不能同时访问，可以压缩静态表和动态表。
+创建方法：myisampack [options] filename。
+
+存储格式依赖于字段格式，不用特意去设置。
+
+#### 7.2.2 InnoDB
+
+InnoDB存储引擎提供了具有提交、回滚和崩溃恢复能力的事务安全。
+
+下面重点介绍InnoDB不同于其他存储引擎的表现：
+
+ * 自动增长列
+
+下面定义表autoincre_demo，其中i是自动增长列，对该表插入记录然后查看自动增长列的处理情况。可以发现插入0或者空时，实际插入的都将是自动增长后的值。
+
+</code></pre>
+
+<p>mysql&gt; create table autoincre_demo
+    -&gt; (i smallint not null auto_increment,
+    -&gt; name varchar(10),primary key (i)
+    -&gt; ) engine=innodb;
+Query OK, 0 rows affected (0.15 sec)</p>
+
+<p>mysql&gt; insert into autoincre_demo values (1,'1'),(0,'2'),(8,'8'),(null,'9');
+Query OK, 4 rows affected (0.10 sec)
+Records: 4  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from autoincre_demo;
++---+------+
+| i | name |
++---+------+
+| 1 | 1    |
+| 2 | 2    |
+| 8 | 8    |
+| 9 | 9    |
++---+------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以使用LAST_INSERT_ID()查询当前线程最后插入记录使用的值。如果一次插入了多条记录，那么返回的是第一条记录使用的自动增长值。
+
+</code></pre>
+
+<p>mysql&gt; insert into autoincre_demo values (10,'10');
+Query OK, 1 row affected (0.07 sec)</p>
+
+<p>mysql&gt; select last_insert_id();
++------------------+
+| last_insert_id() |
++------------------+
+|                2 |
++------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+为什么是2呢？紧上没有用到自动增长；再上一共插入四条记录，其中第二条和第四条记录是自动增长，第二条插入了2，第四条插入了9。那么2刚好是当前线程最后插入记录使用的第一个值！
+
+</code></pre>
+
+<p>mysql&gt; insert into autoincre_demo (name) values ('11'),('12'),('13');
+Query OK, 3 rows affected (0.03 sec)
+Records: 3  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt;  select last_insert_id();
++------------------+
+| last_insert_id() |
++------------------+
+|               11 |
++------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>对于InnoDB表，自动增长列必须是索引（上例中主键也是一种索引）。如果是组合索引，也必须是组合索引的第一列。但对MyISAM表，自动增长列可以是组合索引的其他列，这样插入记录后，自动增长列是按照组合索引的前面几列进行排序后递增的。例如，创建MyISAM类型的表autoincre，自动增长列d1作为组合索引的第二列，对该表插入一些记录后，可以发现自动增长列是按照组合索引的第一列d2进行排序后递增的（d2第一次取2时，如果d1需要插值，那么第一次插入1，第二次插入比前次加1，以此类推）：
+
+</code></pre>
+
+<p>mysql&gt; create table autoincre
+    -&gt; (d1 smallint not null auto_increment,
+    -&gt; d2 smallint not null,
+    -&gt; name varchar(10),
+    -&gt; index(d2,d1)
+    -&gt; ) engine=myisam;
+Query OK, 0 rows affected (0.09 sec)</p>
+
+<p>mysql&gt; insert into autoincre (d2,name) values (2,'2'),(3,'3'),(4,'4'),(2,'2'),(3,'3'),(4,'4');
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; select * from autoincre;
++----+----+------+
+| d1 | d2 | name |
++----+----+------+
+|  1 |  2 | 2    |
+|  1 |  3 | 3    |
+|  1 |  4 | 4    |
+|  2 |  2 | 2    |
+|  2 |  3 | 3    |
+|  2 |  4 | 4    |
++----+----+------+
+6 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ * 外键约束
+
+MySQL支持外键的有InnoDB和NDB（5.7及之后版本），在创建外键的时候，要求父表必须有对应的索引，子表在创建外键时候也会自动创建对应的索引。
+
+下面是样例数据库中的两个表，country1是父表，country_id为主键索引，city是子表，country_id字段为外键，对应于country表的主键country_id。
+
+</code></pre>
+
+<p>mysql&gt; CREATE TABLE country1 (
+    -&gt; country_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -&gt; country VARCHAR(50) NOT NULL,
+    -&gt; last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -&gt; PRIMARY KEY (country_id)
+    -&gt; ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected, 1 warning (0.13 sec)</p>
+
+<p>mysql&gt; CREATE TABLE city1 (
+    -&gt; city_id SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    -&gt; city VARCHAR(50) NOT NULL,
+    -&gt; country_id SMALLINT UNSIGNED NOT NULL,
+    -&gt; last_update TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -&gt; PRIMARY KEY (city_id),
+    -&gt; KEY idx_fk_country_id (country_id),
+    -&gt; CONSTRAINT fk_city1_country1 FOREIGN KEY (country_id) REFERENCES country1 (country_id) ON DELETE RESTRICT ON UPDATE CASCADE
+    -&gt; ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+Query OK, 0 rows affected, 1 warning (0.16 sec)</p>
+
+<p>mysql&gt; show create table city1 \G;
+*************************** 1. row ***************************
+       Table: city1
+Create Table: CREATE TABLE <code>city1</code> (
+  <code>city_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>city</code> varchar(50) NOT NULL,
+  <code>country_id</code> smallint(5) unsigned NOT NULL,
+  <code>last_update</code> timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>city_id</code>),
+  KEY <code>idx_fk_country_id</code> (<code>country_id</code>),
+  CONSTRAINT <code>fk_city1_country1</code> FOREIGN KEY (<code>country_id</code>) REFERENCES <code>country1</code> (<code>country_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+8.0版本下，**fk_city1_country1**不得用引号包裹，否则会报错。
+
+在创建索引时，可以指定在删除、更新父表时，对子表进行的相应操作，包括RESTRICT、CASCADE、SET NULL和NO ACTION。其中RESTRICT和NO ACTION相同，是指限制在子表有有关联记录的情况下父表不能更新；CASCADE表示在父表更新或删除时，更新或删除子表对应记录；SET NULL则表示父表更新或删除时，子表对应字段被SET NULL。应谨慎设置以防数据丢失。
+
+上面创建的两个表，子表的外键指定是ON DELETE RESTRICT ON UPDATE CASCADE方式的。那么子表有对应记录的话，将阻止父表删除相应记录；父表更新记录，子表对应记录将自动更新。
+
+</code></pre>
+
+<p>mysql&gt; INSERT INTO country1 values (1,'Afghanistan',20060215044400);
+Query OK, 1 row affected (0.02 sec)</p>
+
+<p>mysql&gt; INSERT INTO city1 values (251,'Kabul',1,20060215044400);
+Query OK, 1 row affected (0.04 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code></code></pre>
+
+<p>mysql&gt; SELECT * FROM country1 WHERE country_id = 1;
++------------+-------------+---------------------+
+| country_id | country     | last_update         |
++------------+-------------+---------------------+
+|          1 | Afghanistan | 2006-02-15 04:44:00 |
++------------+-------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM city1 WHERE country_id = 1;
++---------+-------+------------+---------------------+
+| city_id | city  | country_id | last_update         |
++---------+-------+------------+---------------------+
+|     251 | Kabul |          1 | 2006-02-15 04:44:00 |
++---------+-------+------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; DELETE FROM country1 WHERE country_id = 1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (<code>test1</code>.<code>city1</code>, CONSTRAINT <code>fk_city1_country1</code> FOREIGN KEY (<code>country_id</code>) REFERENCES <code>country1</code> (<code>country_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE)
+mysql&gt; UPDATE country1 SET country_id = 10000 WHERE country_id = 1;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0</p>
+
+<p>mysql&gt; SELECT * FROM country1 WHERE country = 'Afghanistan';
++------------+-------------+---------------------+
+| country_id | country     | last_update         |
++------------+-------------+---------------------+
+|      10000 | Afghanistan | 2018-12-03 17:01:50 |
++------------+-------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM city1 WHERE city_id = 251;
++---------+-------+------------+---------------------+
+| city_id | city  | country_id | last_update         |
++---------+-------+------------+---------------------+
+|     251 | Kabul |      10000 | 2006-02-15 04:44:00 |
++---------+-------+------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM country1;
++------------+-------------+---------------------+
+| country_id | country     | last_update         |
++------------+-------------+---------------------+
+|      10000 | Afghanistan | 2018-12-03 17:01:50 |
++------------+-------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM city1;
++---------+-------+------------+---------------------+
+| city_id | city  | country_id | last_update         |
++---------+-------+------------+---------------------+
+|     251 | Kabul |      10000 | 2006-02-15 04:44:00 |
++---------+-------+------------+---------------------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>当某个表被其他表创建了外键参照，那么该表的对应索引或者主键禁止被删除。
+
+在导入多个表的数据时，如果需要忽略表之前的导入顺序，可以暂时关闭外键的检查；同样，在执行LOAD DATA和ALTER TABLE操作时，可以通过暂时关闭外键约束来加快处理速度，关闭的命令是“SET FOREIGN_KEY_CHECKS = 0;”，执行完处理后，通过命令“SET FOREIGN_KEY_CHECKS = 0;”改回原状态。
+
+对于InnoDB类型的表，外键信息可通过SHOW CREATE TABLE命令来显示。
+
+ * 存储方式
+
+（略）
+
+#### 7.2.3 MEMORY
+
+MEMORY存储引擎使用RAM来创建文件。MEMORY类型的表访问非常快，因为是放在内存中的，并且默认使用HASH索引，但是一旦服务关闭，表中数据将丢失。
+
+下例创建了一个MEMORY类型的表，并从表city1获得记录：
+
+</code></pre>
+
+<p>mysql&gt; CREATE TABLE tab_memory ENGINE=MEMORY
+    -&gt; SELECT city_id,city,country_id
+    -&gt; FROM city1 GROUP BY city_id;
+Query OK, 1 row affected (0.06 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; SELECT COUNT(<em>) FROM tab_memory;
++----------+
+| COUNT(</em>) |
++----------+
+|        1 |
++----------+
+1 row in set (0.01 sec)</p>
+
+<p>mysql&gt; SHOW TABLE STATUS LIKE 'tab_memory' \G;
+*************************** 1. row ***************************
+           Name: tab_memory
+         Engine: MEMORY
+        Version: 10
+     Row_format: Fixed
+           Rows: 1
+ Avg_row_length: 155
+    Data_length: 127040
+Max_data_length: 16252835
+   Index_length: 0
+      Data_free: 0
+ Auto_increment: 1
+    Create_time: 2018-12-03 17:40:54
+    Update_time: NULL
+     Check_time: NULL
+      Collation: utf8_general_ci
+       Checksum: NULL
+ Create_options:
+        Comment:
+1 row in set (0.09 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+给MEMORY表创建索引时，可以指定使用HASH索引还是BTREE索引：
+
+</code></pre>
+
+<p>mysql&gt; CREATE INDEX mem_hash USING HASH ON tab_memory (city_id);
+Query OK, 1 row affected (0.10 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; SHOW INDEX FROM tab_memory \G;
+*************************** 1. row ***************************
+        Table: tab_memory
+   Non_unique: 1
+     Key_name: mem_hash
+ Seq_in_index: 1
+  Column_name: city_id
+    Collation: NULL
+  Cardinality: 0
+     Sub_part: NULL
+       Packed: NULL
+         Null:
+   Index_type: HASH
+      Comment:
+Index_comment:
+      Visible: YES
+   Expression: NULL
+1 row in set (0.11 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; DROP INDEX mem_hash ON tab_memory;
+Query OK, 1 row affected (0.07 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt;
+mysql&gt; CREATE INDEX mem_btree USING BTREE ON tab_memory (city_id);
+Query OK, 1 row affected (0.04 sec)
+Records: 1  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; SHOW INDEX FROM tab_memory \G;
+*************************** 1. row ***************************
+        Table: tab_memory
+   Non_unique: 1
+     Key_name: mem_btree
+ Seq_in_index: 1
+  Column_name: city_id
+    Collation: A
+  Cardinality: NULL
+     Sub_part: NULL
+       Packed: NULL
+         Null:
+   Index_type: BTREE
+      Comment:
+Index_comment:
+      Visible: YES
+   Expression: NULL
+1 row in set (0.10 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+在启动MySQL服务的时候使用--init-file选项，把INSERT INTO...SELECT或LOAD DATA INFILE这样的语句放入到这个文件中，就可以在服务启动时从持久稳固的数据源中装载表。(See Section 5.1.7, “Server Command Options”, and Section 13.2.7, “LOAD DATA INFILE Syntax”. )
+
+当不再需要MEMORY表的内容时，为释放内存需执行DELETE FROM或TRUNCATE TABLE，或整个删除MEMORY类型的表（DROP TABLE）。
+
+在MEMORY表中，一行须要的内存使用下列公式计算： 
+
+</code></pre>
+
+<p>SUM_OVER_ALL_BTREE_KEYS(max_length_of_key + sizeof(char*) * 4)
++ SUM_OVER_ALL_HASH_KEYS(sizeof(char*) * 2)
++ ALIGN(length_of_row+1, sizeof(char*))</p>
+
+<pre><code>#### 7.2.4 MERGE
+
+下面是一个创建和使用MERGE类型的表的示例。
+
+创建3个测试表payment_2006、payment_2007、payment_all，其中payment_all是前两个表的MERGE类型的表：
+
+
+</code></pre>
+
+<p>mysql&gt; CREATE TABLE payment_2006 （
+    -&gt; country_id SMALLINT,
+    -&gt; payment_date DATETIME,
+    -&gt; amount DECIMAL(15,2),
+    -&gt; KEY idx_fk_country_id (country_id)
+    -&gt; ) ENGINE=MyISAM;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '（
+country_id SMALLINT,
+payment_date DATETIME,
+amount DECIMAL(15,2),
+KEY idx_fk' at line 1
+mysql&gt; CREATE TABLE payment_2006 (
+    -&gt; country_id SMALLINT,
+    -&gt; payment_date DATETIME,
+    -&gt; amount DECIMAL(15,2),
+    -&gt; KEY idx_fk_country_id (country_id)
+    -&gt; ) ENGINE=MyISAM;
+Query OK, 0 rows affected (0.03 sec)</p>
+
+<p>mysql&gt; CREATE TABLE payment_2007 (
+    -&gt; country_id SMALLINT,
+    -&gt; payment_date DATETIME,
+    -&gt; amount DECIMAL(15,2),
+    -&gt; KEY idx_fk_country_id (country_id)
+    -&gt; ) ENGINE=MyISAM;
+Query OK, 0 rows affected (0.06 sec)</p>
+
+<p>mysql&gt; CREATE TABLE payment_all (
+    -&gt; country_id SMALLINT,
+    -&gt; payment_date DATETIME,
+    -&gt; amount DECIMAL(15,2),
+    -&gt; INDEX (country_id)
+    -&gt; ) ENGINE=MERGE UNION=(payment_2006, payment_2007) INSERT_METHOD=LAST;
+Query OK, 0 rows affected (0.09 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+分别向payment_2006和payment_2007表中插入测试数据：
+
+</code></pre>
+
+<p>mysql&gt; INSERT INTO payment_2006 VALUES (1,'2006-05-01',100000), (2,'2006-08-15',150000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt;
+mysql&gt; INSERT INTO payment_2007 VALUES (1,'2007-02-20',35000), (2,'2007-07-15',220000);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+分别查看这3个表中的记录：
+
+</code></pre>
+
+<p>mysql&gt; SELECT * FROM payment_2006;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2006-05-01 00:00:00 | 100000.00 |
+|          2 | 2006-08-15 00:00:00 | 150000.00 |
++------------+---------------------+-----------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM payment_2007;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2007-02-20 00:00:00 |  35000.00 |
+|          2 | 2007-07-15 00:00:00 | 220000.00 |
++------------+---------------------+-----------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM payment_all;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2006-05-01 00:00:00 | 100000.00 |
+|          2 | 2006-08-15 00:00:00 | 150000.00 |
+|          1 | 2007-02-20 00:00:00 |  35000.00 |
+|          2 | 2007-07-15 00:00:00 | 220000.00 |
++------------+---------------------+-----------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以发现，payment_all表中的数据是payment_2006和payment_2007表记录合并后的结果集。
+
+下面向MERGE表中插入一条记录，由于MERGE表定义INSERT_METHOD=LAST，就会向最后一个表插入记录，虽然这条记录是2006年的，但仍将写入payment_2007表中。
+
+</code></pre>
+
+<p>mysql&gt; INSERT INTO payment_all VALUES (3,'2006-03-31',112200);
+Query OK, 1 row affected (0.01 sec)</p>
+
+<p>mysql&gt; SELECT * FROM payment_2006;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2006-05-01 00:00:00 | 100000.00 |
+|          2 | 2006-08-15 00:00:00 | 150000.00 |
++------------+---------------------+-----------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM payment_2007;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2007-02-20 00:00:00 |  35000.00 |
+|          2 | 2007-07-15 00:00:00 | 220000.00 |
+|          3 | 2006-03-31 00:00:00 | 112200.00 |
++------------+---------------------+-----------+
+3 rows in set (0.00 sec)</p>
+
+<p>mysql&gt; SELECT * FROM payment_all;
++------------+---------------------+-----------+
+| country_id | payment_date        | amount    |
++------------+---------------------+-----------+
+|          1 | 2006-05-01 00:00:00 | 100000.00 |
+|          2 | 2006-08-15 00:00:00 | 150000.00 |
+|          1 | 2007-02-20 00:00:00 |  35000.00 |
+|          2 | 2007-07-15 00:00:00 | 220000.00 |
+|          3 | 2006-03-31 00:00:00 | 112200.00 |
++------------+---------------------+-----------+
+5 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+**这时MERGE表和分区表的区别，分区表可以智能将数据写入对应的分区。**
+
+分区详见第17章
+
+### 7.3 如何选择合适的存储引擎
+
+下面是几种常用存储引擎的适用环境：
+
+ * MyISAM：应用是以读操作和插入操作为主，只有很少的更新和删除操作，并且对事务的完整性和并发性要求不高。
+ * InnoDB：用于事务处理应用程序，支持外键。如果应用对事务的完整性有较高要求，在并发条件下要求数据的一致性，数据操作除了插入和查询外还包括很多的更新和删除操作。
+ * MEMORY：将所有数据保存于RAM中，在需要快速定位记录和其他类似数据的环境下可提供极快速的访问。受限于RAM的大小。
+ * MERGE：用于将一系列MyISAM表以逻辑方式组合在一起，并作为一个对象引用他们。优点是可以突破对单个MyISAM表大小的限制，并且通过将不同表分布在不同磁盘，可以有效改善MERGE表的访问效率。这对于诸如数据仓库等VLDB环境十分适合。
+
+### 7.4 小结
+
+
+## 8 选择合适的数据结构
+## 9 字符集
+## 10 索引的设计和使用
+
+
+
+### 10.1 索引概述
+
+索引可在建表时候同时创建，也可以随时增加新的索引。创建索引的语法是：
+
+</code></pre>
+
+<p>CREATE [UNIQUE | FULLTEXT | SPATIAL] INDEX index_name
+    [index_type]
+    ON tbl_name (key_part,...)
+    [index_option]
+    [algorithm_option | lock_option] ...</p>
+
+<p>key_part: {col_name [(length)] | (expr)} [ASC | DESC]</p>
+
+<p>index_option:
+    KEY_BLOCK_SIZE [=] value
+  | index_type
+  | WITH PARSER parser_name
+  | COMMENT 'string'
+  | {VISIBLE | INVISIBLE}</p>
+
+<p>index_type:
+    USING {BTREE | HASH}</p>
+
+<p>algorithm_option:
+    ALGORITHM [=] {DEFAULT | INPLACE | COPY}</p>
+
+<p>lock_option:
+    LOCK [=] {DEFAULT | NONE | SHARED | EXCLUSIVE}</p>
+
+<pre><code>
+例如，要为city表创建10个字节的前缀索引，代码如下
+
+</code></pre>
+
+<p>CREATE INDEX cityname ON city (city(10))</p>
+
+<pre><code>
+删除索引的语法
+
+</code></pre>
+
+<p>DROP INDEX index_name ON tbl_name</p>
+
+<pre><code>
+Table 13.1 Index Types Per Storage Engine不同存储引擎的索引类型
+
+|Storage Engine &lt;br&gt; 存储引擎|Permissible Index Types &lt;br&gt; 允许的索引类型|
+|:------|:------|
+|InnoDB|BTREE|
+|MyISAM|BTREE|
+|MEMORY/HEAP|HASH, BTREE|
+|NDB|HASH, BTREE (see note in text)|
+
+Table 13.2 InnoDB Storage Engine Index Characteristics存储引擎InnoDB的索引特性
+
+|Index Class &lt;br&gt; 索引分类|Index Type &lt;br&gt; 索引类型|Stores NULL VALUES &lt;br&gt; 存储零值|Permits Multiple NULL Values &lt;br&gt; 允许多个零值|IS NULL Scan Type &lt;br&gt; 是零扫描类型？|IS NOT NULL Scan Type &lt;br&gt; 不是零扫描类型？|
+|:------|:------|:------|:------|:------|:------|
+|**Primary key** &lt;br&gt; 主键|BTREE|No|No|N/A|N/A|
+|**Unique** &lt;br&gt; 唯一键|BTREE|Yes|Yes|Index|Index|
+|**Key** &lt;br&gt; 普通键|BTREE|Yes|Yes|Index|Index|
+|**FULLTEXT** &lt;br&gt; 全文|N/A|Yes|Yes|Table|Table|
+|**SPATIAL** &lt;br&gt; 空间|N/A|No|No|N/A|N/A|
+
+
+
+Table 13.3 MyISAM Storage Engine Index Characteristics存储引擎MyISAM的索引特性
+
+|Index Class &lt;br&gt; 索引分类|Index Type &lt;br&gt; 索引类型|Stores NULL VALUES &lt;br&gt; 存储零值|Permits Multiple NULL Values &lt;br&gt; 允许多个零值|IS NULL Scan Type &lt;br&gt; 是零扫描类型？|IS NOT NULL Scan Type &lt;br&gt; 不是零扫描类型？|
+|:------|:------|:------|:------|:------|:------|
+|**Primary key** &lt;br&gt; 主键|BTREE|No|No|N/A|N/A|
+|**Unique** &lt;br&gt; 唯一键|BTREE|Yes|Yes|Index|Index|
+|**Key** &lt;br&gt; 普通键|BTREE|Yes|Yes|Index|Index|
+|**FULLTEXT** &lt;br&gt; 全文|N/A|Yes|Yes|Table|Table|
+|**SPATIAL** &lt;br&gt; 空间|N/A|No|No|N/A|N/A|
+
+Table 13.4 MEMORY Storage Engine Index Characteristics存储引擎MEMORY的索引特性
+
+|Index Class &lt;br&gt; 索引分类|Index Type &lt;br&gt; 索引类型|Stores NULL VALUES &lt;br&gt; 存储零值|Permits Multiple NULL Values &lt;br&gt; 允许多个零值|IS NULL Scan Type &lt;br&gt; 是零扫描类型？|IS NOT NULL Scan Type &lt;br&gt; 不是零扫描类型？|
+|:------|:------|:------|:------|:------|:------|
+|**Primary key** &lt;br&gt; 主键|BTREE|No|No|N/A|N/A|
+|**Unique** &lt;br&gt; 唯一键|BTREE|Yes|Yes|Index|Index|
+|**Key** &lt;br&gt; 普通键|BTREE|Yes|Yes|Index|Index|
+|**Primary key** &lt;br&gt; 主键|HASH|No|No|N/A|N/A|
+|**Unique** &lt;br&gt; 唯一键|HASH|Yes|Yes|Index|Index|
+|**Key** &lt;br&gt; 普通键|HASH|Yes|Yes|Index|Index|
+
+Table 13.5 NDB Storage Engine Index Characteristics存储引擎NDB的索引特性
+
+|Index Class &lt;br&gt; 索引分类|Index Type &lt;br&gt; 索引类型|Stores NULL VALUES &lt;br&gt; 存储零值|Permits Multiple NULL Values &lt;br&gt; 允许多个零值|IS NULL Scan Type &lt;br&gt; 是零扫描类型？|IS NOT NULL Scan Type &lt;br&gt; 不是零扫描类型？|
+|:------|:------|:------|:------|:------|:------|
+|**Primary key** &lt;br&gt; 主键|BTREE|No|No|Index|Index|
+|**Unique** &lt;br&gt; 唯一键|BTREE|Yes|Yes|Index|Index|
+|**Key** &lt;br&gt; 普通键|BTREE|Yes|Yes|Index|Index|
+|**Primary key** &lt;br&gt; 主键|HASH|No|No|Table (see note 1)|Table (see note 1)|
+|**Unique** &lt;br&gt; 唯一键|HASH|Yes|Yes|Table (see note 1)|Table (see note 1)|
+|**Key** &lt;br&gt; 普通键|HASH|Yes|Yes|Table (see note 1)|Table (see note 1)|
+
+Table note: 
+1. USING HASH prevents creation of an implicit ordered index.使用HASH可以防止创建隐式有序索引。 
+
+**以上内容过细，不是能记住的，用时随时翻阅。**
+
+索引的使用随着版本发展有很大的发展，详情见于[13.1.15 CREATE INDEX Syntax](https://dev.mysql.com/doc/refman/8.0/en/create-index.html#create-index-functional-key-parts)
+
+
+### 10.2 设计索引的原则
+
+ * 索引作为WHERE CONDITION来使用，而不是直接用在SELECT命令中。
+
+ * 使用唯一索引。如不是唯一，则分布越分散越好。
+
+ * 使用短索引。
+
+ * 利用最左前缀。
+
+ * 不要过度索引。
+
+ * InnoDB类型的表尽量自己指定主键。InnoDB类型的表普通索引都会保存主键的键值，索引主键要选择尽量短的数据类型。
+
+### 10.3 BTREE索引和HASH索引
+
+**HASH索引**有如下一些重要的特征需要特别注意:
+
+ * 只使用**=**或**&lt;=&gt;**操作符的等式比较。
+
+ * 优化器不能使用HASH索引来加速ORDER BY操作。
+
+ * MySQL不能确定在两个值之间大约有多少行。
+
+ * 只能使用整个关键字来搜索一行。
+
+而BTREE索引，当使用&gt;、&lt;、&gt;=、&lt;=、BETWEEN、!=或者&lt;&gt;，或者LIKE 'pattern'（其中‘pattern’不以通配符开始）操作符时，都可以使用相关列上的索引。
+
+下列范围查询适用于BTREE索引和HASH索引：
+
+</code></pre>
+
+<p>SELECT * FROM t1 WHERE key_col = 1 OR key_col IN (15 18 20);</p>
+
+<pre><code>
+下列范围查询只适用于BTREE索引（因为**HASH索引**只使用**=**或**&lt;=&gt;**操作符的等式比较，所以&gt;等比较不能用于HASH索引。）：
+
+</code></pre>
+
+<p>SELECT * FROM t1 WHERE key_col &gt; 1 AND key_col &lt; 10;
+SELECT * FROM t1 WHERE key_col LIKE 'ab%' OR key_col BETWEEN 'lisa' AND 'simon';</p>
+
+<pre><code>当对索引字段进行范围查询时，只有BTREE索引可以通过索引访问；而HASH索引实际是全盘扫描。
+
+### 10.4 小结
+
+索引用于快速找出在某列有一特定值的行，无索引将从头至尾搜索，时间耗费大。
+
+## 11 视图
+## 12 存储过程和函数
+## 13 触发器
+## 14 事务控制和锁定语句
+## 15 SQL中的安全问题
+## 16 SQL Model及相关问题
+## 17 MySQL分区
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 18 SQL优化
+
+本章所涉及的案例表都包括在sakila上，是MySQL官方提供的模拟电影出租厅信息管理系统的数据库。压缩包包含3个文件：sakila-schema.sql、sakila-data.sql和sakila.mwb，分别是表格创建、数据灌入和Workbench数据模型。加载入数据库的方法为（路径需改为自己的解压缩路径，可以解压缩在任何地方）：
+
+</code></pre>
+
+<p>mysql&gt; SOURCE C:/temp/sakila-db/sakila-schema.sql;
+mysql&gt; SOURCE C:/temp/sakila-db/sakila-data.sql;</p>
+
+<pre><code>
+### 18.1 优化SQL语句的一般步骤
+
+
+
+
+
+#### 18.1.1 通过SHOW STATUS命令了解各种SQL的执行命令
+
+下面命令显示了当前session中所有统计参数的值：
+
+</code></pre>
+
+<p>mysql&gt; show status like 'Com_%';
++-------------------------------------+-------+
+| Variable_name                       | Value |
++-------------------------------------+-------+
+| Com_admin_commands                  | 0     |
+| Com_assign_to_keycache              | 0     |
+| Com_alter_db                        | 0     |
+| Com_alter_event                     | 0     |
+| Com_alter_function                  | 0     |
+| Com_alter_instance                  | 0     |
+| Com_alter_procedure                 | 0     |
+| Com_alter_resource_group            | 0     |
+| Com_alter_server                    | 0     |
+| Com_alter_table                     | 2     |
+| Com_alter_tablespace                | 0     |
+| Com_alter_user                      | 0     |
+| Com_alter_user_default_role         | 0     |
+| Com_analyze                         | 0     |
+| Com_begin                           | 0     |
+| Com_binlog                          | 0     |
+| Com_call_procedure                  | 0     |
+| Com_change_db                       | 2     |
+| Com_change_master                   | 0     |
+| Com_change_repl_filter              | 0     |
+| Com_check                           | 0     |
+| Com_checksum                        | 0     |
+| Com_clone                           | 0     |
+| Com_commit                          | 15    |
+| Com_create_db                       | 1     |
+| Com_create_event                    | 0     |
+| Com_create_function                 | 3     |
+| Com_create_index                    | 0     |
+| Com_create_procedure                | 3     |
+| Com_create_role                     | 0     |
+| Com_create_server                   | 0     |
+| Com_create_table                    | 16    |
+| Com_create_resource_group           | 0     |
+| Com_create_trigger                  | 6     |
+| Com_create_udf                      | 0     |
+| Com_create_user                     | 0     |
+| Com_create_view                     | 7     |
+| Com_create_spatial_reference_system | 0     |
+| Com_dealloc_sql                     | 0     |
+| Com_delete                          | 0     |
+| Com_delete_multi                    | 0     |
+| Com_do                              | 0     |
+| Com_drop_db                         | 1     |
+| Com_drop_event                      | 0     |
+| Com_drop_function                   | 0     |
+| Com_drop_index                      | 0     |
+| Com_drop_procedure                  | 0     |
+| Com_drop_resource_group             | 0     |
+| Com_drop_role                       | 0     |
+| Com_drop_server                     | 0     |
+| Com_drop_spatial_reference_system   | 0     |
+| Com_drop_table                      | 0     |
+| Com_drop_trigger                    | 0     |
+| Com_drop_user                       | 0     |
+| Com_drop_view                       | 0     |
+| Com_empty_query                     | 0     |
+| Com_execute_sql                     | 0     |
+| Com_explain_other                   | 0     |
+| Com_flush                           | 0     |
+| Com_get_diagnostics                 | 0     |
+| Com_grant                           | 0     |
+| Com_grant_roles                     | 0     |
+| Com_ha_close                        | 0     |
+| Com_ha_open                         | 0     |
+| Com_ha_read                         | 0     |
+| Com_help                            | 0     |
+| Com_import                          | 0     |
+| Com_insert                          | 1017  |
+| Com_insert_select                   | 0     |
+| Com_install_component               | 0     |
+| Com_install_plugin                  | 0     |
+| Com_kill                            | 0     |
+| Com_load                            | 0     |
+| Com_lock_instance                   | 0     |
+| Com_lock_tables                     | 1     |
+| Com_optimize                        | 0     |
+| Com_preload_keys                    | 0     |
+| Com_prepare_sql                     | 0     |
+| Com_purge                           | 0     |
+| Com_purge_before_date               | 0     |
+| Com_release_savepoint               | 0     |
+| Com_rename_table                    | 0     |
+| Com_rename_user                     | 0     |
+| Com_repair                          | 0     |
+| Com_replace                         | 0     |
+| Com_replace_select                  | 0     |
+| Com_reset                           | 0     |
+| Com_resignal                        | 0     |
+| Com_restart                         | 0     |
+| Com_revoke                          | 0     |
+| Com_revoke_all                      | 0     |
+| Com_revoke_roles                    | 0     |
+| Com_rollback                        | 0     |
+| Com_rollback_to_savepoint           | 0     |
+| Com_savepoint                       | 0     |
+| Com_select                          | 4     |
+| Com_set_option                      | 27    |
+| Com_set_password                    | 0     |
+| Com_set_resource_group              | 0     |
+| Com_set_role                        | 0     |
+| Com_signal                          | 0     |
+| Com_show_binlog_events              | 0     |
+| Com_show_binlogs                    | 0     |
+| Com_show_charsets                   | 0     |
+| Com_show_collations                 | 0     |
+| Com_show_create_db                  | 0     |
+| Com_show_create_event               | 0     |
+| Com_show_create_func                | 0     |
+| Com_show_create_proc                | 0     |
+| Com_show_create_table               | 0     |
+| Com_show_create_trigger             | 0     |
+| Com_show_databases                  | 1     |
+| Com_show_engine_logs                | 0     |
+| Com_show_engine_mutex               | 0     |
+| Com_show_engine_status              | 0     |
+| Com_show_events                     | 0     |
+| Com_show_errors                     | 0     |
+| Com_show_fields                     | 0     |
+| Com_show_function_code              | 0     |
+| Com_show_function_status            | 0     |
+| Com_show_grants                     | 0     |
+| Com_show_keys                       | 0     |
+| Com_show_master_status              | 0     |
+| Com_show_open_tables                | 0     |
+| Com_show_plugins                    | 0     |
+| Com_show_privileges                 | 0     |
+| Com_show_procedure_code             | 0     |
+| Com_show_procedure_status           | 0     |
+| Com_show_processlist                | 0     |
+| Com_show_profile                    | 0     |
+| Com_show_profiles                   | 0     |
+| Com_show_relaylog_events            | 0     |
+| Com_show_slave_hosts                | 0     |
+| Com_show_slave_status               | 0     |
+| Com_show_status                     | 1     |
+| Com_show_storage_engines            | 0     |
+| Com_show_table_status               | 0     |
+| Com_show_tables                     | 0     |
+| Com_show_triggers                   | 0     |
+| Com_show_variables                  | 0     |
+| Com_show_warnings                   | 0     |
+| Com_show_create_user                | 0     |
+| Com_shutdown                        | 0     |
+| Com_slave_start                     | 0     |
+| Com_slave_stop                      | 0     |
+| Com_group_replication_start         | 0     |
+| Com_group_replication_stop          | 0     |
+| Com_stmt_execute                    | 0     |
+| Com_stmt_close                      | 0     |
+| Com_stmt_fetch                      | 0     |
+| Com_stmt_prepare                    | 0     |
+| Com_stmt_reset                      | 0     |
+| Com_stmt_send_long_data             | 0     |
+| Com_truncate                        | 0     |
+| Com_uninstall_component             | 0     |
+| Com_uninstall_plugin                | 0     |
+| Com_unlock_instance                 | 0     |
+| Com_unlock_tables                   | 1     |
+| Com_update                          | 0     |
+| Com_update_multi                    | 0     |
+| Com_xa_commit                       | 0     |
+| Com_xa_end                          | 0     |
+| Com_xa_prepare                      | 0     |
+| Com_xa_recover                      | 0     |
+| Com_xa_rollback                     | 0     |
+| Com_xa_start                        | 0     |
+| Com_stmt_reprepare                  | 0     |
+| Compression                         | OFF   |
++-------------------------------------+-------+
+168 rows in set (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+Com_xxx表示每个xxx语句执行次数，我们通常比较关心的是以下几个统计参数：
+
+ * Com_select：执行SELECT操作次数，一次查询只累加1。
+
+ * Com_insert：执行INSERT操作次数，对于批量插入的INSERT操作，只累加一次。
+
+ * Com_update：执行UPDATE操作次数。
+
+ * Com_delete：执行DELETE操作次数。
+
+上面这些参数是对于所有存储引擎的。下面这些参数是对于InnoDB存储引擎的：
+
+ * InnoDB_rows_read：SELECT查询返回的行数。
+
+ * InnoDB_rows_inserted：执行INSERT操作插入的行数。
+
+ * InnoDB_rows_updated：执行UPDATE操作更新的行数。
+
+ * InnoDB_rows_deleted：执行DELETE操作删除的行数。
+
+</code></pre>
+
+<p>mysql&gt; SHOW STATUS LIKE 'InnoDB<em>rows</em>%';
++----------------------+-------+
+| Variable_name        | Value |
++----------------------+-------+
+| Innodb_rows_deleted  | 9     |
+| Innodb_rows_inserted | 48005 |
+| Innodb_rows_read     | 10064 |
+| Innodb_rows_updated  | 1896  |
++----------------------+-------+
+4 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+对于事务型的应用，通过Com_commit和Com_rollback可以了解事务提交和回滚的情况，回滚操作非常频繁的数据库，可能意味着应用编写存在问题。
+
+此外，以下几个参数便于用户了解数据库的基本情况:
+
+
+ * Connections：试图连接MySQL服务器的次数。
+
+ * Uptime：服务器工作时间。
+
+ * Slow_queries：慢查询次数。
+
+#### 18.1.2 定位执行效率较低的SQL语句
+
+执行效率较低SQL语句的两种定位方法：
+
+ * 通过**慢查询日志**定位执行效率较低的SQL语句(启动服务器时使用--slow_query_log[={0|1}]来指定慢查询日志开启还是关闭，慢查询日志启动后将记录所有执行时间超过long_query_time秒的SQL语句,详情见第26章)。
+
+</code></pre>
+
+<p>C:\WINDOWS\system32&gt;net start mysql --slow_query_log
+MySQL 服务正在启动 .
+MySQL 服务已经启动成功。</p>
+
+<p>C:\WINDOWS\system32&gt;</p>
+
+<pre><code>
+**这是启动方式，慢查询的日志记录在myql.slow_log表和hostname.log文件中**
+
+</code></pre>
+
+<p>mysql&gt; use mysql;
+Database changed
+mysql&gt; show tables;
++---------------------------+
+| Tables_in_mysql           |
++---------------------------+
+| columns_priv              |
+| component                 |
+| db                        |
+| default_roles             |
+| engine_cost               |
+| func                      |
+| general_log               |
+| global_grants             |
+| gtid_executed             |
+| help_category             |
+| help_keyword              |
+| help_relation             |
+| help_topic                |
+| innodb_index_stats        |
+| innodb_table_stats        |
+| password_history          |
+| plugin                    |
+| procs_priv                |
+| proxies_priv              |
+| role_edges                |
+| server_cost               |
+| servers                   |
+| slave_master_info         |
+| slave_relay_log_info      |
+| slave_worker_info         |
+| slow_log                  |
+| tables_priv               |
+| time_zone                 |
+| time_zone_leap_second     |
+| time_zone_name            |
+| time_zone_transition      |
+| time_zone_transition_type |
+| user                      |
++---------------------------+
+33 rows in set (0.01 sec)</p>
+
+<p>mysql&gt; select * from slow_log;
+Empty set (0.01 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>因为暂时没有执行时间较久的语句。
+
+ * 慢查询日志记录的是事后的状态，而**SHOW PROCESSLIST**命令可实时查询MySQL在进行的线程，包括线程的状态、是否锁表等，可实时查看SQL的执行情况。
+
+</code></pre>
+
+<p>mysql&gt; SHOW PROCESSLIST;
++----+-----------------+----------------+--------+---------+------+------------------------+------------------+
+| Id | User            | Host           | db     | Command | Time | State                  | Info             |
++----+-----------------+----------------+--------+---------+------+------------------------+------------------+
+|  4 | event_scheduler | localhost      | NULL   | Daemon  | 4389 | Waiting on empty queue | NULL             |
+|  8 | root            | localhost:9525 | sakila | Query   |    0 | starting               | show processlist |
++----+-----------------+----------------+--------+---------+------+------------------------+------------------+
+2 rows in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+#### 18.1.3 通过EXPLAIN分析低效SQL的执行计划
+
+找到执行效率较低的SQL语句后，可通过EXPLAIN或DESC命令获取MySQL如何执行该语句的信息。
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT SUM(amount) FROM customer a, payment b WHERE 1=1 AND a.customer_id=b.customer_id AND email='JANE.BENNETT@sakilacustomer.org' \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: a
+   partitions: NULL
+         type: ALL
+possible_keys: PRIMARY
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 599
+     filtered: 10.00
+        Extra: Using where
+*************************** 2. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: b
+   partitions: NULL
+         type: ref
+possible_keys: idx_fk_customer_id
+          key: idx_fk_customer_id
+      key_len: 2
+          ref: sakila.a.customer_id
+         rows: 26
+     filtered: 100.00
+        Extra: NULL
+2 rows in set, 1 warning (0.02 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+对返回信息的解读：
+
+ * select_type：表示SELECT的类型，常用的有SMIMPLE（简单表，即不使用表连接或子查询）、PRIMARY（主查询，即外层的查询）、UNION（UNION中的第二个或者后面的查询语句）、SUBQUERY（子查询中的第一个SELECT）等。
+
+ * table：输出结果集的表。
+
+ * type：表示MySQL在表中找到所需行的方式，或者叫访问类型，常见类型有（往右性能越来越好）：ALL、index、range、ref、eq_ref、const/system、NULL。
+ （1）type=ALL，全盘扫描，MySQL遍历全表来找到匹配的行：
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT * FROM film WHERE rating&gt;9 \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: film
+   partitions: NULL
+         type: ALL
+possible_keys: NULL
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 1000
+     filtered: 33.33
+        Extra: Using where
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ （2）type=index，索引全扫描，MySQL遍历整个索引来找到匹配的行：
+
+</code></pre>
+
+<p>mysql&gt; SHOW CREATE TABLE film \G;
+*************************** 1. row ***************************
+       Table: film
+Create Table: CREATE TABLE <code>film</code> (
+  <code>film_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>title</code> varchar(255) NOT NULL,
+  <code>description</code> text,
+  <code>release_year</code> year(4) DEFAULT NULL,
+  <code>language_id</code> tinyint(3) unsigned NOT NULL,
+  <code>original_language_id</code> tinyint(3) unsigned DEFAULT NULL,
+  <code>rental_duration</code> tinyint(3) unsigned NOT NULL DEFAULT '3',
+  <code>rental_rate</code> decimal(4,2) NOT NULL DEFAULT '4.99',
+  <code>length</code> smallint(5) unsigned DEFAULT NULL,
+  <code>replacement_cost</code> decimal(5,2) NOT NULL DEFAULT '19.99',
+  <code>rating</code> enum('G','PG','PG-13','R','NC-17') DEFAULT 'G',
+  <code>special_features</code> set('Trailers','Commentaries','Deleted Scenes','Behind the Scenes') DEFAULT NULL,
+  <code>last_update</code> timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>film_id</code>),
+  KEY <code>idx_title</code> (<code>title</code>),
+  KEY <code>idx_fk_language_id</code> (<code>language_id</code>),
+  KEY <code>idx_fk_original_language_id</code> (<code>original_language_id</code>),
+  CONSTRAINT <code>fk_film_language</code> FOREIGN KEY (<code>language_id</code>) REFERENCES <code>language</code> (<code>language_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_film_language_original</code> FOREIGN KEY (<code>original_language_id</code>) REFERENCES <code>language</code> (<code>language_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1001 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; EXPLAIN SELECT title FROM film \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: film
+   partitions: NULL
+         type: index
+possible_keys: NULL
+          key: idx_title
+      key_len: 767
+          ref: NULL
+         rows: 1000
+     filtered: 100.00
+        Extra: Using index
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ （3）type=range，索引范围扫描，常用于&lt;、&lt;=、&gt;、&gt;=、BETWEEN等操作：
+
+</code></pre>
+
+<p>mysql&gt; SHOW CREATE TABLE payment \G;
+*************************** 1. row ***************************
+       Table: payment
+Create Table: CREATE TABLE <code>payment</code> (
+  <code>payment_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>customer_id</code> smallint(5) unsigned NOT NULL,
+  <code>staff_id</code> tinyint(3) unsigned NOT NULL,
+  <code>rental_id</code> int(11) DEFAULT NULL,
+  <code>amount</code> decimal(5,2) NOT NULL,
+  <code>payment_date</code> datetime NOT NULL,
+  <code>last_update</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>payment_id</code>),
+  KEY <code>idx_fk_staff_id</code> (<code>staff_id</code>),
+  KEY <code>idx_fk_customer_id</code> (<code>customer_id</code>),
+  KEY <code>fk_payment_rental</code> (<code>rental_id</code>),
+  CONSTRAINT <code>fk_payment_customer</code> FOREIGN KEY (<code>customer_id</code>) REFERENCES <code>customer</code> (<code>customer_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_payment_rental</code> FOREIGN KEY (<code>rental_id</code>) REFERENCES <code>rental</code> (<code>rental_id</code>) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_payment_staff</code> FOREIGN KEY (<code>staff_id</code>) REFERENCES <code>staff</code> (<code>staff_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16050 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; EXPLAIN SELECT * FROM payment WHERE customer_id&gt;=300 AND customer_id&lt;=350 \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: payment
+   partitions: NULL
+         type: range
+possible_keys: idx_fk_customer_id
+          key: idx_fk_customer_id
+      key_len: 2
+          ref: NULL
+         rows: 1350
+     filtered: 100.00
+        Extra: Using index condition
+1 row in set, 1 warning (0.01 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ （4）type=ref，使用非唯一索引或唯一索引的前缀扫描，返回匹配某个单独值的记录行：
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT * FROM payment WHERE customer_id=350 \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: payment
+   partitions: NULL
+         type: ref
+possible_keys: idx_fk_customer_id
+          key: idx_fk_customer_id
+      key_len: 2
+          ref: const
+         rows: 23
+     filtered: 100.00
+        Extra: NULL
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+索引idx_fk_customer_id是非唯一索引，查询条件为等值查询条件customer_id=350，所以扫描索引的类型为ref。ref还经常出现join操作中：
+
+</code></pre>
+
+<p>mysql&gt; SHOW CREATE TABLE customer \G;
+*************************** 1. row ***************************
+       Table: customer
+Create Table: CREATE TABLE <code>customer</code> (
+  <code>customer_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>store_id</code> tinyint(3) unsigned NOT NULL,
+  <code>first_name</code> varchar(45) NOT NULL,
+  <code>last_name</code> varchar(45) NOT NULL,
+  <code>email</code> varchar(50) DEFAULT NULL,
+  <code>address_id</code> smallint(5) unsigned NOT NULL,
+  <code>active</code> tinyint(1) NOT NULL DEFAULT '1',
+  <code>create_date</code> datetime NOT NULL,
+  <code>last_update</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>customer_id</code>),
+  KEY <code>idx_fk_store_id</code> (<code>store_id</code>),
+  KEY <code>idx_fk_address_id</code> (<code>address_id</code>),
+  KEY <code>idx_last_name</code> (<code>last_name</code>),
+  CONSTRAINT <code>fk_customer_address</code> FOREIGN KEY (<code>address_id</code>) REFERENCES <code>address</code> (<code>address_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_customer_store</code> FOREIGN KEY (<code>store_id</code>) REFERENCES <code>store</code> (<code>store_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=600 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; EXPLAIN SELECT b.<em>,a.</em> FROM payment a,customer b WHERE a.customer_id=b.customer_id \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: b
+   partitions: NULL
+         type: ALL
+possible_keys: PRIMARY
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 599
+     filtered: 100.00
+        Extra: NULL
+*************************** 2. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: a
+   partitions: NULL
+         type: ref
+possible_keys: idx_fk_customer_id
+          key: idx_fk_customer_id
+      key_len: 2
+          ref: sakila.b.customer_id
+         rows: 26
+     filtered: 100.00
+        Extra: NULL
+2 rows in set, 1 warning (0.01 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ （5）type=eq_ref，类似ref，区别就在使用的索引是唯一索引，对于每个索引键值，表中只有一条记录匹配，简单来说，就是多表连接中使用primary key或者unique key作为关联条件：
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT * FROM film a,film_text b WHERE a.film_id=b.film_id \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: b
+   partitions: NULL
+         type: ALL
+possible_keys: PRIMARY
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: 1000
+     filtered: 100.00
+        Extra: NULL
+*************************** 2. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: a
+   partitions: NULL
+         type: eq_ref
+possible_keys: PRIMARY
+          key: PRIMARY
+      key_len: 2
+          ref: sakila.b.film_id
+         rows: 1
+     filtered: 100.00
+        Extra: Using where
+2 rows in set, 1 warning (0.02 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+ （6）type=const/system，单表中最多有一个匹配行，查询起来非常迅速，是所以这个匹配行中其他列的值可以被优化器在当前查询中当作常量来处理，例如，根据主键primary key或者唯一索引unique index进行的查询：
+
+</code></pre>
+
+<p>mysql&gt; ALTER TABLE customer ADD UNIQUE INDEX uk_email (email);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; SHOW CREATE TABLE customer \G;
+*************************** 1. row ***************************
+       Table: customer
+Create Table: CREATE TABLE <code>customer</code> (
+  <code>customer_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>store_id</code> tinyint(3) unsigned NOT NULL,
+  <code>first_name</code> varchar(45) NOT NULL,
+  <code>last_name</code> varchar(45) NOT NULL,
+  <code>email</code> varchar(50) DEFAULT NULL,
+  <code>address_id</code> smallint(5) unsigned NOT NULL,
+  <code>active</code> tinyint(1) NOT NULL DEFAULT '1',
+  <code>create_date</code> datetime NOT NULL,
+  <code>last_update</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>customer_id</code>),
+  UNIQUE KEY <code>uk_email</code> (<code>email</code>),
+  KEY <code>idx_fk_store_id</code> (<code>store_id</code>),
+  KEY <code>idx_fk_address_id</code> (<code>address_id</code>),
+  KEY <code>idx_last_name</code> (<code>last_name</code>),
+  CONSTRAINT <code>fk_customer_address</code> FOREIGN KEY (<code>address_id</code>) REFERENCES <code>address</code> (<code>address_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_customer_store</code> FOREIGN KEY (<code>store_id</code>) REFERENCES <code>store</code> (<code>store_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=600 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; EXPLAIN SELECT * FROM (SELECT * FROM customer WHERE email='AARON.SELBY@sakilacustomer.org') a \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: customer
+   partitions: NULL
+         type: const
+possible_keys: uk_email
+          key: uk_email
+      key_len: 153
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: NULL
+1 row in set, 1 warning (0.00 sec)</p>
+
+<pre><code>
+ （7）type=NULL，MySQL不用访问表，直接就能得到结果：
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT 1 FROM dual WHERE 1 \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: NULL
+   partitions: NULL
+         type: NULL
+possible_keys: NULL
+          key: NULL
+      key_len: NULL
+          ref: NULL
+         rows: NULL
+     filtered: NULL
+        Extra: No tables used
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+类型type还有其他值，如ref_or_null（与ref类似，区别在于条件中包含对NULL的查询）、index_merge（索引合并优化）、unique_subquery（in的后面是一个查询主键字段的子查询）、index_subquery（与unique_subquery类似，区别在于in的后面是查询非唯一索引字段的子查询）。
+
+
+ * possible_keys：表示查询可能使用的索引。
+
+ * key：表示实际使用的索引。
+
+ * key_len：使用到索引字段的长度。
+
+ * rows：扫描行的数量。
+
+ * Extra：执行情况的说明和描述，包含不适合在其他列中显示但是对执行计划非常重要的额外信息。
+
+ * filtered：显示了通过条件过滤出的行数的百分比估计值。值很大，比方100，说明条件非常有效过滤。
+
+ * partitions：若所查询的表是分区表，将显示SQL所需访问的分区名字。
+
+
+EXPLAIN命令加上SHOW WARNINGS我们能够看到在SQL被真正执行前优化器做了哪些改写：
+
+</code></pre>
+
+<p>mysql&gt; EXPLAIN SELECT SUM(amount) FROM customer a, payment b WHERE 1=1 AND a.customer_id=b.customer_id AND email='JANE.BENNETT@sakilacustomer.org' \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: a
+   partitions: NULL
+         type: const
+possible_keys: PRIMARY,uk_email
+          key: uk_email
+      key_len: 153
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: Using index
+*************************** 2. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: b
+   partitions: NULL
+         type: ref
+possible_keys: idx_fk_customer_id
+          key: idx_fk_customer_id
+      key_len: 2
+          ref: const
+         rows: 28
+     filtered: 100.00
+        Extra: NULL
+2 rows in set, 1 warning (0.01 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; SHOW WARNINGS \G;
+*************************** 1. row ***************************
+  Level: Note
+   Code: 1003
+Message: /* select#1 */ select sum(<code>sakila</code>.<code>b</code>.<code>amount</code>) AS <code>SUM(amount)</code> from <code>sakila</code>.<code>customer</code> <code>a</code> join <code>sakila</code>.<code>payment</code> <code>b</code> where ((<code>sakila</code>.<code>b</code>.<code>customer_id</code> = '77') and ('JANE.BENNETT@sakilacustomer.org' = 'JANE.BENNETT@sakilacustomer.org'))
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+从warnings看以看到，优化器自动去除了1=1这个恒成立的条件。
+
+
+下面给一个分区表的例子：
+
+</code></pre>
+
+<p>mysql&gt; SHOW CREATE TABLE customer \G;
+*************************** 1. row ***************************
+       Table: customer
+Create Table: CREATE TABLE <code>customer</code> (
+  <code>customer_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>store_id</code> tinyint(3) unsigned NOT NULL,
+  <code>first_name</code> varchar(45) NOT NULL,
+  <code>last_name</code> varchar(45) NOT NULL,
+  <code>email</code> varchar(50) DEFAULT NULL,
+  <code>address_id</code> smallint(5) unsigned NOT NULL,
+  <code>active</code> tinyint(1) NOT NULL DEFAULT '1',
+  <code>create_date</code> datetime NOT NULL,
+  <code>last_update</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>customer_id</code>),
+  UNIQUE KEY <code>uk_email</code> (<code>email</code>),
+  KEY <code>idx_fk_store_id</code> (<code>store_id</code>),
+  KEY <code>idx_fk_address_id</code> (<code>address_id</code>),
+  KEY <code>idx_last_name</code> (<code>last_name</code>),
+  CONSTRAINT <code>fk_customer_address</code> FOREIGN KEY (<code>address_id</code>) REFERENCES <code>address</code> (<code>address_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_customer_store</code> FOREIGN KEY (<code>store_id</code>) REFERENCES <code>store</code> (<code>store_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=600 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; CREATE TABLE customer_part (
+    -&gt; customer_id SMALLINT(5) UNSIGNED NOT NULL AUTO_INCREMENT,
+    -&gt; store_id TINYINT(3) UNSIGNED NOT NULL,
+    -&gt; first_name VARCHAR(45) NOT NULL,
+    -&gt; last_name VARCHAR(45) NOT NULL,
+    -&gt; email VARCHAR(50) DEFAULT NULL,
+    -&gt; address_id SMALLINT(5) unsigned NOT NULL,
+    -&gt; active TINYINT(1) NOT NULL DEFAULT '1',
+    -&gt; create_date DATETIME NOT NULL,
+    -&gt; last_update TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    -&gt; PRIMARY KEY (customer_id)
+    -&gt; ) PARTITION BY HASH (customer_id) PARTITIONS 8;
+Query OK, 0 rows affected (0.38 sec)</p>
+
+<p>mysql&gt; INSERT INTO customer_part SELECT * FROM customer;
+Query OK, 599 rows affected (0.10 sec)
+Records: 599  Duplicates: 0  Warnings: 0</p>
+
+<p>mysql&gt; EXPLAIN PARTITIONS SELECT * FROM customer_part WHERE customer_id=130;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SELECT * FROM customer_part WHERE customer_id=130' at line 1
+mysql&gt; EXPLAIN SELECT * FROM customer_part WHERE customer_id=130 \G;
+*************************** 1. row ***************************
+           id: 1
+  select_type: SIMPLE
+        table: customer_part
+   partitions: p2
+         type: const
+possible_keys: PRIMARY
+          key: PRIMARY
+      key_len: 2
+          ref: const
+         rows: 1
+     filtered: 100.00
+        Extra: NULL
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>我们阅读返回信息可知，SQL语句需要访问p2分区。
+
+#### 18.1.4 通过SHOW PROFILE分析SQL
+有时仅通过EXPAIN命令不能很快速定位SQL的问题，这时可以选择PROFILE联合分析。
+
+查询版本是否支持PROFILE：
+
+</code></pre>
+
+<p>mysql&gt; SELECT @@have_profiling;
++------------------+
+| @@have_profiling |
++------------------+
+| YES              |
++------------------+
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+默认PROFILING是关闭的，可通过SET语句在Session级别开启PROFILING：
+
+</code></pre>
+
+<p>mysql&gt; SELECT @@profiling;
++-------------+
+| @@profiling |
++-------------+
+|           0 |
++-------------+
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt; SET PROFILING=1;
+Query OK, 0 rows affected, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+通过profile，我们能够清楚了解SQL执行的过程。例如，我们知道MyISAM类型的表有元数据的缓存（例如行数，即COUNT( * )值），那么对MyISAM类型的表的COUNT( * )是不需要消耗太多资源的，而对于InnoDB类型的表来说，没有元数据的缓存，COUNT( * )执行得慢。
+
+
+</code></pre>
+
+<p>mysql&gt; SHOW CREATE TABLE payment \G;
+*************************** 1. row ***************************
+       Table: payment
+Create Table: CREATE TABLE <code>payment</code> (
+  <code>payment_id</code> smallint(5) unsigned NOT NULL AUTO_INCREMENT,
+  <code>customer_id</code> smallint(5) unsigned NOT NULL,
+  <code>staff_id</code> tinyint(3) unsigned NOT NULL,
+  <code>rental_id</code> int(11) DEFAULT NULL,
+  <code>amount</code> decimal(5,2) NOT NULL,
+  <code>payment_date</code> datetime NOT NULL,
+  <code>last_update</code> timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (<code>payment_id</code>),
+  KEY <code>idx_fk_staff_id</code> (<code>staff_id</code>),
+  KEY <code>idx_fk_customer_id</code> (<code>customer_id</code>),
+  KEY <code>fk_payment_rental</code> (<code>rental_id</code>),
+  CONSTRAINT <code>fk_payment_customer</code> FOREIGN KEY (<code>customer_id</code>) REFERENCES <code>customer</code> (<code>customer_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_payment_rental</code> FOREIGN KEY (<code>rental_id</code>) REFERENCES <code>rental</code> (<code>rental_id</code>) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT <code>fk_payment_staff</code> FOREIGN KEY (<code>staff_id</code>) REFERENCES <code>staff</code> (<code>staff_id</code>) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16050 DEFAULT CHARSET=utf8
+1 row in set (0.00 sec)</p>
+
+<p>ERROR:
+No query specified</p>
+
+<p>mysql&gt; SELECT COUNT(<em>) FROM payment;
++----------+
+| COUNT(</em>) |
++----------+
+|    16049 |
++----------+
+1 row in set (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+执行完毕通过SHOW PROFILES语句，看到当前SQL语句得QUERY_ID为1：
+
+</code></pre>
+
+<p>mysql&gt; SHOW PROFILES;
++----------+------------+------------------------------+
+| Query_ID | Duration   | Query                        |
++----------+------------+------------------------------+
+|        1 | 0.01493800 | SELECT COUNT(*) FROM payment |
++----------+------------+------------------------------+
+1 row in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+通过SHOW PROFILE FOR QUERY语句可以看到执行过程中线程得每个状态和消耗得时间：
+
+</code></pre>
+
+<p>mysql&gt; SHOW PROFILE FOR QUERY 1;
++----------------------------+----------+
+| Status                     | Duration |
++----------------------------+----------+
+| starting                   | 0.000127 |
+| checking permissions       | 0.000009 |
+| Opening tables             | 0.000056 |
+| init                       | 0.000009 |
+| System lock                | 0.000016 |
+| optimizing                 | 0.000006 |
+| statistics                 | 0.000037 |
+| preparing                  | 0.000023 |
+| executing                  | 0.000003 |
+| Sending data               | 0.014495 |
+| end                        | 0.000015 |
+| query end                  | 0.000005 |
+| waiting for handler commit | 0.000009 |
+| query end                  | 0.000014 |
+| closing tables             | 0.000013 |
+| freeing items              | 0.000070 |
+| cleaning up                | 0.000033 |
++----------------------------+----------+
+17 rows in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+可以查询INFORMATION_SCHEMA.PROFILING表并按时间降序排序：
+
+</code></pre>
+
+<p>mysql&gt; SET @query_id := 1;
+Query OK, 0 rows affected (0.00 sec)</p>
+
+<p>mysql&gt; SELECT STATE, SUM(DURATION) AS Total_R,
+    -&gt;        ROUND(
+    -&gt;        100 * SUM(DURATION) /
+    -&gt;        (
+    -&gt;        SELECT SUM(DURATION)
+    -&gt;        FROM INFORMATION_SCHEMA.PROFILING
+    -&gt;        WHERE QUERY_ID = @query_id
+    -&gt;        ), 2
+    -&gt;        ) AS Pct_R,
+    -&gt;        COUNT(<em>) AS Calls,
+    -&gt;        SUM(DURATION) / COUNT(</em>) AS &quot;R/Calls&quot;
+    -&gt; FROM INFORMATION_SCHEMA.PROFILING
+    -&gt; WHERE QUERY_ID = @query_id
+    -&gt; GROUP BY STATE
+    -&gt; ORDER BY Total_R DESC;
++----------------------------+----------+-------+-------+--------------+
+| STATE                      | Total_R  | Pct_R | Calls | R/Calls      |
++----------------------------+----------+-------+-------+--------------+
+| Sending data               | 0.014495 | 97.02 |     1 | 0.0144950000 |
+| starting                   | 0.000127 |  0.85 |     1 | 0.0001270000 |
+| freeing items              | 0.000070 |  0.47 |     1 | 0.0000700000 |
+| Opening tables             | 0.000056 |  0.37 |     1 | 0.0000560000 |
+| statistics                 | 0.000037 |  0.25 |     1 | 0.0000370000 |
+| cleaning up                | 0.000033 |  0.22 |     1 | 0.0000330000 |
+| preparing                  | 0.000023 |  0.15 |     1 | 0.0000230000 |
+| query end                  | 0.000019 |  0.13 |     2 | 0.0000095000 |
+| System lock                | 0.000016 |  0.11 |     1 | 0.0000160000 |
+| end                        | 0.000015 |  0.10 |     1 | 0.0000150000 |
+| closing tables             | 0.000013 |  0.09 |     1 | 0.0000130000 |
+| checking permissions       | 0.000009 |  0.06 |     1 | 0.0000090000 |
+| init                       | 0.000009 |  0.06 |     1 | 0.0000090000 |
+| waiting for handler commit | 0.000009 |  0.06 |     1 | 0.0000090000 |
+| optimizing                 | 0.000006 |  0.04 |     1 | 0.0000060000 |
+| executing                  | 0.000003 |  0.02 |     1 | 0.0000030000 |
++----------------------------+----------+-------+-------+--------------+
+16 rows in set, 17 warnings (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+在获取了最好事线程后，还可进一步查询在使用什么资源上耗费过多时间，比如查询cpu消耗时间：
+
+</code></pre>
+
+<p>mysql&gt; SHOW PROFILE CPU FOR QUERY 1;
++----------------------------+----------+----------+------------+
+| Status                     | Duration | CPU_user | CPU_system |
++----------------------------+----------+----------+------------+
+| starting                   | 0.000127 | 0.000000 |   0.000000 |
+| checking permissions       | 0.000009 | 0.000000 |   0.000000 |
+| Opening tables             | 0.000056 | 0.000000 |   0.000000 |
+| init                       | 0.000009 | 0.000000 |   0.000000 |
+| System lock                | 0.000016 | 0.000000 |   0.000000 |
+| optimizing                 | 0.000006 | 0.000000 |   0.000000 |
+| statistics                 | 0.000037 | 0.000000 |   0.000000 |
+| preparing                  | 0.000023 | 0.000000 |   0.000000 |
+| executing                  | 0.000003 | 0.000000 |   0.000000 |
+| Sending data               | 0.014495 | 0.015625 |   0.000000 |
+| end                        | 0.000015 | 0.000000 |   0.000000 |
+| query end                  | 0.000005 | 0.000000 |   0.000000 |
+| waiting for handler commit | 0.000009 | 0.000000 |   0.000000 |
+| query end                  | 0.000014 | 0.000000 |   0.000000 |
+| closing tables             | 0.000013 | 0.000000 |   0.000000 |
+| freeing items              | 0.000070 | 0.000000 |   0.000000 |
+| cleaning up                | 0.000033 | 0.000000 |   0.000000 |
++----------------------------+----------+----------+------------+
+17 rows in set, 1 warning (0.00 sec)</p>
+
+<p>mysql&gt;</p>
+
+<pre><code>
+能够发现Sending data状态下，时间主要好在CPU上了。
+
+#### 18.1.5 通过TRACE分析优化器选择执行计划
+
+这东西繁琐，理解性东西不多，可以当作肌肉训练了；以后与机器学习交替进行。
+datetime：2018/12/5 16：35
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+#### 18.1.6 确定问题并采取相应的优化措施
+
+
+
+
+
+
+
+### 18.2 索引问题
+
+
+
+
+#### 18.2.1 索引的存储分类
+
+
+
+
+
+#### 18.2.2 MySQL如何使用索引
+
+
+
+
+
+#### 18.2.3 查看索引使用情况
+
+
+
+
+
+
+### 18.3 两个简单实用的优化方法
+
+
+
+
+
+#### 18.3.1 定期分析表和检查表
+
+
+
+
+
+#### 18.3.2 定期优化表
+
+
+
+
+
+
+### 18.4 常用SQL的优化
+
+
+
+
+#### 18.4.1 大批量插入数据
+
+
+
+
+
+#### 18.4.2 优化INSERT语句
+
+
+
+
+
+#### 18.4.3 优化ORDER BY语句
+
+
+
+
+
+#### 18.4.4 优化GROUP BY语句
+
+
+
+
+
+#### 18.4.5 优化嵌套查询
+
+
+
+
+
+#### 18.4.6 优化OR条件
+
+
+
+
+
+#### 18.4.7 优化分页查询
+
+
+
+
+
+#### 18.4.8 使用SQL提示
+
+
+
+
+
+
+### 18.5 常用SQL技巧
+
+
+
+
+
+#### 18.5.1 正则表达式的使用
+
+
+
+
+
+#### 18.5.2 巧用RAND()提取随即行
+
+
+
+
+
+#### 18.5.3 利用GROUP BY的WITH ROLLUP子句
+
+
+
+
+
+#### 18.5.4 利用BIT GROUP FUCTIONS做统计
+
+
+
+
+
+#### 18.5.5 数据库名、表名大小写问题
+
+
+
+
+
+#### 18.5.6 使用外键需要注意的问题
+
+
+
+
+
+
+### 18.6 小结
+
+
+
+
+load data infile 'e:/notebook/test.csv' 
+into table test
+fields terminated by ','   
+lines terminated by '\n'
+ignore 1 lines;
+
+
+load data infile 'e:/notebook/train.csv' 
+into table train
+fields terminated by ','   
+lines terminated by '\n'
+ignore 1 lines;
+
+
+
+
+select * from test
+into outfile 'e:/notebook/project/test.csv' 
+fields terminated by ','   
+lines terminated by '\n';
+
+
+
+select * from train
+into outfile 'e:/notebook/project/train.csv' 
+fields terminated by ','   
+lines terminated by '\n';
+
+
+
+
+
+
+select * from (select 'id','date','store','item' union select id,date,store,item from test) b
+into outfile 'e:/notebook/project/test.csv' 
+fields terminated by ','   
+lines terminated by '\n'; 
+
+select * from (select 'date','store','item','sales' union select date,store,item,sales from train) b
+into outfile 'e:/notebook/project/train.csv' 
+fields terminated by ','   
+lines terminated by '\n';
+
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 19 优化数据库对象
+
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<pre><code>
+
+
+</code></pre>
+
+<p>```</p>
+
+<h2 id="20-锁问题">20 锁问题</h2>
+
+<h2 id="21-优化mysql-server">21 优化MySQL Server</h2>
+
+<h2 id="22-磁盘i-o问题">22 磁盘I/O问题</h2>
+
+<h2 id="23-应用优化">23 应用优化</h2>
+
+<h2 id="24-mysql高级安装和升级">24 MySQL高级安装和升级</h2>
+
+<h2 id="25-mysql中常用的工具">25 MySQL中常用的工具</h2>
+
+<h2 id="26-mysql日志">26 MySQL日志</h2>
+
+<h2 id="27-备份与恢复">27 备份与恢复</h2>
+
+<h2 id="28-mysql权限与安全">28 MySQL权限与安全</h2>
+
+<h2 id="29-mysql监控">29 MySQL监控</h2>
+
+<h2 id="30-mysql常见问题和应用技巧">30 MySQL常见问题和应用技巧</h2>
+
+<h2 id="31-mysql复制">31 MySQL复制</h2>
+
+<h2 id="32-mysql-cluster">32 MySQL Cluster</h2>
+
+<h2 id="33-mysql高可用架构">33 MySQL高可用架构</h2>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

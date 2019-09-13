@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Kaggle之Store item demand forecasting challenge竞赛项目总结 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Kaggle之Store item demand forecasting challenge竞赛项目总结</h1>
+
+
+<h2 id="1-项目情况">1.项目情况</h2>
+
+<p>kaggle的Store Item Demand Forecasting Challenge竞赛，
+有2013年初到2017年末10个商店、50种货物每日销量情况，预测2018年头3个月这些商店、货物的每日销售情况。竞赛要求结果采用SMAPE度量。
+<code>$$SMAPE=100 \text{%} \frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2}$$</code>
+<code>$A_i$</code>代表第i个样本的真实值，<code>$F_i$</code>代表第i个样本的预测值。</p>
+
+<h2 id="2-项目成绩">2.项目成绩</h2>
+
+<p>以下代码采用2014年、2015年和2016年数据用于训练，2017年数据用于验证，模型采用损失函数RMSE，度量函数SMAPE。得到训练smape约12.30<sup>[11]</sup>，2017年smape为11.860766606767626<sup>[12]</sup>，2014年第一季度smape为14.645917711865364<sup>[3]</sup>，2015年第一季度smape为14.091883155407277<sup>[4]</sup>，2016年第一季度smape为13.476791353148277<sup>[5]</sup>，2017年第一季度smape为13.301776762020786<sup>[6]</sup>。据此推断2018年第一季度smape约<strong>12.5846141148</strong>，与竞赛最优成绩<strong>12.58015</strong>相当，可惜不在竞赛时段，无法最终验证。依据如下：</p>
+
+<p>损失函数采用RMSE，
+<code>$$RMSE=\sqrt{\frac{1}{n} \sum_{i=1}^{n} {(A_i-F_i)}^{2}}$$</code>
+其关注的是绝对误差，而且RMSE对绝对误差的离散程度容忍较小，个体绝对误差偏离均值将显著增加RMSE，因此RMSE倾向于减小绝对误差并使绝对误差尽可能均一化。
+模型的绝对误差接近均一化，但是由于实际销量情况随时间是不平衡的，这就是造成smape差异的原因。</p>
+
+<p>为估计2018年第一季度smape，作如下假设：</p>
+
+<ol>
+<li>SMAPE约等于销量绝对误差的平均值除以销量的平均值。即：
+<code>$$SMAPE=\frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} (|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} |A_i|}$$</code></li>
+<li>2018年第一季度销量平均值取自2013年第一季度、2014年第一季度、2015年第一季度、2016年第一季度、2017年第一季度销量平均值的最小二乘法线性插值。</li>
+</ol>
+
+<p>smape计算</p>
+
+<table>
+<thead>
+<tr>
+<th align="center">时间</th>
+<th align="center">平均绝对误差<sup>[8]</sup></th>
+<th align="center">平均销量<sup>[9]</sup></th>
+<th align="center">smape</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="center">2014q1</td>
+<td align="center">572.6247872118</td>
+<td align="center">39.097911<sup>[1]</sup></td>
+<td align="center">14.645917711865364<sup>[3]</sup></td>
+</tr>
+
+<tr>
+<td align="center">2015q1</td>
+<td align="center">574.5670977178</td>
+<td align="center">40.772911<sup>[1]</sup></td>
+<td align="center">14.091883155407277<sup>[4]</sup></td>
+</tr>
+
+<tr>
+<td align="center">2016q1</td>
+<td align="center">594.8380237664</td>
+<td align="center">44.137956<sup>[1]</sup></td>
+<td align="center">13.476791353148277<sup>[5]</sup></td>
+</tr>
+
+<tr>
+<td align="center">2017q1</td>
+<td align="center">609.3224692039</td>
+<td align="center">45.807600<sup>[1]</sup></td>
+<td align="center">13.301776762020786<sup>[6]</sup></td>
+</tr>
+
+<tr>
+<td align="center">2018q1</td>
+<td align="center">620.8601<sup>[7]</sup></td>
+<td align="center">49.334854<sup>[2]</sup></td>
+<td align="center">12.5846141148</td>
+</tr>
+</tbody>
+</table>
+
+<p>备注：</p>
+
+<ol>
+<li>2014q1、2015q1、2016q1和2017q1的平均销量见Out[26]。</li>
+<li>2018q1的平均销量取自2013q1到2017q1平均销量的最小二乘法线性插值。</li>
+<li>2014q1的smape见Out[92]。</li>
+<li>2015q1的smape见Out[93]。</li>
+<li>2016q1的smape见Out[94]。</li>
+<li>2017q1的smape见Out[90]。</li>
+<li>2018q1的平均绝对误差取自2014q1到2017q1平均绝对误差的最小二乘法线性插值。</li>
+<li>平均绝对误差即<code>$\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|$</code>。</li>
+<li>平均销量即<code>$\frac{1}{n} \sum_{i=1}^{n} |A_i|$</code>。</li>
+<li>最小二乘法线性回归公式<code>$y=ax+b$</code>、<code>$a = \frac{n\sum_{i=1}^{n}xy - \sum_{i=1}^{n}x\sum_{i=1}^{n}y}{n\sum_{i=1}^{n}x^2 - {(\sum_{i=1}^{n}x)}^2}$</code>、<code>$b=\hat{y}-a\hat{x}$</code>。</li>
+<li>2014-2016年的smape见Out[89]。</li>
+<li>2017年的smape见Out[91]。</li>
+</ol>
+
+<p>竞赛排行耪：
+<a href="https://www.kaggle.com/c/demand-forecasting-kernels-only/leaderboard">https://www.kaggle.com/c/demand-forecasting-kernels-only/leaderboard，名称feiyang0chen1</a></p>
+
+<p><img src="/sidfc/leaderboard.png" alt="Figure 1-1. 竞赛排行耪" /></p>
+
+<h2 id="3-项目心得体会">3.项目心得体会：</h2>
+
+<ol>
+<li><strong>防止泄露</strong>是关键。时间序列的预测不可避免要利用需要预测的目标值本身构造特征。竞赛历史数据时间段为2013.1.1~2017.12.31，需要预测2018.1.1~2018.3.31时间段（90天）10个商店每个商店50种货物销量，那么在利用销量构造特征时必须滞后90天及以上，若含有滞后小于90天的特征，将造成模型训练时效果很好而预测时候效果很差，因为2018.1.1及以后销量没有数据。我构造的特征如果利用了往期销量，要么滞后不小于90，要么分出数据用来作统计构造特征而不参与训练，这样保证了不存在泄露。</li>
+<li>很自然会想到2018年全年作为验证数据集，建立的模型很容易得到2018年的smape接近12.0，那么据此认为2018年第一季度的smape为12.0吗？不是的，作图可知<strong>销量随时间上是不均衡的</strong>，事实上年初和年末属于销量淡季，其smape显著大于年中及年平均。</li>
+<li>多次尝试建立模型发现，模型很容易模拟销量的平均变化，就犹如将往期销量数据平滑了一般，但这就造成了模型很难模拟销量极值出现的情况。特别地，小销量如果出现极小值而模型未抓取，将显著增加模型smape。<strong>关键是抓取极值信息</strong>，所以我采用2013年销量数据计算了月、日、商店、商品（年中第几周、星期几、商店、商品）联合对应销量的窗口平均与实际销量的差值除以销量（记作mpe）将这个数据的极大值和极小值对应的月、日、商店、商品（年中第几周、星期几、商店、商品）联合分别标记为1，-1，其它月、日、商店、商品（年中第几周、星期几、商店、商品）标记为0，这样构成了一些新的特征。若采用全部历史数据构造这些特征将造成严重泄露，这也从侧面验证了这些数据的有效性。（见In[51~58])</li>
+<li>同时还发现，月、日、商店、商品（年中第几周、星期几、商店、商品）联合对应销量的窗口平均与实际销量的差值除以销量（记作mpe）本身对模型是没有贡献的，因为<strong>mpe信息性太强</strong>而不一定符合之后数据。（见In[59~60]，Out[96])</li>
+<li>关于特征选择，提升算法的基础学习器是树，树根据信息熵划分，那么需要尽可能找到一些与目标变量之间互信息较大的特征，根据作图发现：销量呈现出年周期性，按日期平均的销量呈现出周周期性，那么合理猜测滞后接近一年和一周的整数倍的特征含有较大的互信息且比较重要，Out[62]、Out[96]和Out[97]证明了这一猜测。</li>
+<li>那么是不是互信息较小特重要度小的特征应该去掉呢，我认为不是，即使存在严重泄露的时候，感想3对应的特征互信息也很小，在特征重要度中也很低，但确实显著影响模型smape。笼统地说，模型效果取决于模型特征的配合，<strong>一些互信息较小的特征，若能促进树的进一步划分，将对模型有举足轻重的贡献</strong>。</li>
+<li>关注包的选择：Sklearn、XGBoost、lightGBM、CatBoost都可实现提升算法，似乎后三者计算损失函数采用了泰勒定理用一阶导数和二阶导数来近似，加快了计算。而计算效率按大家经验和我粗略的感知似乎CatBoost更快，同时我还觉得CatBoost调参负担小一点，不需怎么调参即可得到尚可的结果。似乎lightGBM、CatBoost可处理分类变量而Sklearn、XGBoost需要预处理之后才能灌入包。Sklearn似乎不能容忍数据中含有空值，而后三个包可以允许。</li>
+<li>关于损失函数的选择：自带损失函数我本想选MAPE，MAPE关注误差百分比，契合竞赛的度量函数，奈何其更新太慢，设置远超1的学习率训练训练仍难以得到相当结果，于是作罢。想尝试采用平均的平方百分误差误差来训练会怎么样，不过catboost推荐用c++来构造损失函数，我暂时不掌握c++，暂时作罢。</li>
+<li>设置用2013、2014年数据构造特征，2015、2016年数据用于训练事实上能得到更好效果（这时2017q1的smape可13.27），但线性插值的数据点将减少，2018年第一季度实际销量不知道的前提下不易说明预测smape的范围。</li>
+</ol>
+
+<h2 id="4-代码">4.代码</h2>
+
+<iframe src="/sidfc/13_301776762020786.html" width="100%" height="65910" frameborder=0 ></iframe>
+
+<h2 id="5-图片">5.图片</h2>
+
+<p>代码Out89部分生成的图片未能在博客显示，截图呈现。</p>
+
+<p><img src="/sidfc/13_301776762020786_a.png" alt="Figure 1-2. 模型结果" /></p>
+
+<p><img src="/sidfc/13_301776762020786_b.png" alt="Figure 1-3. 模型结果" /></p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

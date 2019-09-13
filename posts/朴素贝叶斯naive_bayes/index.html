@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>朴素贝叶斯naive_bayes | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>朴素贝叶斯naive_bayes</h1>
+
+
+<p>Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable. Bayes’ theorem states the following relationship, given class variable
+<code>$y$</code>
+and dependent feature vector
+<code>$x_1$</code>
+through
+<code>$x_m$</code>
+,:朴素贝叶斯方法是应用贝叶斯定理的监督学习算法的集合，其假设决定目标分类的各特征列之间两两条件独立，这是“朴素”二字的由来。贝叶斯定理陈述如下关系，给定分类变量<code>$y$</code>和其依存特征变量从<code>$x_1$</code>到<code>$x_m$</code>：
+<code>$$P(y \mid x_1, x_2, \dots, x_m) = \frac{P(y) P(x_1, x_2, \dots x_m \mid y)}
+                                 {P(x_1, x_2, \dots, x_m)}   \tag{1}$$</code></p>
+
+<p><strong>这里<code>$x_1,\ldots,x_m$</code>是一行数据，这m个数构成一个行向量<code>$[x_1,x_2,\ldots,x_m]$</code>。</strong></p>
+
+<p>Using the naive conditional independence assumption that:使用条件独立假设：
+<code>$$P(x_1, x_2, \dots, x_m | y) = \prod_{i=1}^{m}{P(x_i | y)}   \tag{2}$$</code>
+For all
+<code>$i$</code>
+, this relationship is simplified to:对所有<code>$i$</code>，这些关系简化为：
+<code>$$P(y \mid x_1, x_2, \dots, x_m) = \frac{P(y) \prod_{i=1}^{m} P(x_i \mid y)}
+                                 {P(x_1, x_2, \dots, x_m)}   \tag{3}$$</code>
+Since
+<code>$P(x_1, x_2, \dots, x_m)$</code>
+is constant given the input, we can use the following classification rule:由于<code>$P(x_1, x_2, \dots, x_m)$</code>在给定输入条件下是常数，我们可以使用以下分类规则：
+<code>$$\begin{align}\begin{aligned}P(y \mid x_1, x_2, \dots, x_m) \propto P(y) \prod_{i=1}^{m} P(x_i \mid y)\\\Downarrow\\\hat{y} = \arg\max_y P(y) \prod_{i=1}^{m} P(x_i \mid y),\end{aligned}\end{align}   \tag{4}$$</code>
+And we can use Maximum A Posteriori (MAP) estimation to estimate
+<code>$P(y)$</code>
+and
+<code>$P(x_i \mid y)$</code>
+; the former is then the relative frequency of class
+<code>$y$</code>
+in the training set.我们可以用极大后验(MAP)估计<code>$P(y)$</code>和<code>$P(x_i \mid y)$</code>；前者是训练集中<code>$y$</code>分类的相对频率。</p>
+
+<p><strong>The different naive Bayes classifiers differ mainly by the assumptions they make regarding the distribution of
+<code>$P(x_i \mid y)$</code>
+.</strong><strong>不同朴素贝叶斯分类器的区别主要在于它们对<code>$P(x_i \mid y)$</code>分布的假设。</strong></p>
+
+<p>In spite of their apparently over-simplified assumptions, naive Bayes classifiers have worked quite well in many real-world situations, famously document classification and spam filtering. They require a small amount of training data to estimate the necessary parameters. (For theoretical reasons why naive Bayes works well, and on which types of data it does, see the references below.)尽管朴素贝叶斯分类器的假设显然过于简单，但在许多实际情况下，它们都能很好地工作，比如著名的文档分类和垃圾邮件过滤。它们需要少量的训练数据来估计必要的参数。(出于理论上的原因，朴素贝叶斯算法为什么能很好地工作，以及它适用于哪种类型的数据，请参阅下面的参考2)。</p>
+
+<p>Naive Bayes learners and classifiers can be extremely fast compared to more sophisticated methods. The decoupling of the class conditional feature distributions means that each distribution can be independently estimated as a one dimensional distribution. This in turn helps to alleviate problems stemming from the curse of dimensionality.与更复杂的方法相比，朴素贝叶斯学习者和分类器可以非常快。分类条件特征分布的解耦意味着每个分布可以独立地估计为一维分布。这反过来又有助于缓解维度诅咒带来的问题。</p>
+
+<p>On the flip side, although naive Bayes is known as a decent classifier, it is known to be a bad estimator, so the probability outputs from <code>predict_proba</code> are not to be taken too seriously.另一方面，虽然朴素贝叶斯被认为是一个不错的分类器，但它被认为是一个糟糕的估计器，所以<code>predict_proba</code>的概率输出不需要太认真对待。</p>
+
+<h2 id="1-gaussian-naive-bayes高斯朴素贝叶斯">1 Gaussian Naive Bayes高斯朴素贝叶斯</h2>
+
+<p>GaussianNB implements the Gaussian Naive Bayes algorithm for classification. The likelihood of the features is assumed to be Gaussian:GaussianNB实现了高斯朴素贝叶斯分类算法。假设特征的似然是高斯分布的:
+<code>$$P(x_i \mid y) = \frac{1}{\sqrt{2\pi\sigma^2_y}} \exp\left(-\frac{(x_i - \mu_y)^2}{2\sigma^2_y}\right)   \tag{5}$$</code>
+The parameters
+<code>$\sigma_y$</code>
+and
+<code>$\mu_y$</code>
+are estimated using maximum likelihood.参数<code>$\sigma_y$</code>和<code>$\mu_y$</code>是使用最似然估计的。</p>
+
+<h2 id="2-multinomial-naive-bayes多项式朴素贝叶斯">2 Multinomial Naive Bayes多项式朴素贝叶斯</h2>
+
+<p>MultinomialNB implements the naive Bayes algorithm for multinomially distributed data, and is one of the two classic naive Bayes variants used in text classification (where the data are typically represented as word vector counts, although tf-idf vectors are also known to work well in practice). The distribution is parametrized by vectors
+<code>$\theta_y = (\theta_{y1},\ldots,\theta_{ym})$</code>
+for each class
+<code>$y$</code>
+, where
+<code>$m$</code>
+is the number of features (in text classification, the size of the vocabulary) and
+<code>$\theta_{yi}$</code>
+is the probability
+<code>$P(x_i \mid y)$</code>
+of feature
+<code>$i$</code>
+appearing in a sample belonging to class
+<code>$y$</code>
+. MultinomialNB对多项式分布数据实现朴素贝叶斯算法，是文本分类中使用的两个经典朴素贝叶斯变体之一(其中数据通常表示为单词向量计数，尽管tf-idf向量在实践中也很有效)。向量的分布按每个样本分类<code>$y$</code>参数化为<code>$\theta_y = (\theta_{y1},\ldots,\theta_{ym})$</code>，其中<code>$m$</code>是特征列的数量(在文本分类中,词汇数量)，<code>$\theta_{yi}$</code>是第<code>$i$</code>个特征的概率<code>$P(x_i \mid y)$</code>。</p>
+
+<p>The parameters
+<code>$\theta_{y}$</code>
+is estimated by a smoothed version of maximum likelihood, i.e. relative frequency counting:参数z由平滑后的版本的最大似然估计，即相对频率计数:
+<code>$$\hat{\theta}_{yi} = \frac{ N_{yi} + \alpha}{N_y + \alpha m}   \tag{6}$$</code>
+where
+<code>$N_{yi} = \sum_{x \in T} x_i$</code>
+is the number of times feature
+<code>$x_i$</code>
+appears in a sample of class
+<code>$y$</code>
+in the training set
+<code>$T$</code>
+, and
+<code>$N_{y} = \sum_{i=1}^{n} N_{yi}$</code>
+is the total count of all features for class
+<code>$y$</code>
+.其中<code>$N_{yi} = \sum_{x \in T} x_i$</code>为训练集<code>$T$</code>中<code>$y$</code>类样本中特征<code>$x_i$</code>出现的次数，<code>$N_{y} = \sum_{i=1}^{n} N_{yi}$</code>为<code>$y$</code>类特征的总数（也就是，目标的分类为<code>$y$</code>时，特征<code>$x_i$</code>的所有分类的计数之和，一个意思，不过我这个表述好理解一点。）。</p>
+
+<p>The smoothing priors
+<code>$\alpha \ge 0$</code>
+accounts for features not present in the learning samples and prevents zero probabilities in further computations. Setting
+<code>$\alpha = 1$</code>
+is called Laplace smoothing, while
+<code>$\alpha &lt; 1$</code>
+is called Lidstone smoothing.平滑先验<code>$\alpha \ge 0$</code>考虑了学习样本中不存在的特征，防止了进一步计算中的零概率。设<code>$\alpha = 1$</code>则为拉普拉斯平滑，<code>$\alpha &lt; 1$</code>则为Lidstone平滑。</p>
+
+<p>【
+这里<code>$m$</code>是特征列的数量，暂时不清楚为什么分母中<code>$\alpha$</code>需乘以特征列的数量，但查阅<a href="https://en.wikipedia.org/wiki/Additive_smoothing">sklearn文档Additive smoothing</a>，确实分母中<code>$\alpha$</code>需乘以特征列的数量。</p>
+
+<p>在维基Additive smoothing中是这样定义的：</p>
+
+<p>In statistics, additive smoothing, also called Laplace smoothing (not to be confused with Laplacian smoothing as used in image processing), or Lidstone smoothing, is a technique used to smooth categorical data. Given an observation
+<code>$\mathbf {x} \ =\ \left\langle x_{1},\,x_{2},\,\ldots ,\,x_{m}\right\rangle$</code>
+from a multinomial distribution with
+<code>$n$</code>
+trials, a &quot;smoothed&quot; version of the data gives the estimator:在统计学中，加性平滑，也称为Laplace平滑(不要与图像处理中的Laplacian平滑混淆)或Lidstone平滑，是一种用于平滑分类数据的技术。给定<code>$n$</code>次试验的多项式分布的观测<code>$\mathbf {x} \ =\ \left\langle x_{1},\,x_{2},\,\ldots ,\,x_{m}\right\rangle$</code>，数据的“平滑”版本给出估计量
+<code>$${\hat {\theta }}_{i}={\frac {n_{x_{i}}+\alpha }{n+\alpha m}}\qquad (i=1,\ldots ,m)   \tag{7}$$</code>
+where the &quot;pseudocount&quot; <code>$\alpha &gt; 0$</code> is a smoothing parameter. <code>$\alpha = 0$</code> corresponds to no smoothing. Additive smoothing is a type of shrinkage estimator, as the resulting estimate will be between the empirical probability (relative frequency)
+<code>$\frac {n_{x_{i}}}{n}$</code>
+, and the uniform probability
+<code>$\frac {1}{m}$</code>
+. Invoking Laplace's rule of succession, some authors have argued that <code>$\alpha$</code> should be 1 (in which case the term add-one smoothing is also used), though in practice a smaller value is typically chosen.其中“伪计数”<code>$\alpha &gt; 0$</code>是一个平滑参数。<code>$\alpha = 0$</code>对应没有平滑。加性平滑是一种收缩估计，因为得到的估计值将介于经验概率(相对频率)<code>$\frac {n_{x_{i}}}{n}$</code>和均匀概率<code>$\frac {1}{m}$</code>之间。引用拉普拉斯演算法则，一些作者认为<code>$\alpha$</code>应该是1(在这种情况下，术语add-one平滑也被使用)，尽管在实践中通常选择较小的值。
+下面证明得到的估计值将介于经验概率(相对频率)<code>$\frac {n_{x_{i}}}{n}$</code>和均匀概率<code>$\frac {1}{m}$</code>之间：
+<code>$$\begin{align} \\ 
+&amp;(\frac{x_1+x_2}{y_1+y_2}-\frac{x_1}{y_1})\cdot(\frac{x_2}{y_2}-\frac{x_1+x_2}{y_1+y_2}) \\
+&amp;=\frac{(x_1+x_2)y_1-x_1(y_1+y_2)}{(y_1+y_2)y_1}\cdot\frac{x_2(y_1+y_2)-(x_1+x_2)y_2}{(y_1+y_2)y_2} \\
+&amp;=\frac{(x_2y_1-x_1y_2)^2}{(y_1+y_2)^2y_1y_2} \end{align}$$</code>
+当<code>$y_1y_2 &gt; 0$</code>时上式必不小于0，那么<code>$\frac{x_1+x_2}{y_1+y_2}$</code>介于<code>$\frac{x_1}{y_1}$</code>和<code>$\frac{x_2}{y_2}$</code>之间。因为<code>$n$</code>和<code>$\alpha m$</code>均大于零，故得到的估计值将介于经验概率(相对频率)<code>$\frac {n_{x_{i}}}{n}$</code>和均匀概率<code>$\frac {1}{m}$</code>之间。</p>
+
+<p>From a Bayesian point of view, this corresponds to the expected value of the posterior distribution, using a symmetric Dirichlet distribution with parameter <code>$\alpha$</code> as a prior distribution. In the special case where the number of categories is 2, this is equivalent to using a Beta distribution as the conjugate prior for the parameters of Binomial distribution.从贝叶斯的观点来看，这对应于后验分布的期望值，使用参数为<code>$\alpha$</code>的对称狄利克雷分布作为先验分布。在类别数为2的特殊情况下，这等价于使用Beta分布作为二项分布参数的共轭先验。</p>
+
+<p><strong>以上对维基的转载，为使叙述连贯，还有发现了一个小错误，因此改动过符号标记。</strong></p>
+
+<p>公式7中为什么是计算<code>$P(x_i \mid y)$</code>的加性平滑估计而不是<code>$P(x_i)$</code>的平滑估计，所以由<code>$n_{x_{i}}$</code>和<code>$n$</code>相应改为<code>$N_{y_{i}}$</code>和<code>$N_{y}$</code>。这里的<code>$n_{x_{i}}$</code>、<code>$n$</code>、<code>$N_{y_{i}}$</code>和<code>$N_{y}$</code>均是计数，千万不要被x、y束缚。
+】</p>
+
+<h2 id="3-complement-naive-bayes互补朴素贝叶斯">3 Complement Naive Bayes互补朴素贝叶斯</h2>
+
+<p>ComplementNB implements the complement naive Bayes (CNB) algorithm. CNB is an adaptation of the standard multinomial naive Bayes (MNB) algorithm that is particularly suited for <strong>imbalanced data sets</strong>. Specifically, CNB uses statistics from the complement of each class to compute the model’s weights. The inventors of CNB show empirically that the parameter estimates for CNB are more stable than those for MNB. Further, CNB regularly outperforms MNB (often by a considerable margin) on text classification tasks. The procedure for calculating the weights is as follows: ComplementNB实现了互补朴素贝叶斯算法(CNB)。CNB是标准多项式朴素贝叶斯(MNB)算法的一种改进，特别适用于<strong>不平衡数据集</strong>。具体来说，CNB使用来自每个类的补集的统计信息来计算模型的权重。CNB的发明人通过实验证明，CNB的参数估计比MNB的参数估计更稳定。此外，在文本分类任务上，CNB通常比MNB表现更好(通常是相当大的优势)。计算权重的步骤如下：
+<code>$$\begin{align}\begin{aligned}\hat{\theta}_{ci} = \frac{\alpha_i + \sum_{j:y_j \neq c} d_{ij}}
+                         {\alpha + \sum_{j:y_j \neq c} \sum_{k} d_{kj}}\\w_{ci} = \log \hat{\theta}_{ci}\\w_{ci} = \frac{w_{ci}}{\sum_{j} |w_{cj}|}\end{aligned}\end{align}   \tag{8}$$</code></p>
+
+<p><strong>这里三行是三个步骤，第一行计算<code>$\hat{\theta}_{ci}$</code>，第二行对<code>$\hat{\theta}_{ci}$</code>取对数得到<code>$w_{ci}$</code>，第三行标准化<code>$w_{ci}$</code>使其和为1。</strong>
+<strong>这里关于i、j的标注与机器学习刚好相反，不可因此混淆。</strong></p>
+
+<p>where the summations are over all documents
+<code>$j$</code>
+not in class
+<code>$c$</code>
+,
+<code>$d_{ij}$</code>
+is either the count or tf-idf value of term
+<code>$i$</code>
+in document
+<code>$j$</code>
+,
+<code>$\alpha_i$</code>
+is a smoothing hyperparameter like that found in MNB, and
+<code>$\alpha = \sum_{i} \alpha_i$</code>
+. The second normalization addresses the tendency for longer documents to dominate parameter estimates in MNB. The classification rule is:其中，对所有不在<code>$c$</code>类中的文档<code>$j$</code>求和，<code>$d_{ij}$</code>是文档<code>$j$</code>中<code>$i$</code>项的count或tf-idf值，<code>$\alpha_i$</code>是一个类似于MNB中的超参数的平滑超参数，且<code>$\alpha = \sum_{i} \alpha_i$</code>。第二个标准化处理了较长文档的趋势以控制参数估计。分类规则是：
+<code>$$\hat{c} = \arg\min_c \sum_{i} t_i w_{ci}  \tag{9}$$</code>
+<strong>这里其实就是公式4，但是因为是互补朴素贝叶斯，我们要使分类<code>$y$</code>被分配正确分类的补集（错误分类）的概率尽可能小，这样<code>$y$</code>也就被正确分入正确的分类了。</strong></p>
+
+<p>i.e., a document is assigned to the class that is the poorest complement match.即，将文档分配给最不匹配补集的类。</p>
+
+<p><strong>关于算法的过程，大致使清楚了的，但是，为什么互补贝叶斯可以处理好不平衡数据集，则任然不清楚。有空再阅读<a href="https://people.csail.mit.edu/jrennie/papers/icml03-nb.pdf">Rennie, J. D., Shih, L., Teevan, J., &amp; Karger, D. R. (2003). Tackling the poor assumptions of naive bayes text classifiers. In ICML (Vol. 3, pp. 616-623).</a>。</strong></p>
+
+<h2 id="4-bernoulli-naive-bayes">4 Bernoulli Naive Bayes</h2>
+
+<p>BernoulliNB implements the naive Bayes training and classification algorithms for data that is distributed according to multivariate Bernoulli distributions; i.e., there may be multiple features but each one is assumed to be a binary-valued (Bernoulli, boolean) variable. Therefore, this class requires samples to be represented as binary-valued feature vectors; if handed any other kind of data, a BernoulliNB instance may binarize its input (depending on the binarize parameter).对多元伯努利分布分布的数据，BernoulliNB实现了朴素贝叶斯训练和分类算法；即，可能有多个特性，但每个特性都被假定为一个二分类值(Bernoulli, boolean)变量。因此，该类要求样本表示为二值特征向量；如果传递任何其他类型的数据，BernoulliNB实例可以对其输入进行二值化(取决于二值化参数)。</p>
+
+<p>The decision rule for Bernoulli naive Bayes is based on:伯努利朴素贝叶斯的决策规则是基于：
+<code>$$P(x_i \mid y) = P(i \mid y) x_i + (1 - P(i \mid y)) (1 - x_i)   \tag{10}$$</code>
+which differs from multinomial NB’s rule in that it explicitly penalizes the non-occurrence of a feature
+<code>$i$</code>
+that is an indicator for class
+<code>$y$</code>
+, where the multinomial variant would simply ignore a non-occurring feature.这与多项式朴素贝叶斯规则的不同之处在于，它显式地惩罚不出现的特征<code>$i$</code>，而<code>$i$</code>是类<code>$y$</code>的指示器，其中多项式变量（<strong>这里作者的意思是多元伯努利变量</strong>）会简单地忽略不出现的特征。</p>
+
+<p>In the case of text classification, word occurrence vectors (rather than word count vectors) may be used to train and use this classifier. BernoulliNB might perform better on some datasets, especially those with shorter documents. It is advisable to evaluate both models, if time permits.在文本分类的情况下，可以使用单词出现向量(而不是单词计数向量)来训练和使用这个分类器。BernoulliNB可能在某些数据集上表现更好，特别是那些文档较短的数据集。如果时间允许，最好对这两个模型（BernoulliNB和MultinomialNB）进行评估。</p>
+
+<h2 id="5-out-of-core-naive-bayes-model-fitting核外朴素贝叶斯模型拟合">5 Out-of-core naive Bayes model fitting核外朴素贝叶斯模型拟合</h2>
+
+<p>Naive Bayes models can be used to tackle large scale classification problems for which the full training set might not fit in memory. To handle this case, MultinomialNB, BernoulliNB, and GaussianNB expose a <code>partial_fit</code> method that can be used incrementally as done with other classifiers as demonstrated in <a href="https://scikit-learn.org/stable/auto_examples/applications/plot_out_of_core_classification.html#sphx-glr-auto-examples-applications-plot-out-of-core-classification-py">Out-of-core classification of text documents</a>. All naive Bayes classifiers support sample weighting.朴素贝叶斯模型可用于处理大规模分类问题，但完整的训练集可能超出内存范围。为了处理这种情况，MultinomialNB、BernoulliNB和GaussianNB公开了一种<code>partial_fit</code>方法，可以像在<a href="https://scikit-learn.org/stable/auto_examples/applications/plot_out_of_core_classification.html#sphx-glr-auto-examples-applications-plot-out-of-core-classification-py">Out-of-core classification of text documents</a>演示的那样，增量地使用其他分类器。</p>
+
+<p>Contrary to the <code>fit</code> method, the first call to <code>partial_fit</code> needs to be passed the list of all the expected class labels.与<code>fit</code>方法相反，对<code>partial_fit</code>的第一次调用需要传递所有预期分类标签的列表。</p>
+
+<p>For an overview of available strategies in scikit-learn, see also the <a href="https://scikit-learn.org/stable/modules/computing.html#scaling-strategies">out-of-core learning</a> documentation.有关scikit-learn中可用策略的概述，请参见文档<a href="https://scikit-learn.org/stable/modules/computing.html#scaling-strategies">out-of-core learning</a>。</p>
+
+<p>参考：</p>
+
+<ol>
+<li><a href="https://scikit-learn.org/stable/modules/naive_bayes.html#">sklearn文档1.9. Naive Bayes</a>；</li>
+<li><a href="http://www.cs.unb.ca/~hzhang/publications/FLAIRS04ZhangH.pdf">H. Zhang (2004). The optimality of Naive Bayes. Proc. FLAIRS.</a>；</li>
+<li><a href="https://en.wikipedia.org/wiki/Laplacian_smoothing">sklearn文档Laplacian smoothing</a>；</li>
+<li><a href="https://en.wikipedia.org/wiki/Additive_smoothing">sklearn文档Additive smoothing</a>；</li>
+<li><a href="https://people.csail.mit.edu/jrennie/papers/icml03-nb.pdf">Rennie, J. D., Shih, L., Teevan, J., &amp; Karger, D. R. (2003). Tackling the poor assumptions of naive bayes text classifiers. In ICML (Vol. 3, pp. 616-623).</a>；</li>
+<li><a href="https://scikit-learn.org/stable/auto_examples/applications/plot_out_of_core_classification.html#sphx-glr-auto-examples-applications-plot-out-of-core-classification-py">Out-of-core classification of text documents</a>；</li>
+<li><a href="https://scikit-learn.org/stable/modules/computing.html#scaling-strategies">out-of-core learning</a>。</li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

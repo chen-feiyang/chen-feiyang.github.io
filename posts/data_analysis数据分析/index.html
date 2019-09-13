@@ -1,0 +1,930 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>data_analysis数据分析 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>data_analysis数据分析</h1>
+
+
+<p>这里要成系统地叙述什么叫数据分析，然后涉及的知识点在这里不展开，仅仅链接内容，链接内容之后去扩充。</p>
+
+<p><strong>Data analysis</strong> is a process of inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making. Data analysis has multiple facets and approaches, encompassing diverse techniques under a variety of names, while being used in different business, science, and social science domains.</p>
+
+<p>数据分析是一个对数据进行查看、清洗、转换、建模的过程，目的是为了发现有用信息、含有信息的结论、或者支持决策。数据分析有很多方面和手段，包含不同的技术，以不同名字出现在商业、科学、社科等领域。</p>
+
+<p>Data mining is a particular data analysis technique that focuses on modeling and knowledge discovery for predictive rather than purely descriptive purposes, while business intelligence covers data analysis that relies heavily on aggregation, focusing mainly on business information.[1] In statistical applications, data analysis can be divided into descriptive statistics, exploratory data analysis (EDA), and confirmatory data analysis (CDA). EDA focuses on discovering new features in the data while CDA focuses on confirming or falsifying existing hypotheses. Predictive analytics focuses on application of statistical models for predictive forecasting or classification, while text analytics applies statistical, linguistic, and structural techniques to extract and classify information from textual sources, a species of unstructured data. All of the above are varieties of data analysis.</p>
+
+<p>数据挖掘是一个特别的数据分析技术，它关注建模和用于预测的知识而不只是描述，而商业智慧所涉及的数据分析很依赖聚合，主要关注商业信息。统计学手段上，数据分析可分为描述性统计、探索性数据分析（EDA）、和验证性数据分析（CDA）。EDA关注发现数据中的新特征，而CDA关注论证或证伪假设。预测分析关注预测或分类用的模型，而文本分析运用统计学、语言学、和结构技术来从文本资源这种非结构化的数据中提取和分类出信息。以上这些都是数据分析的变种。</p>
+
+<p>Data integration is a precursor to data analysis,[according to whom?] and data analysis is closely linked[how?] to data visualization and data dissemination. The term data analysis is sometimes used as a synonym for data modeling.</p>
+
+<p>数据集成是数据分析的先驱，数据分析紧密连于数据可视化和数据传播。数据分析这一术语有时被用作数据建模的同义词。</p>
+
+<h2 id="1-the-process-of-data-analysis数据分析过程">1 The process of data analysis数据分析过程</h2>
+
+<p>Analysis refers to breaking a whole into its separate components for individual examination. Data analysis is a process for obtaining raw data and converting it into information useful for decision-making by users. Data is collected and analyzed to answer questions, test hypotheses or disprove theories.[2]</p>
+
+<p>分析指的是将一个整体分解成独立的组件。数据分析是获取原始数据并将其转换成用于决策的信息的过程。 数据经收集、分析以回答问题、测试假设或推翻理论。</p>
+
+<p>Statistician John Tukey defined data analysis in 1961 as: &quot;Procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.&quot;[3]</p>
+
+<p>统计学家John Tukey在1961年这样定义数据分析：“分析数据的过程，解释此类过程产生的结果的技术，规划数据收集以使数据分析更容易、更精密或更准确的方法，施于数据分析过程的所有数理统计的机制和结果”。</p>
+
+<p>There are several phases that can be distinguished, described below. The phases are iterative, in that feedback from later phases may result in additional work in earlier phases.[4]</p>
+
+<p>数据分析有几个可以区分的阶段，下面将介绍。这些阶段是迭代的，后面阶段的反馈可能导致先前阶段额外的工作。</p>
+
+<h3 id="1-1-data-requirements数据要求">1.1 Data requirements数据要求</h3>
+
+<p>The data is necessary as inputs to the analysis, which is specified based upon the requirements of those directing the analysis or customers (who will use the finished product of the analysis). The general type of entity upon which the data will be collected is referred to as an experimental unit (e.g., a person or population of people). Specific variables regarding a population (e.g., age and income) may be specified and obtained. Data may be numerical or categorical (i.e., a text label for numbers).[4]</p>
+
+<p>数据是根据指导分析者或客户（他们将使用分析的成果）的要求来制定的，也必然是分析过程的输入。对着收集数据的实体的一般类型被称为实验单位（例如一个人或一群人）。 关于一个群体的特定变量（如年龄和收入）可以指定和获得。数据可以是数值型或分类型（如数字的文本标签）。</p>
+
+<h3 id="1-2-data-collection数据收集">1.2 Data collection数据收集</h3>
+
+<p>Data is collected from a variety of sources. The requirements may be communicated by analysts to custodians of the data, such as information technology personnel within an organization. The data may also be collected from sensors in the environment, such as traffic cameras, satellites, recording devices, etc. It may also be obtained through interviews, downloads from online sources, or reading documentation.[4]</p>
+
+<p>数据是从各种来源收集的。要求可以由分析员传达给数据保管人，如组织内的信息技术人员。数据也可由环境中的传感器采集，如交通摄像头、卫星、记录仪等。也可从访谈获得，从网上下载，或者从文档读取。</p>
+
+<h3 id="1-3-data-processing数据处理">1.3 Data processing数据处理</h3>
+
+<p>Data initially obtained must be processed or organised for analysis. For instance, these may involve placing data into rows and columns in a table format (i.e., structured data) for further analysis, such as within a spreadsheet or statistical software.[4]</p>
+
+<p>最初获得的数据必须被处理或整理用于分析。例如，这可能涉及到将数据放到表格（如结构化数据）对应的行列中以用于进一步分析，就如在电子表格和统计软件中做的一样。</p>
+
+<h3 id="1-4-data-cleaning数据清洗">1.4 Data cleaning数据清洗</h3>
+
+<p>Once processed and organised, the data may be incomplete, contain duplicates, or contain errors. The need for data cleaning will arise from problems in the way that data is entered and stored. Data cleaning is the process of preventing and correcting these errors. Common tasks include record matching, identifying inaccuracy of data, overall quality of existing data,[5] deduplication, and column segmentation.[6] Such data problems can also be identified through a variety of analytical techniques. For example, with financial information, the totals for particular variables may be compared against separately published numbers believed to be reliable.[7] Unusual amounts above or below pre-determined thresholds may also be reviewed. There are several types of data cleaning that depend on the type of data such as phone numbers, email addresses, employers etc. Quantitative data methods for outlier detection can be used to get rid of likely incorrectly entered data. Textual data spell checkers can be used to lessen the amount of mistyped words, but it is harder to tell if the words themselves are correct.[8]</p>
+
+<p>处理并整理好后的数据，还可能不完整，含有重复值，或者含有错误值。数据的输入和存储方式问题也会导致需要数据清洗。数据清洗是防止和纠正这些错误的过程。常规任务包括：记录匹配、识别数据的不准确性、现有数据的整体质量、重复数据删除、列分割。这样的数据问题也可以通过多种分析方法来识别。例如，对金融信息，特定变量的总数可能与据信可靠的单独发布的数字进行比较。也可以回顾超过或低于预定阈值的异常量。有几种类型的数据清洗取决于数据类型，如手机号码、邮箱地址、雇主信息等。用于离群点检测的定量数据方法可用于去除可能错误输入数据。文本数据拼写检查程序可用于减少错字量，但是很难分辨这些单词本身是否正确。</p>
+
+<h3 id="1-5-exploratory-data-analysis探索性数据分析eda">1.5 Exploratory data analysis探索性数据分析EDA</h3>
+
+<p>Once the data is cleaned, it can be analyzed. Analysts may apply a variety of techniques referred to as exploratory data analysis to begin understanding the messages contained in the data.[9][10] The process of exploration may result in additional data cleaning or additional requests for data, so these activities may be iterative in nature. Descriptive statistics, such as the average or median, may be generated to help understand the data. Data visualization may also be used to examine the data in graphical format, to obtain additional insight regarding the messages within the data.[4]</p>
+
+<p>清洗好的数据，可用于分析。分析人员可以应用被称为EDA的多种技术来开始理解数据中包含的消息。探索过程可能导致额外的数据清洗或额外的数据要求，因此这些活动很可能本质上是迭代的。可以做描述性统计，如均值或中值，以帮助理解数据。数据可视化也可以用于以图形格式检查数据，以获得关于数据内的信息的额外洞察力。</p>
+
+<h3 id="1-6-modeling-and-algorithms建模和算法">1.6 Modeling and algorithms建模和算法</h3>
+
+<p>Mathematical formulas or models called algorithms may be applied to the data to identify relationships among the variables, such as correlation or causation. In general terms, models may be developed to evaluate a particular variable in the data based on other variable(s) in the data, with some residual error depending on model accuracy (i.e., Data = Model + Error).[2]</p>
+
+<p>数学公式或模型也即算法可以应用于数据以确定变量之间的关系，如相关或因果关系。一般而言，建成的模型可用于基于其他（一个或多个）变量评估数据中的一个变量，当然因精度原因会留有一定残差（如，数据=模型+残差）。</p>
+
+<p>Inferential statistics includes techniques to measure relationships between particular variables. For example, regression analysis may be used to model whether a change in advertising (independent variable X) explains the variation in sales (dependent variable Y). In mathematical terms, Y (sales) is a function of X (advertising). It may be described as Y = aX + b + error, where the model is designed such that a and b minimize the error when the model predicts Y for a given range of values of X. Analysts may attempt to build models that are descriptive of the data to simplify analysis and communicate results.[2]</p>
+
+<p>推理统计包括测量特定变量之间关系的技术。例如，回归分析可用于模拟广告的变化（自变量X）是否能解释销售额的变化（因变量Y）。在数学术语中，Y（销售）是X（广告）的函数。可将之表述为Y = aX + b + error，给定的x值范围内预测Y的误差值最小化对应的a和b确定了，模型也就确定了。分析师可能尝试建立对数据进行描述的模型来简化分析和交流结果。</p>
+
+<h3 id="1-7-data-product数据产品">1.7 Data product数据产品</h3>
+
+<p>A data product is a computer application that takes data inputs and generates outputs, feeding them back into the environment. It may be based on a model or algorithm. An example is an application that analyzes data about customer purchasing history and recommends other purchases the customer might enjoy.[4]</p>
+
+<p>数据产品是接受数据输入并生成输出的电脑应用程序，输出将回到环境中。数据产品可能基于模型或算法。例如分析客户历史购买数据并推荐顾客可能喜欢的其他商品的应用程序。</p>
+
+<h3 id="1-8-communication交流">1.8 Communication交流</h3>
+
+<p>Once the data is analyzed, it may be reported in many formats to the users of the analysis to support their requirements. The users may have feedback, which results in additional analysis. As such, much of the analytical cycle is iterative.[4]</p>
+
+<p>数据分析后，可能需要以数据分析用户要求的多种格式进行报告。用户可能有所反馈，这将导致额外的分析。因此，许多分析周期是迭代的。</p>
+
+<p>When determining how to communicate the results, the analyst may consider data visualization techniques to help clearly and efficiently communicate the message to the audience. Data visualization uses information displays (such as tables and charts) to help communicate key messages contained in the data. Tables are helpful to a user who might lookup specific numbers, while charts (e.g., bar charts or line charts) may help explain the quantitative messages contained in the data.</p>
+
+<p>当确定如何传达结果时，分析师可以考虑数据可视化技术，这将有助于清晰且高效地向观众传达信息。数据可视化使用信息显示（如图表）来帮助传递数据中包含的关键信息。表利于用户查找特定数字，而图（如条形图或线形图）利于解释数据中包含的定量信息。</p>
+
+<h2 id="2-quantitative-messages定量信息">2 Quantitative messages定量信息</h2>
+
+<p>Stephen Few described eight types of quantitative messages that users may attempt to understand or communicate from a set of data and the associated graphs used to help communicate the message. Customers specifying requirements and analysts performing the data analysis may consider these messages during the course of the process.</p>
+
+<p>Stephen Few描述了8种用户可以尝试从数据集和用于帮助传达消息的关联图中理解或交流定量信息。在过程中，指定要求的客户和执行数据分析的分析师将参考这些信息。</p>
+
+<ol>
+<li>Time-series: A single variable is captured over a period of time, such as the unemployment rate over a 10-year period. A line chart may be used to demonstrate the trend.时序：一段时间内捕获的单个变量，诸如十年期失业率。线型图可用于揭示这种趋势。</li>
+<li>Ranking: Categorical subdivisions are ranked in ascending or descending order, such as a ranking of sales performance (the measure) by sales persons (the category, with each sales person a categorical subdivision) during a single period. A bar chart may be used to show the comparison across the sales persons.排序：细分分类按升序或降序排序，例如单个时期内销售人员的销售业绩(衡量标准)排名，每个销售人员是销售人员分类的一个细分。条形图可用于显示不同销售人员的对比。</li>
+<li>Part-to-whole: Categorical subdivisions are measured as a ratio to the whole (i.e., a percentage out of 100%). A pie chart or bar chart can show the comparison of ratios, such as the market share represented by competitors in a market.部分与整体的比率：细分分类是作为整体的比例（例如百分比）来衡量的。饼状图或条形图能显示比例的对比，例如竞争对手在市场中的市场份额。</li>
+<li>Deviation: Categorical subdivisions are compared against a reference, such as a comparison of actual vs. budget expenses for several departments of a business for a given time period. A bar chart can show comparison of the actual versus the reference amount.偏差：细分分类与参考值比较，如一定时间周期内某商业活动的多个部门实际值和预算费用的比较。条形图能显示实际与参考的对比。</li>
+<li>Frequency distribution: Shows the number of observations of a particular variable for given interval, such as the number of years in which the stock market return is between intervals such as 0–10%, 11–20%, etc. A histogram, a type of bar chart, may be used for this analysis.频率分布：显示给定区间下特定变量的观测值，诸如股市回报率在0–10%、11–20%等区间的年份。直方图，也是一种条形图，可用于这种分析。</li>
+<li>Correlation: Comparison between observations represented by two variables (X,Y) to determine if they tend to move in the same or opposite directions. For example, plotting unemployment (X) and inflation (Y) for a sample of months. A scatter plot is typically used for this message.相关系数：由两个变量（x，y）表示的观测值之间的比较去决定它们是否倾向于同向或反向移动。例如，用几个月样本的失业（X）和通胀（Y）进行绘图。这类信息一般用散点图。</li>
+<li>Nominal comparison: Comparing categorical subdivisions in no particular order, such as the sales volume by product code. A bar chart may be used for this comparison.名义比较：比较无特定顺序的分类细分，如按销售代码分类的销量。条形图可用于这种比较。</li>
+<li>Geographic or geospatial: Comparison of a variable across a map or layout, such as the unemployment rate by state or the number of persons on the various floors of a building. A cartogram is a typical graphic used.[12][13]地理或地理空间：根据地图或布局比较一个变量，如国家失业率或楼房每层人数。地图是一种典型的图像。</li>
+</ol>
+
+<h2 id="3-techniques-for-analyzing-quantitative-data定量信息分析技术">3 Techniques for analyzing quantitative data定量信息分析技术</h2>
+
+<p>Author Jonathan Koomey has recommended a series of best practices for understanding quantitative data. These include:
+ - Check raw data for anomalies prior to performing your analysis;
+ - Re-perform important calculations, such as verifying columns of data that are formula driven;
+ - Confirm main totals are the sum of subtotals;
+ - Check relationships between numbers that should be related in a predictable way, such as ratios over time;
+ - Normalize numbers to make comparisons easier, such as analyzing amounts per person or relative to GDP or as an index value relative to a base year;
+ - Break problems into component parts by analyzing factors that led to the results, such as DuPont analysis of return on equity.[7]
+For the variables under examination, analysts typically obtain descriptive statistics for them, such as the mean (average), median, and standard deviation. They may also analyze the distribution of the key variables to see how the individual values cluster around the mean.</p>
+
+<p>Jonathan Koomey推荐理解定量数据的一系列最好实践，包括：在执行分析之前检查原始数据是否有异常；重做重要计算，例如验证由公式驱动的数据列；确认重要的总和是小计的和；确认那些应该以可预测的方式联系起来的数字之间的关系，如随时间变化比列；标准化数字以简化比较，如分析人均或相对于GDP的量、或相对于基准年的指数价值；通过分析导致结果的因素，将问题分解为组成部分，如对等效回报率采用杜邦分析法。对要检查的变量，分析师通常会获得描述性统计数据，如算术均值mean、中位数median和标准差standard deviation。分析师也可能分析关键变量的分布，来看个体值如何簇拥算术均值mean的。（注：平均数average反映集中趋势central tendency。常用的有：算术均数arithmetic mean，简称均属mean；集合均数geometric mean；中位数median；众数mode；调和均数harmonic mean；截尾均数5% trimmed mean）</p>
+
+<p>The consultants at McKinsey and Company named a technique for breaking a quantitative problem down into its component parts called the MECE principle. Each layer can be broken down into its components; each of the sub-components must be mutually exclusive of each other and collectively add up to the layer above them. The relationship is referred to as &quot;Mutually Exclusive and Collectively Exhaustive&quot; or MECE. For example, profit by definition can be broken down into total revenue and total cost. In turn, total revenue can be analyzed by its components, such as revenue of divisions A, B, and C (which are mutually exclusive of each other) and should add to the total revenue (collectively exhaustive).</p>
+
+<p>麦肯锡公司McKinseyand Company的顾问们将一种技术命名为MECE原理，这项技术将定量问题分解为多个部分。每个层都可以分解出组件；每个子组件必须相互排斥且加起来就是上面的层。这种关系被称为“互斥和完全穷尽MCME”。例如，利润的定义可以分为总收入和总成本。反过来，总收入可以通过其组成部分来分析，如分类A、B和C（互斥）的收入且加起来就是总收入（完全穷尽）。</p>
+
+<p>Analysts may use robust statistical measurements to solve certain analytical problems. Hypothesis testing is used when a particular hypothesis about the true state of affairs is made by the analyst and data is gathered to determine whether that state of affairs is true or false. For example, the hypothesis might be that &quot;Unemployment has no effect on inflation&quot;, which relates to an economics concept called the Phillips Curve. Hypothesis testing involves considering the likelihood of Type I and type II errors, which relate to whether the data supports accepting or rejecting the hypothesis.</p>
+
+<p>分析师可能使用鲁棒性统计度量来解决特定分析问题。分析师对事物的真实状态做出一个特定的假设，收集数据并使用假设检验决定事务状态对或错。例如，假设可能是“失业不影响通胀”，这与一个叫做菲利普斯曲线的经济学概念有关。假设检验包括考虑类型I和类型II的似然误差，这与数据支持接受或反对假设有关。</p>
+
+<p>Regression analysis may be used when the analyst is trying to determine the extent to which independent variable X affects dependent variable Y (e.g., &quot;To what extent do changes in the unemployment rate (X) affect the inflation rate (Y)?&quot;). This is an attempt to model or fit an equation line or curve to the data, such that Y is a function of X.</p>
+
+<p>试图确定自变量X影响因变量Y程度时（例如，失业率(X)的变化在多大程度上影响通货膨胀率(Y)），分析师可采用回归分析。这是对数据进行建模或拟合的一种尝试，使Y是X的函数。</p>
+
+<p>Necessary condition analysis (NCA) may be used when the analyst is trying to determine the extent to which independent variable X allows variable Y (e.g., &quot;To what extent is a certain unemployment rate (X) necessary for a certain inflation rate (Y)?&quot;). Whereas (multiple) regression analysis uses additive logic where each X-variable can produce the outcome and the X's can compensate for each other (they are sufficient but not necessary), necessary condition analysis (NCA) uses necessity logic, where one or more X-variables allow the outcome to exist, but may not produce it (they are necessary but not sufficient). Each single necessary condition must be present and compensation is not possible.</p>
+
+<p>试图确定自变量X允许变量Y的程度时（例如，失业率(X)的变化在多大程度上允许通货膨胀率(Y)变化），分析师可采用必要条件分析（NCA）。而(多元)回归分析使用加法逻辑，其中每个x变量都可以产生结果且这些X产生的结果可以相互补偿（充分但不必要）；必要条件分析（NCA）使用必要性逻辑，一个或多个x变量允许结果在的位置，但结果可能不会产生（必要但不充分）。每一个必要条件都必须存在，补偿是不可能的。</p>
+
+<h2 id="4-analytical-activities-of-data-users数据用户的分析活动">4 Analytical activities of data users数据用户的分析活动</h2>
+
+<p>Users may have particular data points of interest within a data set, as opposed to general messaging outlined above. Such low-level user analytic activities are presented in the following table. The taxonomy can also be organized by three poles of activities: retrieving values, finding data points, and arranging data points.[14][15][16][17]</p>
+
+<p>与上面提到的该书信息不同，用户可能对数据集中特定的数据点感兴趣。下表列出了这种低级别的用户分析活动。分类法还可以由三个活动极点来组织：检索值、查找数据点和安排数据点。</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">#</th>
+<th align="left">Task任务</th>
+<th align="left">General Description整体概述</th>
+<th align="left">Pro Forma Abstract形式上的抽象</th>
+<th align="left">Examples例子</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">1</td>
+<td align="left">Retrieve Value检索值</td>
+<td align="left">Given a set of specific cases, find attributes of those cases.给定一组特定情况，查找这些情况的属性。</td>
+<td align="left">What are the values of attributes {X, Y, Z, ...} in the data cases {A, B, C, ...}?数据情况{A, B, C, ...}下，属性{X, Y, Z, ...}的值是多少?</td>
+<td align="left">- What is the mileage per gallon of the Ford Mondeo?福特蒙迪欧每加仑跑多少英里？ <br>- How long is the movie Gone with the Wind?电影《飘》有多长时间</td>
+</tr>
+
+<tr>
+<td align="left">2</td>
+<td align="left">Filter筛选器</td>
+<td align="left">Given some concrete conditions on attribute values, find data cases satisfying those conditions.给定属性值的一些具体条件，找出满足这些条件的数据用例。</td>
+<td align="left">Which data cases satisfy conditions {A, B, C...}?什么数据情况满足条件{A, B, C...}?</td>
+<td align="left">- What Kellogg's cereals have high fiber?家乐氏那款麦片纤维素含量最高？<br>- What comedies have won awards?什么喜剧获奖了？<br>- Which funds underperformed the SP-500?哪些基金表现逊于SP-500？</td>
+</tr>
+
+<tr>
+<td align="left">3</td>
+<td align="left">Compute Derived Value计算得出值</td>
+<td align="left">Given a set of data cases, compute an aggregate numeric representation of those data cases.给定一组数据用例，计算这些数据用例的汇总数字表示。</td>
+<td align="left">What is the value of aggregation function F over a given set S of data cases?在给定的数据用例集合S上，聚合函数F的值是多少？</td>
+<td align="left">- What is the average calorie content of Post cereals?宝式谷物的平均卡路里含量是多少？<br>- What is the gross income of all stores combined?所有商店的总收入加起来是多少<br>- How many manufacturers of cars are there?有多少汽车制造商？</td>
+</tr>
+
+<tr>
+<td align="left">4</td>
+<td align="left">Find Extremum找极值</td>
+<td align="left">Find data cases possessing an extreme value of an attribute over its range within the data set.查找数据用例，该数据用例具有属性在数据集中范围内的极值。</td>
+<td align="left">What are the top/bottom N data cases with respect to attribute A?属性A对应的顶上/底下N个数据情况是多少？</td>
+<td align="left">- What is the car with the highest MPG?MPG最高的汽车是哪辆？<br>- What director/film has won the most awards?哪个导演/哪部电影获奖最多？<br>- What Marvel Studios film has the most recent release date?哪部漫威电影公司电影上映日期最近？</td>
+</tr>
+
+<tr>
+<td align="left">5</td>
+<td align="left">Sort排序</td>
+<td align="left">Given a set of data cases, rank them according to some ordinal metric.给定一组数据用例，根据某种顺序度量对它们进行排序。</td>
+<td align="left">What is the sorted order of a set S of data cases according to their value of attribute A?根据属性A的值，一组数据用例的集合S的排序顺序是怎么样的？</td>
+<td align="left">- Order the cars by weight.汽车按自重排序。<br>- Rank the cereals by calories.谷类食物按卡路里排序。</td>
+</tr>
+
+<tr>
+<td align="left">6</td>
+<td align="left">Determine Range确定范围</td>
+<td align="left">Given a set of data cases and an attribute of interest, find the span of values within the set.给定一组数据用例和一个感兴趣的属性，查找集合中值的跨度。</td>
+<td align="left">What is the range of values of attribute A in a set S of data cases?在一组数据用例中，属性A的值的范围是多少</td>
+<td align="left">- What is the range of film lengths?胶卷长度的范围是多少？<br>- What is the range of car horsepowers?汽车马力的范围是多少？<br>- What actresses are in the data set?数据集中有哪些女演员？</td>
+</tr>
+
+<tr>
+<td align="left">7</td>
+<td align="left">Characterize Distribution描述分布</td>
+<td align="left">Given a set of data cases and a quantitative attribute of interest, characterize the distribution of that attribute’s values over the set.给定一组数据用例和感兴趣的数量属性，描述集合的属性值分布。</td>
+<td align="left">What is the distribution of values of attribute A in a set S of data cases?属性A在数据用例集合S中的值分布是什么？</td>
+<td align="left">- What is the distribution of carbohydrates in cereals?谷物中的碳水化合物分布如何？<br>- What is the age distribution of shoppers?购物者的年龄分布如何？</td>
+</tr>
+
+<tr>
+<td align="left">8</td>
+<td align="left">Find Anomalies找寻异常</td>
+<td align="left">Identify any anomalies within a given set of data cases with respect to a given relationship or expectation, e.g. statistical outliers.根据给定的关系或期望，识别给定数据用例集合中的任何异常，如统计学上的异常值。</td>
+<td align="left">Which data cases in a set S of data cases have unexpected/exceptional values?数据集集合S中的哪些数据实例具有意外/例外值？</td>
+<td align="left">- Are there exceptions to the relationship between horsepower and acceleration?马力和加速度之间的关系有例外吗？<br>- Are there any outliers in protein?蛋白质中有异常吗？</td>
+</tr>
+
+<tr>
+<td align="left">9</td>
+<td align="left">Cluster聚合</td>
+<td align="left">Given a set of data cases, find clusters of similar attribute values.给定一组数据用例，查找具有相似属性值的集群。</td>
+<td align="left">Which data cases in a set S of data cases are similar in value for attributes {X, Y, Z, ...}?数据用例集合S中的哪些数据用例在属性{X, Y, Z, ...}的值上相似</td>
+<td align="left">- Are there groups of cereals similar fat/calories/sugar?有几组谷类食物有相似的脂肪/卡路里/糖分吗<br>- Is there a cluster of typical film lengths?是否有典型胶卷长度的聚合？</td>
+</tr>
+
+<tr>
+<td align="left">10</td>
+<td align="left">Correlate关联</td>
+<td align="left">Given a set of data cases and two attributes, determine useful relationships between the values of those attributes.给定一组数据用例和两个属性，确定这些属性值之间的有用关系。</td>
+<td align="left">What is the correlation between attributes X and Y over a given set S of data cases?在给定的数据用例集合S上，X和Y的属性之间的相关性是怎么样？</td>
+<td align="left">- Is there a correlation between carbohydrates and fat?碳水化合物和脂肪之间有联系吗？<br>- Is there a correlation between country of origin and MPG?原产国与MPG是否存在相关性？<br>- Do different genders have a preferred payment method?两性付款方式不同吗？<br>- Is there a trend of increasing film length over the years?这些年来电影长度有无增加趋势？</td>
+</tr>
+
+<tr>
+<td align="left">11</td>
+<td align="left">Contextualization[17]情境化</td>
+<td align="left">Given a set of data cases, find contextual relevancy of the data to the users.给定一组数据用例，查找数据与用户的上下文相关性。</td>
+<td align="left">Which data cases in a set S of data cases are relevant to the current users' context?一组数据用例中的哪些数据用例与当前用户的上下文相关？</td>
+<td align="left">- Are there groups of restaurants that have foods based on my current caloric intake?有几家餐厅的食物是基于我目前的卡路里摄入量的吗？</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id="5-barriers-to-effective-analysis有效分析的障碍">5 Barriers to effective analysis有效分析的障碍</h2>
+
+<p>Barriers to effective analysis may exist among the analysts performing the data analysis or among the audience. Distinguishing fact from opinion, cognitive biases, and innumeracy are all challenges to sound data analysis.</p>
+
+<p>执行数据分析的分析师或受众之间可能存在有效分析的障碍。将事实与观点、认知偏见和数学盲区分开来，都是对可靠数据分析的挑战。</p>
+
+<h3 id="5-1-confusing-fact-and-opinion令人困惑的事实和意见">5.1 Confusing fact and opinion令人困惑的事实和意见</h3>
+
+<p>Effective analysis requires obtaining relevant facts to answer questions, support a conclusion or formal opinion, or test hypotheses. Facts by definition are irrefutable, meaning that any person involved in the analysis should be able to agree upon them. For example, in August 2010, the Congressional Budget Office (CBO) estimated that extending the Bush tax cuts of 2001 and 2003 for the 2011–2020 time period would add approximately $3.3 trillion to the national debt.[18] Everyone should be able to agree that indeed this is what CBO reported; they can all examine the report. This makes it a fact. Whether persons agree or disagree with the CBO is their own opinion.</p>
+
+<p>有效的分析需要获得相关的事实来回答问题，来支持结论或正式意见，或者一个假设。按定义事实是无可辩驳的，这意味着任何参与分析的人都应该能够同意这些的观点。例如，2010年8月，美国国会预算办公室（CBO）估计延长布什2001年和2003年的减税政策延长至2011-2020年期将增加约3.3万亿国债。每个人都应该会同意CBO的报告；他们都可以检查这份报告。这是事实，是他们自己的观点，无论他们是否同意CBO（的其他观点）。</p>
+
+<p>As another example, the auditor of a public company must arrive at a formal opinion on whether financial statements of publicly traded corporations are &quot;fairly stated, in all material respects.&quot; This requires extensive analysis of factual data and evidence to support their opinion. When making the leap from facts to opinions, there is always the possibility that the opinion is erroneous.</p>
+
+<p>再如，上市公司的审计师必须就上市公司的财务报表是否“在所有重大方面都作了公平表述”达成正式意见。这需要对事实数据和证据进行广泛的分析，以支持他们的观点。当从事实跳到观点的时候，总是有可能这个观点是错误的。</p>
+
+<h3 id="5-2-cognitive-biases认知偏差">5.2 Cognitive biases认知偏差</h3>
+
+<p>There are a variety of cognitive biases that can adversely affect analysis. For example, confirmation bias is the tendency to search for or interpret information in a way that confirms one's preconceptions. In addition, individuals may discredit information that does not support their views.</p>
+
+<p>有各种各样的认知偏差会对分析产生不利影响。例如，确认偏差是一种倾向，即以一种先入之见的方式搜索或解释信息。而且，个体还可能不信任那些反对自己观点的信息。</p>
+
+<p>Analysts may be trained specifically to be aware of these biases and how to overcome them. In his book Psychology of Intelligence Analysis, retired CIA analyst Richards Heuer wrote that analysts should clearly delineate their assumptions and chains of inference and specify the degree and source of the uncertainty involved in the conclusions. He emphasized procedures to help surface and debate alternative points of view.[19]</p>
+
+<p>分析师接受了专门培训，应该能了解并知道如何克服这些偏见。在《智力分析心理学》中，作者CIA退休分析师Richards Heuer写道：“分析师应该清楚地描述他们的假设和推论链，并明确结论中所涉及的不确定性的程度和来源。”他强调程序有助于提出和辩论其他观点。</p>
+
+<h3 id="5-3-innumeracy数学盲">5.3 Innumeracy数学盲</h3>
+
+<p>Effective analysts are generally adept with a variety of numerical techniques. However, audiences may not have such literacy with numbers or numeracy; they are said to be innumerate. Persons communicating the data may also be attempting to mislead or misinform, deliberately using bad numerical techniques.[20]</p>
+
+<p>有效的分析师通常能熟练使用各种数值技术。然而,受众可能没有这种数字或数学素养;也就是数学盲。交流数据结果的人有可能试图误导别人,或故意使用错误技术。</p>
+
+<p>For example, whether a number is rising or falling may not be the key factor. More important may be the number relative to another number, such as the size of government revenue or spending relative to the size of the economy (GDP) or the amount of cost relative to revenue in corporate financial statements. This numerical technique is referred to as normalization[7] or common-sizing. There are many such techniques employed by analysts, whether adjusting for inflation (i.e., comparing real vs. nominal data) or considering population increases, demographics, etc. Analysts apply a variety of techniques to address the various quantitative messages described in the section above.</p>
+
+<p>例如，一个数字是上升还是下降可能不是关键因素。更重要的可能是其与另一数字的关系，政府收入或支出的规模相对于经济规模(GDP)或成本量相对于企业财务报表收入。</p>
+
+<p>Analysts may also analyze data under different assumptions or scenarios. For example, when analysts perform financial statement analysis, they will often recast the financial statements under different assumptions to help arrive at an estimate of future cash flow, which they then discount to present value based on some interest rate, to determine the valuation of the company or its stock. Similarly, the CBO analyzes the effects of various policy options on the government's revenue, outlays and deficits, creating alternative future scenarios for key measures.</p>
+
+<p>分析人员还可以分析不同的假设或场景下的数据。例如，分析师进行财务报表分析时，他们通常会根据不同的假设重新编制财务报表以帮助对未来的现金流进行估算，然后根据利率折现到现值，进而确定公司或其股票的估值。同样,国会预算办公室(CBO)分析了各种政策选择对政府收入、支出和赤字的影响,为关键措施创造了另一种未来情景。</p>
+
+<h2 id="6-other-topics其他话题">6 Other topics其他话题</h2>
+
+<h3 id="6-1-smart-buildings智能建筑">6.1 Smart buildings智能建筑</h3>
+
+<p>A data analytics approach can be used in order to predict energy consumption in buildings.[21] The different steps of the data analysis process are carried out in order to realise smart buildings, where the building management and control operations including heating, ventilation, air conditioning, lighting and security are realised automatically by miming the needs of the building users and optimising resources like energy and time.</p>
+
+<p>数据分析方法可以用来预测建筑物的能源消耗。为了实现智能建筑，对数据分析过程进行了不同的步骤，建筑的管理和控制操作包括供暖、通风、空调、照明,通过模拟建筑用户的需求，优化能源和时间等资源，可以自动实现安全性。</p>
+
+<h3 id="6-2-analytics-and-business-intelligence分析与商业智能">6.2 Analytics and business intelligence分析与商业智能</h3>
+
+<p>Analytics is the &quot;extensive use of data, statistical and quantitative analysis, explanatory and predictive models, and fact-based management to drive decisions and actions.&quot; It is a subset of business intelligence, which is a set of technologies and processes that use data to understand and analyze business performance.</p>
+
+<p>分析是“广泛使用数据、统计和定量分析、解释和预测模型以及基于事实的管理来驱动决策和行动”。它是业务智能的一个子集，业务智能是一组使用数据来理解和分析业务性能的技术和流程。</p>
+
+<h3 id="6-3-education教育">6.3 Education教育</h3>
+
+<p>In education, most educators have access to a data system for the purpose of analyzing student data.[23] These data systems present data to educators in an over-the-counter data format (embedding labels, supplemental documentation, and a help system and making key package/display and content decisions) to improve the accuracy of educators’ data analyses.[24]</p>
+
+<p>在教育领域，大多数教育工作者都可以使用数据系统来分析学生数据。这些数据系统以场外数据格式（嵌入标签、补充文件、一个帮助系统和密钥包/显示和内容决策 ）向教育者提供数据，以提高教育者数据分析的准确性。</p>
+
+<h2 id="7-practitioner-notes从业者笔记">7 Practitioner notes从业者笔记</h2>
+
+<p>This section contains rather technical explanations that may assist practitioners but are beyond the typical scope of a Wikipedia article.</p>
+
+<p>这个部分包含了一些技术性的解释，这些解释可能对实践者有帮助，但是超出了维基百科文章的典型范围。</p>
+
+<h3 id="7-1-initial-data-analysis初始数据分析">7.1 Initial data analysis初始数据分析</h3>
+
+<p>The most important distinction between the initial data analysis phase and the main analysis phase, is that during initial data analysis one refrains from any analysis that is aimed at answering the original research question. The initial data analysis phase is guided by the following four questions:[25]</p>
+
+<p>最初的数据分析阶段和主要的分析阶段之间最重要的区别是，在最初的数据分析过程中，人们不会进行任何旨在回答原始研究问题的分析。初始数据分析阶段由以下四个问题指导：</p>
+
+<h4 id="7-1-1-quality-of-data数据质量">7.1.1 Quality of data数据质量</h4>
+
+<p>The quality of the data should be checked as early as possible. Data quality can be assessed in several ways, using different types of analysis: frequency counts, descriptive statistics (mean, standard deviation, median), normality (skewness, kurtosis, frequency histograms). variables are compared with coding schemes of variables external to the data set, and possibly corrected if coding schemes are not comparable.</p>
+
+<p>应该尽早检查数据的质量。数据质量可以通过几种方法进行评估，使用不同类型的分析:频率计数，描述性统计（均数mean、标准差standard deviation、中位数median），正态性（偏度、峰度、频率直方图）。将变量与数据集外部变量的编码方案进行比较，如果编码方案不具有可比性，则可能进行修正。</p>
+
+<ul>
+<li>Test for common-method variance.常用方差检验方法。
+The choice of analyses to assess the data quality during the initial data analysis phase depends on the analyses that will be conducted in the main analysis phase.[26]</li>
+</ul>
+
+<p>在初始数据分析阶段，评估数据质量该选择什么样的分析方法取决于主要分析阶段进行的分析。</p>
+
+<h4 id="7-1-2-quality-of-measurements测量质量">7.1.2 Quality of measurements测量质量</h4>
+
+<p>The quality of the measurement instruments should only be checked during the initial data analysis phase when this is not the focus or research question of the study. One should check whether structure of measurement instruments corresponds to structure reported in the literature.</p>
+
+<p>测量仪器的质量只在初始数据分析阶段检查，但这不是本文论述的关注点和研究方向。要检查测量仪器的结构是否符合文献报道的结构。</p>
+
+<p>There are two ways to assess measurement: [NOTE: only one way seems to be listed]</p>
+
+<p>评估度量有两种方法：（注：这里只列出一种）</p>
+
+<ul>
+<li>Analysis of homogeneity (internal consistency), which gives an indication of the reliability of a measurement instrument. During this analysis, one inspects the variances of the items and the scales, the Cronbach's α of the scales, and the change in the Cronbach's alpha when an item would be deleted from a scale[27]均匀性分析（内部一致性），表明测量仪器的可靠性。在这个分析中,一个检查项目和规模的差异,克伦巴赫α的大小和当一个项目将从一个比例删除时克伦巴赫α的变化（这里应该wiki作者没写完）</li>
+</ul>
+
+<h4 id="7-1-3-initial-transformations初始变换">7.1.3 Initial transformations初始变换</h4>
+
+<p>After assessing the quality of the data and of the measurements, one might decide to impute missing data, or to perform initial transformations of one or more variables, although this can also be done during the main analysis phase.[28]</p>
+
+<p>在评估数据质量和测量结果之后，可能决定估算缺失的数据，或者执行一个或多个变量的初始转换，尽管这也可以在主分析阶段完成。</p>
+
+<p>Possible transformations of variables are:[29]</p>
+
+<ul>
+<li>Square root transformation (if the distribution differs moderately from normal)</li>
+<li>Log-transformation (if the distribution differs substantially from normal)</li>
+<li>Inverse transformation (if the distribution differs severely from normal)</li>
+<li>Make categorical (ordinal / dichotomous) (if the distribution differs severely from normal, and no transformations help)</li>
+</ul>
+
+<p>对变量可能的转换：平方根转换（如果分布稍异于正态分布）；对数变换（如果分布一定程度异于正态分布）；逆变换（如果分布严重异于正态分布）；做分类（顺序/两分）（如果分布严重异于正态分布，且其他转换不起作用）</p>
+
+<h4 id="7-1-4-did-the-implementation-of-the-study-fulfill-the-intentions-of-the-research-design-这项研究的实施是否完全符合研究项目的设计目的">7.1.4 Did the implementation of the study fulfill the intentions of the research design?这项研究的实施是否完全符合研究项目的设计目的？</h4>
+
+<p>One should check the success of the randomization procedure, for instance by checking whether background and substantive variables are equally distributed within and across groups.</p>
+
+<p>应该检查随机化过程是否成功，例如，通过检查背景变量和实质变量是否在组内和组间均匀分布。</p>
+
+<p>If the study did not need or use a randomization procedure, one should check the success of the non-random sampling, for instance by checking whether all subgroups of the population of interest are represented in sample.</p>
+
+<p>如果研究不需要或不使用随机程序，则应检查非随机抽样的成功情况，例如，通过检查感兴趣人群的所有子组是否在样本中表示。</p>
+
+<p>Other possible data distortions that should be checked are:</p>
+
+<ul>
+<li>dropout (this should be identified during the initial data analysis phase)</li>
+<li>Item nonresponse (whether this is random or not should be assessed during the initial data analysis phase)</li>
+<li>Treatment quality (using manipulation checks).[30]</li>
+</ul>
+
+<p>应该检查的其他可能的数据失真有：流失（这应该在初始数据分析阶段确定）；项目无反应（在初始数据分析阶段，应该评估这是否是随机的）；处理质量（使用操作检查）</p>
+
+<h4 id="7-1-5-characteristics-of-data-sample数据样本特征">7.1.5 Characteristics of data sample数据样本特征</h4>
+
+<p>In any report or article, the structure of the sample must be accurately described. It is especially important to exactly determine the structure of the sample (and specifically the size of the subgroups) when subgroup analyses will be performed during the main analysis phase.</p>
+
+<p>在任何报告或文章中，必须准确描述样本的结构。在主分析阶段进行子组分析时，准确确定样品的结构（特别是子组的大小）极为重要。</p>
+
+<p>The characteristics of the data sample can be assessed by looking at:
+ - Basic statistics of important variables
+ - Scatter plots
+ - Correlations and associations
+ - Cross-tabulations[31]</p>
+
+<p>数据样本的特征可以通过查看以下内容来评估：重要变量的基础统计量；散点图；相关性和关联性；交叉表</p>
+
+<h4 id="7-1-6-final-stage-of-the-initial-data-analysis初始数据分析的最后阶段">7.1.6 Final stage of the initial data analysis初始数据分析的最后阶段</h4>
+
+<p>During the final stage, the findings of the initial data analysis are documented, and necessary, preferable, and possible corrective actions are taken.
+Also, the original plan for the main data analyses can and should be specified in more detail or rewritten.</p>
+
+<p>在最后阶段，记录初始数据分析的结果，并采取必要的、可取的和可能的纠正措施。此外，主要数据分析的原始计划可以而且应该更详细地指定或重写。</p>
+
+<p>In order to do this, several decisions about the main data analyses can and should be made:
+ - In the case of non-normals: should one transform variables; make variables categorical (ordinal/dichotomous); adapt the analysis method?
+ - In the case of missing data: should one neglect or impute the missing data; which imputation technique should be used?
+ - In the case of outliers: should one use robust analysis techniques?
+ - In case items do not fit the scale: should one adapt the measurement instrument by omitting items, or rather ensure comparability with other (uses of the) measurement instrument(s)?
+ - In the case of (too) small subgroups: should one drop the hypothesis about inter-group differences, or use small sample techniques, like exact tests or bootstrapping?
+ - In case the randomization procedure seems to be defective: can and should one calculate propensity scores and include them as covariates in the main analyses?[32]</p>
+
+<p>为了做到这一点，应该对主要数据分析做出几个决定：
+如果非正态分布：分析方法是否要求变量呈正态分布？应做合适转换？
+如有缺失值：该忽略或处理丢失数据，应该采用哪种处理技术？
+如有域外值：是否该采用鲁棒性分析技术？
+如果项目不在数值范围：是否应该通过省略项目来调整测量手段，或更确切地说，确保与其他(使用的)测量手段的可比性？
+如果子组（太）小：应该放弃关于群体间差异的假设，还是使用小样本技术，如精密测试或拔靴法bootstrapping？
+如果随机化过程出现问题：应该进行倾向分数计算并将之作为协变量包括进主分析中吗？</p>
+
+<h4 id="7-1-7-analysis分析">7.1.7 Analysis分析</h4>
+
+<p>Several analyses can be used during the initial data analysis phase:[33]
+ - Univariate statistics (single variable)
+ - Bivariate associations (correlations)
+ - Graphical techniques (scatter plots)</p>
+
+<p>初始分析阶段可采用的集中分析方法：单变量统计（单变量）；双变量关联（相关性）；图形技术（散点图）</p>
+
+<p>It is important to take the measurement levels of the variables into account for the analyses, as special statistical techniques are available for each level:[34]</p>
+
+<p>重要的是要将变量的测量级别考虑到分析中，因为每个级别都有特殊的统计技术：</p>
+
+<ul>
+<li>Nominal and ordinal variables名义变量和序数变量
+
+<ul>
+<li>Frequency counts (numbers and percentages)频率计数（数字和百度分数）</li>
+<li>Associations关联
+
+<ul>
+<li>circumambulations (crosstabulations)绕行（交叉表）</li>
+<li>hierarchical loglinear analysis (restricted to a maximum of 8 variables)分层对数线性分析（限制在最多8个变量）</li>
+<li>loglinear analysis (to identify relevant/important variables and possible confounders)对数线性分析（识别相关/重要的变量和可能的混淆）</li>
+</ul></li>
+<li>Exact tests or bootstrapping (in case subgroups are small)</li>
+<li>Computation of new variables算出新变量</li>
+</ul></li>
+<li>Continuous variables连续变量
+
+<ul>
+<li>Distribution分布
+
+<ul>
+<li>Statistics (M, SD, variance, skewness, kurtosis)统计量（均值M、标准差SD、方差variance、偏度skewness、峰度kurtosis）</li>
+<li>Stem-and-leaf displays茎叶图</li>
+<li>Box plots箱型图</li>
+</ul></li>
+</ul></li>
+</ul>
+
+<h4 id="7-1-8-nonlinear-analysis非线性分析">7.1.8 Nonlinear analysis非线性分析</h4>
+
+<p>Nonlinear analysis will be necessary when the data is recorded from a nonlinear system. Nonlinear systems can exhibit complex dynamic effects including bifurcations, chaos, harmonics and subharmonics that cannot be analyzed using simple linear methods. Nonlinear data analysis is closely related to nonlinear system identification.[35]</p>
+
+<p>当数据是从非线性系统中获得的，需要进行非线性分析。非线性系统可表现出复杂的动态效应，包括不能用简单现象方法分析如分岔、混沌、谐波与次谐波等。非线性数据分析与非线性系统辨识密切相关。</p>
+
+<h3 id="7-2-main-data-analysis主数据分析">7.2 Main data analysis主数据分析</h3>
+
+<p>In the main analysis phase analyses aimed at answering the research question are performed as well as any other relevant analysis needed to write the first draft of the research report.[36]</p>
+
+<p>在主数据分析阶段，为回答研究问题而进行分析，同时为撰写研究报告初稿而进行其他相关分析。</p>
+
+<h4 id="7-2-1-exploratory-and-confirmatory-approaches探索性与验证性手段">7.2.1 Exploratory and confirmatory approaches探索性与验证性手段</h4>
+
+<p>In the main analysis phase either an exploratory or confirmatory approach can be adopted. Usually the approach is decided before data is collected. In an exploratory analysis no clear hypothesis is stated before analysing the data, and the data is searched for models that describe the data well. In a confirmatory analysis clear hypotheses about the data are tested.</p>
+
+<p>主分析阶段探索性和验证性手段均可采用。通常收集数据前就要确定采用什么手段。在探索性分析中，分析数据之前不作明确假设，寻找能够很好地描述数据的模型。在验证性分析中，需要清晰作出假设并检验。</p>
+
+<p>Exploratory data analysis should be interpreted carefully. When testing multiple models at once there is a high chance on finding at least one of them to be significant, but this can be due to a type 1 error. It is important to always adjust the significance level when testing multiple models with, for example, a Bonferroni correction. Also, one should not follow up an exploratory analysis with a confirmatory analysis in the same dataset. An exploratory analysis is used to find ideas for a theory, but not to test that theory as well. When a model is found exploratory in a dataset, then following up that analysis with a confirmatory analysis in the same dataset could simply mean that the results of the confirmatory analysis are due to the same type 1 error that resulted in the exploratory model in the first place. The confirmatory analysis therefore will not be more informative than the original exploratory analysis.[37]</p>
+
+<p>应该仔细解释探索性数据分析。当一次测试多个模型时，很有可能发现其中至少有一个显著，但这可能由于1型错误。测试多模型时，校正显著性水平很重要，例如用Bonferroni校正。而且相同数据集做了探索性数据分析之后不应进行验证性数据分析。探索性分析用来发现理论，但不是用来验证这个理论。如果数据集先采用探索性数据分析，然后又在同一数据集中用验证性数据分析将直接意味着验证性分析的结果含有刚才探索性模型相同的1型错误。因此，验证性分析将不会比最初的探索性分析提供更多的信息。</p>
+
+<h4 id="7-2-2-stability-of-results结果的稳定性">7.2.2 Stability of results结果的稳定性</h4>
+
+<p>It is important to obtain some indication about how generalizable the results are.[38] While this is hard to check, one can look at the stability of the results. Are the results reliable and reproducible? There are two main ways of doing this:
+ - Cross-validation: By splitting the data in multiple parts we can check if an analysis (like a fitted model) based on one part of the data generalizes to another part of the data as well.
+ - Sensitivity analysis: A procedure to study the behavior of a system or model when global parameters are (systematically) varied. One way to do this is with bootstrapping.</p>
+
+<p>重要的是要知道结果普遍程度如何。虽然这很难检验，但我们可以看看结果的稳定性。结果可靠且可重复吗？主要有两种方法来验证结果的稳定性：
+ - 交叉验证：将数据分成多部分，如果基于一部分数据的分析（如拟合模型）也可推广到剩下部分的数据。
+ - 敏感度分析：一个过程，来学习系统或模型全局参数变化时候的行为。一种方法是采用拔靴法bootstrapping。</p>
+
+<h4 id="7-2-3-statistical-methods统计学方法">7.2.3 Statistical methods统计学方法</h4>
+
+<p>Many statistical methods have been used for statistical analyses. A very brief list of four of the more popular methods is:
+ - General linear model: A widely used model on which various methods are based (e.g. t test, ANOVA, ANCOVA, MANOVA). Usable for assessing the effect of several predictors on one or more continuous dependent variables.
+ - Generalized linear model: An extension of the general linear model for discrete dependent variables.
+ - Structural equation modelling: Usable for assessing latent structures from measured manifest variables.
+ - Item response theory: Models for (mostly) assessing one latent variable from several binary measured variables (e.g. an exam).</p>
+
+<p>许多统计学方法已用于统计分析。最流行的四种分析方法的简单列表如下：
+ - 一般线性模型：广泛使用的模型，多种方法都基于此（如t测试、ANOVA、ANCOVA、MANOVA）。可用于评估多个预测因子对一个或多个连续因变量的影响。
+ - 广义线性模型：一般线性模型对离散因变量的一种扩展。
+ - 结构方程模型：可用于评估被测显式变量得来的潜在结构。
+ - 项目反应理论：从几个二元被测变量（如一场考试）中评估一个潜在变量的模型。</p>
+
+<h2 id="8-free-software-for-data-analysis数据分析的免费软件">8 Free software for data analysis数据分析的免费软件</h2>
+
+<ul>
+<li>DevInfo – a database system endorsed by the United Nations Development Group for monitoring and analyzing human development.</li>
+<li>ELKI – data mining framework in Java with data mining oriented visualization functions.</li>
+<li>KNIME – the Konstanz Information Miner, a user friendly and comprehensive data analytics framework.</li>
+<li>Orange – A visual programming tool featuring interactive data visualization and methods for statistical data analysis, data mining, and machine learning.</li>
+<li>PAST – free software for scientific data analysis</li>
+<li>PAW – FORTRAN/C data analysis framework developed at CERN</li>
+<li>R – a programming language and software environment for statistical computing and graphics.</li>
+<li>ROOT – C++ data analysis framework developed at CERN</li>
+<li>SciPy and Pandas – Python libraries for data analysis</li>
+</ul>
+
+<h2 id="9-international-data-analysis-contests国际数据分析竞赛">9 International data analysis contests国际数据分析竞赛</h2>
+
+<p>Different companies or organizations hold a data analysis contests to encourage researchers utilize their data or to solve a particular question using data analysis. A few examples of well-known international data analysis contests are as follows.
+ - Kaggle competition held by Kaggle[39]
+ - LTPP data analysis contest held by FHWA and ASCE.[40][41]</p>
+
+<p>不同公司或组织举办数据分析比赛去鼓励研究者利用他们的数据或者用数据分析来解决一个特定的问题。一些出名的国际数据分析竞赛有：Kaggle公司举办的Kaggle竞赛；FHWA和ASCE举办的LTPP数据分析竞赛.</p>
+
+<h2 id="11-see-also请参阅">11 See also请参阅</h2>
+
+<ul>
+<li>Actuarial science精算科学</li>
+<li>Analytics分析学</li>
+<li>Big data大数据</li>
+<li>Business intelligence商业智能</li>
+<li>Censoring (statistics)删截（统计学）</li>
+<li>Computational physics计算机物理学</li>
+<li>Data acquisition数据采集</li>
+<li>Data blending数据融合</li>
+<li>Data governance数据管控</li>
+<li>Data mining数据挖掘</li>
+<li>Data Presentation Architecture数据呈现架构</li>
+<li>Data science数据科学</li>
+<li>Digital signal processing数字信号处理</li>
+<li>Dimension reduction降维</li>
+<li>Early case assessment早期案例评估</li>
+<li>Exploratory data analysis探索性数据分析</li>
+<li>Fourier analysis傅里叶分析</li>
+<li>Machine learning机器学习</li>
+<li>Multilinear PCA多重线性主成分分析</li>
+<li>Multilinear subspace learning多线性子空间学习</li>
+<li>Multiway data analysis多路数据分析</li>
+<li>Nearest neighbor search最近邻搜索</li>
+<li>Nonlinear system identification非线性系统辨识</li>
+<li>Predictive analytics预测分析</li>
+<li>Principal component analysis主成分分析</li>
+<li>Qualitative research定性研究</li>
+<li>Scientific computing科学计算</li>
+<li>Structured data analysis (statistics)结构化数据分析（统计学）</li>
+<li>System identification系统识别</li>
+<li>Test method测试理论</li>
+<li>Text analytics文本分析</li>
+<li>Unstructured data非结构化数据</li>
+<li>Wavelet小波</li>
+</ul>
+
+<h2 id="11-references参考资料">11 References参考资料</h2>
+
+<h3 id="11-1-citations参考文献">11.1 Citations参考文献</h3>
+
+<p>这个参考文献有问题，先不理。
+^ Exploring Data Analysis
+^
+Jump up to:
+a b c Judd, Charles and, McCleland, Gary (1989). Data Analysis. Harcourt Brace Jovanovich. ISBN 0-15-516765-0.
+Jump up
+^ John Tukey-The Future of Data Analysis-July 1961
+^
+Jump up to:
+a b c d e f g O'Neil, Cathy and, Schutt, Rachel (2013). Doing Data Science. O'Reilly. ISBN 978-1-449-35865-5.
+Jump up
+^ Clean Data in CRM: The Key to Generate Sales-Ready Leads and Boost Your Revenue Pool Retrieved 29th July, 2016
+Jump up
+^ &quot;Data Cleaning&quot;. Microsoft Research. Retrieved 26 October 2013.
+^
+Jump up to:
+a b c Perceptual Edge-Jonathan Koomey-Best practices for understanding quantitative data-February 14, 2006
+Jump up
+^ Hellerstein, Joseph (27 February 2008). &quot;Quantitative Data Cleaning for Large Databases&quot; (PDF). EECS Computer Science Division: 3. Retrieved 26 October 2013.
+Jump up
+^ Stephen Few-Perceptual Edge-Selecting the Right Graph For Your Message-September 2004
+Jump up
+^ Behrens-Principles and Procedures of Exploratory Data Analysis-American Psychological Association-1997
+Jump up
+^ Grandjean, Martin (2014). &quot;La connaissance est un réseau&quot; (PDF). Les Cahiers du Numérique. 10 (3): 37–54. doi:10.3166/lcn.10.3.37-54.
+Jump up
+^ Stephen Few-Perceptual Edge-Selecting the Right Graph for Your Message-2004
+Jump up
+^ Stephen Few-Perceptual Edge-Graph Selection Matrix
+Jump up
+^ Robert Amar, James Eagan, and John Stasko (2005) &quot;Low-Level Components of Analytic Activity in Information Visualization&quot;
+Jump up
+^ William Newman (1994) &quot;A Preliminary Analysis of the Products of HCI Research, Using Pro Forma Abstracts&quot;
+Jump up
+^ Mary Shaw (2002) &quot;What Makes Good Research in Software Engineering?&quot;
+^
+Jump up to:
+a b &quot;ConTaaS: An Approach to Internet-Scale Contextualisation for Developing Efficient Internet of Things Applications&quot;. ScholarSpace. HICSS50. Retrieved May 24, 2017.
+Jump up
+^ &quot;Congressional Budget Office-The Budget and Economic Outlook-August 2010-Table 1.7 on Page 24&quot; (PDF). Retrieved 2011-03-31.
+Jump up
+^ &quot;Introduction&quot;. cia.gov.
+Jump up
+^ Bloomberg-Barry Ritholz-Bad Math that Passes for Insight-October 28, 2014
+Jump up
+^ González-Vidal, Aurora; Moreno-Cano, Victoria (2016). &quot;Towards energy efficiency smart buildings models based on intelligent data analytics&quot;. Procedia Computer Science. 83 (Elsevier): 994–999. doi:10.1016/j.procs.2016.04.213.
+Jump up
+^ Davenport, Thomas and, Harris, Jeanne (2007). Competing on Analytics. O'Reilly. ISBN 978-1-4221-0332-6.
+Jump up
+^ Aarons, D. (2009). Report finds states on course to build pupil-data systems. Education Week, 29(13), 6.
+Jump up
+^ Rankin, J. (2013, March 28). How data Systems &amp; reports can either fight or propagate the data analysis error epidemic, and how educator leaders can help. Presentation conducted from Technology Information Center for Administrative Leadership (TICAL) School Leadership Summit.
+Jump up
+^ Adèr 2008a, p. 337.
+Jump up
+^ Adèr 2008a, pp. 338-341.
+Jump up
+^ Adèr 2008a, pp. 341-342.
+Jump up
+^ Adèr 2008a, p. 344.
+Jump up
+^ Tabachnick &amp; Fidell, 2007, p. 87-88.
+Jump up
+^ Adèr 2008a, pp. 344-345.
+Jump up
+^ Adèr 2008a, p. 345.
+Jump up
+^ Adèr 2008a, pp. 345-346.
+Jump up
+^ Adèr 2008a, pp. 346-347.
+Jump up
+^ Adèr 2008a, pp. 349-353.
+Jump up
+^ Billings S.A. &quot;Nonlinear System Identification: NARMAX Methods in the Time, Frequency, and Spatio-Temporal Domains&quot;. Wiley, 2013
+Jump up
+^ Adèr 2008b, p. 363.
+Jump up
+^ Adèr 2008b, pp. 361-362.
+Jump up
+^ Adèr 2008b, pp. 361-371.
+Jump up
+^ &quot;The machine learning community takes on the Higgs&quot;. Symmetry Magazine. July 15, 2014. Retrieved 14 January 2015.
+Jump up
+^ Nehme, Jean (September 29, 2016). &quot;LTPP International Data Analysis Contest&quot;. Federal Highway Administration. Retrieved October 22, 2017.
+Jump up
+^ &quot;Data.Gov:Long-Term Pavement Performance (LTPP)&quot;. May 26, 2016. Retrieved November 10, 2017.</p>
+
+<h3 id="11-2-bibliography参考书目">11.2 Bibliography参考书目</h3>
+
+<ul>
+<li>Adèr, Herman J. (2008a). &quot;Chapter 14: Phases and initial steps in data analysis&quot;. In Adèr, Herman J.; Mellenbergh, Gideon J.; Hand, David J. Advising on research methods : a consultant's companion. Huizen, Netherlands: Johannes van Kessel Pub. pp. 333–356. ISBN 9789079418015. OCLC 905799857.</li>
+<li>Adèr, Herman J. (2008b). &quot;Chapter 15: The main analysis phase&quot;. In Adèr, Herman J.; Mellenbergh, Gideon J.; Hand, David J. Advising on research methods : a consultant's companion. Huizen, Netherlands: Johannes van Kessel Pub. pp. 357–386. ISBN 9789079418015. OCLC 905799857.</li>
+<li>Tabachnick, B.G. &amp; Fidell, L.S. (2007). Chapter 4: Cleaning up your act. Screening data prior to analysis. In B.G. Tabachnick &amp; L.S. Fidell (Eds.), Using Multivariate Statistics, Fifth Edition (pp. 60–116). Boston: Pearson Education, Inc. / Allyn and Bacon.</li>
+</ul>
+
+<h2 id="12-further-reading延伸阅读">12 Further reading延伸阅读</h2>
+
+<ul>
+<li>Adèr, H.J. &amp; Mellenbergh, G.J. (with contributions by D.J. Hand) (2008). Advising on Research Methods: A Consultant's Companion. Huizen, the Netherlands: Johannes van Kessel Publishing.</li>
+<li>Chambers, John M.; Cleveland, William S.; Kleiner, Beat; Tukey, Paul A. (1983). Graphical Methods for Data Analysis, Wadsworth/Duxbury Press. ISBN 0-534-98052-X</li>
+<li>Fandango, Armando (2008). Python Data Analysis, 2nd Edition. Packt Publishers.</li>
+<li>Juran, Joseph M.; Godfrey, A. Blanton (1999). Juran's Quality Handbook, 5th Edition. New York: McGraw Hill. ISBN 0-07-034003-X</li>
+<li>Lewis-Beck, Michael S. (1995). Data Analysis: an Introduction, Sage Publications Inc, ISBN 0-8039-5772-6</li>
+<li>NIST/SEMATECH (2008) Handbook of Statistical Methods,</li>
+<li>Pyzdek, T, (2003). Quality Engineering Handbook, ISBN 0-8247-4614-7</li>
+<li>Richard Veryard (1984). Pragmatic Data Analysis. Oxford : Blackwell Scientific Publications. ISBN 0-632-01311-7</li>
+<li>Tabachnick, B.G.; Fidell, L.S. (2007). Using Multivariate Statistics, 5th Edition. Boston: Pearson Education, Inc. / Allyn and Bacon, ISBN 978-0-205-45938-4</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

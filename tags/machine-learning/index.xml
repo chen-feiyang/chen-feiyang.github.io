@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>machine learning on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/machine-learning/</link>
+    <description>Recent content in machine learning on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Jan 2019 21:43:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Adaboost2</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost2/</link>
+      <pubDate>Tue, 08 Jan 2019 21:43:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost2/</guid>
+      <description>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。
+Abstract摘要 In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.</description>
+    </item>
+    
+  </channel>
+</rss>

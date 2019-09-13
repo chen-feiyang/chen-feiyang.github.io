@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>支持向量机svm之数学原理 | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>支持向量机svm之数学原理</h1>
+
+
+<p>A support vector machine constructs a hyper-plane or set of hyper-planes in a high or infinite dimensional space, which can be used for classification, regression or other tasks. Intuitively, a good separation is achieved by the hyper-plane that has the largest distance to the nearest training data points of any class (so-called functional margin), since in general the larger the margin the lower the generalization error of the classifier.机器在高维或无限维空间中构造超平面或超平面集合，可用于分类、回归或其他任务。直观上，超平面是距离任何类最近的训练数据点距离最大的平面(即所谓的函数边界)，可以实现很好的分离，因为一般来说，边界越大，分类器的泛化误差越低。</p>
+
+<h2 id="1-svc">1 SVC</h2>
+
+<h3 id="1-1-text-n-classes-2">1.1 <code>$\text{n_classes}=2$</code></h3>
+
+<p>对于数据特征矩阵<code>$\mathbf{X}_{n \times m}$</code>和二值目标向量<code>$\vec{y}$</code>：</p>
+
+<p>Given training vectors
+<code>$x_i \in \mathbb{R}^p \quad i=1,2,\ldots,n$</code>
+, in two classes, and a vector
+<code>$\vec{y} \ \ where \ y_1 \in \{1,-1\}^n$</code>
+, SVC solves the following primal problem:给定训练向量<code>$x_i \in \mathbb{R}^p \quad i=1,2,\ldots,n$</code>（为便于理解，这里其实是数据集X中的第<code>$i$</code>行）和向量<code>$\vec{y} \ \ where \ y_1 \in \{1,-1\}^n$</code>（<code>$\vec{y}$</code>是二值目标向量，<code>$y_i$</code>是其第<code>$i$</code>行值。），SVC解决以下原始问题：
+<code>$$\begin{align} \begin{aligned} &amp; \min_ {\vec{w}, b, \vec{\zeta}}\frac{1}{2} \vec{w}^T \vec{w} + C \sum_{i=1}^{n} \zeta_i \\ 
+&amp; \begin{split}\textrm {subject to } &amp; y_i (\vec{w}^T \phi (\vec{x}_i) + b) \geq 1 - \zeta_i,\\
+&amp; \zeta_i \geq 0, \\
+&amp; \zeta_i \text{ is the i-th elemnet of vector $\vec{\zeta}$} \\
+&amp; i=1, ..., n\end{split}\end{aligned}\end{align}$$</code>
+<strong>上式决定支持向量的参数<code>$\vec{w}$</code>也就是<code>$w_1, w_2, \ldots, w_m$</code>、<code>$b$</code>、<code>$\vec{\zeta}$</code>也就是<code>$\zeta_1, \zeta_2, \ldots, \zeta_n$</code>。</strong></p>
+
+<p><strong>这一优化将使得支持向量间距离最大化。因采用核函数，会将<code>$\vec{x}_i$</code>转化为<code>$\phi(\vec{x}_i)$</code>，这点需注意一下。进一步可阅读Support-Vector Networks。</strong></p>
+
+<p>Its dual is:其对偶形式如下：
+<code>$$\begin{align}\begin{aligned} &amp; \min_{\vec{\alpha}} \frac{1}{2} \vec{\alpha}^T \mathbf{Q} \vec{\alpha} - \vec{e}^T \vec{\alpha}\\
+&amp; \begin{split}
+\textrm {subject to } &amp; \vec{y}^T \vec{\alpha} = 0\\
+&amp; 0 \leq \alpha_i \leq C, \\
+&amp; i=1, ..., n\end{split}\end{aligned}\end{align}$$</code>
+<strong>上式决定核函数相关参数<code>$\vec{\alpha}$</code>也就是<code>$\alpha_1, \alpha_2, \ldots, \alpha_n$</code>。</strong></p>
+
+<p><strong>Support-Vector Networks文章中的式40-48为详细的推导过程。不过，因采用核函数，会将<code>$\vec{x}_i$</code>转化为<code>$\phi(\vec{x}_i)$</code>。</strong></p>
+
+<p>where
+<code>$\vec{e}$</code>
+is the vector of all ones,
+<code>$C &gt; 0$</code>
+is the upper bound,
+<code>$\mathbf{Q}$</code>
+is an
+<code>$n$</code>
+by
+<code>$n$</code>
+positive semidefinite matrix,
+<code>$\mathbf{Q}_{ij} \equiv y_i y_j K(\vec{x}_i, \vec{x}_j)$</code>
+where
+<code>$K(\vec{x}_i, \vec{x}_j) = \phi (\vec{x}_i)^T \phi (\vec{x}_j)$</code>
+is the kernel. Here training vectors are implicitly mapped into a higher (maybe infinite) dimensional space by the function
+<code>$\phi$</code>
+.其中<code>$\vec{e}$</code>是全部由1组成的向量，<code>$C &gt; 0$</code>是上界，<code>$\mathbf{Q}$</code>是<code>$n$</code>乘以<code>$n$</code>半正定矩阵，<code>$\mathbf{Q}_{ij} \equiv y_i y_j K(\vec{x}_i, \vec{x}_j)$</code>，其中<code>$K(\vec{x}_i, \vec{x}_j) = \phi (\vec{x}_i)^T \phi (\vec{x}_j)$</code>是核函数。在这里，训练向量通过函数<code>$\phi$</code>隐式映射到一个更高的(也许是无限的)维空间。</p>
+
+<p>The decision function is:决策方程为：
+<code>$$\operatorname{sgn}(\sum_{i=1}^n y_i \alpha_i K(\vec{x}_i, \vec{x}) + \rho)$$</code>
+<strong>决定函数也就是决定<code>$y$</code>取值的函数，由于是分类，所以即决定<code>$y$</code>的正负。关于<code>$\rho$</code>,也就是<code>intercept_</code>，查阅sklearn源码，其是一高参。当目标变量分类数<code>$\text{n_classes}=2$</code>那么<code>$shape(\rho)=[1]$</code>；当目标变量分类数<code>$\text{n_classes} \ne 2$</code>那么<code>$shape(\rho)=[\text{n_classes}]$</code>。其实<code>$\rho$</code>也可以按需自由设置，也就是<code>sklearn.svm.SVC</code>中的<code>coef0</code>参数。</strong></p>
+
+<p><strong>上述三式中，式1优化出<code>$\vec{w}$</code>、<code>$b$</code>、<code>$\vec{\zeta}$</code>以决定支持向量；式2、3优化出核函数相关参数<code>$\vec{\alpha}$</code>用于预测训练集以外数据点，优化出的<code>$\vec{\alpha}$</code>不参与决定支持向量。式3中因为<code>$x_i$</code>为已知，那么<code>$K(\vec{x}_i, \vec{x})$</code>是<code>$m$</code>维空间中的一个曲面，曲面高度为<code>$K(\vec{x}_i, \vec{x})$</code>。式1中<code>$\phi{vec{x}_i}$</code>将<code>$\vec{x}_i$</code>映射到空间<code>$\mathcal {V}$</code>，对SVM施加核技巧可将之转化成非线性模型。关于核函数可参阅我的博文<a href="https://chen-feiyang.github.io/post/核方法kernel_method/">核方法kernel_method</a>。</strong></p>
+
+<p><strong>Support-Vector Networks文章中的式33。</strong></p>
+
+<ul>
+<li>Note: While SVM models derived from <code>libsvm</code> and <code>liblinear</code> use C as regularization parameter, most other estimators use alpha. The exact equivalence between the amount of regularization of two models depends on the exact objective function optimized by the model. For example, when the estimator used is <code>sklearn.linear_model.Ridge regression</code>, the relation between them is given as
+<code>$C = \frac{1}{alpha}$</code>
+. 注:由<code>libsvm</code>和<code>liblinear</code>衍生的SVM模型使用C作为正则化参数，而其他大多数估计器使用alpha。两个模型正则化量的精确等价取决于模型优化后的精确目标函数。例如，使用的估计器是<code>sklearn.linear_model.Ridge regression</code>，它们之间的关系为<code>$C = \frac{1}{alpha}$</code>。</li>
+</ul>
+
+<p>This parameters can be accessed through the members <code>dual_coef_</code> which holds the product
+<code>$y_i \alpha_i$</code>
+, <code>support_vectors_</code> which holds the support vectors, and <code>intercept_</code> which holds the independent term
+<code>$\rho$</code>
+.这些参数可通过<code>dual_coef_</code>、<code>support_vectors_</code>和<code>intercept_</code>访问，<code>dual_coef_</code>控制乘积<code>$y_i \alpha_i$</code>，<code>support_vectors_</code>控制支持向量，<code>intercept_</code>控制独立项<code>$\rho$</code>。</p>
+
+<h3 id="1-2-text-n-classes-2-原创">1.2 <code>$\text{n_classes} &gt; 2$</code>（原创）</h3>
+
+<p>对于多分类目标向量<code>$\vec{y}$</code>（记<code>$p=\text{n_classes}$</code>），对每个<code>$y_i$</code>编码，可将<code>$\vec{y}$</code>转化为<code>$\mathbf{Y}_{n \times p}$</code>：</p>
+
+<p>上面三个公式相应改写为：
+<code>$$\begin{align}\begin{aligned} &amp; \min_ {\vec{w}, b, \mathbf{Z}_{n \times p}}\frac{1}{2} \vec{w}^T \vec{w} + C \sum_{i=1}^{n} \zeta_{i1} \\
+&amp; \min_ {\vec{w}, b, \mathbf{Z}_{n \times p}}\frac{1}{2} \vec{w}^T \vec{w} + C \sum_{i=1}^{n} \zeta_{i2} \\
+&amp; \vdots \\
+&amp; \min_ {\vec{w}, b, \mathbf{Z}_{n \times p}}\frac{1}{2} \vec{w}^T \vec{w} + C \sum_{i=1}^{n} \zeta_{ip} \\
+&amp; \begin{split}\textrm {subject to } &amp; y_{ik} (\vec{w}^T \phi (\vec{x}_i) + b) \geq 1 - \zeta_{ik},\\
+&amp; \zeta_{ik} \geq 0, \\
+&amp; \zeta_{ik} \text{ is the the element from row i, column k of $\mathbf{Z}_{n \times p}$,} \\
+&amp; y_{ik} \text{ is the the element from row i, column k of $\mathbf{Y}_{n \times p}$,} \\
+&amp; i=1, ..., n, \\
+&amp; k=1, ..., p\end{split}\end{aligned}\end{align}$$</code>
+<strong>上式决定支持向量的参数<code>$\vec{w}$</code>也就是<code>$\{w_1, w_2, \ldots, w_m\}$</code>、<code>$b$</code>、<code>$\mathbf{Z}_{n \times p}$</code>也就是<code>$\{\zeta_{11}, \zeta_{21}, \ldots, \zeta_{n1}, \quad \zeta_{12}, \zeta_{22}, \ldots, \zeta_{n2}, \quad \ldots, \quad \zeta_{1p}, \zeta_{2p}, \ldots, \zeta_{np}\}$</code>。</strong>
+<code>$$\begin{align}\begin{aligned} &amp; \min_{\mathbf{A}_{n \times p}} \frac{1}{2} \vec{\alpha}_{1}^T Q \vec{\alpha}_{1} - \vec{e}^T \vec{\alpha}_{1}\\
+&amp; \min_{\mathbf{A}_{n \times p}} \frac{1}{2} \vec{\alpha}_{2}^T Q \vec{\alpha}_{2} - \vec{e}^T \vec{\alpha}_{2}\\
+&amp; \vdots \\
+&amp; \min_{\mathbf{A}_{n \times p}} \frac{1}{2} \vec{\alpha}_{p}^T Q \vec{\alpha}_{p} - \vec{e}^T \vec{\alpha}_{p}\\
+&amp; \begin{split}
+\textrm {subject to } &amp; \vec{y}_{k}^T \vec{\alpha}_k = 0\\
+&amp; \vec{y}_k \text{ is column k of $\mathbf{Y}_{n \times p}$,} \\
+&amp; \vec{\alpha}_k \text{ is column k of $\mathbf{A}_{n \times p}$,} \\
+&amp; 0 \leq \alpha_{ik} \leq C, \\
+&amp; i=1, ..., n \\
+&amp; j=1, ..., p \end{split}\end{aligned}\end{align}$$</code>
+<strong>上式决定核函数相关参数<code>$\mathbf{A}_{n \times m}$</code>也就是<code>$\{\alpha_{11}, \alpha_{21}, \ldots, \alpha_{n1}, \quad \alpha_{12}, \alpha_{22}, \ldots, \alpha_{n2}, \quad \ldots, \quad \alpha_{1p}, \alpha_{2p}, \ldots, \alpha_{np}\}$</code>。</strong></p>
+
+<p><code>$$\operatorname{sgn}(\sum_{i=1}^n \vec{y}_{i1} \vec{\alpha}_{i1} K(x_i, x) + \rho_1)  \\
+\operatorname{sgn}(\sum_{i=1}^n \vec{y}_{i2} \vec{\alpha}_{i2} K(x_i, x) + \rho_2)  \\
+\vdots \\
+\operatorname{sgn}(\sum_{i=1}^n \vec{y}_{ip} \vec{\alpha}_{ip} K(x_i, x) + \rho_p)  \\
+$$</code>
+<strong>决定函数也就是决定<code>$y$</code>取值的函数，由于是分类，所以即决定<code>$y$</code>的正负。关于<code>$\vec{\rho}$</code>,也就是<code>intercept_</code>，查阅sklearn源码，当目标变量分类数<code>$\text{n_classes}=2$</code>那么<code>$shape(\rho)=[1]$</code>；当目标变量分类数<code>$\text{n_classes} \ne 2$</code>那么<code>$shape(\rho)=[\text{n_classes}]$</code>。</strong></p>
+
+<p><strong>关于多分类试写的上面三个公式有可能是错误的，因为毕竟<code>$\mathbf{Y}$</code>的各列不是独立的，上面公式完全割裂了各列的联系。不过暂时留下上述公式吧，其总还是可以方便我们理解。</strong></p>
+
+<h2 id="2-nusvc">2 NuSVC</h2>
+
+<p>We introduce a new parameter
+<code>$\nu$</code>
+which controls the number of support vectors and training errors. The parameter
+<code>$\nu \in (0,1]$</code>
+is an upper bound on the fraction of training errors and a lower bound of the fraction of support vectors.引入新参数<code>$\nu$</code>，其控制支持向量和训练误差的数值。<code>$\nu \in (0,1]$</code>是是训练误差部分的上界和支持向量部分的下界。</p>
+
+<p>It can be shown that the
+<code>$\nu$</code>
+-SVC formulation is a reparameterization of the
+<code>$C$</code>
+-SVC and therefore mathematically equivalent.显然<code>$\nu$</code>-SVC是<code>$C$</code>-SVC的再参数化(看两者取值范围，其关系应是互为倒数)，因此两者是等价的。</p>
+
+<h2 id="3-svr">3 SVR</h2>
+
+<p>Given training vectors
+<code>$\vec{x}_i \in \mathbb{R}^p \quad i=1,2,\ldots,n$</code>
+, and a vector
+<code>$\vec{y} \in \mathbb{R}^n$</code>
+<code>$\varepsilon$</code>-SVR solves the following primal problem:给定训练向量<code>$\vec{x}_i \in \mathbb{R}^p \quad i=1,2,\ldots,n$</code>和<code>$\vec{y} \in \mathbb{R}^n$</code>（<code>$\vec{y} \in \mathbb{R}^n$</code>是因为变量训练的行数是n），<code>$\varepsilon$</code>-SVR解决以下原始问题：
+<code>$$\begin{align}\begin{aligned} &amp; \min_ {\vec{w}, b, \vec{\zeta}, \vec{\zeta}^*} \frac{1}{2} \vec{w}^T \vec{w} + C \sum_{i=1}^{n} (\zeta_i + \zeta_i^*)\\ &amp; \begin{split}\textrm {subject to } &amp; y_i - \vec{w}^T \phi (\vec{x}_i) - b \leq \varepsilon + \zeta_i,\\
+                      &amp; \vec{w}^T \phi (\vec{x}_i) + b - y_i \leq \varepsilon + \zeta_i^*,\\
+                      &amp; \zeta_i, \zeta_i^* \geq 0, \\
+                      &amp; i=1, ..., n\end{split}\end{aligned}\end{align}$$</code>
+<strong>那么模型对训练数据的目标预测值<code>$\vec{w}^T \phi (\vec{x}_i) + b$</code>与真实值<code>$y_i$</code>之差的预测范围是<code>$[\varepsilon + \zeta_i,\varepsilon + \zeta_i^*]$</code>。其中<code>$\zeta_i$</code>和<code>$\zeta_i^*$</code>将惩罚至尽可能小，而对于<code>$\varepsilon$</code>，查阅sklearn文档发现是一高参，不能被学习器调整，只能网格搜索寻求最优。按文档说法，损失函数中，如果预测值与真实值之差距小于<code>$\varepsilon$</code>将不给与惩罚，如上式所示，不会对<code>$\varepsilon$</code>进行限制。</strong></p>
+
+<p>Its dual is:其对偶是：
+<code>$$\begin{align}\begin{aligned} &amp; \min_{\vec{\alpha}, \vec{\alpha}^*} \frac{1}{2} (\vec{\alpha} - \vec{\alpha}^*)^T Q (\vec{\alpha} - \vec{\alpha}^*) + \varepsilon \vec{e}^T (\vec{\alpha} + \vec{\alpha}^*) - y^T (\vec{\alpha} - \vec{\alpha}^*)\\
+&amp; \begin{split}
+\textrm {subject to } &amp; \vec{e}^T (\vec{\alpha} - \vec{\alpha}^*) = 0\\
+&amp; 0 \leq \alpha_i, \alpha_i^* \leq C, i=1, ..., n\end{split}\end{aligned}\end{align}$$</code>
+where
+<code>$\vec{e}$</code>
+is the vector of all ones,
+<code>$C&gt;0$</code>
+is the upper bound,
+<code>$\mathbf{Q}$</code>
+is an
+<code>$n$</code>
+by
+<code>$n$</code>
+positive semidefinite matrix,
+<code>$\mathbf{Q}_{ij} \equiv K(\vec{x}_i, \vec{x}_j) = \phi (\vec{x}_i)^T \phi (\vec{x}_j)$</code>
+is the kernel. Here training vectors are implicitly mapped into a higher (maybe infinite) dimensional space by the function
+<code>$\phi$</code>
+.其中<code>$\vec{e}$</code>是全部由1组成的向量，<code>$C &gt; 0$</code>是上界，<code>$\mathbf{Q}$</code>是<code>$n$</code>乘以<code>$n$</code>半正定矩阵，<code>$\mathbf{Q}_{ij} \equiv K(\vec{x}_i, \vec{x}_j) = \phi (\vec{x}_i)^T \phi (\vec{x}_j)$</code>是核函数。在这里，训练向量通过函数<code>$\phi$</code>隐式映射到一个更高的(也许是无限的)维空间。</p>
+
+<p>The decision function is:决策方程为：
+<code>$$\sum_{i=1}^n {((\alpha_i - \alpha_i^*) K(\vec{x}_i, \vec{x}) + \rho)}$$</code>
+These parameters can be accessed through the members <code>dual_coef_</code> which holds the difference
+<code>$\alpha_i - \alpha_i^*$</code>
+, <code>support_vectors_</code> which holds the support vectors, and <code>intercept_</code> which holds the independent term
+<code>$\rho$</code>
+.这些参数可通过<code>dual_coef_</code>、<code>support_vectors_</code>和<code>intercept_</code>访问，<code>dual_coef_</code>控制差值<code>$\alpha_i - \alpha_i^*$</code>，<code>support_vectors_</code>控制支持向量，<code>intercept_</code>控制独立项<code>$\rho$</code>。</p>
+
+<p>参考：</p>
+
+<ol>
+<li><a href="https://scikit-learn.org/stable/modules/svm.html#mathematical-formulation">sklearn文档1.4.7. Mathematical formulation</a>；</li>
+<li><a href="http://citeseerx.ist.psu.edu/viewdoc/download;jsessionid=ECA8A9693A2F2701E8A46DAAD50FB83E?doi=10.1.1.17.7215&amp;rep=rep1&amp;type=pdf">“Automatic Capacity Tuning of Very Large VC-dimension Classifiers”, I. Guyon, B. Boser, V. Vapnik - Advances in neural information processing 1993.</a>；</li>
+<li><a href="https://link.springer.com/content/pdf/10.1007%2FBF00994018.pdf">“Support-vector networks”, C. Cortes, V. Vapnik - Machine Learning, 20, 273-297 (1995).</a>；</li>
+<li><a href="http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.114.4288&amp;rep=rep1&amp;type=pdf">“A Tutorial on Support Vector Regression”, Alex J. Smola, Bernhard Schölkopf - Statistics and Computing archive Volume 14 Issue 3, August 2004, p. 199-222.</a>；</li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

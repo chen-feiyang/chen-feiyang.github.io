@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Dont_overfit_ii | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Dont_overfit_ii</h1>
+<p>2019/4/9开始kaggle的Don't Overfit! II竞赛，竞赛含250条训练数据，需要据此预测19.8k条数据的目标值。特征300个，目标值为0-1变量，训练样本含正样本160条，负样本90条。</p>
+
+<p><a href="https://www.kaggle.com/c/dont-overfit-ii">kaggle的Don't Overfit! II竞赛。</a></p>
+
+<p>显然，此竞赛的特点是小样本和不平衡样本。</p>
+
+<p>关于小样本的解决参考4；关于不平衡数据参考2。</p>
+
+<p>注意：不平衡数据不会造成过拟合，不平衡数据倾向于归入大分类的误分类，AUCROC是度量这种误分类的度量函数。？？？？？？</p>
+
+<p>关于不平衡：</p>
+
+<p>按参考2，解决不平衡学习问题的五种方法包括：
+1. Up-sample the minority class对少数分类升采样
+2. Down-sample the majority class对多数分类降采样
+3. Change your performance metric改变度量函数
+4. Penalize algorithms (cost-sensitive training)惩罚算法（即代价敏感训练）
+5. Use tree-based algorithms采用基于树的算法</p>
+
+<p>COSTCLA、costsensitive包可实现方法4。</p>
+
+<p>按TOM FAWCETT，分类问题不能简单地预测标签。因为但：
+1. 预测标签浪费很多信息，概率才是更重要的。
+2. 虽然很多分类学习器都有预测概率这个功能，但很可能其简单以0.5作为阈值划分分类标签的依据。由于算法、数据不平衡和训练测试数据集标签比例不均衡等原因，此模型所谓的”概率“是不准确的，所以不可以简单以0.5作概率阈值。
+3. 在概率不准情况下需要选择合适的概率阈值作为划分标签的依据。
+4.也可以校准，在sklearn中有sklearn.calibration.CalibratedClassifierCV。TOM FAWCETT先生的意思我并没有叙述准确，详见其博客（参考4、5）。</p>
+
+<p>那么将train分成tra、val，选取学习器比如逻辑回归，高参由tra进行cv获取，运用全部tra并cv获取的高参训练模型。查看模型对tra和val的aucroc，比较tra和val的aucroc，若接近说明没有过拟合，可用这个模型对test进行预测。class_weight需使weigh乘以分类样本数得到的乘积平衡，在sklearn可选‘balanced’。其他包应根据分类样本数自己设定。</p>
+
+<p>第一步选择逻辑回归，重复上行过程，这个结果作为基础，其他学习器的结果需好于此学习器。</p>
+
+<p>参考：</p>
+
+<ul>
+<li>1.<a href="https://www.analyticsvidhya.com/blog/2016/10/investigation-on-handling-structured-imbalanced-datasets-with-deep-learning/">Investigation on handling Structured &amp; Imbalanced Datasets with Deep Learning</a>；</li>
+<li>2.<a href="https://elitedatascience.com/imbalanced-classes">EXPLAINERS TUTORIALS__How to Handle Imbalanced Classes in Machine Learning</a>；</li>
+<li>3.<a href="http://lamda.nju.edu.cn/huangsj/dm11/files/qiny.pdf">Cost-sensitive 分类算法——综述与实验</a>；</li>
+<li>4.<a href="https://www.svds.com/learning-imbalanced-classes/">TOM FAWCETT__Learning from Imbalanced Classes</a>；</li>
+<li>5.<a href="http://www.svds.com/classifiers2/">TOM FAWCETT__The Basics of Classifier Evaluation: Part 2</a>；<br /></li>
+<li>4.<a href="https://elitedatascience.com/overfitting-in-machine-learning#how-to-prevent">EXPLAINERS TUTORIALS__Overfitting in Machine Learning: What It Is and How to Prevent It</a>；</li>
+<li>5.<a href="https://scikit-learn.org/stable/modules/grid_search.html#grid-search">Tuning the hyper-parameters of an estimator</a>；</li>
+<li>2.<a href="https://elitedatascience.com/imbalanced-classes">EXPLAINERS TUTORIALS__How to Handle Imbalanced Classes in Machine Learning</a>；</li>
+<li>3.<a href="http://lamda.nju.edu.cn/huangsj/dm11/files/qiny.pdf">Cost-sensitive 分类算法——综述与实验</a>；</li>
+<li>4.<a href="https://elitedatascience.com/overfitting-in-machine-learning#how-to-prevent">EXPLAINERS TUTORIALS__Overfitting in Machine Learning: What It Is and How to Prevent It</a>；</li>
+</ul>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

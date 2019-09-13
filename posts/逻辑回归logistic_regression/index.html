@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>逻辑回归logistic_regression | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>逻辑回归logistic_regression</h1>
+
+
+<h2 id="1-回归-regression">1 回归(Regression)</h2>
+
+<p>回归，我的理解来说，其直观的理解就是拟合的意思。我们以线性回归为例子，在二维平面上有一系列红色的点，我们想用一条直线来尽量拟合这些红色的点，这就是线性回归。回归的本质就是我们的预测结果尽量贴近实际观测的结果，或者说我们的求得一些参数，经过计算之后的预测结果尽可能接近真实值。
+<img src="/lr/1.jpg" alt="" />
+按照机器学习的一些作者的叙述，如果目标变量是连续型的，那么是回归；如果预测变量是离散型的，那么是分类。</p>
+
+<p>最简单的回归是普通最小二乘法回归（Ordinary Least Squares），在sklearn中是<code>sklearn.linear_model.LinearRegression</code>。数学上即解决以下数学问题。
+<code>$$\min_{w} {|| \mathbf{X} \vec{w} - \vec{y}||_2}^2$$</code>
+也就是损失函数为MSE。</p>
+
+<h2 id="2-逻辑回归的由来">2 逻辑回归的由来</h2>
+
+<p>对于二类线性可分的数据集，使用线性感知器就可以很好的分类。如下图中红色和蓝色的点，我们使用一条直线<code>$x_1 +x_2 = 3$</code>就可以区分两种数据集，在直线上方的属于红色类，直线下方的属于蓝色类。
+<img src="/lr/2.jpg" alt="" />
+线性回归和非线性回归的分类问题都不能给予解答，因为线性回归和非线性回归的问题，假设其分类函数如下：
+<code>$$y=\vec{w}^T\vec{x}+b$$</code>
+这里<code>$\vec{x}$</code>是数据矩阵<code>$\mathbf{X}$</code>中的一行。</p>
+
+<p>但是如果我们想知道对于一个二类分类问题，对于具体的一个样例，我们不仅想知道该类属于某一类，而且还想知道该类属于某一类的概率多大,有什么办法呢？</p>
+
+<p>y的阈值处于<code>$(-\infty，+\infty)$</code>，此时不能很好的给出属于某一类的概率，因为概率的范围是<code>$(0,1)$</code>，我们需要一个更好的映射函数，能够将分类的结果很好的映射成为<code>$(0,1)$</code>之间的概率，并且这个函数能够具有很好的可微分性。在这种需求下，人们找到了这个映射函数，即逻辑斯谛函数，也就是我们常说的sigmoid函数，其形式如下：
+<code>$$\frac{1}{1+e^{-z}}$$</code>
+sigmoid函数图像如下图所示
+<img src="/lr/4.png" alt="" />
+如图，其可以将<code>$(-\infty，+\infty)$</code>数据映射到<code>$(0,1)$</code>，正好满足我们的要求。</p>
+
+<p>sigmoid函数完美的解决了上述需求，而且sigmoid函数连续可微分。
+假设数据离散二类可分，分为0类和1类,如果概率值大于1/2，我们就将该类划分为1类，如果概率值低于1/2,我们就将该类划分为0类。当z取值为0的时候，概率值为1/2，这时候需要人为规定划分为哪一类。</p>
+
+<p>但是如果二类线性不可分的数据集，我们无法找到一条直线能够将两种类别很好的区分，即线性回归的分类法对于线性不可分的数据无法有效分类。例如下图中的红色点和蓝色点，我们无法使用一条直线很好的区分这两类，但是我们可以使用非线性分类器，如果我们使用<code>${x_1}^2+{x_2}^2 = 1$</code>，在圆外面的为红色类，在圆里面的一类为蓝色类。
+<img src="/lr/3.jpg" alt="" />
+诚然，数据线性可分可以使用线性分类器，如果数据线性不可分，可以使用非线性分类器，然后再运用sigmoid函数，这样就是非线性逻辑回归。</p>
+
+<p>但以下讨论仅限于线性可分的情况的逻辑回归。</p>
+
+<h2 id="3-为什么采用sigmoid函数">3 为什么采用sigmoid函数</h2>
+
+<p><a href="http://www.win-vector.com/dfiles/LogisticRegressionMaxEnt.pdf">http://www.win-vector.com/dfiles/LogisticRegressionMaxEnt.pdf</a></p>
+
+<h2 id="3-逻辑回归的损失函数-loss-function-和成本函数-cost-function">3 逻辑回归的损失函数(Loss Function)和成本函数(Cost Function)</h2>
+
+<p>在二类分类中，我们假定sigmoid输出结果表示属于1类的概率值，我们很容易想到用平方损失函数（也就是MSE），即
+<code>$$J(\vec{w})=\sum_{i=1}^{n}{\frac{1}{2}(\hat{y}_{i}-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi({z}_i)-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi(\vec{w}^T\vec{x}_i+b)-y_{i})^2}$$</code>
+这里<code>$z_i=\vec{w}^T\vec{x}_i+b$</code>，<code>$i$</code>代表第<code>$i$</code>个样本点。<code>$\hat{y}_i$</code>代表第<code>$i$</code>个样本的预测值，<code>$y_i$</code>代表第<code>$i$</code>个样本的实际值，<code>$\phi{(z_i)}$</code>代表对第<code>$i$</code>个<code>$z$</code>施加sigmoid函数。</p>
+
+<p>在这种情况下，我们<code>$\phi({z_{i}})$</code>表示sigmoid对第i个值的预测结果，我们将sigmoid函数带入上述成本函数中，绘制其图像，发现这个成本函数的函数图像是一个非凸函数，如下图所示，这个函数里面有很多极小值，如果采用梯度下降法，则会导致陷入局部最优解中,有没有一个凸函数的成本函数呢？
+<img src="/lr/5.jpg" alt="" /></p>
+
+<p>Cross entropy can be used to define a loss function in machine learning and optimization. The true probability
+<code>$p_{i}$</code>
+is the true label, and the given distribution
+<code>$q_{i}$</code>
+is the predicted value of the current model.交叉熵可以用来定义机器学习和优化中的损失函数。真实概率<code>$p_{i}$</code>是真实的标签，给定的分布<code>$q_{i}$</code>是当前模型的预测值。</p>
+
+<p>More specifically, let us consider logistic regression, which (in its most basic form) deals with classifying a given set of data points into two possible classes generically labelled
+<code>$0$</code>
+and
+<code>$1$</code>
+. The logistic regression model thus predicts an output
+<code>$y\in \{0,1\}$</code>
+, given an input vector
+<code>$\vec {x}$</code>
+. The probability is modeled using the logistic function
+<code>$g(z)=1/(1+e^{-z})$</code>
+. Namely, the probability of finding the output
+<code>$y=1$</code>
+is given by:更具体地说，让我们考虑逻辑回归，它(以其最基本的形式)处理将给定的一组数据点分类为通常标记为<code>$0$</code>和<code>$1$</code>的两个可能的类。因此，逻辑回归模型预测给定输入向量<code>$\vec {x}$</code>的输出<code>$y\in \{0,1\}$</code>。概率是用逻辑函数<code>$g(z)=1/(1+e^{-z})$</code>建模的。即，得到输出<code>$y=1$</code>的概率为：
+<code>$$q_{y=1}\ =\ {\hat {y}}\ \equiv \ g(\vec {w}^T \cdot \vec {x} +b)\ =1/(1+e^{-(\vec {w}^T \cdot \vec {x} +b)})$$</code></p>
+
+<p>where the vector of weights
+<code>$\mathbf {w}$</code>
+is optimized through some appropriate algorithm such as gradient descent. Similarly, the complementary probability of finding the output
+<code>$y=0$</code>
+is simply given by:其中权向量<code>$\mathbf {w}$</code>通过梯度下降等适当算法进行优化。类似地，输出<code>$y=0$</code>的互补概率简单地由以下方程给出：
+<code>$$q_{y=0}\ =\ 1-{\hat {y}}\equiv \ 1-g(\vec {w}^T \cdot \vec {x} +b)\ =1-1/(1+e^{-(\vec {w}^T \cdot \vec {x} +b)})$$</code></p>
+
+<p>The true (observed) probabilities can be expressed similarly as
+<code>$p_{y=1}=y$</code>
+and
+<code>$p_{y=0}=1-y$</code>
+.真实(观测)概率可以类似地表示为<code>$p_{y=1}=y$</code>和<code>$p_{y=0}=1-y$</code>。</p>
+
+<p>Having set up our notation,
+<code>$p \in \{y,1-y\}$</code>
+and
+<code>$q \in \{\hat {y},1-\hat {y}\}$</code>
+, we can use cross entropy to get a measure of dissimilarity between
+<code>$p$</code>
+and
+<code>$q$</code>
+:设置符号<code>$p \in \{y,1-y\}$</code>和<code>$q \in \{\hat {y},1-\hat {y}\}$</code>，我们可以利用交叉熵来衡量<code>$p$</code>和<code>$q$</code>之间的不同:
+<code>$$H(p_i,q_i)\ =-\sum_{i}p_{i}\log q_{i}\ =-y\log{\hat {y}}-(1-y)\log(1-\hat{y})$$</code></p>
+
+<p>The typical cost function that one uses in logistic regression is computed by taking the average of all cross-entropies in the sample. For example, suppose we have
+<code>$n$</code>
+samples with each sample indexed by
+<code>$i=1,\dots ,n$</code>
+. The loss function is then given by:在逻辑回归中使用的典型成本函数是通过取样本中所有交叉熵的平均值来计算的。例如，假设我们有<code>$n$</code>个样本，每个样本的索引为<code>$i=1,\dots ,n$</code>。则损失函数为:
+<code>$${\begin{aligned}J(\vec {w},b )\ &amp;=\ {\frac {1}{n}}\sum _{i=1}^{n}H(p_{i},q_{i})\ =\ -{\frac {1}{n}}\sum _{i=1}^{n}\ {\bigg [}y_{i}\log {\hat {y}}_{i}+(1-y_{i})\log(1-{\hat {y}}_{i}){\bigg ]}\,,\end{aligned}}$$</code></p>
+
+<p>where
+<code>${\hat {y}}_{i}\equiv g(\vec {w}^T \cdot \vec {x} _{i}+b)=1/(1+e^{-(\vec {w}^T \cdot \vec {x} +b)})$</code>
+, with
+<code>$g(z)$</code>
+the logistic function as before.其中<code>${\hat {y}}_{i}\equiv g(\vec {w}^T \cdot \vec {x} _{i}+b)=1/(1+e^{-(\vec {w}^T \cdot \vec {x} +b)})$</code>，其中逻辑函数<code>$g(z)$</code>如前所述。</p>
+
+<p>The logistic loss is sometimes called cross-entropy loss. It is also known as <code>$\log$</code> loss (In this case, the binary label is often denoted by {-1,+1}).逻辑损失有时称为<strong>交叉熵损失</strong>。它也称为<code>$\log$</code>损失（在这种情况下，二分类标签通常表示为{-1,+1}）。</p>
+
+<p>这是一个凸函数（斜率是非单调递减的函数即凸函数），因此可以用梯度下降法求其最小值。
+<img src="/lr/6.jpg" alt="" /></p>
+
+<h2 id="4-极大似然法求解逻辑回归">4 极大似然法求解逻辑回归</h2>
+
+<p>还可以用我们熟知的统计学知识——极大似然法估计逻辑回归中的参数<code>$\vec{x}$</code>和<code>$b$</code>，上述得到的<code>$\log{p(y|\vec{w},\vec{x})}$</code>,假设目前有n组样本，分别为<code>$(\vec{x}_1,y_1),(\vec{x}_2,y_2),\ldots,(\vec{x}_n,y_n)$</code>，其中<code>$\vec{x}_1$</code>表示第i个样本的特征，<code>$y_i$</code>表示第i个样本的类别，<code>$y_i=0$</code>或者<code>$y_i=1$</code>，</p>
+
+<p><strong>假设sigmoid函数<code>$\phi{(z_i)}$</code>表示属于1类的概率</strong>，于是做出如下的定义：
+<code>$$\left\{ \begin{aligned} p(y_i=1|\vec{x}_i) &amp; = \phi{(\vec{w}^T \cdot \vec{x}_i +b)}=\phi{(z_i)}  \\ p(y_i=0|\vec{x}_i) &amp; = 1-\phi{(z_i)}  \end{aligned} \right.$$</code></p>
+
+<p>将两个式子综合来，可以改写为下式：
+<code>$$p(y_i|\vec{x}_i) = {\hat{y}_i}^{y_i}{(1-\hat{y}_i)}^{(1-y_i)}$$</code></p>
+
+<p>因为<code>$y_i \in \{0,1\}$</code>；当<code>$y_i=0$</code>时，上式退化为<code>$p(y_i|\vec{x}_i) = {(1-\hat{y}_i)}$</code>；当<code>$y_i=1$</code>时，上式退化为<code>$p(y_i|\vec{x}_i) = {\hat{y}_i}$</code>。</p>
+
+<p>利用极大似然法的原则，假设所有训练样本独立同分布，则联合概率为所有样本概率的乘积，即：
+<code>$$P(\vec{y})=\prod_{i=1}^{n}{P(y_i|\vec{x}_i)}$$</code>
+对上述公式两边取对数，得到下述公式，是不是对这个公式优点熟悉呢？这个公式就是我们的成本函数的和，对于这个公式和成本函数来说，取平均值和不取平均值没有影响。
+<code>$$\log{P(\vec{y})}=\log{\prod_{i=1}^{n}{P(y_i|\vec{x}_i)}}=\sum_{i=1}^{n}{\log{P(y_i|\vec{x}_i)}}=\sum_{i=1}^{n}{H(p_i,q_i)}$$</code>
+按照极大似然法求极值的方法，分别对<code>$\vec{w}$</code>的每个参数求偏导数使其为0，得到对数似然方程组，求解该方程，便可以到的<code>$\vec{w}$</code>的参数。只是如果参数很多，求解方程组就会很复杂，此时可以考虑梯度下降法来求解。</p>
+
+<p>由上面叙述，交叉熵损失函数与极大似然法是等效的。</p>
+
+<h2 id="5-总结">5 总结</h2>
+
+<ul>
+<li>逻辑回归最大的优势在于它的输出结果不仅可以用于分类，还可以表征某个样本属于某类别的概率。</li>
+<li>逻辑斯谛函数将原本输出结果从范围<code>$(-\infty，+\infty)$</code>映射到<code>$(0,1)$</code>，从而完成概率的估测。</li>
+<li>逻辑回归得判定的阈值能够映射为平面的一条判定边界，随着特征的复杂化，判定边界可能是多种多样的样貌，但是它能够较好地把两类样本点分隔开，解决分类问题。</li>
+<li>求解逻辑回归参数的传统方法是梯度下降，构造为凸函数的代价函数后，每次沿着偏导方向(下降速度最快方向)迈进一小部分，直至N次迭代后到达最低点。</li>
+<li>查阅sklearn文档<code>sklearn.linear_model.LogisticRegression</code>发现其并没有损失函数的选择，言外之意其损失函数是固定的，也就是损失函数固定为交叉熵。这是普通最小二乘法线性回归与普通逻辑回归最重要的区别。</li>
+</ul>
+
+<p>参考：</p>
+
+<ol>
+<li><a href="https://blog.csdn.net/t46414704152abc/article/details/79574003">逻辑回归的理解</a>；</li>
+<li><a href="https://scikit-learn.org/dev/modules/linear_model.html#logistic-regression">sklearn文档Generalized Linear Models</a>；</li>
+<li><a href="https://scikit-learn.org/dev/modules/generated/sklearn.linear_model.LinearRegression.html#sklearn.linear_model.LinearRegression">sklearn文档LinearRegression</a>；</li>
+<li><a href="https://en.wikipedia.org/wiki/Logistic_regression">维基Logistic regression</a>。</li>
+<li><a href="https://en.wikipedia.org/wiki/Cross_entropy">维基Cross entropy</a>。</li>
+</ol>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

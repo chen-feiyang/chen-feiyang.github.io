@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Steel_defect_detection | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Steel_defect_detection</h1>
+
+
+<h1 id="description描述">Description描述</h1>
+
+<p>Steel is one of the most important building materials of modern times. Steel buildings are resistant to natural and man-made wear which has made the material ubiquitous around the world. To help make production of steel more efficient, this competition will help identify defects.钢铁是现代社会最重要建材之一。钢结构建筑能够抵抗自然和人为的磨损，这使得这种材料在世界各地普遍存在。为了使钢铁生产更有效率，此竞赛将帮助识别缺陷。</p>
+
+<p>Severstal is leading the charge in efficient steel mining and production. They believe the future of metallurgy requires development across the economic, ecological, and social aspects of the industry—and they take corporate responsibility seriously. The company recently created the country’s largest industrial data lake, with petabytes of data that were previously discarded. Severstal is now looking to machine learning to improve automation, increase efficiency, and maintain high quality in their production. Severstal在高效钢铁开采和生产方面处于领先地位。他们认为，冶金行业的未来需要在经济、生态和社会各方面进行发展，他们认真对待企业责任。该公司最近创建了所在国最大两的的工业数据，这些量大至pd的数据之前被丢弃。Severstal现在希望通过机器学习来提高自动化程度，提高效率，并在生产中保持高质量。</p>
+
+<p>The production process of flat sheet steel is especially delicate. From heating and rolling, to drying and cutting, several machines touch flat steel by the time it’s ready to ship. Today, Severstal uses images from high frequency cameras to power a defect detection algorithm.扁钢的生产工艺特别精细。从加热和轧制，到干燥和切割，装船之前多台机器接触扁钢。如今，Severstal利用来自高频摄像机的图像为缺陷检测算法提供数据源。</p>
+
+<p>In this competition, you’ll help engineers improve the algorithm by localizing and classifying surface defects on a steel sheet.在这次比赛中，你将帮助工程师通过对钢板表面缺陷进行定位和分类来改进算法。</p>
+
+<p>If successful, you’ll help keep manufacturing standards for steel high and enable Severstal to continue their innovation, leading to a stronger, more efficient world all around us.如果成功，你们将帮助保持钢铁的高制造标准，并使Severstal能够继续创新，使我们周围的世界变得更强大、更高效。</p>
+
+<p><strong>参加此比赛需要手机验证：格式为“+860手机号码”。</strong></p>
+
+<p><strong>数据集有1.3G，或者网络原因等，下载需要10多小时。所以也许使用<code>kaggle competitions download -c severstal-steel-defect-detection</code>是更好选择。试验了一下，确实使用kaggle api下载是更好选择，速度快许多。</strong></p>
+
+<p><strong>关于kaggle api的安装和使用：1.anaconda中新建一环境kaggle。2.<code>activate kaggle</code>。3.<code>pip install kaggle</code>。4.在kaggle网页右上角点账户图标并点“My Account”点击“Create New Token”将下载kaggle.json，将其放入C:\Users\yourusername.kaggle文件夹下。5.在Anaconda Prompt（注意激活kaggle环境）中输入<code>kaggle competitions download -c severstal-steel-defect-detection</code>即可将竞赛数据集下载在C:\Users\yourusername文件夹下。</strong></p>
+
+<h1 id="evaluation评估">Evaluation评估</h1>
+
+<p>This competition is evaluated on the mean Dice coefficient. The Dice coefficient can be used to compare the pixel-wise agreement between a predicted segmentation and its corresponding ground truth. The formula is given by:本次比赛采用平均<a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Dice系数</a>进行评价。Dice系数可以用来比较预测分割和相应的真实值之间的像素层面的一致性。公式为：
+<code>$$\frac{2∗|X∩Y|} {|X|+|Y|}$$</code></p>
+
+<p>where <code>$X$</code> is the predicted set of pixels and <code>$Y$</code> is the ground truth. The Dice coefficient is defined to be 1 when both <code>$X$</code> and <code>$Y$</code> are empty. The leaderboard score is the mean of the Dice coefficients for each <code>&lt;ImageId, ClassId&gt;</code> pair in the test set.其中<code>$X$</code>为像素的预测集，而<code>$Y$</code>为真实值。当<code>$X$</code>和<code>$Y$</code>均为空值时定义Dice系数为1.排行榜分数是测试集中每一<code>&lt;ImageId, ClassId&gt;</code>的Dice系数的平均值。</p>
+
+<h2 id="encodedpixels">EncodedPixels</h2>
+
+<p>In order to reduce the submission file size, our metric uses run-length encoding on the pixel values. Instead of submitting an exhaustive list of indices for your segmentation, you will submit pairs of values that contain a start position and a run length. E.g. <code>'1 3'</code> implies starting at pixel 1 and running a total of 3 pixels <code>(1,2,3)</code>.为了减小提交文件的大小，我们的度量对像素值使用运行长度编码。您将提交包含起始位置和运行长度的值对，而不是为您的分段提交一个详尽的索引列表。如：<code>'1 3'</code>表示从像素1开始，总共运行3个像素<code>(1,2,3)</code>。</p>
+
+<p><strong>此竞赛的target即<code>EncodedPixels</code>，代表哪些像素点有缺陷。穷举缺陷像素点将使文件很大，故<code>EncodedPixels</code>采用行程长度编码（Run Length Encoding）来展示。在此编码下奇数项用来表示有缺陷的像素点位置，偶数项用来表示从其左邻揭示的位置开始多少长度均是缺陷像素。</strong></p>
+
+<p><strong>随机抽取了train_images.zip里的10张图片，像素均是1600*256，因此可以比较有把握说，图片大小均是1600*256</strong></p>
+
+<p><strong>此竞赛的<code>X</code>是图片，y是<code>EncodedPixels</code>。这属于图像语义分割（semantic segmentation）范畴。语义分隔的典型应用为标示出行车录像中的车辆、行人等。车辆、行人各可以作为一个分类。与传统的分类不同，语义分割的目标值为</strong>每个像素点的分类<strong>。</strong></p>
+
+<p><strong>为满足运行时间不超1小时这一主办方要求，看到公共kernels都是加载预训练模型来预测，主办方提供kernels的运行环境，最终也需满足运行时常的要求，如无必要就不搭建本地环境了吧。</strong></p>
+
+<p>The competition format requires a space delimited list of pairs. For example, <code>'1 3 10 5'</code> implies pixels 1,2,3,10,11,12,13,14 are to be included in the mask. The metric checks that the pairs are sorted, positive, and the decoded pixel values are not duplicated. The pixels are numbered from top to bottom, then left to right: 1 is pixel <code>(1,1)</code>, 2 is pixel <code>(2,1)</code>, etc.比赛格式需要以空格分隔的对列表。例如，<code>'1 3 10 5'</code>表示像素1,2,3,10,11,12,13,14将包含在掩码中。该度量检查对是否排序、是否为正以及解码后的像素值是否重复。像素从上到下依次编号，然后从左到右:1是像素<code>(1,1)</code>,2是像素<code>(2,1)</code>，依此类推。</p>
+
+<h2 id="file-format文件格式">File Format文件格式</h2>
+
+<p>Your submission file should be in csv format, with a header and columns names : <code>ImageId_ClassId</code>, <code>EncodedPixels</code>. Each row in your submission represents a single predicted defect segmentation for the given <code>ImageId</code>, and predicted <code>ClassId</code>, and you should have the same number of rows as <code>num_images * num_defect_classes</code>. The segment for each defect class will be encoded into a single row, even if there are several non-contiguous defect locations on an image.您的提交文件应该是csv格式的，带有标题和列名:<code>ImageId_ClassId</code>, <code>EncodedPixels</code>。提交中的每一行表示给定<code>ImageId</code>和<code>ClassId</code>的预测缺陷分割，并且您应该具有与<code>num_images * num_defect_classes</code>相同的行数。每个缺陷类的段将被编码成一行，即使在一个图像上有几个不相邻的缺陷位置。</p>
+
+<pre><code>ImageId_ClassId,EncodedPixels
+004f40c73.jpg_1,1 1
+004f40c73.jpg_2,1 1
+004f40c73.jpg_3,2 409599
+etc...
+</code></pre>
+
+<h2 id="dice系数补充知识">Dice系数补充知识</h2>
+
+<p>可能有用的链接：</p>
+
+<ol>
+<li><a href="https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient">Wikipedia之Dice系数</a></li>
+<li><a href="https://github.com/keras-team/keras/issues/3611">Dice score function #3611</a></li>
+<li><a href="https://www.kaggle.com/c/ultrasound-nerve-segmentation/discussion/21358">~0.57 Deep Learning Keras Tutorial</a>，其给出了keras中可用自定义Dice系数的损失函数和度量。并代码本身或也可以参考。</li>
+<li><a href="https://github.com/keras-team/keras/issues/2994">Dice coefficient as custom objective function</a></li>
+<li><a href="https://www.kaggle.com/toregil/a-lung-u-net-in-keras">A lung U-net in Keras</a></li>
+<li><a href="https://lars76.github.io/neural-networks/object-detection/losses-for-segmentation/">Losses for Image Segmentation - Lars' Blog</a></li>
+<li><a href="https://blog.csdn.net/m0_37477175/article/details/83004746">从loss处理图像分割中类别极度不均衡的状况---keras</a></li>
+<li><a href="https://keras.io/metrics/">Usage of metrics - Keras Documentation</a>，其可提示度量函数和自定义度量函数的使用。</li>
+</ol>
+
+<p><strong>突然发现，Dice系数就是F-score。详见<a href="https://segmentation-models.readthedocs.io/en/latest/api.html#metrics">Segmentation Models Python API</a>。</strong></p>
+
+<h1 id="timeline时间线">Timeline时间线</h1>
+
+<ul>
+<li><p>October 17, 2019 - Entry deadline. You must accept the competition rules before this date in order to compete.</p></li>
+
+<li><p>October 17, 2019 - Pre-trained model and external data disclosure deadline. Participants must disclose any external data or pre-trained models used in the official forum thread in adherence with competition rules.</p></li>
+
+<li><p>October 17, 2019 - Team merger deadline. This is the last day participants may join or merge teams.</p></li>
+
+<li><p>October 24, 2019 - Final submission deadline.</p></li>
+
+<li><p>November 10, 2019 - Submission deadline for the Efficiency Prize.</p></li>
+</ul>
+
+<p>Efficiency Prize: Severstal will choose a winner of the “Efficiency Prize.” Participants who finish in the top 50 on the Kaggle Private Leaderboard will be allowed to submit their inference code via docker containers to Severstal for consideration for the Efficiency Prize. For each Participant that submits a solution for consideration for the Efficiency Prize, Severstal will evaluate the speed of such solution and provide a corresponding score to each Participant. Severstal will provide instructions on how to submit solutions via docker containers for consideration for the Efficiency Prize. Severstal will post the all of the results of the evaluations for the Efficiency Prize in the forum for the Competition. Participants are allowed to submit a different code than the one that places them in the Top 50, as long as that solution also scores within the Top 50.效率奖:Severstal将选出“效率奖”的获奖者。在Kaggle Private Leaderboard上排名前50的参与者将被允许通过docker容器向Severstal提交他们的推理代码，以作为获得效率奖的考虑。对于每一位提交解决方案以获得效率奖的参与者，Severstal将对解决方案的速度进行评估，并为每一位参与者提供相应的分数。Severstal将提供指导，说明如何通过docker容器提交解决方案，以获得效率奖。Severstal将在竞争论坛上公布所有效率奖的评价结果。任何代码，只要得分也在前50名之内，就可提交，不限制提交代码的数量。</p>
+
+<p>All deadlines are at 11:59 PM UTC on the corresponding day unless otherwise noted. The competition organizers reserve the right to update the contest timeline if they deem it necessary.除非另有说明，所有截止日期均为协调世界时晚上11:59。如有需要，比赛主办机构保留更新比赛时间表的权利。</p>
+
+<h1 id="prizes">Prizes</h1>
+
+<ul>
+<li>1st Place: $40,000</li>
+<li>2nd Place: $25,000</li>
+<li>3rd Place: $15,000</li>
+<li>4th Place: $10,000</li>
+<li>5th Place: $10,000</li>
+<li>Efficiency Prize: $20,000</li>
+</ul>
+
+<p>Efficiency Prize: Severstal will choose a winner of the “Efficiency Prize.” Participants who finish in the top 50 on the Kaggle Private Leaderboard will be allowed to submit their inference code via docker containers to Severstal for consideration for the Efficiency Prize. For each Participant that submits a solution for consideration for the Efficiency Prize, Severstal will evaluate the speed of such solution and provide a corresponding score to each Participant. Severstal will provide instructions on how to submit solutions via docker containers for consideration for the Efficiency Prize. Severstal will post the all of the results of the evaluations for the Efficiency Prize in the forum for the Competition. Participants are allowed to submit a different code than the one that places them in the Top 50, as long as that solution also scores within the Top 50.效率奖:Severstal将选出“效率奖”的获奖者。在Kaggle Private Leaderboard上排名前50的参与者将被允许通过docker容器向Severstal提交他们的推理代码，以作为获得效率奖的考虑。对于每一位提交解决方案以获得效率奖的参与者，Severstal将对解决方案的速度进行评估，并为每一位参与者提供相应的分数。Severstal将提供指导，说明如何通过docker容器提交解决方案，以获得效率奖。Severstal将在竞争论坛上公布所有效率奖的评价结果。任何代码，只要得分也在前50名之内，就可提交，不限制提交代码的数量。</p>
+
+<h1 id="kernels-requirements-kernels要求">Kernels Requirements Kernels要求</h1>
+
+<p><strong>This is a Kernels-only competition这是一个只提交Kernels的竞赛</strong></p>
+
+<p>Submissions to this competition must be made through Kernels. Your kernel will re-run automatically against an unseen test set, and needs to output a file named submission.csv. You can still train a model offline, upload it as a dataset, and use the kernel exclusively to perform inference.只能通过Kernels提交结果。你的kernel将在一个未见测试机上自动重新运行，并产生一个名为submission.csv的文件。你也可线下训练一个模型，作为数据集上传这个模型，并专门使用这个kernel进行推理。</p>
+
+<p>In order for the &quot;Submit to Competition&quot; button to be active after a commit, the following conditions must be met:为使&quot;Submit to Competition&quot;按键有效，以下条件必须满足：</p>
+
+<ul>
+<li>CPU or GPU Kernels &lt;= 1 hour run-time CPU或GPU Kernels运行时间不超过1小时。</li>
+<li>Internet must be turned off必须关闭互联网</li>
+</ul>
+
+<p>In synchronous KO competitions, note that a submission that results in an error--either within the kernel or within the process of scoring--will count against your daily submission limit and will not return the specific error message. This is to limit probing the private test set.在同步KO比赛中，请注意提交的kernel或其运行的评分过程中稍有错误，将计入你每日提交次数限制，将不会因此返回特定错误信息。这是为了限制探测私有测试集。</p>
+
+<p>Please note - committing your Kernel will result in a full execution of your code from top-to-bottom.请注意，提交你的kernel将从顶至底执行你的代码。</p>
+
+<p>Please see the Kernels-only FAQ for more information on how to submit.请查看Kernels-only FAQ以获取更多关于如何提交的信息。</p>
+
+<h1 id="data数据">Data数据</h1>
+
+<p>In this competition you will be predicting the location and type of defects found in steel manufacturing. Images are named with a unique ImageId. You must segment and classify the defects in the test set.在这次比赛中，你将预测钢铁制造中的缺陷的位置和类型。图片以唯一ImageId命名。你必须对测试集中的缺陷进行分段和分类。</p>
+
+<p>Each image may have no defects, a defect of a single class, or defects of multiple classes. For each image you must segment defects of each class (ClassId = [1, 2, 3, 4]).每张图片可能没有缺陷、单类型的一个缺陷、多类型的多种缺陷。对每张图片，你必须划分是否属于每个分类（ClassId = [1, 2, 3, 4]）。</p>
+
+<p>The segment for each defect class will be encoded into a single row, even if there are several non-contiguous defect locations on an image. You can read more about the encoding standard on the Evaluation page.每个缺陷类的段将被编码为一行，即使图像上有几个不连续的缺陷位置。您可以在评估页面上阅读更多关于编码标准的信息。</p>
+
+<p>Submissions to this competition must be made through Kernels. After your submission against the Public test set, your kernel will re-run automatically against the entire Public and Private (unseen) test set. Refer to the Kernels Requirement Page for more information.只能通过Kernels提交到竞赛。在对公共数据集提交之后，你的kernel将自动重新运行在公共和私有（未见）数据集上运行。有关更多信息，请参阅Kernels要求页面。</p>
+
+<h1 id="some-useful-discussion-from-competion-page">Some useful Discussion from competion page</h1>
+
+<p>20190831排名第67的Nirhar Roy在《New to Machine Learning?》中推荐了一些材料、kernels供大家学习。我在其中找到Chris Deotte的《Keras UNET with EDA》kernel，Chris的这一Kernel在提供代码的同时附加了许多文字解释，而且Chris我以前在其他竞赛讨论中也多次见到其出现，应该算是kaggle的活跃人物了，先暂时跟从他的kernel学习吧。</p>
+
+<p>Chris的代码我将翻译并下载作为学习资料附件。</p>
+
+<p><a href="https://github.com/qubvel/segmentation_models/blob/master/examples/multiclass%20segmentation%20(camvid).ipynb">qubvel/segmentation_models给的[Jupyter Notebook] Multi-class segmentation (cars, pedestrians) on CamVid dataset</a></p>
+
+<p>20190831找到一个公开kernel，甚至无法保证运行时间符合要求。该如何减少允许时间呢？</p>
+
+<p>UNET的inputshape要求h和d均应被32整除，256*1600=（32*8）*（32*50）公开代码将图片长款均除2，在不改变长宽比的情况下似乎是能达到的最小尺寸了，但不能改变长宽比吗，可以截图吗？</p>
+
+<p>Chris Deotte的《Keras UNET with EDA》kernel用到了fit_gennerator，为运行时间，似不必有。如只用compile并fit，可在fit中增大batch_size,大batch_size，可缩短运行时间</p>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

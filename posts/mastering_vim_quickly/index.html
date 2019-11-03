@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Mastering_vim_quickly | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Mastering_vim_quickly</h1>
+
+
+<p>目录：</p>
+
+<ul>
+<li><a href="#1"># 1 Instead of Preface</a>
+
+<ul>
+<li><a href="#1.1">## 1.1 What this book covers</a></li>
+<li><a href="#1.2">## 1.2 What you need for this book</a></li>
+<li><a href="#1.3">## 1.3 Who this book is for</a></li>
+<li><a href="#1.4">## 1.4 Vim versions</a></li>
+<li><a href="#1.5">## 1.5 Conventions</a>
+
+<ul>
+<li><a href="#1.5.1">### 1.5.1 Key presses</a></li>
+<li><a href="#1.5.2">### 1.5.2 Normal mode commands</a></li>
+<li><a href="#1.5.3">### 1.5.3 Command line commands</a></li>
+<li><a href="#1.5.4">### 1.5.4 Fonts</a></li>
+<li><a href="#1.5.5">### 1.5.5 Other formatting</a></li>
+</ul></li>
+<li><a href="#1.6">## 1.6 Piracy</a></li>
+<li><a href="#1.7">## 1.7 Mastering Vim Quickly Newsletter</a></li>
+<li><a href="#1.8">## 1.8 Why this name</a></li>
+<li><a href="#1.9">## 1.9 Questions</a></li>
+</ul></li>
+<li><a href="#2"># 2 Introduction</a>
+
+<ul>
+<li><a href="#2.1">## 2.1 The art of l1earning</a>
+
+<ul>
+<li><a href="#2.1.1">### 2.1.1 Pareto principle</a></li>
+<li><a href="#2.1.2">### 2.1.2 Mini habits</a></li>
+<li><a href="#2.1.3">### 2.1.3 1% improvement per day</a></li>
+</ul></li>
+<li><a href="#2.2">## 2.2 No Experience Necessary</a></li>
+</ul></li>
+<li><a href="#3"># 3 Mastering Vim - Basics</a>
+
+<ul>
+<li><a href="#3.1">## 3.1 Installing Vim 8</a></li>
+<li><a href="#3.2">## 3.2 Vim philosophy</a>
+
+<ul>
+<li><a href="#3.2.1">### 3.2.1 Modal editing</a></li>
+<li><a href="#3.2.2">### 3.2.2 Operators</a></li>
+</ul></li>
+<li><a href="#3.3">## 3.3 Starting Vim</a></li>
+</ul></li>
+<li><a href="#4"># 4 Your first Vim session</a></li>
+<li><a href="#5"># 5 Vim Concepts</a>
+
+<ul>
+<li><a href="#5.1">## 5.1 Modes</a></li>
+<li><a href="#5.2">## 5.2 Commands</a></li>
+</ul></li>
+<li><a href="#6"># 6 Working with files</a>
+
+<ul>
+<li><a href="#6.1">## 6.1 Opening files</a></li>
+<li><a href="#6.2">## 6.2 Closing files</a></li>
+<li><a href="#6.3">## 6.3 Saving files</a></li>
+<li><a href="#6.4">## 6.4 Navigation</a>
+
+<ul>
+<li><a href="#6.4.1">### 6.4.1 Basic movement</a></li>
+<li><a href="#6.4.2">### 6.4.2 Navigate through words</a></li>
+<li><a href="#6.4.3">### 6.4.3 Scrolling pages</a></li>
+<li><a href="#6.4.4">### 6.4.4 Jumping around the file</a></li>
+<li><a href="#6.4.5">### 6.4.5 Navigating inside the window</a></li>
+<li><a href="#6.4.6">### 6.4.6 Navigating in Insert mode</a></li>
+</ul></li>
+<li><a href="#6.5">## 6.5 Basic search</a>
+
+<ul>
+<li><a href="#6.5.1">### 6.5.1 Searching for the current word</a></li>
+<li><a href="#6.5.2">### 6.5.2 Search history</a></li>
+<li><a href="#6.6">## 6.6 File Manager (netrw) in Vim</a></li>
+<li><a href="#6.6.1">### 6.6.1 Changing how files are opened</a></li>
+<li><a href="#6.6.2">### 6.6.2 Set netrw split width</a></li>
+</ul></li>
+<li><a href="#6.7">## 6.7 Editing files via SSH</a></li>
+</ul></li>
+<li><a href="#7"># 7 Personalizing Vim</a>
+
+<ul>
+<li><a href="#7.1">## 7.1 Vim configuration explained</a>
+
+<ul>
+<li><a href="#7.1.1">### 7.1.1 Make Vim look beautiful</a></li>
+<li><a href="#7.1.2">### 7.1.2 Usability improvements</a></li>
+<li><a href="#7.1.3">### 7.1.3 Status line</a></li>
+<li><a href="#7.1.4">### 7.1.4 Swap and backup files dilemma</a></li>
+<li><a href="#7.1.5">### 7.1.5 Project specific .vimrc</a></li>
+<li><a href="#7.1.6">### 7.1.6 Basic recommended configuration</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#8"># 8 Undo and Redo</a>
+
+<ul>
+<li><a href="#8.1">## 8.1 Undo branches</a></li>
+<li><a href="#8.2">## 8.2 Persistent Undo</a></li>
+</ul></li>
+<li><a href="#9"># 9 Do you speak Vim?</a>
+
+<ul>
+<li><a href="#9.1">## 9.1 Vim Language Elements</a>
+
+<ul>
+<li><a href="#9.1.1">### 9.1.1 Verbs</a></li>
+<li><a href="#9.1.2">### 9.1.2 Modifiers</a></li>
+<li><a href="#9.1.3">### 9.1.3 Nouns</a></li>
+<li><a href="#9.1.4">### 9.1.4 Learn to talk to Vim</a></li>
+</ul></li>
+<li><a href="#9.2">## 9.2 The &quot;dot&quot; command</a></li>
+</ul></li>
+<li><a href="#10"># 10 Substitution</a>
+
+<ul>
+<li><a href="#10.1">## 10.1 Ranges</a></li>
+<li><a href="#10.2">## 10.2 Search and replace</a>
+
+<ul>
+<li><a href="#10.2.1">### 10.2.1 Replacement in the whole file</a></li>
+<li><a href="#10.2.2">### 10.2.2 Replacement within a single line</a></li>
+<li><a href="#10.2.3">### 10.2.3 Replacement within a range of lines</a></li>
+<li><a href="#10.2.4">### 10.2.4 Replacement inside visual selection</a></li>
+<li><a href="#10.2.5">### 10.2.5 Replace only the whole words</a></li>
+<li><a href="#10.2.6">### 10.2.6 Replace either string1 or string2 with a new word</a></li>
+<li><a href="#10.2.7">### 10.2.7 Interactive search and replace</a></li>
+</ul></li>
+<li><a href="#10.3">## 10.3 Search through multiple files</a></li>
+<li><a href="#10.4">## 10.4 Match that string</a></li>
+<li><a href="#10.5">## 10.5 The power of the global command</a></li>
+</ul></li>
+<li><a href="#11"># 11 Registers</a>
+
+<ul>
+<li><a href="#11.1">## 11.1 Using Vim Registers Internally</a>
+
+<ul>
+<li><a href="#11.1.1">### 11.1.1 The famous annoying problem finally solved</a></li>
+</ul></li>
+<li><a href="#11.2">## 11.2 The System Clipboard Registers &quot;+ and &quot;*</a></li>
+</ul></li>
+<li><a href="#12"># 12 Buffers</a></li>
+<li><a href="#13"># 13 Windows, Tabs and Sessions</a>
+
+<ul>
+<li><a href="#13.1">## 13.1 Windows and Tabs</a></li>
+<li><a href="#13.2">## 13.2 Split Windows</a>
+
+<ul>
+<li><a href="#13.2.1">### 13.2.1 Switching windows</a></li>
+<li><a href="#13.2.2">### 13.2.2 Moving windows</a></li>
+<li><a href="#13.2.3">### 13.2.3 Resizing windows</a></li>
+</ul></li>
+<li><a href="#13.3">## 13.3 Sessions</a></li>
+</ul></li>
+<li><a href="#14"># 14 Macros</a>
+
+<ul>
+<li><a href="#14.1">## 14.1 Execute macro in multiple files</a></li>
+<li><a href="#14.2">## 14.2 Editing a macro</a></li>
+<li><a href="#14.3">## 14.3 Recursive macros</a></li>
+<li><a href="#14.4">## 14.4 More macro examples</a></li>
+</ul></li>
+<li><a href="#15"># 15 The power of Visual modes</a>
+
+<ul>
+<li><a href="#15.1">## 15.1 Selecting characters</a></li>
+<li><a href="#15.2">## 15.2 Selecting lines</a></li>
+<li><a href="#15.3">## 15.3 Visual block selection</a></li>
+<li><a href="#15.4">## 15.4 Extend a current visual selection</a></li>
+<li><a href="#15.5">## 15.5 Run commands across selection</a></li>
+<li><a href="#15.6">## 15.6 The dot command in Visual mode</a></li>
+<li><a href="#15.7">## 15.7 Move visual selection</a></li>
+<li><a href="#15.8">## 15.8 Visual mode possibilities</a></li>
+</ul></li>
+<li><a href="#16"># 16 Mappings</a></li>
+<li><a href="#17"># 17 Folding</a>
+
+<ul>
+<li><a href="#17.1">## 17.1 Manual folding</a></li>
+<li><a href="#17.2">## 17.2 Folding by indentation</a></li>
+<li><a href="#17.3">## 17.3 Syntax folding</a></li>
+<li><a href="#17.4">## 17.4 Persistent folds</a></li>
+</ul></li>
+<li><a href="#18"># 18 Effective multiple file editing</a>
+
+<ul>
+<li><a href="#18.1">## 18.1 The execute and normal commands</a></li>
+<li><a href="#18.2">## 18.2 argdo vs bufdo</a></li>
+<li><a href="#18.3">## 18.3 bufdo examples</a></li>
+<li><a href="#18.4">## 18.4 argdo examples</a></li>
+<li><a href="#18.5">## 18.5 windo command</a></li>
+</ul></li>
+<li><a href="#19"># 19 Productivity tips</a>
+
+<ul>
+<li><a href="#19.1">## 19.1 Relative numbers</a></li>
+<li><a href="#19.2">## 19.2 Using the Leader Key</a></li>
+<li><a href="#19.3">## 19.3 Automatic Completion</a></li>
+<li><a href="#19.4">## 19.4 Using File Templates</a></li>
+<li><a href="#19.5">## 19.5 Repeat the last Ex command</a></li>
+<li><a href="#19.6">## 19.6 Paste text while in Insert mode</a></li>
+<li><a href="#19.7">## 19.7 Delete in Insert mode</a></li>
+<li><a href="#19.8">## 19.8 Repeatable operations on search matches</a></li>
+<li><a href="#19.9">## 19.9 Copy lines without cursor movement</a></li>
+<li><a href="#19.10">## 19.10 Move lines without cursor movement</a></li>
+<li><a href="#19.11">## 19.11 Delete lines without cursor movement</a></li>
+<li><a href="#19.12">## 19.12 Vim write through</a></li>
+<li><a href="#19.13">## 19.13 Run the same command on multiple lines</a></li>
+<li><a href="#19.14">## 19.14 Generating numbered lists</a></li>
+<li><a href="#19.15">## 19.15 Increasing or decreasing numbers</a></li>
+<li><a href="#19.16">## 19.16 Why Vim 8 is great</a></li>
+<li><a href="#19.17">## 19.17 Faster delete/change to the end of the line</a></li>
+<li><a href="#19.18">## 19.18 Repeating characters</a></li>
+<li><a href="#19.19">## 19.19 Clear highlighted searches</a></li>
+<li><a href="#19.20">## 19.20 Execute multiple commands at once</a></li>
+<li><a href="#19.21">## 19.21 External program integration</a></li>
+<li><a href="#19.22">## 19.22 Auto remove trailing whitespace</a></li>
+<li><a href="#19.23">## 19.23 Open and edit archives</a></li>
+<li><a href="#19.24">## 19.24 Open the last edited file</a></li>
+<li><a href="#19.25">## 19.25 Navigation through cursor history</a></li>
+<li><a href="#19.26">## 19.26 Invert selection</a></li>
+<li><a href="#19.27">## 19.27 Quickly switching buffers</a></li>
+<li><a href="#19.28">## 19.28 Fix indentation in entire file</a></li>
+</ul></li>
+<li><a href="#20"># 20 Plugins</a>
+
+<ul>
+<li><a href="#20.1">## 20.1 How to install plugin manager Vundle</a></li>
+<li><a href="#20.2">## 20.2 How to install a new plugin</a></li>
+</ul></li>
+<li><a href="#21"># 21 What now</a></li>
+<li><a href="#22"># 22 References</a></li>
+<li><a href="#23"># 23 About the author</a></li>
+</ul>
+
+<h1 id="1">1 Instead of Preface</h1>
+
+<h2 id="1.1">1.1 What this book covers</h2>
+
+<h2 id="1.2">1.2 What you need for this book</h2>
+
+<h2 id="1.3">1.3 Who this book is for</h2>
+
+<h2 id="1.4">1.4 Vim versions</h2>
+
+<h2 id="1.5">1.5 Conventions</h2>
+
+<h3 id="1.5.1">1.5.1 Key presses</h3>
+
+<h3 id="1.5.2">1.5.2 Normal mode commands</h3>
+
+<h3 id="1.5.3">1.5.3 Command line commands</h3>
+
+<h3 id="1.5.4">1.5.4 Fonts</h3>
+
+<h3 id="1.5.5">1.5.5 Other formatting</h3>
+
+<h2 id="1.6">1.6 Piracy</h2>
+
+<h2 id="1.7">1.7 Mastering Vim Quickly Newsletter</h2>
+
+<h2 id="1.8">1.8 Why this name</h2>
+
+<h2 id="1.9">1.9 Questions</h2>
+
+<h1 id="2">2 Introduction</h1>
+
+<h2 id="2.1">2.1 The art of l1earning</h2>
+
+<h3 id="2.1.1">2.1.1 Pareto principle</h3>
+
+<h3 id="2.1.2">2.1.2 Mini habits</h3>
+
+<h3 id="2.1.3">2.1.3 1% improvement per day</h3>
+
+<h2 id="2.2">2.2 No Experience Necessary</h2>
+
+<h1 id="3">3 Mastering Vim - Basics</h1>
+
+<h2 id="3.1">3.1 Installing Vim 8</h2>
+
+<h2 id="3.2">3.2 Vim philosophy</h2>
+
+<h3 id="3.2.1">3.2.1 Modal editing</h3>
+
+<h3 id="3.2.2">3.2.2 Operators</h3>
+
+<h2 id="3.3">3.3 Starting Vim</h2>
+
+<h1 id="4">4 Your first Vim session</h1>
+
+<h1 id="5">5 Vim Concepts</h1>
+
+<h2 id="5.1">5.1 Modes</h2>
+
+<h2 id="5.2">5.2 Commands</h2>
+
+<h1 id="6">6 Working with files</h1>
+
+<h2 id="6.1">6.1 Opening files</h2>
+
+<h2 id="6.2">6.2 Closing files</h2>
+
+<h2 id="6.3">6.3 Saving files</h2>
+
+<h2 id="6.4">6.4 Navigation</h2>
+
+<h3 id="6.4.1">6.4.1 Basic movement</h3>
+
+<h3 id="6.4.2">6.4.2 Navigate through words</h3>
+
+<h3 id="6.4.3">6.4.3 Scrolling pages</h3>
+
+<h3 id="6.4.4">6.4.4 Jumping around the file</h3>
+
+<h3 id="6.4.5">6.4.5 Navigating inside the window</h3>
+
+<h3 id="6.4.6">6.4.6 Navigating in Insert mode</h3>
+
+<h2 id="6.5">6.5 Basic search</h2>
+
+<h3 id="6.5.1">6.5.1 Searching for the current word</h3>
+
+<h3 id="6.5.2">6.5.2 Search history</h3>
+
+<h2 id="6.6">6.6 File Manager (netrw) in Vim</h2>
+
+<h3 id="6.6.1">6.6.1 Changing how files are opened</h3>
+
+<h3 id="6.6.2">6.6.2 Set netrw split width</h3>
+
+<h2 id="6.7">6.7 Editing files via SSH</h2>
+
+<h1 id="7">7 Personalizing Vim</h1>
+
+<h2 id="7.1">7.1 Vim configuration explained</h2>
+
+<h3 id="7.1.1">7.1.1 Make Vim look beautiful</h3>
+
+<h3 id="7.1.2">7.1.2 Usability improvements</h3>
+
+<h3 id="7.1.3">7.1.3 Status line</h3>
+
+<h3 id="7.1.4">7.1.4 Swap and backup files dilemma</h3>
+
+<h3 id="7.1.5">7.1.5 Project specific .vimrc</h3>
+
+<h3 id="7.1.6">7.1.6 Basic recommended configuration</h3>
+
+<h1 id="8">8 Undo and Redo</h1>
+
+<h2 id="8.1">8.1 Undo branches</h2>
+
+<h2 id="8.2">8.2 Persistent Undo</h2>
+
+<h1 id="9">9 Do you speak Vim?</h1>
+
+<h2 id="9.1">9.1 Vim Language Elements</h2>
+
+<h3 id="9.1.1">9.1.1 Verbs</h3>
+
+<h3 id="9.1.2">9.1.2 Modifiers</h3>
+
+<h3 id="9.1.3">9.1.3 Nouns</h3>
+
+<h3 id="9.1.4">9.1.4 Learn to talk to Vim</h3>
+
+<h2 id="9.2">9.2 The &quot;dot&quot; command</h2>
+
+<h1 id="10">10 Substitution</h1>
+
+<h2 id="10.1">10.1 Ranges</h2>
+
+<h2 id="10.2">10.2 Search and replace</h2>
+
+<h3 id="10.2.1">10.2.1 Replacement in the whole file</h3>
+
+<h3 id="10.2.2">10.2.2 Replacement within a single line</h3>
+
+<h3 id="10.2.3">10.2.3 Replacement within a range of lines</h3>
+
+<h3 id="10.2.4">10.2.4 Replacement inside visual selection</h3>
+
+<h3 id="10.2.5">10.2.5 Replace only the whole words</h3>
+
+<h3 id="10.2.6">10.2.6 Replace either string1 or string2 with a new word</h3>
+
+<h3 id="10.2.7">10.2.7 Interactive search and replace</h3>
+
+<h2 id="10.3">10.3 Search through multiple files</h2>
+
+<h2 id="10.4">10.4 Match that string</h2>
+
+<h2 id="10.5">10.5 The power of the global command</h2>
+
+<h1 id="11">11 Registers</h1>
+
+<h2 id="11.1">11.1 Using Vim Registers Internally</h2>
+
+<h3 id="11.1.1">11.1.1 The famous annoying problem finally solved</h3>
+
+<h2 id="11.2">11.2 The System Clipboard Registers &quot;+ and &quot;*</h2>
+
+<h1 id="12">12 Buffers</h1>
+
+<h1 id="13">13 Windows, Tabs and Sessions</h1>
+
+<h2 id="13.1">13.1 Windows and Tabs</h2>
+
+<h2 id="13.2">13.2 Split Windows</h2>
+
+<h3 id="13.2.1">13.2.1 Switching windows</h3>
+
+<h3 id="13.2.2">13.2.2 Moving windows</h3>
+
+<h3 id="13.2.3">13.2.3 Resizing windows</h3>
+
+<h2 id="13.3">13.3 Sessions</h2>
+
+<h1 id="14">14 Macros</h1>
+
+<h2 id="14.1">14.1 Execute macro in multiple files</h2>
+
+<h2 id="14.2">14.2 Editing a macro</h2>
+
+<h2 id="14.3">14.3 Recursive macros</h2>
+
+<h2 id="14.4">14.4 More macro examples</h2>
+
+<h1 id="15">15 The power of Visual modes</h1>
+
+<h2 id="15.1">15.1 Selecting characters</h2>
+
+<h2 id="15.2">15.2 Selecting lines</h2>
+
+<h2 id="15.3">15.3 Visual block selection</h2>
+
+<h2 id="15.4">15.4 Extend a current visual selection</h2>
+
+<h2 id="15.5">15.5 Run commands across selection</h2>
+
+<h2 id="15.6">15.6 The dot command in Visual mode</h2>
+
+<h2 id="15.7">15.7 Move visual selection</h2>
+
+<h2 id="15.8">15.8 Visual mode possibilities</h2>
+
+<h1 id="16">16 Mappings</h1>
+
+<h1 id="17">17 Folding</h1>
+
+<h2 id="17.1">17.1 Manual folding</h2>
+
+<h2 id="17.2">17.2 Folding by indentation</h2>
+
+<h2 id="17.3">17.3 Syntax folding</h2>
+
+<h2 id="17.4">17.4 Persistent folds</h2>
+
+<h1 id="18">18 Effective multiple file editing</h1>
+
+<h2 id="18.1">18.1 The execute and normal commands</h2>
+
+<h2 id="18.2">18.2 argdo vs bufdo</h2>
+
+<h2 id="18.3">18.3 bufdo examples</h2>
+
+<h2 id="18.4">18.4 argdo examples</h2>
+
+<h2 id="18.5">18.5 windo command</h2>
+
+<h1 id="19">19 Productivity tips</h1>
+
+<h2 id="19.1">19.1 Relative numbers</h2>
+
+<h2 id="19.2">19.2 Using the Leader Key</h2>
+
+<h2 id="19.3">19.3 Automatic Completion</h2>
+
+<h2 id="19.4">19.4 Using File Templates</h2>
+
+<h2 id="19.5">19.5 Repeat the last Ex command</h2>
+
+<h2 id="19.6">19.6 Paste text while in Insert mode</h2>
+
+<h2 id="19.7">19.7 Delete in Insert mode</h2>
+
+<h2 id="19.8">19.8 Repeatable operations on search matches</h2>
+
+<h2 id="19.9">19.9 Copy lines without cursor movement</h2>
+
+<h2 id="19.10">19.10 Move lines without cursor movement</h2>
+
+<h2 id="19.11">19.11 Delete lines without cursor movement</h2>
+
+<h2 id="19.12">19.12 Vim write through</h2>
+
+<h2 id="19.13">19.13 Run the same command on multiple lines</h2>
+
+<h2 id="19.14">19.14 Generating numbered lists</h2>
+
+<h2 id="19.15">19.15 Increasing or decreasing numbers</h2>
+
+<h2 id="19.16">19.16 Why Vim 8 is great</h2>
+
+<h2 id="19.17">19.17 Faster delete/change to the end of the line</h2>
+
+<h2 id="19.18">19.18 Repeating characters</h2>
+
+<h2 id="19.19">19.19 Clear highlighted searches</h2>
+
+<h2 id="19.20">19.20 Execute multiple commands at once</h2>
+
+<h2 id="19.21">19.21 External program integration</h2>
+
+<h2 id="19.22">19.22 Auto remove trailing whitespace</h2>
+
+<h2 id="19.23">19.23 Open and edit archives</h2>
+
+<h2 id="19.24">19.24 Open the last edited file</h2>
+
+<h2 id="19.25">19.25 Navigation through cursor history</h2>
+
+<h2 id="19.26">19.26 Invert selection</h2>
+
+<h2 id="19.27">19.27 Quickly switching buffers</h2>
+
+<h2 id="19.28">19.28 Fix indentation in entire file</h2>
+
+<h1 id="20">20 Plugins</h1>
+
+<h2 id="20.1">20.1 How to install plugin manager Vundle</h2>
+
+<h2 id="20.2">20.2 How to install a new plugin</h2>
+
+<h1 id="21">21 What now</h1>
+
+<h1 id="22">22 References</h1>
+
+<h1 id="23">23 About the author</h1>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

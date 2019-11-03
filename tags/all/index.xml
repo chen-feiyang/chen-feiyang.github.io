@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>all on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/all/</link>
+    <description>Recent content in all on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Aug 2019 13:07:47 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/all/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>平常遇到的一些问题及问题的解决办法</title>
+      <link>https://chen-feiyang.github.io/posts/sundry/</link>
+      <pubDate>Mon, 26 Aug 2019 13:07:47 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/sundry/</guid>
+      <description>这些问题的记录将以问题出现的时间为轴。格式为问题、细节、时间、解决方法、原因。
+问题：pandas查询那些列含有空值  细节：无 时间：20190826 解决办法：  df.isnull().any()
+问题：pandas查询那些列全部为空值  细节：无 时间：20190826 解决办法：  df.isnull().all()
+问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”  细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据&#39;name&#39;列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型Int64Index和RangeIndex，不同的index类型可能是不能join的原因。 时间：20190826 解决办法：  只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。
+问题：数据库更新方式：全量更新、增量更新  细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。 时间：20190829 解决办法：  就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。 采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据； 采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。 所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。
+问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。  细节：字符串内部为字典是指列中的格式为&amp;quot;{&#39;ka&#39;:&#39;va&#39;, &#39;kb&#39;:&#39;vb&#39;...}&amp;quot;，字符串内部为列表是指列中格式为&amp;quot;[&#39;va&#39;,&#39;vb&#39;,&#39;vc&#39;,...]&amp;quot;，嵌套列表与之类似。 时间：20190829 解决办法：  这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为&#39;a&#39;转换为字典df[&#39;a&#39;].apply(eval)，如需要拆分出&#39;va&#39;等值并命名为列&#39;ka&#39;,可df[&#39;ka&#39;] = df[&#39;a&#39;].apply(eval).apply(lambda x: x[&#39;ka&#39;])。当然列&#39;a&#39;可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：
+# 列a非空的索引 column_a_not_null_index = df[df[&#39;a&#39;].notnull()].index df.loc[column_a_not_null_index, &#39;a&#39;] = \ df.</description>
+    </item>
+    
+  </channel>
+</rss>

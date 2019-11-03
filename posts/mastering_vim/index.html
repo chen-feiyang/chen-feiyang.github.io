@@ -1,0 +1,2098 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Mastering_vim | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Mastering_vim</h1>
+
+
+<p>目录：</p>
+
+<ul>
+<li><a href="#1"># 1 Preface</a></li>
+<li><a href="#2"># 2 Chapter 1: Getting Started</a>
+
+<ul>
+<li><a href="#2.1">## 2.1 Technical requirements</a></li>
+<li><a href="#2.2">## 2.2 Let’s start a conversation (about modal interfaces)</a></li>
+<li><a href="#2.3">## 2.3 Installation</a>
+
+<ul>
+<li><a href="#2.3.1">### 2.3.1 Setting up on Linux</a></li>
+<li><a href="#2.3.2">### 2.3.2 Setting up on MacOS</a>
+
+<ul>
+<li><a href="#2.3.2.1">#### 2.3.2.1 Using Homebrew</a></li>
+<li><a href="#2.3.2.2">#### 2.3.2.2 Downloading a .dmg image</a></li>
+</ul></li>
+<li><a href="#2.3.3">### 2.3.3 Setting up on Windows</a>
+
+<ul>
+<li><a href="#2.3.3.1">#### 2.3.3.1 Unix-like experience with Cygwin</a>
+
+<ul>
+<li><a href="#2.3.3.1.1">##### 2.3.3.1.1 Installing Cygwin</a></li>
+<li><a href="#2.3.3.1.2">##### 2.3.3.1.2 Using Cygwin</a></li>
+</ul></li>
+<li><a href="#2.3.3.2">#### 2.3.3.2 Visual Vim with gVim</a></li>
+</ul></li>
+<li><a href="#2.3.4">### 2.3.4 Verifying and troubleshooting the installation</a></li>
+</ul></li>
+<li><a href="#2.4">## 2.4 Vanilla Vim vs gVim</a></li>
+<li><a href="#2.5">## 2.5 Configuring Vim with your .vimrc</a></li>
+<li><a href="#2.6">## 2.6 Common operations (or how to exit Vim)</a>
+
+<ul>
+<li><a href="#2.6.1">### 2.6.1 Opening files</a></li>
+<li><a href="#2.6.2">### 2.6.2 Changing text</a></li>
+<li><a href="#2.6.3">### 2.6.3 Saving and closing files</a>
+
+<ul>
+<li><a href="#2.6.3.1">#### 2.6.3.1 A word about swap files</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#2.7">## 2.7 Moving around: talk to your editor</a></li>
+<li><a href="#2.8">## 2.8 Making simple edits in insert mode</a></li>
+<li><a href="#2.9">## 2.9 Persistent undo and repeat</a></li>
+<li><a href="#2.10">## 2.10 Read the Vim manual using :help</a></li>
+<li><a href="#2.11">## 2.11 Summary</a></li>
+</ul></li>
+<li><a href="#3"># 3 Chapter 2: Advanced Editing and Navigation</a>
+
+<ul>
+<li><a href="#3.1">## 3.1 Technical requirements</a></li>
+<li><a href="#3.2">## 3.2 Installing plugins</a></li>
+<li><a href="#3.3">## 3.3 Organizing workspace</a>
+
+<ul>
+<li><a href="#3.3.1">### 3.3.1 Buffers</a></li>
+<li><a href="#3.3.2">### 3.3.2 Plugin spotlight – unimpaired</a></li>
+<li><a href="#3.3.3">### 3.3.3 Windows</a>
+
+<ul>
+<li><a href="#3.3.3.1">#### 3.3.3.1 Creating, deleting, and navigating windows</a></li>
+<li><a href="#3.3.3.2">#### 3.3.3.2 Moving windows</a></li>
+<li><a href="#3.3.3.3">#### 3.3.3.3 Resizing windows</a></li>
+</ul></li>
+<li><a href="#3.3.4">### 3.3.4 Tabs</a></li>
+<li><a href="#3.3.5">### 3.3.5 Folds</a>
+
+<ul>
+<li><a href="#3.3.5.1">#### 3.3.5.1 Folding Python code</a></li>
+<li><a href="#3.3.5.2">#### 3.3.5.2 Types of folds</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#3.4">## 3.4 Navigating file trees</a>
+
+<ul>
+<li><a href="#3.4.1">### 3.4.1 Netrw</a></li>
+<li><a href="#3.4.2">### 3.4.2 :e with wildmenu enabled</a></li>
+<li><a href="#3.4.3">### 3.4.3 Plugin spotlight – NERDTree</a></li>
+<li><a href="#3.4.4">### 3.4.4 Plugin spotlight – Vinegar</a></li>
+<li><a href="#3.4.5">### 3.4.5 Plugin spotlight – CtrlP</a></li>
+</ul></li>
+<li><a href="#3.5">## 3.5 Navigating text</a>
+
+<ul>
+<li><a href="#3.5.1">### 3.5.1 Jumping into insert mode</a></li>
+<li><a href="#3.5.2">### 3.5.2 Searching with / and ?</a>
+
+<ul>
+<li><a href="#3.5.2.1">#### 3.5.2.1 Searching across files</a></li>
+<li><a href="#3.5.2.2">#### 3.5.2.2 ack</a></li>
+</ul></li>
+<li><a href="#3.5.3">### 3.5.3 Utilizing text objects</a></li>
+<li><a href="#3.5.4">### 3.5.4 Plugin spotlight – EasyMotion</a></li>
+</ul></li>
+<li><a href="#3.6">## 3.6 Copying and pasting with registers</a>
+
+<ul>
+<li><a href="#3.6.1">### 3.6.1 Where do the registers come in?</a></li>
+<li><a href="#3.6.2">### 3.6.2 Copying from outside of Vim</a></li>
+</ul></li>
+<li><a href="#3.7">## 3.7 Summary</a></li>
+</ul></li>
+<li><a href="#4"># 4 Chapter 3: Follow the Leader - Plugin Management</a>
+
+<ul>
+<li><a href="#4.1">## 4.1 Technical requirements</a></li>
+<li><a href="#4.2">## 4.2 Managing plugins</a>
+
+<ul>
+<li><a href="#4.2.1">### 4.2.1 vim-plug</a></li>
+<li><a href="#4.2.2">### 4.2.2 Honorable mentions</a>
+
+<ul>
+<li><a href="#4.2.2.1">#### 4.2.2.1 Vundle</a></li>
+<li><a href="#4.2.2.2">#### 4.2.2.2 Do it yourself</a></li>
+<li><a href="#4.2.2.3">#### 4.2.2.3 Pathogen</a></li>
+</ul></li>
+<li><a href="#4.2.3">### 4.2.3 Profiling slow plugins</a>
+
+<ul>
+<li><a href="#4.2.3.1">#### 4.2.3.1 Profiling startup</a></li>
+<li><a href="#4.2.3.2">#### 4.2.3.2 Profiling specific actions</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#4.3">## 4.3 Deeper dive into modes</a>
+
+<ul>
+<li><a href="#4.3.1">### 4.3.1 Normal mode</a></li>
+<li><a href="#4.3.2">### 4.3.2 Command-line and ex modes</a></li>
+<li><a href="#4.3.3">### 4.3.3 Insert mode</a></li>
+<li><a href="#4.3.4">### 4.3.4 Visual and select mode</a></li>
+<li><a href="#4.3.5">### 4.3.5 Replace and virtual replace mode</a></li>
+<li><a href="#4.3.6">### 4.3.6 Terminal mode</a></li>
+</ul></li>
+<li><a href="#4.4">## 4.4 Remapping commands</a>
+
+<ul>
+<li><a href="#4.4.1">### 4.4.1 Mode – aware remapping</a></li>
+</ul></li>
+<li><a href="#4.5">## 4.5 The leader key</a></li>
+<li><a href="#4.6">## 4.6 Configuring plugins</a></li>
+<li><a href="#4.7">## 4.7 Summary</a></li>
+</ul></li>
+<li><a href="#5"># 5 Chapter 4: Understanding the Text</a>
+
+<ul>
+<li><a href="#5.1">## 5.1 Technical requirements</a></li>
+<li><a href="#5.2">## 5.2 Code autocomplete</a>
+
+<ul>
+<li><a href="#5.2.1">### 5.2.1 Built-in autocomplete</a></li>
+<li><a href="#5.2.2">### 5.2.2 YouCompleteMe</a>
+
+<ul>
+<li><a href="#5.2.2.1">#### 5.2.2.1 Installation</a></li>
+<li><a href="#5.2.2.2">#### 5.2.2.2 Using YouCompleteMe</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#5.3">## 5.3 Navigating the code base with tags</a>
+
+<ul>
+<li><a href="#5.3.1">### 5.3.1 Exuberant Ctags</a></li>
+<li><a href="#5.3.2">### 5.3.2 Automatically updating the tags</a></li>
+</ul></li>
+<li><a href="#5.4">## 5.4 Undo tree and Gundo</a></li>
+<li><a href="#5.5">## 5.5 Summary</a></li>
+</ul></li>
+<li><a href="#6"># 6 Chapter 5: Build, Test, and Execute</a>
+
+<ul>
+<li><a href="#6.1">## 6.1 Technical requirements</a></li>
+<li><a href="#6.2">## 6.2 Working with version control</a>
+
+<ul>
+<li><a href="#6.2.1">### 6.2.1 Quick-and-dirty version control and Git introduction</a>
+
+<ul>
+<li><a href="#6.2.1.1">#### 6.2.1.1 Concepts</a></li>
+<li><a href="#6.2.1.2">#### 6.2.1.2 Setting up a new project</a></li>
+<li><a href="#6.2.1.3">#### 6.2.1.3 Cloning an existing repository</a></li>
+<li><a href="#6.2.1.4">#### 6.2.1.4 Working with Git</a>
+
+<ul>
+<li><a href="#6.2.1.4.1">##### 6.2.1.4.1 Adding files, committing, and pushing</a></li>
+<li><a href="#6.2.1.4.2">##### 6.2.1.4.2 Creating and merging branches</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6.2.2">### 6.2.2 Integrating Git with Vim (vim-fugitive)</a></li>
+</ul></li>
+<li><a href="#6.3">## 6.3 Resolving conflicts with vimdiff</a>
+
+<ul>
+<li><a href="#6.3.1">### 6.3.1 Comparing two files</a></li>
+<li><a href="#6.3.2">### 6.3.2 vimdiff and Git</a>
+
+<ul>
+<li><a href="#6.3.2.1">#### 6.3.2.1 git config</a></li>
+<li><a href="#6.3.2.2">#### 6.3.2.2 Creating merge conflict</a></li>
+<li><a href="#6.3.2.3">#### 6.3.2.3 Resolving a merge conflict</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6.4">## 6.4 tmux, screen, and Vim terminal mode</a>
+
+<ul>
+<li><a href="#6.4.1">### 6.4.1 tmux</a>
+
+<ul>
+<li><a href="#6.4.1.1">#### 6.4.1.1 Panes are just like splits</a></li>
+<li><a href="#6.4.1.2">#### 6.4.1.2 Windows are just like tabs</a></li>
+<li><a href="#6.4.1.3">#### 6.4.1.3 Sessions are invaluable</a></li>
+<li><a href="#6.4.1.4">#### 6.4.1.4 tmux and Vim splits</a></li>
+</ul></li>
+<li><a href="#6.4.2">### 6.4.2 Screen</a></li>
+<li><a href="#6.4.3">### 6.4.3 Terminal mode</a></li>
+</ul></li>
+<li><a href="#6.5">## 6.5 Building and testing</a>
+
+<ul>
+<li><a href="#6.5.1">### 6.5.1 Quickfix list</a></li>
+<li><a href="#6.5.2">### 6.5.2 Location list</a></li>
+<li><a href="#6.5.3">### 6.5.3 Building code</a>
+
+<ul>
+<li><a href="#6.5.3.1">#### 6.5.3.1 Plugin spotlight: vim-dispatch</a></li>
+</ul></li>
+<li><a href="#6.5.4">### 6.5.4 Testing code</a>
+
+<ul>
+<li><a href="#6.5.4.1">#### 6.5.4.1 Plugin spotlight – vim-test</a></li>
+</ul></li>
+<li><a href="#6.5.5">### 6.5.5 Syntax checking code with linters</a>
+
+<ul>
+<li><a href="#6.5.5.1">#### 6.5.5.1 Using linters with Vim</a></li>
+<li><a href="#6.5.5.2">#### 6.5.5.2 Plugin spotlight – Syntastic</a></li>
+<li><a href="#6.5.5.3">#### 6.5.5.3 Plugin spotlight – ALE</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6.6">## 6.6 Summary</a></li>
+</ul></li>
+<li><a href="#7"># 7 Chapter 6: Refactoring Code with Regex and Macros</a>
+
+<ul>
+<li><a href="#7.1">## 7.1 Technical requirements</a></li>
+<li><a href="#7.2">## 7.2 Search or replace with regular expressions</a>
+
+<ul>
+<li><a href="#7.2.1">### 7.2.1 Search and replace</a></li>
+<li><a href="#7.2.2">### 7.2.2 Operations across files using arglist</a></li>
+<li><a href="#7.2.3">### 7.2.3 Regex basics</a>
+
+<ul>
+<li><a href="#7.2.3.1">#### 7.2.3.1 Special regex characters</a></li>
+<li><a href="#7.2.3.2">#### 7.2.3.2 Alternation and grouping</a></li>
+<li><a href="#7.2.3.3">#### 7.2.3.3 Quantifiers or multis</a></li>
+</ul></li>
+<li><a href="#7.2.4">### 7.2.4 More about magic</a>
+
+<ul>
+<li><a href="#7.2.4.1">#### 7.2.4.1 Magic</a></li>
+<li><a href="#7.2.4.2">#### 7.2.4.2 No magic</a></li>
+<li><a href="#7.2.4.3">#### 7.2.4.3 Very magic</a></li>
+</ul></li>
+<li><a href="#7.2.5">### 7.2.5 Applying the knowledge in practice</a>
+
+<ul>
+<li><a href="#7.2.5.1">#### 7.2.5.1 Renaming a variable, a method, or a class</a></li>
+<li><a href="#7.2.5.2">#### 7.2.5.2 Reordering function arguments</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#7.3">## 7.3 Recording and playing macros</a>
+
+<ul>
+<li><a href="#7.3.1">### 7.3.1 Editing macros</a></li>
+<li><a href="#7.3.2">### 7.3.2 Recursive macros</a></li>
+<li><a href="#7.3.3">### 7.3.3 Running macros across multiple files</a></li>
+</ul></li>
+<li><a href="#7.4">## 7.4 Using plugins to do the job</a></li>
+<li><a href="#7.5">## 7.5 Summary</a></li>
+</ul></li>
+<li><a href="#8"># 8 Chapter 7: Making Vim Your Own</a>
+
+<ul>
+<li><a href="#8.1">## 8.1 Technical requirements</a></li>
+<li><a href="#8.2">## 8.2 Playing with the Vim UI</a>
+
+<ul>
+<li><a href="#8.2.1">### 8.2.1 Color schemes</a>
+
+<ul>
+<li><a href="#8.2.1.1">#### 8.2.1.1 Browsing the color schemes</a></li>
+<li><a href="#8.2.1.2">#### 8.2.1.2 Common issues</a></li>
+</ul></li>
+<li><a href="#8.2.2">### 8.2.2 The status line</a>
+
+<ul>
+<li><a href="#8.2.2.1">#### 8.2.2.1 Powerline</a></li>
+<li><a href="#8.2.2.2">#### 8.2.2.2 Airline</a></li>
+</ul></li>
+<li><a href="#8.2.3">### 8.2.3 gVim-specific configuration</a></li>
+</ul></li>
+<li><a href="#8.3">## 8.3 Keeping track of configuration files</a></li>
+<li><a href="#8.4">## 8.4 Healthy Vim customization habits</a>
+
+<ul>
+<li><a href="#8.4.1">### 8.4.1 Optimizing your workflow</a></li>
+<li><a href="#8.4.2">### 8.4.2 Keeping .vimrc organized</a></li>
+</ul></li>
+<li><a href="#8.5">## 8.5 Summary</a></li>
+</ul></li>
+<li><a href="#9"># 9 Chapter 8: Transcending the Mundane with Vimscript</a>
+
+<ul>
+<li><a href="#9.1">## 9.1 Technical requirements</a></li>
+<li><a href="#9.2">## 9.2 Why Vimscript?</a></li>
+<li><a href="#9.3">## 9.3 How to execute Vimscript</a></li>
+<li><a href="#9.4">## 9.4 Learning the syntax</a>
+
+<ul>
+<li><a href="#9.4.1">### 9.4.1 Setting variables</a></li>
+<li><a href="#9.4.2">### 9.4.2 Surfacing output</a></li>
+<li><a href="#9.4.3">### 9.4.3 Conditional statements</a></li>
+<li><a href="#9.4.4">### 9.4.4 Lists</a></li>
+<li><a href="#9.4.5">### 9.4.5 Dictionaries</a></li>
+<li><a href="#9.4.6">### 9.4.6 Loops</a></li>
+<li><a href="#9.4.7">### 9.4.7 Functions</a></li>
+<li><a href="#9.4.8">### 9.4.8 Classes</a></li>
+<li><a href="#9.4.9">### 9.4.9 Lambda expressions</a></li>
+<li><a href="#9.4.10">### 9.4.10 Map and filter</a></li>
+<li><a href="#9.4.11">### 9.4.11 Interacting with Vim</a></li>
+<li><a href="#9.4.12">### 9.4.12 File-related commands</a></li>
+<li><a href="#9.4.13">### 9.4.13 Prompts</a></li>
+<li><a href="#9.4.14">### 9.4.14 Using Help</a></li>
+</ul></li>
+<li><a href="#9.5">## 9.5 A word about style guides</a></li>
+<li><a href="#9.6">## 9.6 Let's build a plugin</a>
+
+<ul>
+<li><a href="#9.6.1">### 9.6.1 Plugin layout</a></li>
+<li><a href="#9.6.2">### 9.6.2 The basics</a></li>
+<li><a href="#9.6.3">### 9.6.3 Housekeeping</a></li>
+<li><a href="#9.6.4">### 9.6.4 Improving our plugin</a></li>
+<li><a href="#9.6.5">### 9.6.5 Distributing the plugin</a></li>
+<li><a href="#9.6.6">### 9.6.6 Where to take the plugin from here</a></li>
+</ul></li>
+<li><a href="#9.7">## 9.7 Further reading</a></li>
+<li><a href="#9.8">## 9.8 Summary</a></li>
+</ul></li>
+<li><a href="#10"># 10 Chapter 9: Neovim</a>
+
+<ul>
+<li><a href="#10.1">## 10.1 Technical requirements</a></li>
+<li><a href="#10.2">## 10.2 Why make another Vim?</a></li>
+<li><a href="#10.3">## 10.3 Installing and configuring Neovim</a>
+
+<ul>
+<li><a href="#10.3.1">### 10.3.1 Checking health</a></li>
+<li><a href="#10.3.2">### 10.3.2 Sane defaults</a></li>
+</ul></li>
+<li><a href="#10.4">## 10.4 Oni</a></li>
+<li><a href="#10.5">## 10.5 Neovim plugin highlights</a></li>
+<li><a href="#10.6">## 10.6 Summary</a></li>
+</ul></li>
+<li><a href="#11"># 11 Chapter 10: Where to Go from Here</a>
+
+<ul>
+<li><a href="#11.1">## 11.1 Seven habits of effective text editing</a></li>
+<li><a href="#11.2">## 11.2 Modal interfaces everywhere</a>
+
+<ul>
+<li><a href="#11.2.1">### 11.2.1 A Vim-like web browsing experience</a>
+
+<ul>
+<li><a href="#11.2.1.1">#### 11.2.1.1 Vimium and Vimium-FF</a></li>
+<li><a href="#11.2.1.2">#### 11.2.1.2 Alternatives</a></li>
+</ul></li>
+<li><a href="#11.2.2">### 11.2.2 Vim everywhere else</a>
+
+<ul>
+<li><a href="#11.2.2.1">#### 11.2.2.1 vim-anywhere for Linux and macOS</a></li>
+<li><a href="#11.2.2.2">#### 11.2.2.2 Text Editor Anywhere for Windows</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#11.3">## 11.3 Recommended reading and communities</a>
+
+<ul>
+<li><a href="#11.3.1">### 11.3.1 Mailing lists</a></li>
+<li><a href="#11.3.2">### 11.3.2 IRC</a></li>
+<li><a href="#11.3.3">### 11.3.3 Other communities</a></li>
+</ul></li>
+<li><a href="#11.4">## 11.4 Summary</a></li>
+</ul></li>
+<li><a href="#12"># 12 Other Books You May Enjoy</a></li>
+<li><a href="#13"># 13 Index</a></li>
+</ul>
+
+<p>bilibili居然有配套“Mastering Vim: Understanding Vim's Lesser-Known Features for More Effective Editing”的视频，作者Damain Conway。</p>
+
+<h1 id="1">1. Preface</h1>
+
+<h1 id="2">2. Chapter 1: Getting Started</h1>
+
+<h2 id="2.1">2.1. Technical requirements</h2>
+
+<h2 id="2.2">2.2. Let’s start a conversation (about modal interfaces)</h2>
+
+<h2 id="2.3">2.3. Installation</h2>
+
+<h3 id="2.3.1">2.3.1. Setting up on Linux</h3>
+
+<p>其实作者用的是Vim8，而公司32号机是Vim7.4,有无必要跟从特定版本。若需跟从，就不能用公司32号机了，无安装权限。</p>
+
+<p>对了，其上介绍了对应不同的linux版本该怎么安装最新的Vim。</p>
+
+<p>书上更新命令似乎无用，换用网上搜索的命令：</p>
+
+<pre><code>sudo add-apt-repository ppa:jonathonf/vim
+sudo apt-get update
+sudo apt-get install vim
+</code></pre>
+
+<h3 id="2.3.2">2.3.2. Setting up on MacOS</h3>
+
+<h4 id="2.3.2.1">2.3.2.1. Using Homebrew</h4>
+
+<h4 id="2.3.2.2">2.3.2.2. Downloading a .dmg image</h4>
+
+<h3 id="2.3.3">2.3.3. Setting up on Windows</h3>
+
+<p>似乎作者说在Windows系统可使用Cygwin和gVim实现Vim的功能，当然，似乎也因操作系统差异有些小问题。</p>
+
+<h4 id="2.3.3.1">2.3.3.1. Unix-like experience with Cygwin</h4>
+
+<h5 id="2.3.3.1.1">2.3.3.1.1. Installing Cygwin</h5>
+
+<h5 id="2.3.3.1.2">2.3.3.1.2. Using Cygwin</h5>
+
+<h4 id="2.3.3.2">2.3.3.2. Visual Vim with gVim</h4>
+
+<h3 id="2.3.4">2.3.4. Verifying and troubleshooting the installation</h3>
+
+<p>作者说到，也许Vim默认支持python2而非3，他介绍了解决这个问题的办法。</p>
+
+<h2 id="2.4">2.4. Vanilla Vim vs gVim</h2>
+
+<h2 id="2.5">2.5. Configuring Vim with your .vimrc</h2>
+
+<h2 id="2.6">2.6. Common operations (or how to exit Vim)</h2>
+
+<h3 id="2.6.1">2.6.1. Opening files</h3>
+
+<p>不管文件存在与否，有则直接打开，无则创建并打开：</p>
+
+<pre><code>vim animal_farm.py
+</code></pre>
+
+<p>若已打开Vim程序，想在Vim程序中打开文件如animal_farm.py，可：</p>
+
+<pre><code>:e animal_farm.py
+</code></pre>
+
+<p>注：<code>:e</code>代表edit。</p>
+
+<h3 id="2.6.2">2.6.2. Changing text</h3>
+
+<p>进入Vim之后默认在普通模式，此模式下任何键入对应特定某条命令。输入<code>i</code>可进入插入模式。模式可看底部状态行，如插入模式显示<code>--INSERT--</code>，普通模式无特别提示。</p>
+
+<p>在插入模式输入以下内容：</p>
+
+<pre><code>#!/usr/bin/python3
+&quot;&quot;&quot;Our own little animal farm.&quot;&quot;&quot;
+
+import sys
+
+def add_animal(farm, animal):
+    farm.add(animal)
+    return farm
+
+def main(animals):
+    farm = set()
+    for animal in animals:
+        farm = add_animal(farm, animal)
+    print(&quot;We've got some animals on the farm:&quot;, ','.join(farm) + '.')
+    
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print('Pass at least one animal type!')
+        sys.exit(1)
+    main(sys.argv[1:])
+</code></pre>
+
+<p>敲击ESC键回到普通模式。</p>
+
+<h3 id="2.6.3">2.6.3. Saving and closing files</h3>
+
+<p>普通模式执行如下命令，可保存文件：</p>
+
+<pre><code>:w
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li><code>:w</code>代表write。</li>
+<li>别忘了在输入命令后敲击ENTER键。</li>
+<li>也可保存到新的文件，如<code>:w animal_farm_2.py</code>代表将<code>animal_farm.py</code>当前内容保存至<code>animal_farm_2.py</code>。</li>
+</ol>
+
+<p>接下来你应该是要退出文件，可输入：</p>
+
+<pre><code>:q
+</code></pre>
+
+<p>注：<code>:q</code>代表quit。</p>
+
+<p>也可同时保存并退出，即：</p>
+
+<pre><code>:wq
+</code></pre>
+
+<p>如文件有更改却想不保存更改直接退出，要使用如下命令强制退出：</p>
+
+<pre><code>:q!
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>Vim中许多命令有长短两个版本。例如，<code>:e</code>、<code>:w</code>和<code>:q</code>是<code>:edit</code>、<code>:write</code>和<code>:quit</code>的短版本。在Vim手册中，命令的可选部分通常用方括号（[]）标注，例如<code>:w[rite]</code>和<code>:e[dit]</code>。</li>
+</ol>
+
+<h4 id="2.6.3.1">2.6.3.1. A word about swap files</h4>
+
+<p>默认情况下，Vim在交换文件中跟踪对文件所做的更改。交换文件是在编辑文件时创建的，用于在Vim、SSH会话或机器崩溃时恢复文件内容。如不清楚退出Vim，屏幕将出现：</p>
+
+<pre><code>...
+Swap file &quot;.animal_farm.py.swp&quot; already exits!
+[O]pen Read-Only, (E)dit anyway, (R)ecover, (D)elete it, (Q)uit, (A)bort:
+</code></pre>
+
+<p>可敲击<code>r</code>来恢复交换文件内容，或敲击<code>d</code>删除交换文件并驳回改变。如果您决定恢复交换文件，您可以通过重新打开一个文件并运行<code>:e</code>，并按<code>d</code>删除交换文件，来防止下次在Vim中打开文件时出现相同的消息。</p>
+
+<p>默认情况下，Vim在与原始文件相同的目录中创建类似于<code>&lt;filename&gt;.swp</code>的文件。如果您不希望您的文件系统被交换文件打乱，您可以通过告诉Vim将所有交换文件放在一个目录中来改变这种行为。为此，在<code>.vimrc</code>中添加以下内容:</p>
+
+<pre><code>set directory=$HOME/.vim/swap//
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li><p>Windows系统应设置：</p>
+
+<pre><code>directory=%USERDATA%\.vim\swap//
+</code></pre>
+
+<p>注意最后两斜线方向必须如上所示。</p></li>
+
+<li><p>甚至可通过<code>set noswapfile</code>完全关闭交换文件。</p></li>
+
+<li><p>很可能home目录无此文件，可创建并加入此条。</p></li>
+
+<li><p>配置时候你可能会写注释，但Vim的注释不能用<code>#</code>，而要在需注释行首用<code>&quot;</code>（英文双引号）。</p></li>
+</ol>
+
+<h2 id="2.7">2.7. Moving around: talk to your editor</h2>
+
+<p>Vim允许您比大多数传统编辑器更有效地浏览内容。让我们从基础开始。</p>
+
+<p>你可以使用方向键或字母<code>h</code>、<code>j</code>、<code>k</code>和<code>l</code>来移动光标。这是最低效和最精确的移动方式：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">key</th>
+<th align="left">Alternative</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">h</td>
+<td align="left">Left arrow<br>左箭头</td>
+<td align="left">Move cursor left<br>光标左移</td>
+</tr>
+
+<tr>
+<td align="left">j</td>
+<td align="left">Down arrow<br>右箭头</td>
+<td align="left">Move cursor down<br>光标右移</td>
+</tr>
+
+<tr>
+<td align="left">k</td>
+<td align="left">Up arrow<br>上箭头</td>
+<td align="left">Move cursor up<br>光标上移</td>
+</tr>
+
+<tr>
+<td align="left">l</td>
+<td align="left">Right arrow<br>下箭头</td>
+<td align="left">Move cursor right<br>光标下移</td>
+</tr>
+</tbody>
+</table>
+
+<p>Vi (Vim的前身)是在旧的ADM-3A终端（看其键盘布局无箭头键）上创建的，该终端没有箭头键。键<code>h</code>、<code>j</code>、<code>k</code>和<code>l</code>用作箭头。</p>
+
+<p>试一试!习惯<code>hjkl</code>的移动有很大的价值：你的手停留在键盘的主行上。这样你就不需要移动你的手，它会帮助你保持流状态。此外，许多应用程序将<code>hjkl</code>视为箭头键—您会惊讶于有这么多工具响应这些键。</p>
+
+<p>现在，您可能倾向于多次点击方向键来达到想要的位置，但是有一个更好的方法!您可以在每个命令前面加上一个数字，这将重复该命令的次数。例如，按<code>5j</code>将光标向下移动5行，而按<code>14l</code>将光标向左移动14个字符。这适用于您在本书中遇到的大多数命令。</p>
+
+<p>计算您想要移动的确切字符数是相当困难的(而且没有人愿意这样做)，所以有一种方法可以通过单词移动。使用<code>w</code>移动到下一个单词的开头，使用<code>e</code>移动到最近单词的结尾。要回到单词开头，按<code>b</code>键。</p>
+
+<p>空格隔断的任何字符，包括大写字母，均应视为文字（word）。这允许您区分希望遍历的内容。</p>
+
+<p>注：</p>
+
+<ol>
+<li>Vim有两种文字（word）对象：小写“word”和大写“WORD”。在Vim世界中，<strong>word</strong>是由空格分隔的字母、数字和下划线组成的序列。<strong>WORD</strong>是由空格分隔的任何非空白字符组成的序列。</li>
+
+<li><p>让我们来看看下面这行代码:</p>
+
+<pre><code class="language-python">farm = add_animal(farm, animal)
+</code></pre>
+
+<p>代码此时光标位置在a。按<code>w</code>键会把光标移到<code>(</code>；而按<code>W</code>键会转到<code>animal</code>的开头。按<code>e</code>键会把光标移到<code>add_animal</code>的末尾；而按<code>E</code>键会转到<code>animal</code>的开头。</p></li>
+</ol>
+
+<p>大写的<code>W</code>、<code>E</code>和<code>B</code>将把任何被空格分隔在一起的字符作为本WORD。如下表所示：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">w</td>
+<td align="left">Move forward by word<br>向前移动一个word</td>
+</tr>
+
+<tr>
+<td align="left">e</td>
+<td align="left">Move forward until the end of the word<br>向前移动到本word末尾</td>
+</tr>
+
+<tr>
+<td align="left">W</td>
+<td align="left">Move forward by WORD<br>向前移动一个WORD</td>
+</tr>
+
+<tr>
+<td align="left">E</td>
+<td align="left">Move forward until the end of the WORD<br>向前移动到本WORD末尾</td>
+</tr>
+
+<tr>
+<td align="left">b</td>
+<td align="left">Move backwards to the beginning of the word<br>后移到本word的开头</td>
+</tr>
+
+<tr>
+<td align="left">B</td>
+<td align="left">Move backwards to the beginning of the WORD<br>后移到本WORD的开头</td>
+</tr>
+</tbody>
+</table>
+
+<p>下面的表格显示了更多关于每个命令行为的例子:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Initial cursor position</th>
+<th align="left">Resulting cursor position</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">w</td>
+<td align="left"><code>farm = &lt;a&gt;dd_animal(farm, animal)</code></td>
+<td align="left"><code>farm = add_animal&lt;(&gt;farm, animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">e</td>
+<td align="left"><code>farm = add_an&lt;i&gt;mal(farm, animal)</code></td>
+<td align="left"><code>farm = add_anima&lt;l&gt;(farm, animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">b</td>
+<td align="left"><code>farm = add_an&lt;i&gt;mal(farm, animal)</code></td>
+<td align="left"><code>farm = &lt;a&gt;dd_animal(farm, animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">W</td>
+<td align="left"><code>farm = add_an&lt;i&gt;mal(farm, animal)</code></td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+</tr>
+
+<tr>
+<td align="left">E</td>
+<td align="left"><code>farm = add_an&lt;i&gt;mal(farm, animal)</code></td>
+<td align="left"><code>farm = add_animal(farm&lt;,&gt; animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">B</td>
+<td align="left"><code>farm = add_animal(f&lt;a&gt;rm, animal)</code></td>
+<td align="left"><code>farm = &lt;a&gt;dd_animal(farm, animal)</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>注：</p>
+
+<ol>
+<li>用<code>&lt;&gt;</code>标注光标位置。</li>
+</ol>
+
+<p>将显示的（通过文字移动）动作与您先前学习的方向动作相结合，以减少按键次数!</p>
+
+<p>在段落中移动也很有用。任何被至少两行隔开的代码都被认为是一个段落，这也意味着每个代码块都是一个段落，如下面的例子所示:</p>
+
+<pre><code>def add_animal(farm, animal):
+    farm.add(animal)
+    return farm
+
+def main(animals):
+    farm = set()
+    for animal in animals:
+        farm = add_animal(farm, animal)
+    print(&quot;We've got some animals on the farm:&quot;, ', '.join(farm) + '.')
+</code></pre>
+
+<p>函数<code>add_animal</code>和<code>main</code>是两个独立的段落。使用右花括号向前移动，使用左花括号向后移动，具体如下表所示:</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">{</td>
+<td align="left">Move back by one paragraph<br>向后移动一段落</td>
+</tr>
+
+<tr>
+<td align="left">}</td>
+<td align="left">Move forward by one paragraph<br>向前移动一段落</td>
+</tr>
+</tbody>
+</table>
+
+<p>注：</p>
+
+<ol>
+<li>区隔段落仅需首尾各一空行。</li>
+<li>这里空行指除换行符之外的其它字符，空格符也不行。</li>
+<li>通过<code>{</code>和<code>}</code>在段落间移动，你会好奇光标落脚处。若段落之间区隔为两空行，<code>{</code>将首先移到本段落的段首，即本段落紧前一空行的行首，之后再<code>{</code>将移到下一段落的段首。<code>}</code>将首先移到本段落的段尾，即本段落的紧后一空行的行首，之后再<code>}</code>将移到下一段落的段尾。若段落之间区隔为一空行，则本段落的段尾即下一段落的段首。</li>
+</ol>
+
+<p>如果你需要移动一个以上的段落，不要忘记把这两个和数字结合起来。</p>
+
+<p>有更多的移动方式，但这些是最重要的基础。我们将在第二章“高级编辑和导航”中介绍更复杂的导航方法。</p>
+
+<h2 id="2.8">2.8. Making simple edits in insert mode</h2>
+
+<p>在使用Vim时，您通常希望在插入模式上花费尽可能少的时间(除非您正在编写而不是编辑)。由于大多数文本操作都涉及编辑，所以我们将重点讨论编辑。</p>
+
+<p>您已经学会了按<code>i</code>键进入插入模式。有更多的方法可以进入插入模式。通常情况下，你会想要为另一篇文章修改一段文字，而且有一个针对该的命令<code>c</code>。<code>change</code>命令允许您删除部分文本并立即进入插入模式。<code>Change</code>是一个复合命令，这意味着它后面需要有一个命令告诉Vim需要更改什么。你可以把它和你以前学过的任何动作命令结合起来。以下是一些例子：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">cw</td>
+<td align="left"><code>farm = add_animal(&lt;f&gt;arm, animal)</code></td>
+<td align="left"><code>farm = add_animal(&lt;,&gt; animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">c3e (comma counts as a word)</td>
+<td align="left"><code>farm = add_animal(fa&lt;r&gt;m, animal)</code></td>
+<td align="left"><code>farm = add_animal(fa&lt;)&gt;</code></td>
+</tr>
+
+<tr>
+<td align="left">cb</td>
+<td align="left"><code>farm = add_animal(farm, ani&lt;m&gt;al)</code></td>
+<td align="left"><code>farm = add_animal(farm, &lt;m&gt;al)</code></td>
+</tr>
+
+<tr>
+<td align="left">c4l</td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;l)</code></td>
+</tr>
+
+<tr>
+<td align="left">cW</td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+<td align="left"><code>farm = add_animal(farm,&lt;&gt;</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>注：</p>
+
+<ol>
+<li><code>c</code>后面跟移动的命令，代表删除到移动结束的位置。如<code>cw</code>指向前移动一个单词并删除，实现表格第一行。</li>
+<li><code>farm</code>、<code>,</code>和<code>animal</code>算3个word。</li>
+<li>紧上表格我试验了，确实如此。</li>
+<li>作为一个奇怪的例外，<code>cw</code>表现得像<code>ce</code>。这是Vim的前身Vi遗留下来的。</li>
+</ol>
+
+<p>当您学习更复杂的动作命令时，您可以将这些命令与快速无缝编辑的更改组合在一起。我们还将介绍一些插件，这些插件将对更改命令进行加速，从而允许进行更强大的编辑，比如更改大括号中的文本，或者替换正在运行的引号类型。</p>
+
+<p>注：</p>
+
+<ol>
+<li>所有这些示例都遵循<code>&lt;command&gt; &lt;number&gt; &lt;movement or a text object&gt;</code>结构。您可以在<code>&lt;command&gt;</code>之前或之后放置一个数字。</li>
+</ol>
+
+<p>例如，如果您希望将<code>farm = add_animal(farm, animal)</code>更改为<code>farm = add_animal(farm, creatures)</code>，您可以执行以下命令集：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Contents of the line</th>
+<th align="left">Action</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>&lt;f&gt;arm = add_animal(farm, animal)</code></td>
+<td align="left">Start with a cursor in the beginning of the line<br>开始时光标位于行首</td>
+</tr>
+
+<tr>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+<td align="left">Hit 3W to move the cursor three WORDs forward to the beginning of animal<br>敲击<code>3W</code>以使光标移动3个WORD到“animal”的开头</td>
+</tr>
+
+<tr>
+<td align="left"><code>farm = add_animal(farm, &lt;)&gt;</code></td>
+<td align="left">Press cw to delete the word animal and enter the insert mode<br>按下cw以删除属于一个word的“animal”并进入插入模式</td>
+</tr>
+
+<tr>
+<td align="left"><code>farm = add_animal(farm, creature&lt;)&gt;</code></td>
+<td align="left">Type creature<br>输入“creature”</td>
+</tr>
+
+<tr>
+<td align="left"><code>farm = add_animal(farm, creatur&lt;e&gt;)</code></td>
+<td align="left">Hit the Esc key to return to NORMAL mode<br>敲击ESC键回到普通模式</td>
+</tr>
+</tbody>
+</table>
+
+<p>有时我们只想切东西，不放任何东西，<code>d</code>就是这样做的。它代表删除。它的行为与<code>c</code>相似，只是<code>w</code>和<code>e</code>的行为更标准一些，如下例所示：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">Before</th>
+<th align="left">After</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">dw</td>
+<td align="left"><code>farm = add_animal(&lt;f&gt;arm, animal)</code></td>
+<td align="left"><code>farm = add_animal(&lt;,&gt; animal)</code></td>
+</tr>
+
+<tr>
+<td align="left">d3e (comma counts as a word)</td>
+<td align="left"><code>farm = add_animal(fa&lt;r&gt;m, animal)</code></td>
+<td align="left"><code>farm = add_animal(fa&lt;)&gt;</code></td>
+</tr>
+
+<tr>
+<td align="left">db</td>
+<td align="left"><code>farm = add_animal(farm, ani&lt;m&gt;al)</code></td>
+<td align="left"><code>farm = add_animal(farm, &lt;m&gt;al)</code></td>
+</tr>
+
+<tr>
+<td align="left">d4l</td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;l)</code></td>
+</tr>
+
+<tr>
+<td align="left">dW</td>
+<td align="left"><code>farm = add_animal(farm, &lt;a&gt;nimal)</code></td>
+<td align="left"><code>farm = add_animal(farm,&lt;&gt;</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>还有两个更漂亮的快捷方式，可以让你改变或删除一整行：</p>
+
+<table>
+<thead>
+<tr>
+<th align="left">Command</th>
+<th align="left">What it does</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">cc</td>
+<td align="left">Clears the whole line and enters insert mode. Preserves current indentation level, which is useful when coding.<br>清除整行并进入插入模式。保持当前缩进级别，这在编码时很有用。</td>
+</tr>
+
+<tr>
+<td align="left">dd</td>
+<td align="left">Deletes an entire line.<br>删除整行。</td>
+</tr>
+</tbody>
+</table>
+
+<p>注：</p>
+
+<ol>
+<li><code>cc</code>和<code>dd</code>的差异。<code>cc</code>将进入插入模式<code>dd</code>则否。<code>cc</code>将保持此行之前的缩进状态，而<code>dd</code>将删除整行并换行符，即被删除行甚至不留下空行。</li>
+<li>如果在选择正确的移动命令时遇到困难，还可以使用可视化模式选择要修改的文本。按<code>v</code>键进入可视模式，使用常用的移动命令来调整选择。一旦您对选择满意，就运行所需的命令(如c更改或d删除)。可视化模式可显示选择了什么文本。</li>
+</ol>
+
+<h2 id="2.9">2.9. Persistent undo and repeat</h2>
+
+<p>与任何编辑器一样，Vim跟踪每个操作。按<code>u</code>撤消最后一个操作，并按<code>Ctrl + r</code>重做。</p>
+
+<p>注：</p>
+
+<ol>
+<li>要了解更多关于Vim的撤消树(Vim的撤消历史不是线性的!)以及如何导航它，请参阅第4章，高级工作流。</li>
+</ol>
+
+<p>Vim还允许持久化会话之间的撤消历史记录，如果您希望撤消(或记住)几天前完成的某些操作，这是非常好的!</p>
+
+<p>您可以通过在.vimrc中添加以下代码来启用持久撤销：</p>
+
+<pre><code>set undofile 
+</code></pre>
+
+<p>但是，这将为您正在编辑的每个文件添加一个undo文件。您可以将撤销文件合并到一个目录中，如下面的示例所示：</p>
+
+<pre><code>&quot; Set up persistent undo across all files. 
+set undofile 
+if !isdirectory(&quot;$HOME/.vim/undodir&quot;)  
+    call mkdir(&quot;$HOME/.vim/undodir&quot;, &quot;p&quot;) 
+endif 
+set undodir=&quot;$HOME/.vim/undodir&quot;
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>如果您使用的是Windows，请将目录替换为<code>%USERPROFILE%\_vim\undodir</code>(您将更改<code>_vimrc</code>而不是<code>.vimrc</code>)。</li>
+<li>不知为何，会遇到E303错误，所以并未实际完成vim配置，既然<code>.vimrc</code>之前是不存在的，那么删除此文件。</li>
+</ol>
+
+<p>现在，您将能够跨会话撤消和重做更改。</p>
+
+<h2 id="2.10">2.10. Read the Vim manual using :help</h2>
+
+<p>Vim提供的最好的学习工具当然是<code>:help</code>命令，如下面的截图所示：</p>
+
+<pre><code>help.txt        For Vim version 8.1.  Last change: 2019 Jul 21
+
+                        VIM - main help file
+                                                                         k
+      Move around:  Use the cursor keys, or &quot;h&quot; to go left,            h   l
+                    &quot;j&quot; to go down, &quot;k&quot; to go up, &quot;l&quot; to go right.       j
+Close this window:  Use &quot;:q&lt;Enter&gt;&quot;.
+   Get out of Vim:  Use &quot;:qa!&lt;Enter&gt;&quot; (careful, all changes are lost!).
+
+Jump to a subject:  Position the cursor on a tag (e.g. bars) and hit CTRL-].
+   With the mouse:  &quot;:set mouse=a&quot; to enable the mouse (in xterm or GUI).
+                    Double-click the left mouse button on a tag, e.g. bars.
+        Jump back:  Type CTRL-O.  Repeat to go further back.
+
+Get specific help:  It is possible to go directly to whatever you want help
+                    on, by giving an argument to the :help command.
+                    Prepend something to specify the context:  help-context
+
+                          WHAT                  PREPEND    EXAMPLE
+                      Normal mode command                  :help x
+help.txt [Help][RO]
+</code></pre>
+
+<p>它是一个随Vim安装的巨大的资源和教程的集合。通过使用页面向上和向下键（也可分别使用<code>Ctrl + b</code>和<code>Ctrl + f</code>）滚动，有很多有用的信息。</p>
+
+<p>当您遇到问题，或者想要了解更多关于某个特定命令的信息时，请尝试使用<code>:help</code>（您可以将其缩短为<code>:h</code>）进行搜索。让我们来搜索一下我们学过的<code>cc</code>命令：</p>
+
+<pre><code>:h cc
+</code></pre>
+
+<p>显示为：</p>
+
+<pre><code>                        &quot;c&quot; command always starts insert mode, even if there
+                        is no text to delete.
+
+                                                        cc
+[&quot;x]cc                  Delete [count] lines [into register x] and start
+                        insert linewise.  If 'autoindent' is on, preserve
+                        the indent of the first line.
+
+                                                        C
+[&quot;x]C                   Delete from the cursor position to the end of the
+                        line and [count]-1 more lines [into register x], and
+                        start insert.  Synonym for c$ (not linewise).
+
+                                                        s
+[&quot;x]s                   Delete [count] characters [into register x] and start
+                        insert (s stands for Substitute).  Synonym for &quot;cl&quot;
+                        (not linewise).
+
+                                                        S
+[&quot;x]S                   Delete [count] lines [into register x] and start
+                        insert.  Synonym for &quot;cc&quot; linewise.
+change.txt [Help][RO]
+</code></pre>
+
+<p>帮助告诉我们命令的工作方式，以及不同的选项和设置如何影响命令（例如自动缩进(<code>autoindent</code>)设置保留缩进）。</p>
+
+<p><code>:help</code>是一个导航一组帮助文件的命令。当您查看帮助文件时，您会注意到某些单词是用颜色高亮显示的。这些都是标记，可以使用<code>:help</code>命令进行搜索。不幸的是，并非每个标签名称都是直观的。例如，如果我们想学习如何在Vim中搜索字符串，我们可以尝试使用以下方法：</p>
+
+<pre><code>:h search
+</code></pre>
+
+<p>然而，看起来这个命令把我们带到表达式求值的入口，这并不是我们要找的，如下面的截图所示：</p>
+
+<pre><code>                Returns an empty String when row or col is out of range.
+
+                Can also be used as a method:
+                        GetRow()-&gt;screenstring(col)
+
+search({pattern} [, {flags} [, {stopline} [, {timeout}]]])      search()
+                Search for regexp pattern {pattern}.  The search starts at the
+                cursor position (you can use cursor() to set it).
+
+                When a match has been found its line number is returned.
+                If there is no match a 0 is returned and the cursor doesn't
+                move.  No error message is given.
+
+                {flags} is a String, which can contain these character flags:
+                'b'     search Backward instead of forward
+                'c'     accept a match at the Cursor position
+                'e'     move to the End of the match
+                'n'     do Not move the cursor
+                'p'     return number of matching sub-Pattern (see below)
+                's'     Set the ' mark at the previous location of the cursor
+                'w'     Wrap around the end of the file
+eval.txt [Help][RO]
+</code></pre>
+
+<p>要找到正确的条目，输入<code>:h search</code>(不要回车)，然后按<code>Ctrl + D</code>。这将为您提供包含子字符串<code>search</code>的帮助标记列表。其中一个选项是<code>search-commands</code>，这是我们要找的。完成您的命令，以下列方式进入我们正在寻找的入口：</p>
+
+<pre><code>:h search-commands 
+</code></pre>
+
+<p>下面的显示显示了搜索的正确帮助条目：</p>
+
+<pre><code>8. Composing characters         patterns-composing
+9. Compare with Perl patterns   perl-patterns
+10. Highlighting matches        match-highlight
+
+==============================================================================
+1. Search commands                              search-commands
+
+                                                        /
+/{pattern}[/]&lt;CR&gt;       Search forward for the [count]'th occurrence of
+                        {pattern} exclusive.
+
+/{pattern}/{offset}&lt;CR&gt; Search forward for the [count]'th occurrence of
+                        {pattern} and go {offset} lines up or down.
+                        linewise.
+
+                                                        /&lt;CR&gt;
+/&lt;CR&gt;                   Search forward for the [count]'th occurrence of the
+                        latest used pattern last-pattern with latest used
+                        {offset}.
+
+//{offset}&lt;CR&gt;          Search forward for the [count]'th occurrence of the
+                        latest used pattern last-pattern with new
+                        {offset}.  If {offset} is empty no offset is used.
+
+pattern.txt [Help][RO]
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>说到搜索功能，您可以使用<code>/search term</code>从游标向前搜索，或者使用<code>?search term</code>向后搜索帮助页面(或Vim中打开的任何文件)。有关如何执行搜索操作的更多信息，请参见第2章高级编辑和导航。</li>
+</ol>
+
+<p>当您有问题或想更好地理解Vim的行为方式时，不要忘记使用Vim的帮助系统。</p>
+
+<h2 id="2.11">2.11. Summary</h2>
+
+<p>最初的Vi是为了在带宽和速度有限的情况下通过远程终端工作而开发的。这些限制引导Vi建立一个高效的、深思熟虑的编辑过程，这是当今Vi改进的核心。</p>
+
+<p>在本章中，您学习了如何在每个主要平台上安装和更新Vim及其图形化对应的GVim(以比您需要的更多的方式)。</p>
+
+<p>您已经学会了通过修改<code>.vimrc</code>来配置Vim，当您根据自己的需要定制编辑器时，您常常会回到这个步骤。</p>
+
+<p>您已经掌握了处理文件、移动Vim和进行更改的基础知识。Vim的文本对象(字母、单词、段落)和复合命令(如<code>d2w</code>-删除两个word)的概念为精确的文本操作提供了支持。</p>
+
+<p>如果你能从这一章中学到一件事，那就是<code>:help</code>。Vim的内部帮助系统非常详细，它可以回答您可能遇到的大多数问题(如果不是所有问题的话)，只要您知道自己在寻找什么。</p>
+
+<p>在下一章中，我们将研究如何从Vim中获得更多信息。您将学习如何导航文件和更好地编辑文本。</p>
+
+<h1 id="3">3. Chapter 2: Advanced Editing and Navigation</h1>
+
+<p>在本章中，您将更轻松地在日常任务中使用Vim。您将使用Python代码库，它应该为您提供一组使用代码的真实场景。如果你有自己的项目，你可以选择使用自己的项目文件来尝试本章的课程;但是，您可能会发现并不是所有的场景都适用于您的代码库。</p>
+
+<p>本章将涉及以下主题：</p>
+
+<ul>
+<li>快速和肮脏的方式安装Vim插件</li>
+<li>在使用缓冲区、窗口、选项卡和折叠处理多个或长文件时，保持工作空间的组织性</li>
+<li>在复杂的文件树中导航，而不让Vim使用<code>Netrw</code>、<code>NERDTree</code>、<code>Vinegar</code>或<code>CtrlP</code></li>
+<li>在整个文件中进行先进的导航，并涵盖更多类型的文本对象:使用<code>grep</code>和<code>ack</code>寻找文件中的东西，和<code>EasyMotion</code>，一个闪电速度移动插件</li>
+<li>利用寄存器的能力复制和粘贴</li>
+</ul>
+
+<h2 id="3.1">3.1. Technical requirements</h2>
+
+<p>本章将介绍如何使用Python代码库。你可以通过https:/​/​github.​com/​PacktPublishing/​MasteringVim/​blob/​master/​Chapter02获取本章将要编辑的代码。</p>
+
+<h2 id="3.2">3.2. Installing plugins</h2>
+
+<p>本章将首先介绍Vim插件。插件管理是一个相当广泛的主题(在第3章，也跟随领导者-插件管理)，但我们开始只有几个插件，所以我们暂不必自己担心那个主题。</p>
+
+<p>首先，让我们来看看一次性设置：</p>
+
+<ol>
+<li><p>您需要创建一个目录来存储插件。在命令行执行以下操作:</p>
+
+<pre><code>$ mkdir -p ~/.vim/pack/plugins/start
+</code></pre>
+
+<p>如果你在Windows下使用GVim，你必须在目录用户文件夹下创建vimfiles(通常<code>C:\Users\&lt;username&gt;</code>),然后在其中创建<code>pack\plugins\start</code>。</p></li>
+
+<li><p>您需要告诉Vim为每个插件加载文档，因为它不会自动加载文档。为此，在<code>~/.vimrc</code>中添加以下行：</p>
+
+<pre><code>packloadall           &quot; Load all plugins.    
+silent! helptags ALL  &quot; Load help files for all plugins. 
+</code></pre></li>
+</ol>
+
+<p>现在，每次你想添加一个插件，你必须：</p>
+
+<ol>
+<li><p>在GitHub上找到你的插件。例如，让我们安装https:/​/​github.​com/1. scrooloose/​nerdtree。如果已经安装了Git，请找到Git存储库URL（在本例中是https:/​/​github.​com/​scrooloose/​nerdtree.​git）并运行以下命令:</p>
+
+<pre><code>$ git clone https://github.com/scrooloose/nerdtree.git ~/.vim/pack/plugins/start/nerdtree 
+</code></pre>
+
+<p>如果您没有安装Git，或者安装着Windows下的GVim插件，请导航到插件的GitHub页面，找到一个<strong>Clone</strong>或<strong>download</strong>按钮。下载ZIP文件并将其解压缩到Linux的<code>.vim/pack/plugins/start/nerdtree</code>，或Windows的<code>vimfiles/pack/plugins/start/nerdtree</code>。</p></li>
+
+<li><p>重新启动Vim，插件应该可以使用。</p></li>
+</ol>
+
+<h2 id="3.3">3.3. Organizing workspace</h2>
+
+<p>到目前为止，我们只处理了Vim中的一个文件。在处理代码时，您通常必须同时处理多个文件，来回切换，在多个文件之间进行编辑，并在其他地方查找某些数据。幸运的是，Vim提供了一种广泛的方式来处理许多文件：</p>
+
+<ul>
+<li>缓冲区是Vim在内部表示文件的方式；它们允许您在多个文件之间快速切换</li>
+<li>窗口通过显示相邻的多个文件来组织工作空间</li>
+<li>选项卡是窗口的集合</li>
+<li>折叠允许您隐藏和展开文件的某些部分，使大型文件更容易导航</li>
+</ul>
+
+<p>下面是一个截图来说明以上几点：</p>
+
+<pre><code>
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>暂不知怎么实现如书上两个文档左右排列</li>
+</ol>
+
+<p>让我们来看看截图中的内容：</p>
+
+<ul>
+<li>多个文件(标记为farm.py、animals/cat.py和animal_farm.py)作为窗口打开</li>
+<li>顶部的条(显示3 farm.py和a/dog.py)表示选项卡</li>
+<li>以+开头的行表示折叠，隐藏文件的一部分</li>
+</ul>
+
+<p>本节将详细讨论窗口、选项卡和折叠，您将能够轻松地处理所需的任何文件。</p>
+
+<h3 id="3.3.1">3.3.1. Buffers</h3>
+
+<p>缓冲区是文件的内部表示。您打开的每个文件都有一个相应的缓冲区。让我们从命令行打开一个文件<code>vim animal_farm.py</code>。现在，让我们看看现有的缓冲区列表：</p>
+
+<pre><code>:ls
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>许多命令都有同义词，<code>:ls</code>也是这样，<code>:buffers</code>和<code>:files</code>将有同样效果。</li>
+</ol>
+
+<p>以下是<code>:ls</code>命令输出的情况（看底部三行）：</p>
+
+<pre><code>...                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+:ls
+  1 %a   &quot;animal_farm.py&quot;               line 23
+Press ENTER or type command to continue
+
+</code></pre>
+
+<p>状态栏显示了一些关于我们已经打开的缓冲区的信息(我们现在只有一个)：</p>
+
+<ul>
+<li><code>1</code>是缓冲区号，它在Vim会话期间保持不变</li>
+<li><code>%</code>表示缓冲区在当前窗口中（参见Windows部分）</li>
+<li><code>a</code>表示缓冲区是活动的：它已加载并且是可见的</li>
+<li><code>animal_farm.py</code>是文件名</li>
+<li><code>line 1</code>是当前光标位置</li>
+</ul>
+
+<p>让我们打开另一个文件：</p>
+
+<pre><code>:e animals/cat.py
+</code></pre>
+
+<p>您可以看到，我们最初打开的文件不见了，已经被当前文件替换。但是，animal_farm.py仍然存储在一个缓冲区中。再次列出所有缓冲区：</p>
+
+<pre><code>:ls
+</code></pre>
+
+<p>你可以看到两个文件名列出：</p>
+
+<pre><code>...                                                                                                                                                                                                           
+~                                                                                                                                                                                                            
+:ls
+  1 #    &quot;animal_farm.py&quot;               line 23
+  2 %a   &quot;animals/cat.py&quot;               line 4
+Press ENTER or type command to continue
+
+</code></pre>
+
+<p>那么，我们怎样才能得到文件呢？</p>
+
+<p>Vim通过一个数字和一个名称引用缓冲区，并且在单个会话中这两者都是惟一的(直到您退出Vim)。要切换到一个不同的缓冲区，使用<code>:b</code>命令，后面跟着缓冲区的数字：</p>
+
+<pre><code>:b 1
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>您可以通过省略<code>:b</code>和缓冲区编号之间的空格来缩短命令。</li>
+</ol>
+
+<p>瞧，你又回到了原始文件!由于缓冲区也由文件名标识，所以可以使用部分文件名在它们之间进行切换。下面将打开包含<code>animals/cat.py</code>的缓冲区:</p>
+
+<pre><code>:b cat
+</code></pre>
+
+<p>但是，如果有多个匹配项，则会出现错误。尝试寻找一个文件名包含py的缓冲区：</p>
+
+<pre><code>:b py
+</code></pre>
+
+<p>如下面的截图所示，状态栏显示了一个错误：</p>
+
+<pre><code>:ls
+  1 #    &quot;animal_farm.py&quot;               line 23
+  2 %a   &quot;animals/cat.py&quot;               line 4
+E93: More than one match for py
+Press ENTER or type command to continue
+</code></pre>
+
+<p>这时就可以使用tab补全来遍历可用选项。输入<code>:b py</code>（不需要回车），然后按Tab键循环查看可用的结果。</p>
+
+<p>您还可以使用<code>:bn</code> （<code>:bnext</code>）和<code>:bp</code>（<code>:bprevious</code>）在缓冲区循环。</p>
+
+<p>一旦你完成了缓冲区（的使用），你可以删除它，也就是从开放缓冲区的列表中删除它而不退出Vim：</p>
+
+<pre><code>:bd
+</code></pre>
+
+<p>如果没有保存当前缓冲区，将返回一个错误。因此，您将有机会保存文件而不会意外删除缓冲区。</p>
+
+<h3 id="3.3.2">3.3.2. Plugin spotlight – unimpaired</h3>
+
+<p>Tim Pope的vim-unimpaired是一个插件，它为现有的Vim命令(以及一些新命令)添加了大量方便的映射。我每天都使用它，因为我发现映射更直观——<code>]b</code>和<code>[b</code>在打开的缓冲区循环，<code>]f</code>和<code>[f</code>在一个路径下的文件循环，等等。可从Github地址https:/​/​github.​com/​tpope/​vim-​unimpaired 得到（参阅本章之前章节安装插件以获得安装指导。）</p>
+
+<p>以下是vim-unimpaired提供的一些映射：</p>
+
+<ul>
+<li><code>]b</code>和<code>[b</code>在缓冲区循环</li>
+<li><code>]f</code>和<code>[f</code>在与当前缓冲区同路径的文件间循环</li>
+<li><code>]l</code>和<code>[l</code>在location list间循环（参阅第五章建立、测试和执行的location list小节）</li>
+<li><code>]q</code>和<code>[q</code>在quickfix list间循环（参阅第五章建立、测试和执行的quickfix list小节）</li>
+<li><code>]t</code>和<code>[t</code>在标签间循环（参阅第四章理解Text的Meet Exuberant Ctags小节）</li>
+</ul>
+
+<p>这个插件也允许你通过几个按键来切换某些选项，比如切换拼写检查或者切换光标高亮显示。</p>
+
+<p>参见<code>:help unimpaired</code>完整列表的映射和功能，vim-unimpaired提供。</p>
+
+<h3 id="3.3.3">3.3.3. Windows</h3>
+
+<p>Vim将缓冲区加载到windows中。您可以同时在屏幕上打开多个窗口，允许分屏功能。</p>
+
+<h4 id="3.3.3.1">3.3.3.1. Creating, deleting, and navigating windows</h4>
+
+<p>让我们尝试一下使用windows。打开animal_farm.py(从命令行运行<code>$ vim animal_farm.py</code>或从vim运行<code>:e animal_farm.py</code>)。</p>
+
+<p>在一个分割窗口打开我们的一个文件:</p>
+
+<pre><code>split animals/cat.py
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>也可将<code>:split</code>简化为<code>:sp</code>。</li>
+</ol>
+
+<p>你可以看到animals/cat.py被打开在当前文件的上方，你的光标被放在那里：</p>
+
+<pre><code>class Cat(animal.Animal):
+
+    def __init__(self):
+        self.kind = 'cat'
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+~                                                                                                                                                                                                            
+animals/cat.py                                                                                                                                                                             4,25           All
+#!/usr/bin/python3
+&quot;&quot;&quot;Our own little animal farm.&quot;&quot;&quot;
+
+import sys
+
+
+def add_animal(farm, animal):
+    farm.add(animal)
+    return farm
+
+
+def main(animals):
+    farm = set()
+    for animal in animals:
+        farm = add_animal(farm, animal)
+    print(&quot;We've got some animals on the farm:&quot;, ', '.join(farm) + '.')
+
+
+if __name__ == '__main__':
+    if len(sys.argv) == 1:
+        print('Pass at least one animal type!')
+        sys.exit(1)
+    main(sys.argv[1:])
+~                                                                                                                                                                                                            
+animal_farm.py                                                                                                                                                                             23,5           All
+&quot;animals/cat.py&quot; 4L, 77C
+</code></pre>
+
+<p>你可以通过运行以下代码来垂直分割窗口：</p>
+
+<pre><code>:vsplit farm.py
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li><code>:vs</code>是<code>:vsplit</code>命令的简化。</li>
+</ol>
+
+<p>您可以将<code>:split</code>和<code>:vsplit</code>命令无限地组合在一起，以创建您需要的任意数量的窗口。</p>
+
+<p>到目前为止，您学到的所有命令在这个窗口中都将正常工作，包括更改缓冲区。要在窗口之间移动，请使用<code>Ctrl+w</code>，然后按方向键:<code>h</code>、<code>j</code>、<code>k</code>或<code>l</code>。箭头键也可以。</p>
+
+<p>注：</p>
+
+<ol>
+<li><p>如果你经常使用windows，你可以通过绑定<code>Ctrl+h</code>到左边的拆分，<code>Ctrl+j</code>到底部的拆分，等等。在<code>.vimrc</code>文件中添加以下内容：</p>
+
+<pre><code>&quot; Fast split navigation with &lt;Ctrl&gt; + hjkl. 
+noremap &lt;c-h&gt; &lt;c-w&gt;&lt;c-h&gt; 
+noremap &lt;c-j&gt; &lt;c-w&gt;&lt;c-j&gt; 
+noremap &lt;c-k&gt; &lt;c-w&gt;&lt;c-k&gt; 
+noremap &lt;c-l&gt; &lt;c-w&gt;&lt;c-l&gt;
+</code></pre></li>
+</ol>
+
+<p>尝试一下<code>Ctrl+w</code>接着<code>j</code>会把你移到下面的窗口，然后<code>Ctrl+w</code>接着<code>k</code>会把光标移回来。</p>
+
+<p>你可以通过以下方式之一关闭分割窗口：</p>
+
+<p><code>Ctrl+w</code>接着<code>q</code>将关闭当前窗口
+<code>:q</code>将关闭窗口并释放缓冲区，然而，如果只有打开的一个窗口，也将关闭vim
+<code>bd</code>将删除当前缓冲区并关闭当前窗口。
+<code>Ctrl+w</code>接着<code>o</code>将关闭除当前外的其它窗口</p>
+
+<p>注：</p>
+
+<ol>
+<li>当打开了多个窗口，可执行<code>:qa</code>来关闭全部窗口并退出vim，可结合<code>:w</code>来保存所有打开了的文件，也就是<code>:wqa</code>。</li>
+</ol>
+
+<p>如果你想关闭一个缓冲区而不关闭它所在的窗口，你可以添加以下命令到你的<code>.vimrc</code>文件：</p>
+
+<pre><code>command! Bd :bp | :sp | :bn | :bd  &quot; Close buffer without closing window. 
+</code></pre>
+
+<p>您将能够使用<code>:Bd</code>关闭缓冲区，同时保持拆分窗口打开。</p>
+
+<h4 id="3.3.3.2">3.3.3.2. Moving windows</h4>
+
+<h4 id="3.3.3.3">3.3.3.3. Resizing windows</h4>
+
+<h3 id="3.3.4">3.3.4. Tabs</h3>
+
+<h3 id="3.3.5">3.3.5. Folds</h3>
+
+<h4 id="3.3.5.1">3.3.5.1. Folding Python code</h4>
+
+<h4 id="3.3.5.2">3.3.5.2. Types of folds</h4>
+
+<h2 id="3.4">3.4. Navigating file trees</h2>
+
+<h3 id="3.4.1">3.4.1. Netrw</h3>
+
+<h3 id="3.4.2">3.4.2. :e with wildmenu enabled</h3>
+
+<h3 id="3.4.3">3.4.3. Plugin spotlight – NERDTree</h3>
+
+<h3 id="3.4.4">3.4.4. Plugin spotlight – Vinegar</h3>
+
+<h3 id="3.4.5">3.4.5. Plugin spotlight – CtrlP</h3>
+
+<h2 id="3.5">3.5. Navigating text</h2>
+
+<h3 id="3.5.1">3.5.1. Jumping into insert mode</h3>
+
+<h3 id="3.5.2">3.5.2. Searching with / and ?</h3>
+
+<h4 id="3.5.2.1">3.5.2.1. Searching across files</h4>
+
+<h4 id="3.5.2.2">3.5.2.2. ack</h4>
+
+<h3 id="3.5.3">3.5.3. Utilizing text objects</h3>
+
+<h3 id="3.5.4">3.5.4. Plugin spotlight – EasyMotion</h3>
+
+<h2 id="3.6">3.6. Copying and pasting with registers</h2>
+
+<h3 id="3.6.1">3.6.1. Where do the registers come in?</h3>
+
+<h3 id="3.6.2">3.6.2. Copying from outside of Vim</h3>
+
+<h2 id="3.7">3.7. Summary</h2>
+
+<h1 id="4">4. Chapter 3: Follow the Leader - Plugin Management</h1>
+
+<h2 id="4.1">4.1. Technical requirements</h2>
+
+<h2 id="4.2">4.2. Managing plugins</h2>
+
+<h3 id="4.2.1">4.2.1. vim-plug</h3>
+
+<h3 id="4.2.2">4.2.2. Honorable mentions</h3>
+
+<h4 id="4.2.2.1">4.2.2.1. Vundle</h4>
+
+<h4 id="4.2.2.2">4.2.2.2. Do it yourself</h4>
+
+<h4 id="4.2.2.3">4.2.2.3. Pathogen</h4>
+
+<h3 id="4.2.3">4.2.3. Profiling slow plugins</h3>
+
+<h4 id="4.2.3.1">4.2.3.1. Profiling startup</h4>
+
+<h4 id="4.2.3.2">4.2.3.2. Profiling specific actions</h4>
+
+<h2 id="4.3">4.3. Deeper dive into modes</h2>
+
+<h3 id="4.3.1">4.3.1. Normal mode</h3>
+
+<h3 id="4.3.2">4.3.2. Command-line and ex modes</h3>
+
+<h3 id="4.3.3">4.3.3. Insert mode</h3>
+
+<h3 id="4.3.4">4.3.4. Visual and select mode</h3>
+
+<h3 id="4.3.5">4.3.5. Replace and virtual replace mode</h3>
+
+<h3 id="4.3.6">4.3.6. Terminal mode</h3>
+
+<h2 id="4.4">4.4. Remapping commands</h2>
+
+<h3 id="4.4.1">4.4.1. Mode – aware remapping</h3>
+
+<h2 id="4.5">4.5. The leader key</h2>
+
+<h2 id="4.6">4.6. Configuring plugins</h2>
+
+<h2 id="4.7">4.7. Summary</h2>
+
+<h1 id="5">5. Chapter 4: Understanding the Text</h1>
+
+<h2 id="5.1">5.1. Technical requirements</h2>
+
+<h2 id="5.2">5.2. Code autocomplete</h2>
+
+<h3 id="5.2.1">5.2.1. Built-in autocomplete</h3>
+
+<h3 id="5.2.2">5.2.2. YouCompleteMe</h3>
+
+<h4 id="5.2.2.1">5.2.2.1. Installation</h4>
+
+<h4 id="5.2.2.2">5.2.2.2. Using YouCompleteMe</h4>
+
+<h2 id="5.3">5.3. Navigating the code base with tags</h2>
+
+<h3 id="5.3.1">5.3.1. Exuberant Ctags</h3>
+
+<h3 id="5.3.2">5.3.2. Automatically updating the tags</h3>
+
+<h2 id="5.4">5.4. Undo tree and Gundo</h2>
+
+<h2 id="5.5">5.5. Summary</h2>
+
+<h1 id="6">6. Chapter 5: Build, Test, and Execute</h1>
+
+<h2 id="6.1">6.1. Technical requirements</h2>
+
+<h2 id="6.2">6.2. Working with version control</h2>
+
+<h3 id="6.2.1">6.2.1. Quick-and-dirty version control and Git introduction</h3>
+
+<h4 id="6.2.1.1">6.2.1.1. Concepts</h4>
+
+<h4 id="6.2.1.2">6.2.1.2. Setting up a new project</h4>
+
+<h4 id="6.2.1.3">6.2.1.3. Cloning an existing repository</h4>
+
+<h4 id="6.2.1.4">6.2.1.4. Working with Git</h4>
+
+<h5 id="6.2.1.4.1">6.2.1.4.1. Adding files, committing, and pushing</h5>
+
+<h5 id="6.2.1.4.2">6.2.1.4.2. Creating and merging branches</h5>
+
+<h3 id="6.2.2">6.2.2. Integrating Git with Vim (vim-fugitive)</h3>
+
+<h2 id="6.3">6.3. Resolving conflicts with vimdiff</h2>
+
+<h3 id="6.3.1">6.3.1. Comparing two files</h3>
+
+<h3 id="6.3.2">6.3.2. vimdiff and Git</h3>
+
+<h4 id="6.3.2.1">6.3.2.1. git config</h4>
+
+<h4 id="6.3.2.2">6.3.2.2. Creating merge conflict</h4>
+
+<h4 id="6.3.2.3">6.3.2.3. Resolving a merge conflict</h4>
+
+<h2 id="6.4">6.4. tmux, screen, and Vim terminal mode</h2>
+
+<h3 id="6.4.1">6.4.1. tmux</h3>
+
+<h4 id="6.4.1.1">6.4.1.1. Panes are just like splits</h4>
+
+<h4 id="6.4.1.2">6.4.1.2. Windows are just like tabs</h4>
+
+<h4 id="6.4.1.3">6.4.1.3. Sessions are invaluable</h4>
+
+<h4 id="6.4.1.4">6.4.1.4. tmux and Vim splits</h4>
+
+<h3 id="6.4.2">6.4.2. Screen</h3>
+
+<h3 id="6.4.3">6.4.3. Terminal mode</h3>
+
+<h2 id="6.5">6.5. Building and testing</h2>
+
+<h3 id="6.5.1">6.5.1. Quickfix list</h3>
+
+<h3 id="6.5.2">6.5.2. Location list</h3>
+
+<h3 id="6.5.3">6.5.3. Building code</h3>
+
+<h4 id="6.5.3.1">6.5.3.1. Plugin spotlight: vim-dispatch</h4>
+
+<h3 id="6.5.4">6.5.4. Testing code</h3>
+
+<h4 id="6.5.4.1">6.5.4.1. Plugin spotlight – vim-test</h4>
+
+<h3 id="6.5.5">6.5.5. Syntax checking code with linters</h3>
+
+<h4 id="6.5.5.1">6.5.5.1. Using linters with Vim</h4>
+
+<h4 id="6.5.5.2">6.5.5.2. Plugin spotlight – Syntastic</h4>
+
+<h4 id="6.5.5.3">6.5.5.3. Plugin spotlight – ALE</h4>
+
+<h2 id="6.6">6.6. Summary</h2>
+
+<h1 id="7">7. Chapter 6: Refactoring Code with Regex and Macros</h1>
+
+<h2 id="7.1">7.1. Technical requirements</h2>
+
+<h2 id="7.2">7.2. Search or replace with regular expressions</h2>
+
+<h3 id="7.2.1">7.2.1. Search and replace</h3>
+
+<h3 id="7.2.2">7.2.2. Operations across files using arglist</h3>
+
+<h3 id="7.2.3">7.2.3. Regex basics</h3>
+
+<h4 id="7.2.3.1">7.2.3.1. Special regex characters</h4>
+
+<h4 id="7.2.3.2">7.2.3.2. Alternation and grouping</h4>
+
+<h4 id="7.2.3.3">7.2.3.3. Quantifiers or multis</h4>
+
+<h3 id="7.2.4">7.2.4. More about magic</h3>
+
+<h4 id="7.2.4.1">7.2.4.1. Magic</h4>
+
+<h4 id="7.2.4.2">7.2.4.2. No magic</h4>
+
+<h4 id="7.2.4.3">7.2.4.3. Very magic</h4>
+
+<h3 id="7.2.5">7.2.5. Applying the knowledge in practice</h3>
+
+<h4 id="7.2.5.1">7.2.5.1. Renaming a variable, a method, or a class</h4>
+
+<h4 id="7.2.5.2">7.2.5.2. Reordering function arguments</h4>
+
+<h2 id="7.3">7.3. Recording and playing macros</h2>
+
+<h3 id="7.3.1">7.3.1. Editing macros</h3>
+
+<h3 id="7.3.2">7.3.2. Recursive macros</h3>
+
+<h3 id="7.3.3">7.3.3. Running macros across multiple files</h3>
+
+<h2 id="7.4">7.4. Using plugins to do the job</h2>
+
+<h2 id="7.5">7.5. Summary</h2>
+
+<h1 id="8">8. Chapter 7: Making Vim Your Own</h1>
+
+<h2 id="8.1">8.1. Technical requirements</h2>
+
+<h2 id="8.2">8.2. Playing with the Vim UI</h2>
+
+<h3 id="8.2.1">8.2.1. Color schemes</h3>
+
+<h4 id="8.2.1.1">8.2.1.1. Browsing the color schemes</h4>
+
+<h4 id="8.2.1.2">8.2.1.2. Common issues</h4>
+
+<h3 id="8.2.2">8.2.2. The status line</h3>
+
+<h4 id="8.2.2.1">8.2.2.1. Powerline</h4>
+
+<h4 id="8.2.2.2">8.2.2.2. Airline</h4>
+
+<h3 id="8.2.3">8.2.3. gVim-specific configuration</h3>
+
+<h2 id="8.3">8.3. Keeping track of configuration files</h2>
+
+<h2 id="8.4">8.4. Healthy Vim customization habits</h2>
+
+<h3 id="8.4.1">8.4.1. Optimizing your workflow</h3>
+
+<h3 id="8.4.2">8.4.2. Keeping .vimrc organized</h3>
+
+<h2 id="8.5">8.5. Summary</h2>
+
+<h1 id="9">9. Chapter 8: Transcending the Mundane with Vimscript</h1>
+
+<h2 id="9.1">9.1. Technical requirements</h2>
+
+<h2 id="9.2">9.2. Why Vimscript?</h2>
+
+<h2 id="9.3">9.3. How to execute Vimscript</h2>
+
+<h2 id="9.4">9.4. Learning the syntax</h2>
+
+<h3 id="9.4.1">9.4.1. Setting variables</h3>
+
+<h3 id="9.4.2">9.4.2. Surfacing output</h3>
+
+<h3 id="9.4.3">9.4.3. Conditional statements</h3>
+
+<h3 id="9.4.4">9.4.4. Lists</h3>
+
+<h3 id="9.4.5">9.4.5. Dictionaries</h3>
+
+<h3 id="9.4.6">9.4.6. Loops</h3>
+
+<h3 id="9.4.7">9.4.7. Functions</h3>
+
+<h3 id="9.4.8">9.4.8. Classes</h3>
+
+<h3 id="9.4.9">9.4.9. Lambda expressions</h3>
+
+<h3 id="9.4.10">9.4.10. Map and filter</h3>
+
+<h3 id="9.4.11">9.4.11. Interacting with Vim</h3>
+
+<h3 id="9.4.12">9.4.12. File-related commands</h3>
+
+<h3 id="9.4.13">9.4.13. Prompts</h3>
+
+<h3 id="9.4.14">9.4.14. Using Help</h3>
+
+<h2 id="9.5">9.5. A word about style guides</h2>
+
+<h2 id="9.6">9.6. Let's build a plugin</h2>
+
+<h3 id="9.6.1">9.6.1. Plugin layout</h3>
+
+<h3 id="9.6.2">9.6.2. The basics</h3>
+
+<h3 id="9.6.3">9.6.3. Housekeeping</h3>
+
+<h3 id="9.6.4">9.6.4. Improving our plugin</h3>
+
+<h3 id="9.6.5">9.6.5. Distributing the plugin</h3>
+
+<h3 id="9.6.6">9.6.6. Where to take the plugin from here</h3>
+
+<h2 id="9.7">9.7. Further reading</h2>
+
+<h2 id="9.8">9.8. Summary</h2>
+
+<h1 id="10">10. Chapter 9: Neovim</h1>
+
+<h2 id="10.1">10.1. Technical requirements</h2>
+
+<h2 id="10.2">10.2. Why make another Vim?</h2>
+
+<h2 id="10.3">10.3. Installing and configuring Neovim</h2>
+
+<h3 id="10.3.1">10.3.1. Checking health</h3>
+
+<h3 id="10.3.2">10.3.2. Sane defaults</h3>
+
+<h2 id="10.4">10.4. Oni</h2>
+
+<h2 id="10.5">10.5. Neovim plugin highlights</h2>
+
+<h2 id="10.6">10.6. Summary</h2>
+
+<h1 id="11">11. Chapter 10: Where to Go from Here</h1>
+
+<h2 id="11.1">11.1. Seven habits of effective text editing</h2>
+
+<h2 id="11.2">11.2. Modal interfaces everywhere</h2>
+
+<h3 id="11.2.1">11.2.1. A Vim-like web browsing experience</h3>
+
+<h4 id="11.2.1.1">11.2.1.1. Vimium and Vimium-FF</h4>
+
+<h4 id="11.2.1.2">11.2.1.2. Alternatives</h4>
+
+<h3 id="11.2.2">11.2.2. Vim everywhere else</h3>
+
+<h4 id="11.2.2.1">11.2.2.1. vim-anywhere for Linux and macOS</h4>
+
+<h4 id="11.2.2.2">11.2.2.2. Text Editor Anywhere for Windows</h4>
+
+<h2 id="11.3">11.3. Recommended reading and communities</h2>
+
+<h3 id="11.3.1">11.3.1. Mailing lists</h3>
+
+<h3 id="11.3.2">11.3.2. IRC</h3>
+
+<h3 id="11.3.3">11.3.3. Other communities</h3>
+
+<h2 id="11.4">11.4. Summary</h2>
+
+<h1 id="12">12. Other Books You May Enjoy</h1>
+
+<h1 id="13">13. Index</h1>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

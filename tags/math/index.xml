@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>math on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/math/</link>
+    <description>Recent content in math on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 04 Mar 2019 21:31:22 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/math/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Ab_test</title>
+      <link>https://chen-feiyang.github.io/posts/ab_test/</link>
+      <pubDate>Mon, 04 Mar 2019 21:31:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/ab_test/</guid>
+      <description>数据分析遇到要提高指标比如转化率，一个很重要的分析是A/B Test，以下是其python代码。
+注意：A/B Test不是因果推断，因果推断我搜索了一下，python有causality和DoWhy包，Pearl有Do-Calculus包，目前较少人涉及，DoWhy甚至没有成熟发布版。
+ </description>
+    </item>
+    
+    <item>
+      <title>data_analysis数据分析</title>
+      <link>https://chen-feiyang.github.io/posts/data_analysis%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</link>
+      <pubDate>Mon, 26 Nov 2018 16:05:15 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_analysis%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90/</guid>
+      <description>这里要成系统地叙述什么叫数据分析，然后涉及的知识点在这里不展开，仅仅链接内容，链接内容之后去扩充。
+Data analysis is a process of inspecting, cleansing, transforming, and modeling data with the goal of discovering useful information, informing conclusions, and supporting decision-making. Data analysis has multiple facets and approaches, encompassing diverse techniques under a variety of names, while being used in different business, science, and social science domains.
+数据分析是一个对数据进行查看、清洗、转换、建模的过程，目的是为了发现有用信息、含有信息的结论、或者支持决策。数据分析有很多方面和手段，包含不同的技术，以不同名字出现在商业、科学、社科等领域。
+Data mining is a particular data analysis technique that focuses on modeling and knowledge discovery for predictive rather than purely descriptive purposes, while business intelligence covers data analysis that relies heavily on aggregation, focusing mainly on business information.</description>
+    </item>
+    
+  </channel>
+</rss>

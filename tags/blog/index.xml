@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>blog on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/blog/</link>
+    <description>Recent content in blog on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Nov 2018 19:09:32 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>latex实现及hugo</title>
+      <link>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</link>
+      <pubDate>Mon, 26 Nov 2018 19:09:32 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</guid>
+      <description>最近在学机器学习算法，其中涉及到大量数学公式。而我之前用的博客工具是hexo portable无法用latex编辑公式，很不方便。就好像古代研究语音的没有方便的工具表示语音，只能用反切，切来切去就是搞不清楚是什么音，不能忍。 粗略一看hugo是能实现latex的。
+关于hugo的使用，许多博客，但官方的安装使用指导其实见于HUGO-Quick Start等。
+博客内容的网页 推送博客本地文件至互联网等需要git，可从git官网下载，但由于需翻墙等，也可从waylau贡献的国内源-Git for Windows 国内下载站下载。 git安装参考田闯-Git安装教程 (windows)。
+评论需用到leancloud的服务，已注册，注册邮箱为我outlook邮箱，密码为常用密码尾位改为大写。 评论功能就不能按hugo官网，或可按Hugo加入评论的功能。 评论需要leancloud或disqus的服务（均已成功注册），其中disqus为hugo推荐并有设置指导，奈何需要翻墙。leancloud暂不知道如何设置。 评论功能咱作罢。
+1 步骤 1.1 安装hugo 按HUGO-Install Hugo，各系统平台均可于Hugo Releases下载系统对应的hugo二进制文件， 其是免安装的，只需将hugo二进制文件所在目录加入path系统变量（如我系统是windows64位系统，下载对应文件并放在d:\hugo，则将d:\hugo放入系统变量path）。
+hugo version能正常显示信息说明hugo已安装成功。
+1.2 静态网址存放处（site后，比如我准备存放在d盘software文件夹下建立chen-feiyang.github.io文件夹作为静态网址存放处。） d:
+cd software hugo new site chen-feiyang.github.io
+cd chen-feiyang.github.io
+tree
+注： * 1. config.toml 是网站的配置文件，hugo 同时还支持 YAML 格式的 config.yaml 或 JSON 格式的 config.json。
+  content 目录放 markdown 文章，data 目录放数据，layouts 目录放网站模板文件，static 目录放图片、css、js 等静态资源，themes 命令放下载的主题。   tree命令一定要运行，否则hugo new about.md命令建立的about.md将不在正确位置。   1.</description>
+    </item>
+    
+    <item>
+      <title>markdown及latex语法</title>
+      <link>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</link>
+      <pubDate>Mon, 26 Nov 2018 16:08:20 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</guid>
+      <description>本文总结摘录Markdown及LaTex语法。由于不同环境可能稍有不同，本文指hugo+github pages环境。
+似乎我这里是在记流水账呢，有没有系统的关于markdown的语法学习材料呢。 有空到这里https://www.markdownguide.org/学学吧，感觉markdown还是很有用的东西，比word什么的方便很多。
+1 Markdown 1.1 标题写法 第一种方法：
+1、在文本下面加上 等于号 = ，那么上方的文本就变成了大标题。等于号的个数无限制，但一定要大于0个哦。。
+2、在文本下面加上 下划线 - ，那么上方的文本就变成了中标题，同样的 下划线个数无限制。
+3、要想输入=号，上面有文本而不让其转化为大标题，则需要在两者之间加一个空行。
+另一种方法：（推荐这种方法；注意⚠️中间需要有一个空格）
+关于标题还有等级表示法，分为六个等级，显示的文本大小依次减小。不同等级之间是以井号 # 的个数来标识的。一级标题有一个 #，二级标题有两个# ，以此类推。
+例如：
+一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 1.2 列表 刚刚才发现词汇叫列表，可多级，可有序，可无序。还有一个概念叫引用，也可分级。
+ 项目1
+ 项目2
+ 项目3
+ 项目1 （一个*号会显示为一个黑点，注意⚠️有空格，否则直接显示为*项目1）
+ 项目2
+   无序列表使用星号、加号或是减号
+1.3 文字换行 （建议直接在前一行后面补两个空格）
+直接回车不能换行，
+可以在上一行文本后面补两个空格，
+这样下一行的文本就换行了。
+或者就是在两行文本直接加一个空行。
+也能实现换行效果，不过这个行间距有点大。
+1.4 居中 这一行需要居中
+1.5 字体格式强调 我们可以使用下面的方式给我们的文本添加强调的效果
+强调 (示例：斜体)
+强调 (示例：斜体)
+加重强调 (示例：粗体)</description>
+    </item>
+    
+  </channel>
+</rss>

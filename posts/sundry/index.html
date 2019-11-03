@@ -229,43 +229,53 @@ code.has-jax {
 <ul>
 <li>细节：无</li>
 <li>时间：20190826</li>
-<li>解决办法：df.isnull().any()</li>
+<li>解决办法：</li>
 </ul>
+
+<p>df.isnull().any()</p>
 
 <h1 id="问题-pandas查询那些列全部为空值">问题：pandas查询那些列全部为空值</h1>
 
 <ul>
 <li>细节：无</li>
 <li>时间：20190826</li>
-<li>解决办法：df.isnull().all()</li>
+<li>解决办法：</li>
 </ul>
+
+<p>df.isnull().all()</p>
 
 <h1 id="问题-pandas0-24-2里根据列值拼接表报错-valueerror-you-are-trying-to-merge-on-object-and-int64-columns-if-you-wish-to-proceed-you-should-use-pd-concat">问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”</h1>
 
 <ul>
 <li>细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据'name'列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型<code>Int64Index</code>和<code>RangeIndex</code>，不同的index类型可能是不能join的原因。</li>
 <li>时间：20190826</li>
-<li>解决办法：只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。</li>
+<li>解决办法：</li>
 </ul>
+
+<p>只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。</p>
 
 <h1 id="问题-数据库更新方式-全量更新-增量更新">问题：数据库更新方式：全量更新、增量更新</h1>
 
 <ul>
 <li>细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。</li>
 <li>时间：20190829</li>
-<li>解决办法：就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。
+<li>解决办法：</li>
+</ul>
+
+<p>就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。
 采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据；
 采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。
-所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。</li>
-</ul>
+所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。</p>
 
 <h1 id="问题-pandas的dataframe里某列为字符串-但字符串内部为字典-列表或嵌套列表-根据逻辑拆分此列">问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。</h1>
 
 <ul>
 <li>细节：字符串内部为字典是指列中的格式为&quot;{'ka':'va', 'kb':'vb'...}&quot;，字符串内部为列表是指列中格式为&quot;['va','vb','vc',...]&quot;，嵌套列表与之类似。</li>
 <li>时间：20190829</li>
+<li>解决办法：</li>
+</ul>
 
-<li><p>解决办法：这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为'a'转换为字典<code>df['a'].apply(eval)</code>，如需要拆分出'va'等值并命名为列'ka',可<code>df['ka'] = df['a'].apply(eval).apply(lambda x: x['ka'])</code>。当然列'a'可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：</p>
+<p>这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为'a'转换为字典<code>df['a'].apply(eval)</code>，如需要拆分出'va'等值并命名为列'ka',可<code>df['ka'] = df['a'].apply(eval).apply(lambda x: x['ka'])</code>。当然列'a'可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：</p>
 
 <pre><code># 列a非空的索引
 column_a_not_null_index = df[df['a'].notnull()].index 
@@ -275,31 +285,32 @@ df['ka'] = np.nan
 #为保证字典含有特定键、列表含有特定位置的索引，可能在此位置还需更细致的索引
 df.loc[column_a_not_null_index, 'ka'] = \
 df.loc[column_a_not_null_index, 'a'].apply(lambda x: x['ka'])
-</code></pre></li>
-</ul>
+</code></pre>
 
 <h1 id="问题-pyspark读取hive表格-为运行效率想只读取几个字段-但是不知道字段名字-如何得到字段名字">问题：pyspark读取Hive表格，为运行效率想只读取几个字段，但是不知道字段名字，如何得到字段名字</h1>
 
 <ul>
 <li>细节：pyspark读取Hive表格，为运行效率想只读取几个字段，但是不知道字段名字，如何得到字段名字。</li>
 <li>时间：20190829</li>
+<li>解决办法：</li>
+</ul>
 
-<li><p>解决办法：部分解决，即限制读取量的方法达到运行效率，代码为：</p>
+<p>部分解决，即限制读取量的方法达到运行效率，代码为：</p>
 
 <pre><code>spark.sql(&quot;select * from tablename limit 5&quot;).show()
 </code></pre>
 
-<p>应该是有更直接方式，但暂未找到。</p></li>
-</ul>
+<p>应该是有更直接方式，但暂未找到。</p>
 
 <h1 id="问题-python-pandas-将一个带参数的函数应用于一个series">问题：python pandas：将一个带参数的函数应用于一个Series</h1>
 
 <ul>
 <li>细节：我们知道可以用<code>apply</code>，但一般情况下<code>apply</code>内的函数只接受一个参数，即Series内一个具体值。但是如果函数本身含有多个参数该怎么办呢。</li>
 <li>时间：20190909</li>
+<li>解决办法：</li>
+</ul>
 
-<li><p>解决办法：按<a href="https://www.imooc.com/wenda/detail/579404">
-慕田峪9158850在猿问中的回答</a>，可：</p>
+<p>按<a href="https://www.imooc.com/wenda/detail/579404">慕田峪9158850在猿问中的回答</a>，可：</p>
 
 <ul>
 <li><ol>
@@ -328,7 +339,6 @@ add_3(7)10
 <pre><code>my_series.apply(your_function, args=(2,3,4), extra_kw=1)
 </code></pre></li>
 </ol></li>
-</ul></li>
 </ul>
 
 <p>应该是有更直接方式，但暂未找到。</p>
@@ -339,24 +349,556 @@ add_3(7)10
 <li><p>细节：当然可以用限制读取前几条的方法，这样不会很大开销：</p>
 
 <pre><code>columns = spark.sql(&quot;select * from tablename limit 5&quot;).toPandas().columns
-</code></pre>
+</code></pre></li>
+</ul>
 
-<p>但其实有更好更直接的方法。</p></li>
-
-<li><p>时间：201909011</p></li>
-
-<li><p>解决办法：</p>
+<p>但其实有更好更直接的方法。
+* 时间：20190911
+* 解决办法：</p>
 
 <pre><code>columns = spark.sql(&quot;select * from tablename&quot;).columns
 </code></pre>
 
-<p>按同事说法，这样不会真的读取全表，没很大开销，我运行之后也感觉是这样。</p></li>
-</ul>
+<p>按同事说法，这样不会真的读取全表，没很大开销，我运行之后也感觉是这样。</p>
 
 <p>可能还会想获得hive表格的元数据（即字段名、字段类型等），可采用：</p>
 
 <pre><code>spark.sql(&quot;desc formatted tablename&quot;).collect()
 </code></pre>
+
+<h1 id="问题-虚拟机软件无法创建64位虚拟机">问题：虚拟机软件无法创建64位虚拟机？</h1>
+
+<ul>
+<li>细节：在尝试搭建spark伪集群时需要虚拟机安装linux，virtualbox创建虚拟机时发现</li>
+<li>时间：20190914</li>
+<li>解决办法：</li>
+</ul>
+
+<p>根据<a href="https://forums.virtualbox.org/viewtopic.php?f=1&amp;t=62339">virtualbox论坛-I have a 64bit host, but can't install 64bit guests</a>、
+<a href="https://forums.virtualbox.org/viewtopic.php?f=6&amp;t=91023">virtualbox论坛-[Solved] VT-x is not available, no solutions have worked</a>说法，
+virtualbox及其他虚拟机软件创建64位系统，需满足：
+ * cpu为64位并硬件上支持虚拟化（Intel VT-x or AMD-v），这只能根据型号查询。
+ * 开启了虚拟化，可在BIOS上开启，并可通过Intel或AMD软件、任务管理器查询。
+ * 现在硬件和出厂应该均能支持前两者，那么要保证其他软件、进程等不占用虚拟化。
+mpack列举了一些占用虚拟化的程序和进程等，只能对应去试错了。
+我根据提示关闭了windows安全中心-设备安全性-内核隔离-内存完整性，即可创建54位虚拟机。</p>
+
+<h1 id="问题-表内某列为列表-字典-甚至字典与列表的层层嵌套-如何根据这列将表格拆分成不含列表-字典的新表-而表的条目根据其内元素值相应增加">问题：表内某列为列表（字典，甚至字典与列表的层层嵌套），如何根据这列将表格拆分成不含列表、字典的新表，而表的条目根据其内元素值相应增加？</h1>
+
+<ul>
+<li>细节：数据清洗时某列为字典与列表的层层嵌套，很可能列表的长度还不一样，需要从中取出有用字段。</li>
+<li>时间：20190922</li>
+<li>解决办法：</li>
+</ul>
+
+<p>读取发现，甚至里面还不是列表、字典，而是列表、字典的字符串形式。可先对此列采用<code>apply(eval)</code>（注：若此列还含有空值，要仅对非空值部分采用此函数）。然后可对此列采用<code>df['a'].apply(pd.Series)</code>或<code>pd.DataFrame(df['a'].tolist(), index=df.index)</code>，其中后者效率明显高于前者（30分钟、2分钟）。若是字典，会自动将键作为列名；而列表，其列名是从0开始的数字，没有意义可删除；列表，很多时候不等长，这样产生的新表df1的列数将是列表最大长度，其中必然含有很多空值。没关系，再运用<code>.stack()</code>，将达到问题要求，且不会引入这些空值。多层嵌套的情况只需将上述步骤重复相应遍数。</p>
+
+<p>拆分后，为进一步拆分，也为相应增加行，我们可能<code>.stack()</code>以达到表仅含一个列，同时其他列的信息也没丢弃，其他列的信息将在多层索引里面。注意<code>.stack()</code>后是Series对象，但因为含有列表等，拆分后将引入无意义列名0-n，<code>.stack()</code>将变成无意义索引，需删除，删除后需重新设置多层索引，此时很可能是单列多重索引的DataFrame对象，需取出对应的Series对象。因为拆分列表/字典列时候是对Series对象进行拆分，而不是DataFrame对象，即使DataFrame对象仅含一列。还需要注意，若索引达到或超过5层将报错，切出相应列之后再拼接吧。
+例如df含有a、b、c三列，c列为列表嵌套字典组成的字符串（还含有空值），c列的第一层为不等长列表，c列的第二层为含有键key1、key2、key3的字典，需要从c中拆分出有用字段。</p>
+
+<pre><code class="language-python"># 将列a、b信息保存在多重索引里
+df = df.set_index(['a', 'b'])
+# 仅对非空部分处理，否则报错
+df1 = df[df['c'].notnull()]
+df2 = df[df['c'].isnull()]
+# 字符串形式不方便拆分，转换成列表嵌套字典
+df2['c'] = df2['c'].apply(eval)
+# 拆分成多列，由于列长不等，会引入空值
+df3 = pd.DataFrame(df1['c'].tolist(), index=df1.index)
+# 没关系，堆叠后没有这些空值
+ser1 = df3.stack()
+# 差分列表列将引入索引位置作为列名，这没意义，删除并重新使得数据仅含一列，其他均为索引
+# 选取DataFrame仅有列形成Series，
+# 由于没指定列名，其将自动生成列名数字0
+ser2 = ser1.reset_index().drop(['level_1'], axis=1).set_index(['a', 'b'])[0]
+# 再次拆分内层字典
+df4 = pd.DataFrame(ser2.tolist(), index=df1.index)
+# 与原来的空值数据合并
+df5 = pd.concat([df4, df1], axis=0)
+# 至此打得到目标
+</code></pre>
+
+<h1 id="问题-根据df-a的column-a和df-b的column-b连接这两个表-其中column-a中每个位置均是列表-字典-集合等-而column-b则每个位置仅含单个元素-若column-b属于column-a则连接成功-该怎么做呢">问题：根据df_a的column_a和df_b的column_b连接这两个表，其中column_a中每个位置均是列表/字典/集合等，而column_b则每个位置仅含单个元素，若column_b属于column_a则连接成功，该怎么做呢？</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间：20190922</li>
+<li>解决办法：</li>
+</ul>
+
+<p>暂无更好办法，我的方法是依据上个问题方法差分列之后join或merge，但是注意保存列表列，这样省得再找办法合并列。</p>
+
+<h1 id="问题-如何将多列合并成一列-键为列名-值为相应列值">问题：如何将多列合并成一列，键为列名，值为相应列值。</h1>
+
+<ul>
+<li>细节：假设有一个关于一个城市房地产项目的表，其中一条数据即一个楼盘，有多个预售证，查询政府网站得到每个预售证的销控表，其中含有这个预售证对应楼栋对应最小独立物业的面积户型等信息，我们可以根据销控表统计每个预售证的户型，得到该预售证的最大量的户型，那么对含有多个预售证的楼盘，怎么知道其最主力户型呢？需要得到一个户型value_counts的dict之后对楼盘的多个预售证汇总，即需要保存个数信息。我能想到的就是将户型统计信息形成dict了。</li>
+<li>时间：20190922</li>
+<li>解决办法：</li>
+</ul>
+
+<p>暂无更好办法，我的方法是依据上个问题方法差分列之后join或merge，但是注意保存列表列，这样省得再找办法合并列。</p>
+
+<h1 id="问题-如何根据某一列-形成关于此列的画像">问题：如何根据某一列，形成关于此列的画像？</h1>
+
+<ul>
+<li>细节：如烟草数据，含有零售户编号、零售户档位、时间、卷烟品种、卷烟价格、卷烟销售金额。其中零售户编号、零售户档位、卷烟品种为分类变量，其余则为数值（时间）变量，如何根据上述数据形成关于档位的画像？</li>
+<li>时间：20190925</li>
+<li>解决办法：</li>
+</ul>
+
+<h1 id="问题-条件查询中查询字段中含有空字符">问题：条件查询中查询字段中含有空字符</h1>
+
+<ul>
+<li>细节：如，我想查询表格a，但仅需要其中字段b='12345   '者，那么该怎么办呢？</li>
+<li>时间：20190925</li>
+
+<li><p>解决办法：</p>
+
+<pre><code>select * from b where b='12345   '
+</code></pre></li>
+</ul>
+
+<p>如是在pyspark中：</p>
+
+<pre><code>spark.sql(&quot;select * from b where b='12345   '&quot;)
+</code></pre>
+
+<h1 id="问题-数据有列a和列b-a为状态-b为日期-想知道状态持续时间">问题：数据有列a和列b，a为状态，b为日期，想知道状态持续时间。</h1>
+
+<ul>
+<li>细节：注意，状态可能反复，也即，有可能2019-01-03~2019-04-22、2019-05-06~2019-08-14时间段的状态均是19；还有，某天数据可能缺失，这种情况下认为状态与最近之前的状态同。也许在pandas里面好操作，但在pyspark里呢？</li>
+<li>时间：20190925</li>
+<li>解决办法：</li>
+</ul>
+
+<p>暂时思路，pyspark里可以设置window函数，如下：</p>
+
+<pre><code>w =  Window.partitionBy(df.k).orderBy(df.v)
+</code></pre>
+
+<p>其中<code>.partitionBy(df.k)</code>定义根据什么列分组，<code>.partitionBy(df.k)</code>定义根据什么列排序。然后即可创建新列：</p>
+
+<pre><code>df.withColumn('a_count', F.count('a').over(window))
+</code></pre>
+
+<p>那么新列将含有列a的的计数。但考虑到a的状态将会反复，所以上述方法无用。同时，由于一些时间点的数据缺失，计数时候也将遗漏缺失时间点。最终还是没有靠方法解决此问题，有一揭示状态a变动情况的表，靠此表解决问题。分组之后按时间排序，设置lag列，其将根据分组自动计算前后差值，那么可用原时间与时间lag的差值代表持续时长。</p>
+
+<p><strong>这个问题还是没完全解决，先暂放待以后补充。</strong></p>
+
+<h1 id="问题-样本无偏标准差-总体标准差">问题：样本无偏标准差、总体标准差</h1>
+
+<ul>
+<li>细节：遇一任务需要统计一字段各值对应的其它字段的均值、标准差等统计量。搜索pyspark文档，发现有stddev、stddev_pop、stddev_samp三个关于标准差的函数。按文档stddev、stddev_samp均是样本无偏标准差，但两者是否有差别，暂不清楚；stddev_pop总体标准差。因此有必要搞清楚总体标准差、样本标准差、样本无偏标准差、无偏估计的含义，还应搞清楚对一特定任务需要标准差统计量的时候该用哪个。</li>
+<li>时间：20190929</li>
+<li>解决办法：</li>
+</ul>
+
+<p>假设总体为N，样本为n，那么总体标准差：
+<code>$$\sigma = \sqrt{\frac {1} {N} \sum_{i=1}^{N} {(x_i - \mu)^2}}$$</code></p>
+
+<p>无偏估计：<br />
+无偏估计是用样本统计量来估计总体参数时的一种无偏推断。估计量的数学期望等于被估计参数的真实值，则称此估计量为被估计参数的无偏估计，即具有无偏性，是一种用于评价估计量优良性的准则。无偏估计的意义是：在多次重复下，它们的平均数接近所估计的参数真值。无偏估计常被应用于测验分数统计中。</p>
+
+<p>总体方差、标准差不存在采样过程，因此必定无偏。而样本均值、方差、标准差，由于采样的误差，将可能有偏。可以证明样本均值无偏，样本方差有偏， 样本标准差   。
+<code>$$a = \frac{\sum_{}^{} {x_i}} {n}$$</code></p>
+
+<p><code>$$\begin{equation*}%加*表示不对公式编号
+\begin{split}
+E(a) =&amp;\frac{1} {n} E(\sum_{i=1}^{n} x_i)\\
+=&amp;\frac{1} {n} \sum_{i=1}^{n} {E(x_i)}\\
+=&amp;\frac{1} {n} \sum_{i=1}^{n} {\mu}\\
+=&amp; \mu\
+\end{split}
+\end{equation*}$$</code></p>
+
+<p><code>$$b = \frac {1} {n} \sum_{i=1}^{n} {(x_i - \mu)^2}$$</code></p>
+
+<p><code>$$\begin{equation*}%加*表示不对公式编号
+\begin{split}
+E(b) =&amp;\frac{1} {n} E(\sum_{i=1}^{n} {(x_i - \mu)^2})\\
+=&amp;\frac{1} {n} E(\sum_{i=1}^{n} {(x_{i}^{2} - 2x_{i}\mu + {\mu}^{2})})\\
+=&amp;\frac{1} {n} E(x_{i}^{2}) - \frac{1} {n} E(2\mu \times n\mu)\\
+=&amp; \mu\
+\end{split}
+\end{equation*}$$</code></p>
+
+<p><code>$$c = \sqrt{\frac {1} {n} \sum_{i=1}^{n} {(x_i - \mu)^2}}$$</code>
+<code>$$E(c) = \frac{1} {n} E(\sum_{i=1}^{n} x_i) = \frac{1} {n} \sum_{i=1}^{n} {E(x_i)} = \frac{1} {n} \sum_{i=1}^{n} {\mu} = \mu$$</code></p>
+
+<p>样本均方差：
+<code>$$\sigma = \sqrt{\frac {1} {n-1} \sum_{i=1}^{n} {(x_i - \mu)^2}}$$</code></p>
+
+<p><strong>问题仍未解决！！！</strong></p>
+
+<h1 id="问题-两个列表a-a1-a2-am-b-b1-b2-bn-自a中一个元素-b中取一个元素组成新的列表-如何取得所有可能的列表且不重复-如果是从更多列表呢">问题：两个列表a=[a1,a2,...,am]、b=[b1,b2,...,bn]，自a中一个元素，b中取一个元素组成新的列表，如何取得所有可能的列表且不重复。如果是从更多列表呢？</h1>
+
+<ul>
+<li>细节：遇到任务需要同一图框中呈现30多个变量的变化趋势，如只用颜色区分，颜色将很接近，那么自然要用到color、linestyle、marker共同来区分。</li>
+<li>时间：20190929</li>
+<li>解决办法：</li>
+</ul>
+
+<p>这个场景其实叫<strong>笛卡尔积</strong>。python中有内置函数itertools.product，可实现此场景。同时numpy中也有meshgrid可以实现，较大可能是numpy中的方法运行效率更高。</p>
+
+<h1 id="问题-两个列表a-a1-a2-am-b-b1-b2-bn-自a中一个元素-b中取一个元素组成新的列表-如何取得所有可能的列表且不重复-如果是从更多列表呢-1">问题：两个列表a=[a1,a2,...,am]、b=[b1,b2,...,bn]，自a中一个元素，b中取一个元素组成新的列表，如何取得所有可能的列表且不重复。如果是从更多列表呢？</h1>
+
+<ul>
+<li>细节：遇到任务需要同一图框中呈现30多个变量的变化趋势，如只用颜色区分，颜色将很接近，那么自然要用到color、linestyle、marker共同来区分。</li>
+<li>时间：20190929</li>
+<li>解决办法：</li>
+</ul>
+
+<p>这个场景其实叫<strong>笛卡尔积</strong>。python中有内置函数itertools.product，可实现此场景。同时numpy中也有meshgrid可以实现，较大可能是numpy中的方法运行效率更高。</p>
+
+<h1 id="问题-如何对某列进行每三行进行一次平均">问题：如何对某列进行每三行进行一次平均。</h1>
+
+<ul>
+<li>细节：来源于QQ群中一网友提问。</li>
+<li>时间： 20190930</li>
+<li>解决办法：</li>
+</ul>
+
+<p>仅就pandas实现来说。如果是第1个平均来自第1、2、3行，而2个平均值来自2、3、4，那么可以使用滑动平均即<code>.rolling(3).mean()</code>。如果是第1个平均来自第1、2、3行，而2个平均值来自4、5、6，那么为什么要每隔3行去计算平均，自有其逻辑，如每三行刚好可被多个分类变量列<code>col1</code>到<code>coln</code>划分，应使用<code>.groupby(['col1', ...,'coln'])['target_col'].mean()</code>。</p>
+
+<h1 id="问题-如何根据字符串包含关系进行表连接">问题：如何根据字符串包含关系进行表连接。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191008</li>
+<li>解决办法：</li>
+</ul>
+
+<p>业务多要连接表格，若索引/位置即可决定逻辑，可concat；若仅需根据列值是否相同，可merge、join；若列值不会相等，需判断字符包含关系等，那就不能用merge、join。很自然会想到逐行扫描、判断再相应赋值。但考虑需连接的两表都较大，则需比对的次数是两表数据条目的乘积，太大！可用<code>df_a['col_a'].isin(df_b['col_b'])</code>来得到<code>df_a</code>内满足逻辑的索引。但是，由于没有<code>isin</code>的反向函数，暂不方便得到<code>df_b</code>的满足逻辑的索引，<code>.str.contains()</code>不是，在numpy里也没找到合适的函数。对了，<code>np.isin()</code>不知为何暂不能取得pandas里<code>.isin()</code>一致的效果。</p>
+
+<p>关于字符串的模糊匹配，有包fuzzywuzzy。</p>
+
+<p><strong>问题仍未解决！！！</strong></p>
+
+<h1 id="问题-pyspark中如何根据日期过滤近30天数据">问题：pyspark中如何根据日期过滤近30天数据。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>假设数据为df，要根据col1筛选日期比如2019-09-06之间近30天内的数据。考虑使用date_sub函数，但似乎date_sub函数的第一个参数应为一数据列而非字符串日期。考虑新建一日期固定为2019-09-06的数据列，但withColum似乎也仅接受数据列而非字符串日期？</p>
+
+<p>答：之前以为date_sub函数仅能接受日期列作为参数，其实也可接收具体日期作为参数。但是具体日期必须用lit函数包裹，否则会被理解成列名而报错。即：</p>
+
+<pre><code>df\
+.filter(col('col1') &gt;= f.data_sub('2019-09-06', 30))\
+.filter(col('col1') &lt; '2019-09-06')
+</code></pre>
+
+<p>中第二行的<code>'2019-09-06'</code>将被理解为列名，但不能找到这样的列名而报错，应改为：</p>
+
+<pre><code>df\
+.filter(col('col1') &gt;= f.data_sub(f.lit('2019-09-06'), 30))\
+.filter(col('col1') &lt; '2019-09-06')
+</code></pre>
+
+<h1 id="问题-pyspark中如何查看空值">问题：pyspark中如何查看空值。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>假设数据为df，要筛查col1含有多少行空值。</p>
+
+<p>答：可新建一列col1_nan来判断col1是否为空，然后对col1_nan进行过滤。即：</p>
+
+<pre><code>df\
+withColumn('col1_nan', f.isnan('col1'))\
+.filter('col_nan = true')
+</code></pre>
+
+<p>注意pyspark里此时的boolean类型为true和false而不是True和False！！！</p>
+
+<p>不知道pyspark里面isnan和isnull函数差别，具体到我的例子，用isnan不能正确判断空值，而innull可以。代码如下：</p>
+
+<pre><code>df\
+withColumn('col1_null', f.isnull('col1'))\
+.filter('col_null = True')
+</code></pre>
+
+<p>注意pyspark里此时的boolean类型为True和Falsee而不是true和false！！！</p>
+
+<p><strong>这又是一个暂未解决的疑点！！！</strong></p>
+
+<h1 id="问题-pyspark连接中空值问题">问题：pyspark连接中空值问题。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>pyspark中df1和df2均有col1，根据col1对df1和df2进行左连接和内连接，左连接后有29715条数据，内连接有29432条数据，那么左连接一定会存在空值吗？如否，左连接没连接上的数据显示上面呢？</p>
+
+<p>答：一定会有空值，筛查时候要用isnull函数而非isnan函数。两函数之间的区别暂未知。如紧上问题所述。</p>
+
+<h1 id="问题-pyspark中显示重复值">问题：pyspark中显示重复值。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>pyspark中删除重复值可<code>pyspark.sql.DataFrame.drop_duplicates</code>，但我要显示重复值。</p>
+
+<p>答：暂时不知道，但可通过各种办法绕过去。试举一例：假设数据为df、希望查看重复的列为col1，df还有col2，那么可：</p>
+
+<pre><code>df\
+.groupby('col1')\
+.agg(f.count('col2'))\
+.filter('count(col2) &gt; 1')\
+.select('col1')
+</code></pre>
+
+<p>无论col2有重复与否，只有groupby之后<code>'count(col2)'</code>大于1者即为<code>'col1'</code>重复者。</p>
+
+<h1 id="问题-pyspark中将字符串形式的整数转化为整数">问题：pyspark中将字符串形式的整数转化为整数。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>分析中遇到df中一列'col1'中含有形如'01'、'02'、...、'30'的整数，如何转成整数？</p>
+
+<p>答：可：</p>
+
+<pre><code>df\
+.withColumn('col1_int', col('col1').cast(IntegerType()))
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>已实验，可将形如'02'的字符串形式整数转为整数。</li>
+</ol>
+
+<h1 id="问题-三列数据如何作图呈现">问题：三列数据如何作图呈现。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191011</li>
+<li>解决办法：</li>
+</ul>
+
+<p>三列数据可仅取两个坐标轴，第三列可仅以颜色揭示其值大小，而不坐标轴显示。若果要三个坐标轴显示，从matplotlib官网示例来看，多要求X、Y、Z均是二维数据，X与Y的每个特定位置如第一行第二列分别代表在第一第二轴组成的平面的索引位置，X与Y分别在同一特定位置取值即第一第二轴的坐标。官网是构造这样的数据，但是现实很多时候的三列数据均是一维的，如何转换？</p>
+
+<p>答：如是pandas可<code>.values.reshape((m,n), order='C')</code>转为符合作图要求的二位数据，<code>m</code>与<code>n</code>分别为第一第二轴的网格数，reshape的order选择合适者。</p>
+
+<h1 id="问题-pyspark里运算符">问题：pyspark里运算符。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191012</li>
+<li>解决办法：</li>
+</ul>
+
+<p>pyspark想对一整数列整除，遇到报错“TypeError: unsupported operand type(s) for //: 'Column' and 'int'”，但是将<code>//</code>改为<code>/</code>则不报错，只是不是我所需。请教同事，其告诉我pyspark里的运算符至少是不完全等同python运算符，确否？</p>
+
+<p>答：由于pyspark文档较简略，暂未找到文档方面的支撑证实同事说法。但以上其实用<code>/</code>并<code>f.floor()</code>可实现整除。</p>
+
+<h1 id="问题-pandas中数字和字符串类型数字的数据列的存储和读取">问题：pandas中数字和字符串类型数字的数据列的存储和读取。</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191012</li>
+<li>解决办法：</li>
+</ul>
+
+<p>工作中遇到两df均有预售证一列，预售证为数字，但是有些明明预售证一样却无法连接。</p>
+
+<p>答：这里涉及到数字类型和字符串类型数字的数据列的存储问题。这里数字类型数据列指列数据类型为int、float32、float64等，这里字符串数字指列类型为str且内容为阿拉伯数字。按我理解，存储成csv、excel均会按字符或二进制字符存储，也即无论csv文件还是excel文件，若在记事本中打开也许都是无格式的字符串。当然，在excel中打开，excel软件或将按软件的规则解析成特定的数据类型（字符、数字等，甚至一列中有些解析为数字有些解析为字符，这正是明明预售证一样却无法连接的原因）。而且，to_csv、to_excel均无参数能决定在excel软件中显示的数据类型。那么，pandas DataFrame的列数据类型对存储的内容有无影响呢？我认为是有影响的，比如，数字“2.3”，虽然无论存储成csv文件或excel文件，用记事本打开均是字符，但是也许列类型为float32时，字符将是“2.300087”，而列类型为float64时，字符将是“2.300032”。读取时候要注意read_csv、read_excel里均有dtype参数，传入期望的列数据类型。</p>
+
+<p>啰嗦这么一大堆，简化为：1.存入前确定好列数据类型；2.读取时候规定好列数据类型；3.有数据类型问题时候通过记事本查看而非excel等软件。</p>
+
+<h1 id="问题-怎么在jupyter环境查询包版本">问题：怎么在jupyter环境查询包版本</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191012</li>
+<li>解决办法：</li>
+</ul>
+
+<p>有时，比如只有jupyter页面的python环境，怎么查询包版本。</p>
+
+<p>答：python包等可通过command prompt、Anaconda Prompt安装和查询。在jupyter运行prompt命令仅需在前面加<code>!</code>，紧接着输入命令。所以在jupyter中查询版本可<code>! conda list</code>。</p>
+
+<h1 id="问题-怎么查看python安装包的文档">问题：怎么查看python安装包的文档</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191012</li>
+<li>解决办法：</li>
+</ul>
+
+<p>有时，某些文档在线只有最新文档没有之前版本的文档，但因权限、依赖等原因不好升级包到最新版。如目前用到集群环境seborn版本0.8.0，但网上文档仅显示最新的0.9.0。有何方法看到当前版本包的文档？
+答：按<a href="https://www.cnblogs.com/yhleng/p/9505520.html">python安装包API文档</a>，可在command prompt使用如下命令：</p>
+
+<pre><code>python -m pydoc -p 8000
+</code></pre>
+
+<p>然后再在浏览器中代开<code>localhost:8000</code>网页，即可查看包当前版本的本地文档。</p>
+
+<p>按紧上问题，不方便打开command prompt时可在jupyter中：</p>
+
+<pre><code>!python -m pydoc -p 8000
+</code></pre>
+
+<p>查看python文档，pydoc模块其实是用来自动生成python模块的文档。大胆猜测这个生成的文档，信息将来源于安装模块的文件结构和函数代码的注释。</p>
+
+<p>注意：</p>
+
+<ol>
+<li>按此方法查看了pandas文档，发现作用有限。</li>
+<li>jupyter中<code>!python -m pydoc -p 8000</code>将卡在那里，不知为何。</li>
+</ol>
+
+<p><code>help([object])</code></p>
+
+<p>Invoke the built-in help system. (This function is intended for interactive use.) If no argument is given, the interactive help system starts on the interpreter console. If the argument is a string, then the string is looked up as the name of a module, function, class, method, keyword, or documentation topic, and a help page is printed on the console. If the argument is any other kind of object, a help page on the object is generated.</p>
+
+<p>This function is added to the built-in namespace by the site module.</p>
+
+<p>调用内置帮助系统。（此功能用于交互式使用。如果未给出参数，则交互式帮助系统将在解释器控制台上启动。如果参数是字符串，则字符串将被视为模块、函数、类、方法、关键字或文档主题的名称，并在控制台上打印一个帮助页。如果参数是任何其他类型的对象，则生成该对象的帮助页。</p>
+
+<p>此函数由站点模块添加到内置命名空间。</p>
+
+<p><code>dir([object])</code></p>
+
+<p>Without arguments, return the list of names in the current local scope. With an argument, attempt to return a list of valid attributes for that object.
+If the object has a method named <code>__dir__()</code>, this method will be called and must return the list of attributes. This allows objects that implement a custom <code>__getattr__()</code> or <code>__getattribute__()</code> function to customize the way <code>dir()</code> reports their attributes.</p>
+
+<p>If the object does not provide <code>__dir__()</code>, the function tries its best to gather information from the object’s <code>__dict__</code> attribute, if defined, and from its type object. The resulting list is not necessarily complete, and may be inaccurate when the object has a custom <code>__getattr__()</code>.</p>
+
+<p>The default <code>dir()</code> mechanism behaves differently with different types of objects, as it attempts to produce the most relevant, rather than complete, information:</p>
+
+<ol>
+<li>If the object is a module object, the list contains the names of the module’s attributes.</li>
+<li>If the object is a type or class object, the list contains the names of its attributes, and recursively of the attributes of its bases.</li>
+<li>Otherwise, the list contains the object’s attributes’ names, the names of its class’s attributes, and recursively of the attributes of its class’s base classes.
+The resulting list is sorted alphabetically. For example:</li>
+</ol>
+
+<p>如果没有参数，则返回当前本地作用域中的名称列表。使用参数，尝试返回该对象的有效属性列表。如果对象具有名为<code>__dir__()</code>的方法，则将调用此方法，并且必须返回属性列表。这允许对象实现自定义的<code>__getattr__()</code>或<code>__getattribute__()</code>函数来自定义<code>dir()</code>的报告方式。</p>
+
+<p>如果对象不提供<code>__dir__()</code>，则函数会尽力从对象的<code>__dict__</code>属性（如果已定义）及其类型对象中收集信息。生成的列表不一定完整，并且当对象具有自定义的<code>__getattr__()</code>时可能不准确。</p>
+
+<p>默认<code>dir()</code>机制随对象而异，因为它试图生成最相关而不是完整的信息：
+1. 如果对象是模块对象，则列表包含模块属性的名称。
+2. 如果对象是类型或类对象，则列表包含其属性的名称，并递归其基的属性。
+3. 否则，列表将包含对象的属性名称、类属性的名称以及类基类属性的递归。生成的列表按字母顺序排序。例如：</p>
+
+<pre><code class="language-python">&gt;&gt;&gt; import struct
+&gt;&gt;&gt; dir()   # show the names in the module namespace
+['__builtins__', '__doc__', '__name__', 'struct']
+&gt;&gt;&gt; dir(struct)   # show the names in the struct module
+['Struct', '__builtins__', '__doc__', '__file__', '__name__',
+ '__package__', '_clearcache', 'calcsize', 'error', 'pack', 'pack_into',
+ 'unpack', 'unpack_from']
+&gt;&gt;&gt; class Shape(object):
+        def __dir__(self):
+            return ['area', 'perimeter', 'location']
+&gt;&gt;&gt; s = Shape()
+&gt;&gt;&gt; dir(s)
+['area', 'perimeter', 'location']
+</code></pre>
+
+<p>Note:</p>
+
+<ol>
+<li>Because <code>dir()</code> is supplied primarily as a convenience for use at an interactive prompt, it tries to supply an interesting set of names more than it tries to supply a rigorously or consistently defined set of names, and its detailed behavior may change across releases. For example, metaclass attributes are not in the result list when the argument is a class.</li>
+</ol>
+
+<p>注：</p>
+
+<ol>
+<li>因为提供主要是为了方便在交互式提示符下使用，它尝试提供一组有趣的名称，而不是尝试提供严格或一致定义的名称集，并且其详细行为可能会在不同版本中更改。例如，当参数是类时，元类属性不在结果列表中。</li>
+<li>在notebook中<code>sns.lineplot?</code>与<code>help(sns.lineplot)</code>有相似的功能，均能看文档、前者显示会高亮等，文档细致或合适程度则可能随对象不同而不同。</li>
+</ol>
+
+<h1 id="问题-时间序列状态变化-状态持续时间的统计">问题：时间序列状态变化、状态持续时间的统计</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191016</li>
+<li>解决办法：</li>
+</ul>
+
+<p>如有时序，含状态A、B、C...等，如何计算状态变化次数、持续时间等？</p>
+
+<p>答：可构造一列记为<code>cola</code>揭示相邻时间的状态是否改变，改变则为1（True）、不变则为0（False）。再构造一列<code>colb</code>对<code>cola</code>进行累加<code>.cumsum()</code>，这将揭示截至目前的状态改变次数。对<code>colb</code>进行<code>groupby(['colb']).count('col')</code>将得到状态持续时间。</p>
+
+<p>关于<code>cola</code>的构建，状态<code>status</code>若为非字符串类型，可：</p>
+
+<pre><code>df[&quot;status&quot;].diff().ne(0)
+</code></pre>
+
+<p>状态<code>status</code>若为字符串类型，可：</p>
+
+<pre><code>df['status'].ne(df['status'].shift().bfill()).astype(int)
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li><code>.diff()</code>计算相邻行（列）的差，默认为行。</li>
+<li><code>Seriesa.ne(b)</code>，若<code>seriesa</code>与<code>b</code>不同则返回1（True），否则0（False），<code>b</code>可为标量或序列。</li>
+<li>以上是在pandas中的处理过程，spark由于使用分布式，不支持diff和cumsum，可转为pandas处理后再转回pyspark。</li>
+</ol>
+
+<h1 id="问题-pyspark中如何增加一列-揭示组内根据某值的排名">问题：pyspark中如何增加一列，揭示组内根据某值的排名？</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191018</li>
+<li>解决办法：</li>
+</ul>
+
+<p>假设数据为df，要根据<code>col1</code>、<code>col2</code>分组，计算根据<code>col3</code>大小的排名，<code>col3</code>越大排名越靠前，怎么办？</p>
+
+<p>答：</p>
+
+<pre><code class="language-python">from pyspark.sql import functions as f
+from pyspark.sql.window import Window as w
+
+df\
+.withColumn('col3_rank', f.row_number().over(w.partitionBy('col1', 'col2').orderBy(-col('col3'))))
+</code></pre>
+
+<p>注：</p>
+
+<ol>
+<li>orderBy如直接用需排序的<code>col3</code>将越小约靠前，所以这里用了<code>-col('col3')</code>。</li>
+<li>所以这也是上一问题的pyspark版答案。</li>
+<li>不特<code>row_number</code>函数，其它函数也可在组内计算而不是全局。</li>
+</ol>
+
+<h1 id="问题-jupyter-notebook中恢复单元格数据">问题：jupyter notebook中恢复单元格数据</h1>
+
+<ul>
+<li>细节：无。</li>
+<li>时间： 20191018</li>
+<li>解决办法：</li>
+</ul>
+
+<p>进行复制导致误删一单元格内数据，在未关闭notebook的情况下，如何恢复此单元格内数据？</p>
+
+<p>答：若<code>checkpoint</code>中包含此单元格内容，可直接关闭并不再2保存，然后打开就是最近的<code>checkpoint</code>了。但是我们可能并没有点保存。这时我们可在任意单元格内输入：</p>
+
+<pre><code>history
+</code></pre>
+
+<p>其将显示所有输入此notebook的所有时间、输入任何单元格的内容，包括<code>history</code>本身。</p>
 
     </article>
   </div>

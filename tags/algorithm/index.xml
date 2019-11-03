@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>algorithm on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/algorithm/</link>
+    <description>Recent content in algorithm on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 08 Jan 2019 21:43:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Adaboost2</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost2/</link>
+      <pubDate>Tue, 08 Jan 2019 21:43:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost2/</guid>
+      <description>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。
+Abstract摘要 In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.</description>
+    </item>
+    
+    <item>
+      <title>Adaboost1</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost1/</link>
+      <pubDate>Wed, 26 Dec 2018 15:04:08 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost1/</guid>
+      <description>sklearn文档介绍AdaBoostClassifier采用的算法是SAMME和SAMME.R，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有优势，下文全文翻译SAMME和SAMME.R发明人论文，当然，遇有不懂的我将找资料再去了解。
+1 Introduction介绍 Boosting has been a very successful technique for solving the two-class classiﬁcation problem. It was ﬁrst introduced by Freund &amp;amp; Schapire (1997), with their AdaBoost algorithm. In going from two-class to multi-class classiﬁcation, most boosting algorithms have been restricted to reducing the multi-class classiﬁcation problem to multiple two-class problems, e.g. Freund &amp;amp; Schapire (1997), Schapire (1997), Schapire &amp;amp; Singer (1999), Allwein, Schapire &amp;amp; Singer (2000), Friedman, Hastie &amp;amp; Tibshirani (2000), Friedman (2001).</description>
+    </item>
+    
+    <item>
+      <title>集成学习ensemble_learning</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</link>
+      <pubDate>Thu, 20 Dec 2018 21:58:16 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</guid>
+      <description>The goal of ensemble methods is to combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness over a single estimator.集成方法的目标是将多个基本估计器的预测与给定的学习算法结合起来，以提高单个估计器的可通用性/鲁棒性。
+Two families of ensemble methods are usually distinguished:通常分成两类不同的集成方法：
+ In averaging methods, the driving principle is to build several estimators independently and then to average their predictions. On average, the combined estimator is usually better than any of the single base estimator because its variance is reduced.</description>
+    </item>
+    
+    <item>
+      <title>决策树decision_tree</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</link>
+      <pubDate>Thu, 20 Dec 2018 21:57:24 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</guid>
+      <description>1 不纯度impurity 考虑特征数据集$\mathbf{D}=(\mathbf{X},\vec{y})$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m \tag{1}$$ 每个数据点$\vec{x}_i$由$m$个特征组成，我们可以试着根据其中一个特征及其阈值划分数据，这样的一个划分我们称之为节点，节点是某一特征及其阈值组成的元组。
+例如，假设我们有一个班的数据，这些数据中有一列是发色深色与否，我们想根据头发颜色判断男生还是女生。碰巧男生均是深色头发，女生均是浅色头发，那么我们预测深色头发为男生浅色头发为女生。那么我们只用特征深色头发与否就成功将学生性别分类了。
+但是，经一个节点（也就是一个特征及其阈值）划分后每个划分的目标变量$y$只含一个值的情况是理想情况。大多时候每个划分含有多个值，也就是划分后的$y$的值是不纯的。比如按发色深与否划分后的两个分类，每个分类将既有男生又有女生（你见过深色头发的男生与女生，也见过浅色头发的男生与女生）。为此我们引入不纯度概念。
+用于分类的不纯度impurity有：
+ 基尼不纯度Gini impurity： $$I_{Gini}(\mathbf{D}) = \sum_k p(y=k) (1 - p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{2}$$ 熵不纯度Entropy impurity： $$I_{Entropy}(\mathbf{D}) = - \sum_k p(y=k) \log(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{3}$$ 基尼不纯度Misclassification impurity： $$I_{Misclassification}(\mathbf{D}) = 1 - \max(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{4}$$  用于回归的不纯度impurity有：</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_2</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</link>
+      <pubDate>Wed, 19 Dec 2018 16:16:17 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</guid>
+      <description>8 Decision Trees and Ensemble Learning决策树和集成学习 8.1 Binary decision trees二分类决策树 决策树的公式基本都是错误的，请参阅我的博文笔记决策树decision_tree。 In the following figure, there are plots of an unnormalized bidimensional dataset and the cross-validation scores obtained using a logistic regression and a decision tree:下图是一个未归一化的二维数据集，以及使用逻辑回归和决策树得到的交叉验证得分: 8.1.1 Binary decisions二分类决策 Let&#39;s consider an input dataset $\mathbf{X}$:让我们考虑一个输入数据集$\mathbf{X}$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m$$ Every vector is made up of $m$ features, so each of them can be a good candidate to create a node based on the (feature, threshold) tuple:每个向量由$m$个特征组成，因此每个特征都是基于(特征、阈值)元组创建节点的良好候选： For example, let&#39;s consider a class of students where all males have dark hair and all females have blonde hair, while both subsets have samples of different sizes.</description>
+    </item>
+    
+    <item>
+      <title>支持向量机svm之数学原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sun, 16 Dec 2018 23:04:20 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</guid>
+      <description>A support vector machine constructs a hyper-plane or set of hyper-planes in a high or infinite dimensional space, which can be used for classification, regression or other tasks. Intuitively, a good separation is achieved by the hyper-plane that has the largest distance to the nearest training data points of any class (so-called functional margin), since in general the larger the margin the lower the generalization error of the classifier.机器在高维或无限维空间中构造超平面或超平面集合，可用于分类、回归或其他任务。直观上，超平面是距离任何类最近的训练数据点距离最大的平面(即所谓的函数边界)，可以实现很好的分离，因为一般来说，边界越大，分类器的泛化误差越低。</description>
+    </item>
+    
+    <item>
+      <title>朴素贝叶斯naive_bayes</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</link>
+      <pubDate>Sat, 15 Dec 2018 11:16:40 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</guid>
+      <description>Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable. Bayes’ theorem states the following relationship, given class variable $y$ and dependent feature vector $x_1$ through $x_m$ ,:朴素贝叶斯方法是应用贝叶斯定理的监督学习算法的集合，其假设决定目标分类的各特征列之间两两条件独立，这是“朴素”二字的由来。贝叶斯定理陈述如下关系，给定分类变量$y$和其依存特征变量从$x_1$到$x_m$： $$P(y \mid x_1, x_2, \dots, x_m) = \frac{P(y) P(x_1, x_2, \dots x_m \mid y)} {P(x_1, x_2, \dots, x_m)} \tag{1}$$</description>
+    </item>
+    
+    <item>
+      <title>逻辑回归logistic_regression</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</link>
+      <pubDate>Thu, 13 Dec 2018 19:19:09 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</guid>
+      <description>1 回归(Regression) 回归，我的理解来说，其直观的理解就是拟合的意思。我们以线性回归为例子，在二维平面上有一系列红色的点，我们想用一条直线来尽量拟合这些红色的点，这就是线性回归。回归的本质就是我们的预测结果尽量贴近实际观测的结果，或者说我们的求得一些参数，经过计算之后的预测结果尽可能接近真实值。 按照机器学习的一些作者的叙述，如果目标变量是连续型的，那么是回归；如果预测变量是离散型的，那么是分类。
+最简单的回归是普通最小二乘法回归（Ordinary Least Squares），在sklearn中是sklearn.linear_model.LinearRegression。数学上即解决以下数学问题。 $$\min_{w} {|| \mathbf{X} \vec{w} - \vec{y}||_2}^2$$ 也就是损失函数为MSE。
+2 逻辑回归的由来 对于二类线性可分的数据集，使用线性感知器就可以很好的分类。如下图中红色和蓝色的点，我们使用一条直线$x_1 +x_2 = 3$就可以区分两种数据集，在直线上方的属于红色类，直线下方的属于蓝色类。 线性回归和非线性回归的分类问题都不能给予解答，因为线性回归和非线性回归的问题，假设其分类函数如下： $$y=\vec{w}^T\vec{x}+b$$ 这里$\vec{x}$是数据矩阵$\mathbf{X}$中的一行。
+但是如果我们想知道对于一个二类分类问题，对于具体的一个样例，我们不仅想知道该类属于某一类，而且还想知道该类属于某一类的概率多大,有什么办法呢？
+y的阈值处于$(-\infty，+\infty)$，此时不能很好的给出属于某一类的概率，因为概率的范围是$(0,1)$，我们需要一个更好的映射函数，能够将分类的结果很好的映射成为$(0,1)$之间的概率，并且这个函数能够具有很好的可微分性。在这种需求下，人们找到了这个映射函数，即逻辑斯谛函数，也就是我们常说的sigmoid函数，其形式如下： $$\frac{1}{1+e^{-z}}$$ sigmoid函数图像如下图所示 如图，其可以将$(-\infty，+\infty)$数据映射到$(0,1)$，正好满足我们的要求。
+sigmoid函数完美的解决了上述需求，而且sigmoid函数连续可微分。 假设数据离散二类可分，分为0类和1类,如果概率值大于1/2，我们就将该类划分为1类，如果概率值低于1/2,我们就将该类划分为0类。当z取值为0的时候，概率值为1/2，这时候需要人为规定划分为哪一类。
+但是如果二类线性不可分的数据集，我们无法找到一条直线能够将两种类别很好的区分，即线性回归的分类法对于线性不可分的数据无法有效分类。例如下图中的红色点和蓝色点，我们无法使用一条直线很好的区分这两类，但是我们可以使用非线性分类器，如果我们使用${x_1}^2+{x_2}^2 = 1$，在圆外面的为红色类，在圆里面的一类为蓝色类。 诚然，数据线性可分可以使用线性分类器，如果数据线性不可分，可以使用非线性分类器，然后再运用sigmoid函数，这样就是非线性逻辑回归。
+但以下讨论仅限于线性可分的情况的逻辑回归。
+3 为什么采用sigmoid函数 http://www.win-vector.com/dfiles/LogisticRegressionMaxEnt.pdf
+3 逻辑回归的损失函数(Loss Function)和成本函数(Cost Function) 在二类分类中，我们假定sigmoid输出结果表示属于1类的概率值，我们很容易想到用平方损失函数（也就是MSE），即 $$J(\vec{w})=\sum_{i=1}^{n}{\frac{1}{2}(\hat{y}_{i}-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi({z}_i)-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi(\vec{w}^T\vec{x}_i+b)-y_{i})^2}$$ 这里$z_i=\vec{w}^T\vec{x}_i+b$，$i$代表第$i$个样本点。$\hat{y}_i$代表第$i$个样本的预测值，$y_i$代表第$i$个样本的实际值，$\phi{(z_i)}$代表对第$i$个$z$施加sigmoid函数。
+在这种情况下，我们$\phi({z_{i}})$表示sigmoid对第i个值的预测结果，我们将sigmoid函数带入上述成本函数中，绘制其图像，发现这个成本函数的函数图像是一个非凸函数，如下图所示，这个函数里面有很多极小值，如果采用梯度下降法，则会导致陷入局部最优解中,有没有一个凸函数的成本函数呢？ Cross entropy can be used to define a loss function in machine learning and optimization. The true probability $p_{i}$ is the true label, and the given distribution $q_{i}$ is the predicted value of the current model.</description>
+    </item>
+    
+    <item>
+      <title>稀疏pca原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sat, 08 Dec 2018 13:31:30 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</guid>
+      <description>Note that there are many different formulations for the Sparse PCA problem. The one implemented here is based on Mrl09. The optimization problem solved is a PCA problem with an $\ell_1$ penalty on the components:注意稀疏主成分分析问题有许多不同的公式。这里应用的公式基于Mrl09。优化问题是一个带有$\ell_1$惩罚组件的PCA问题： $$\begin{split}(W_{n \times k}^*, H_{k \times m}^*) = \underset{W_{n \times k}, H_{k \times m}}{\operatorname{arg\,min\,}} &amp;amp; \frac{1}{2} ||X_{n \times m}-W_{n \times k}H_{k \times m}||_2^2+\alpha||H_{k \times m}||_1 \\ \text{subject to } &amp;amp; ||W_i||_2 = 1 \text{ for all } 0 \leq i \leq k \leq m\end{split}$$</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_1</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</link>
+      <pubDate>Mon, 26 Nov 2018 15:35:14 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</guid>
+      <description>make sure all our blog md file under post.
+文前申明：机器学习算法涉及到很多公式、数学概念。为统一表述，特申明：
+ 关于向量、矩阵：矩阵标记采用\mathbf{X} $\mathbf{X}$；向量标记采用 \vec{x} $\vec{x}$；行向量的元素是用逗号隔开$\vec{x} = [ x_1,x_2,\ldots,x_m ]$；列向量则用分号隔开$\vec{x} = [ x_1;x_2;\ldots;x_n ]$。 那么$n \times m$矩阵$\mathbf{X}$，可表示为由行向量作为元素组成的列向量，即： $$\mathbf{X}=[\vec{x_1};\vec{x_2};\ldots;\vec{x_n}] \\ where \ \vec{x_i}=[x_{i1},x_{i2},\ldots,x_{im}] \\ where \ i \in \lbrace 1,2,\ldots,n \rbrace$$
+ 那么$n \times m$矩阵$\mathbf{X}$，可表示为由列向量作为元素组成的行向量，即： $$\mathbf{X}=[\vec{x_1},\vec{x_2},\ldots,\vec{x_m}] \\ where \ \vec{x_j}=[x_{1j};x_{2j};\ldots;x_{nj}] \\ where \ j \in \lbrace 1,2,\ldots,m \rbrace$$
+ 区间用小括号()表示；有序的元素用中括号[]，例如向量中的元素就是有顺序要求的；无序的元素用大括号{}括起来，例如集合中的元素就是不要求顺序的。
+     algorithms            监督学习、非监督学习、强化学习 分类、回归 参数学习、无参数学习</description>
+    </item>
+    
+  </channel>
+</rss>

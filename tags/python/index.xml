@@ -6,10 +6,154 @@
     <description>Recent content in python on Feiyang Chen&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Jan 2019 21:43:45 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 09 Sep 2019 09:33:39 +0800</lastBuildDate>
     
 	<atom:link href="https://chen-feiyang.github.io/tags/python/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>正则表达式</title>
+      <link>https://chen-feiyang.github.io/posts/regex/</link>
+      <pubDate>Mon, 09 Sep 2019 09:33:39 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/regex/</guid>
+      <description>注：python引用re模块来解析正则表达式，不同变成语言关于正则表达式的解析稍有区别，但python3.7.4文档并未提及其re模块的正则表达式遵循什么标准。不过其给出了一些关于正则表达式的示例、Mastering Regular Expressions、Regular Expression HOWTO等帮助掌握python中的正则表达式。暂不考虑不同语言正则表达式差别的话，[deerchao的正则表达式30分钟入门教程]是不错的中文教材。
+以下是篇幅均根据deerchao的此博文来做笔记。
+1. 本文目标 30分钟内让你明白正则表达式是什么，并对它有一些基本的了解，让你可以在自己的程序或网页里使用它。
+2. 如何使用本教程 作为入门教程（但入门了也不代表记住了，很细节的东西显然之后会忘，时时像翻阅字典一样翻阅这篇文章），并作为正则表达式语法参考手册。
+3. 正则表达式到底是什么东西？ 在编写处理字符串的程序或网页时，经常会有查找符合某些复杂规则的字符串的需要。正则表达式就是用于描述这些规则的工具。换句话说，正则表达式就是记录文本规则的代码。
+很可能你使用过Windows/Dos下用于文件查找的通配符(wildcard)，也就是*和?。如果你想查找某个目录下的所有的Word文档的话，你会搜索*.doc。在这里，*会被解释成任意的字符串。和通配符类似，正则表达式也是用来进行文本匹配的工具，只不过比起通配符，它能更精确地描述你的需求——当然，代价就是更复杂——比如你可以编写一个正则表达式，用来查找所有以0开头，后面跟着2-3个数字，然后是一个连字号“-”，最后是7或8位数字的字符串(像010-12345678或0376-7654321)。
+注：
+ 字符是计算机软件处理文字时最基本的单位，可能是字母，数字，标点符号，空格，换行符，汉字等等。字符串是0个或更多个字符的序列。文本也就是文字，字符串。说某个字符串匹配某个正则表达式，通常是指这个字符串里有一部分（或几部分分别）能满足表达式给出的条件。  4. 入门 学习正则表达式的最好方法是从例子开始，理解例子之后再自己对例子进行修改，实验。下面给出了不少简单的例子，并对它们作了详细的说明。
+假设你在一篇英文小说里查找hi，你可以使用正则表达式hi。
+这几乎是最简单的正则表达式了，它可以精确匹配这样的字符串：由两个字符组成，前一个字符是h,后一个是i。通常，处理正则表达式的工具会提供一个忽略大小写的选项，如果选中了这个选项，它可以匹配hi,HI,Hi,hI这四种情况中的任意一种。
+不幸的是，很多单词里包含hi这两个连续的字符，比如him,history,high等等。用hi来查找的话，这里边的hi也会被找出来。如果要精确地查找hi这个单词的话，我们应该使用\bhi\b。
+\b是正则表达式规定的一个特殊代码（好吧，某些人叫它元字符，metacharacter），代表着单词的开头或结尾，也就是单词的分界处。虽然通常英文的单词是由空格，标点符号或者换行来分隔的，但是\b并不匹配这些单词分隔字符中的任何一个，它只匹配一个位置。
+假如你要找的是hi后面不远处跟着一个Lucy，你应该用\bhi\b.*\bLucy\b。
+这里，.是另一个元字符，匹配除了换行符以外的任意字符。*同样是元字符，不过它代表的不是字符，也不是位置，而是数量——它指定*前边的内容可以连续重复使用任意次以使整个表达式得到匹配。因此，.*连在一起就意味着任意数量的不包含换行的字符。现在\bhi\b.*\bLucy\b的意思就很明显了：先是一个单词hi,然后是任意个任意字符(但不能是换行)，最后是Lucy这个单词。
+如果同时使用其它元字符，我们就能构造出功能更强大的正则表达式。比如下面这个例子：
+0\d\d-\d\d\d\d\d\d\d\d匹配这样的字符串：以0开头，然后是两个数字，然后是一个连字号“-”，最后是8个数字(也就是中国的电话号码。当然，这个例子只能匹配区号为3位的情形)。
+这里的\d是个新的元字符，匹配一位数字(0，或1，或2，或……)。-不是元字符，只匹配它本身——连字符(或者减号，或者中横线，或者随你怎么称呼它)。
+为了避免那么多烦人的重复，我们也可以这样写这个表达式：0\d{2}-\d{8}。这里\d后面的{2}({8})的意思是前面\d必须连续重复匹配2次(8次)。
+注：
+ 1. 如果需要更精确的说法，\b匹配这样的位置：它的前一个字符和后一个字符不全是(一个是,一个不是或不存在)\w。 2. 换行符就是&#39;\n&#39;,ASCII编码为10(十六进制0x0A)的字符。  5. 测试正则表达式 可用的测试工具：RegexBuddy、Javascript正则表达式在线测试工具、Regester（作者自己编写）。
+这样可实时显示是否满足自己要求
+6. 元字符 现在你已经知道几个很有用的元字符了，如\b,.,*，还有\d.正则表达式里还有更多的元字符，比如\s匹配任意的空白符，包括空格，制表符(Tab)，换行符，中文全角空格等。\w匹配字母或数字或下划线或汉字等。
+下面来看看更多的例子：
+\ba\w*\b匹配以字母a开头的单词——先是某个单词开始处(\b)，然后是字母a,然后是任意数量的字母或数字(\w*)，最后是单词结束处(\b)。
+\d+匹配1个或更多连续的数字。这里的+是和*类似的元字符，不同的是*匹配重复任意次(可能是0次)，而+则匹配重复1次或更多次。
+\b\w{6}\b匹配刚好6个字符的单词。
+表1.常用的元字符
+   代码 说明     . 匹配除换行符以外的任意字符   \w 匹配字母或数字或下划线或汉字   \s 匹配任意的空白符   \d 匹配数字   \b 匹配单词的开始或结束   ^ 匹配字符串的开始   $ 匹配字符串的结束    元字符^（和数字6在同一个键位上的符号）和$都匹配一个位置，这和\b有点类似。^匹配你要用来查找的字符串的开头，$匹配结尾。这两个代码在验证输入的内容时非常有用，比如一个网站如果要求你填写的QQ号必须为5位到12位数字时，可以使用：^\d{5,12}$。</description>
+    </item>
+    
+    <item>
+      <title>数据清洗-为规范录入数据</title>
+      <link>https://chen-feiyang.github.io/posts/data_cleaning_1/</link>
+      <pubDate>Fri, 23 Aug 2019 12:59:23 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/data_cleaning_1/</guid>
+      <description>前言 工作中一个常见的工作场景是：爬虫爬取的数据需要录入数据库，数据库有其元数据：包含哪些字段，字段名字是什么、字段的格式是什么（字符？字符格式？数字？数字格式？），需要经过清洗工作。这个工作可由爬取的原数据进行清洗，为更加自动化，也可在爬虫程序里自动进行清洗，例如scrapy框架里可直接在Item Pipeline里进行清洗。为完成这些清洗工作，我总结为三个清洗步骤（当然，如果在爬虫程序中清洗，由于缺少交互式数据呈现，故仅进行第二步骤，即实际清洗过程）。这样的清洗过程产出的数据仍不可避免含有一些错误，至少会有离群值等，为数据分析（机器学习）等，仍需要清洗离群值等，我准备再总结一篇关于数据分析（机器学习）的数据清洗。本博文仅介绍为录入数据库而进行的清洗工作。
+1.原表检查 原表应结合数据库导出的表进行查看，当然如果公司制度完善的话应有实时更新的关于产出表的字段描述，那可直接看字段描述。
+1.1 检查原表与产出表字段的匹配情况 不考虑字段名，而考虑字段里的内容。产出表含有哪些字段？产出表哪些字段必须要有？能爬取到哪些字段？哪些字段可经由爬取的字段转化而来？将产出表必须要有的字段和能爬取（包括能转换的字段）联系起来，后者必去包含前者！否则爬虫同事可能要想想办法。
+1.2 检查字段漂移 并不是专业术语，我编的。用来定义某个字段出现的值仅从形式来看就不属于该字段的情况。例如：容积率出现345000平方米或3吨等。 代码：
+for i in data.columns: print(i) print(data[i].unique()) print(i) print(data[i].unique()) print(&#39;-------------------------------------------------------------------&#39;) print(&#39;-------------------------------------------------------------------&#39;)  由于可能字段具体值的字符串很长，需要首尾均提示字段名，并用显眼字符串分隔不同字符串。一点小技巧，我觉得挺有用。
+1.3 检查字段漂移情况出现的次数 这个可能因为网页原因等等，可能要去问问爬虫同事。如果确实比例很少或无关紧要等，爬虫同事可能会让这些出现字段漂移的实例删除。 代码：
+data[data[&#39;财产年限&#39;]==&#39; 总楼栋数：2栋;公寓：2栋;&#39;][&#39;楼盘名&#39;]  检查字段漂移发现财产年限居然出现了&#39; 总楼栋数：2栋;公寓：2栋;&#39;，那么可利用此代码检查字段漂移实例，进一步，还可以看看此实例的唯一键，在这个场景中‘楼盘名’即可作为唯一键。
+1.4 检查数据格式 爬取数据归根结底是在抓取字符串，因此，即使产出表里是数字，爬取的数字仍是字符串格式的。总归，我们需要检查字符串的格式是否规整。其实还可以使用1.1代码，但是这次已根据2.1删除了字段漂移的少数实例，看起来应会清爽少许吧。着眼点要比1.1更细致一点，比方价格，我们发现既有元/m²又有万元/套，而且产出表要求纯数字，单位为元/m²。那么就容不得偷懒了。
+2.根据检查情况进行处理 理想情况是，爬虫程序建立字段时即应命名与产出表相同的字段。可能因为爬取的字段杂糅在一起不好分开等，现实情况就不是这样，当然需要修改字段名以满足要求。我认为修改字段名应在字段转换之后。
+2.1 删除字段漂移的实例 少量字段漂移，可能源于网站质量等，不甚影响数据质量，也许也较难改进，可询问爬虫同事是否能删除？若大比例的实例出现字段漂移，则或应寻求代码同事改进爬虫代码。
+2.2 删除冗余字段 有些字段不会在产出表里出现，甚至不是中间过程字段，则应在第一时间删除。否则，若字段很多将显示杂乱。事实上在检查时候即应进行此步。
+2.3 字段转换 因为含有空值等，很可能原表的所有字段都是字符形式。产出表仅要求字符状形式，可字符截取等，应较简单；产出表要求数字形式，如不需进行计算，可仅按规则截取得到字符状的数字如‘5’和‘np.nan’,然后再apply(eval)，即可得到数字；产出表要求数字格式，又需经过中间转化的，将转换表达式写成字符串如‘5*3+6’和‘np.nan’,然后再apply(eval)，即可得到数字。这其中还涉及到代码的筛选。一个场景：爬取的房价含有元/m²、万元/套、待定，产出表需要数字形式的房价并字段名为deal_price。代码如下：
+#元/m²的去掉元/m²。 data[data[&#39;价格&#39;].str.contains(&#39;元/m²&#39;, regex=False), &#39;价格&#39;] = \ data[data[&#39;价格&#39;].str.contains(&#39;元/m²&#39;, regex=False), &#39;价格&#39;].str.extract(&#39;\d+\.?\d*\/\d+&#39;, expanding=False) #万元/套的，求掉万元/套，再乘以10000，再乘以套面积（套面积可能是数字格式的） data[data[&#39;价格&#39;].str.contains(&#39;万元/套&#39;, regex=False), &#39;价格&#39;] = \ data[data[&#39;价格&#39;].str.contains(&#39;万元/套&#39;, regex=False), &#39;价格&#39;].str.extract(&#39;\d+\.?\d*\/\d+&#39;, expanding=False)+&#39;*10000*&#39; + \ data[data[&#39;价格&#39;].</description>
+    </item>
+    
+    <item>
+      <title>Pyspark</title>
+      <link>https://chen-feiyang.github.io/posts/pyspark/</link>
+      <pubDate>Mon, 12 Aug 2019 19:57:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/pyspark/</guid>
+      <description>若工作场景涉及大数据，则需要使用pyspark。找了三天，暂时发现Tomasz Drabas, Denny Lee的《Learning PySpark》应该是一本较适合的书，感知其难度适中。发现此书不介绍环境搭建。Bill Chambers and Matei Zaharia的《Spark: The Definitive Guide》也是，难度适中，但不涉及环境搭建。不涉及环境搭建是不行的，因为可能版本演进太快，可用代码在不同环境无法运行。比如，anaconda里面conda install -c conda-forge pyspark搭建的环境无法运行《Spark: The Definitive Guide》里的代码，也许涉及本地安装等变量的设置问题而无法运行等，暂不清楚。还是应该找本包括环境搭建的书。琳达贵的《python+spark2.0+hadoop机器学习与大数据实战》包含环境搭建的过程，需要内存和固态空间，我电脑不一定跟得上，试着安装吧。2019-08-21装好虚拟机装好linux装好hadoop，目前很卡。
+20190826: 最近在学习scrapy爬虫，今天看点这本书，明天看点那个博客，因此笔记就很杂乱。启示是：要先列一个提纲，这样即使看的书、知识比较杂也好，都可以把笔记写在对应位置。
+网易云课堂有一免费课程《Spark编程基础》，我接下来的笔记大纲则遵从此课程。当然，有可能会找其他资料等补充此笔记大纲。
+1. 大数据计数概括 1.1 大数据时代 1.2 大数据的概念 1.3 大数据的影响 1.4 大数据的关键技术 1.5 答案数据计算模式 1.6 代表大数据技术之Hadoop 1.7 代表大数据技术之Spark 1.8 代表大数据技术之Flink和Beam 2. Spark的设计与运行原理 2.1 Spark概述 2.2 Spark生态系统 2.3 基本概念和架构设计 2.4 Spark运行原理（RDD概念、操作和特性） 2.5 RDD运行原理（RDD之间的依赖关系） 2.6 RDD运行原理（阶段的划分和RDD运行过程） 2.7 Spark的部署和应用方式 3. Spark环境搭建和使用方法 3.1 安装Spark 3.1.1 单机安装Spark 参考：
+ 在Windows中使用VirtualBox安装Ubuntu
+ Hadoop安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04
+ Spark2.1.0入门：Spark的安装和使用</description>
+    </item>
+    
+    <item>
+      <title>Selenium</title>
+      <link>https://chen-feiyang.github.io/posts/selenium/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:55 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/selenium/</guid>
+      <description>又是爬虫，我似乎跟爬虫干上了。同事教了我selenium并要求我将房天下此页面分区域、近一年的数据爬下来。同事已经实现，现在的问题是：手动确实能实现，但是由于量大很费时，因此需要改一下代码，使得可以更加自动实现。</description>
+    </item>
+    
+    <item>
+      <title>Scrapy</title>
+      <link>https://chen-feiyang.github.io/posts/scrapy/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:26 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/scrapy/</guid>
+      <description>之前没学过爬虫，这次需要我去运维爬虫，所以这次找了本书专门学一下。《精通Scrapy网络爬虫》。学习有5天了，学到了第十章模拟登录，也说不上有什么很大体会。但是，关于选书，这本还是不错的，上面的示例经我验证均能成功运行，这得益于作者示例选的网站是专门供爬虫练习者使用的。
+我理解爬虫的难点：1.网站多不喜欢被爬，因此会设置障碍并持续改进以阻挡爬虫。2.解析（prase，会用到xpath、css）爬取的内容是关键，怎么从一堆代码中提取有用信息，我遇到的难点就在这。3.要循序渐进，否则劳而无功或劳得微功。
+照着《精通Scrapy网络爬虫》敲了对应示例，发现最大困难是选择器的运用，css和xpath。同事说scrapy的css选择器跟前端的css选择器是不同的，建议我完全使用xpath解析器。而且，在运行爬虫scrapy scrawl xx会得到log信息，出现2019-08-21 19:49:07 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to &amp;lt;GET https://matplotlib.org/robots.txt&amp;gt; from &amp;lt;GET http://matplotlib.org/robots.txt&amp;gt;，[scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301)代表网页重定向，重定向之后自然解析不到内容。或者还要注意[scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt:，我这次运行出现一行2019-08-21 19:49:08 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: &amp;lt;GET http://matplotlib.org/examples/index.html&amp;gt;，
+那么问题来了：在哪里可以看到xpath选择器语法的官方文档呢？ 答：W3C xpath cover page是scrapy给出的xpath链接，其上显示2017-03-21发布了XML Path Language (XPath) 3.1。太长的英文，所以等遇到其他有错误嫌疑再来细看此文吧。同事推荐了Xpath和CSS选择器的使用详解、CSS 选择器参考手册、xpath如何取包含多个class属性、XPath详解，总结、Xpath string()提取多个子节点中的文本、使用 lxml 中的 xpath 高效提取文本与标签属性值、Xpath判断某个属性是否包含或不包含指定的属性或值等博文，均是同事认为不错的，遇到不懂的还是首先看看同事给的资料，而不是即刻网络搜索。
+什么是xpath？ xpath使用路径表达式在xml文档中进行导航；xpatth包含一个标准函数库；xpath是xslt中的主要元素，xpath是一个w3c标准。
+xpath术语： 在xpath中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以即文档（根）节点。XML文档是一种被作为节点树来对待的。树的根被称为文档节点或者根节点。
+请看下面这个XML文档：
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;ISO-8859-1&amp;quot;?&amp;gt; &amp;lt;bookstore&amp;gt; &amp;lt;book&amp;gt; &amp;lt;title lang=&amp;quot;en&amp;quot;&amp;gt;Harry Potter&amp;lt;/title&amp;gt; &amp;lt;author&amp;gt;J K. Rowling&amp;lt;/author&amp;gt; &amp;lt;year&amp;gt;2005&amp;lt;/year&amp;gt; &amp;lt;price&amp;gt;29.99&amp;lt;/price&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/bookstore&amp;gt;  上面的XML文档中的节点例子：
+&amp;lt;bookstore&amp;gt; （文档节点） &amp;lt;author&amp;gt;J K.</description>
+    </item>
+    
+    <item>
+      <title>Kaggle之House Prices: Advanced Regression Techniques竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/hpart/</link>
+      <pubDate>Sun, 28 Jul 2019 22:58:19 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/hpart/</guid>
+      <description> 项目介绍： 竞赛数据集为Ames Housing dataset，是一个房价销售的数据集，需据此预测房屋销售价格，误差度量要求采用实际售价与预测售价的对数的均方根误差（RMSE），在此度量标准下，关注的不是实际售价和预测售价的差值，而是其比值。
+项目成绩： 我的迄今最好成绩是0.10616，也就是实际售价与预测售价之比平均约为e的0.10616次方（约等于1.1120），目前排名29/4413。成绩见于https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard，名称feiyang0chen1。
+项目心得体会：  若未认真理解项目需求，采用不经对数转换的RMSE，也许成绩停留在0.15；若不经对数转换，采用RMSLE（对数均方根误差），也许误差停留在0.14。显然损失函数决定优化的方向，这两种情况均因偏离项目要求的优化方向难以取得更好表现。 单个模型最好的是线性回归，发现对严重偏离正态分布的特征进行转换可提高成绩。 线性模型需要特征矩阵之间线性无关，PCA可以做到，但将过滤掉一些有用信息。若不采用PCA，可引入正则化项抑制线性模型特征对应的系数，这也是一种特征选择的方法，视正则化项的不同分别为lasso、ridge、elasticnet。 分类变量最理想的情况应该平衡，查阅文献，对于高分化分类变量（即含有很多分类，一些分类含有极少的数据点rare category），应采用target encoding而不是onehot encoding，target encoding可以采取忽视rare category的策略以减少杂讯。本案例分类变量虽不是特别高分化，但某些分类所含的数据点只有6个，应具有类似特点。但是发现target encoding没有提高成绩。 数据集含有较多的缺失数据，对于一些特征列，有相互印证的数据列比较好填补缺失值，没有这些印证信息的缺失数据，可采用删除数据点、删除特征列，或补入均值、中值、众值、回归（分类）等，回归（分类）又涉及到具体该采用什么模型什么特征列等，变数很多，查阅文献暂没有绝对优势的策略。补入虽然补充了信息但也引入了杂讯，一般认为补充中值、众值将使模型更鲁棒。 离群值，检索数据集，含有一个特征名为MSZoning，是标注地产商业性质的分类变量。通过分析此变量，发现在大多数特征点为各种住宅地产，极少数是工业或其他地产。自然想到有些数据点为离群值。而且，常识判断，与总售价最相关的是总使用面积GrLivArea，分析相关性也证明了这一点。根据总使用面积和总售价的联合分布，有些数据点是明显偏离的。单变量离群值分析，可假设此变量服从某分布，再排除概率小于某值比如1%的范围区间内的值，但这种判断方法应无益于机器学习问题。机器学习中可将模型残差大于一定值的数据点视为域外值，但选择什么特征建立模型、选择什么模型、残差大于多少判断为残差目前似乎没有公论，只能视具体情况试验。而且，排除过多数据点将使预测数据集的分布过多偏离训练数据。这违背机器学习的根本假设即数据同分布。 若特征数量较少，可直观地判断欠拟合和过拟合；当纬度较大时，可通过判断验证数据集上的表现来减小过拟合，但仍不能根绝。异源的模型组合可进一步减少过拟合以提高表现，假设两个模型的预测不同，具体到某一数据点，若真实值不在两模型预测值之间，此点模型融合的表现将是单个模型表现的某权值组合的加权平均；但也很可能实际值处在两模型预测值之间，此点模型融合的表现将优于单个模型，所以模型融合较大概率对表现有提升，我的模型的明显提升也正是来源于此，几个RMSE在0.11上下的模型平均后RMSE为0.106，优于任一单个模型的表现。可任意武断假设模型的权值，这在sklearn里面可通过VotingRegressor实现。当然模型融合的权值也是可以通过学习得到的，mlxtend中便捷函数StackingRegressor，设置meta_regressor为线性模型并线性模型设置fit_intercept=False可学习权值。当然meta_regressor也可不是线性模型甚至融合模型让基础模型的特征重新参与训练，这正是堆叠stack的含义。基础模型的预测作为特征重新参与建模将造成过拟合/泄露，可以让基础模型的预测来自k折后的k个训练数据形成的模型的折外数据点的预测（out-of-fold predictions），这可通过StackingCVRegressor实现。 关于模型的特征数量和特征选择：模型的特征数量影响计算速度并模型复杂度，过度复杂的模型容易产生过拟合。分类变量的编码方式将改变潜在特征数，lasso、基于树的模型等可自动选择特征。 最终模型取自特定补充缺失值策略、分类变量编码策略、排除离群值策略、PCA、基础模型选择、模型融合策略的组合，很难相信这是最优解，但结果尚可。 鉴于我的模型表现与排行榜仍有较大差距，猜测也许数据更适于采用某一非线性模型。可实现非线性的模型主要有：1基于树的模型，2线性模型采用非线性核函数，3.深度模型采用非线性激活函数。基于树的模型如决策树、提升等不能取得优于线性模型的表现是因为训练数据点较少时基于树的模型将不够顺滑，这将使预测表现不够好。当训练数据点较少时候，以决策树为例，若训练数据点含n个独特值，那么模型的预测值也将不外乎这n个独特值。提升算法的情况类似，虽然权值将导致预测的可能取值稍微增加，但仍不可避免比较稀疏，这将导致在非训练数据上表现不佳。而线性模型采用非线性核函数将不产生类似基于树模型同类的稀疏，但是，其非线性是不可学习的，只能作为高参调参，而且非线性高参可调弹性比较小，比方采用多项式核，其次数只能为整数。深度学习可学习非线性本身，也许进一步提升模型性能的方向在此。 以上体会基于此项目的一些经验或我的一些主观猜测，错漏之处在所难免，应进一步夯实。  </description>
+    </item>
+    
+    <item>
+      <title>Dont_overfit_ii</title>
+      <link>https://chen-feiyang.github.io/posts/dont_overfit_ii/</link>
+      <pubDate>Fri, 12 Apr 2019 17:02:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/dont_overfit_ii/</guid>
+      <description>2019/4/9开始kaggle的Don&#39;t Overfit! II竞赛，竞赛含250条训练数据，需要据此预测19.8k条数据的目标值。特征300个，目标值为0-1变量，训练样本含正样本160条，负样本90条。
+kaggle的Don&#39;t Overfit! II竞赛。
+显然，此竞赛的特点是小样本和不平衡样本。
+关于小样本的解决参考4；关于不平衡数据参考2。
+注意：不平衡数据不会造成过拟合，不平衡数据倾向于归入大分类的误分类，AUCROC是度量这种误分类的度量函数。？？？？？？
+关于不平衡：
+按参考2，解决不平衡学习问题的五种方法包括： 1. Up-sample the minority class对少数分类升采样 2. Down-sample the majority class对多数分类降采样 3. Change your performance metric改变度量函数 4. Penalize algorithms (cost-sensitive training)惩罚算法（即代价敏感训练） 5. Use tree-based algorithms采用基于树的算法
+COSTCLA、costsensitive包可实现方法4。
+按TOM FAWCETT，分类问题不能简单地预测标签。因为但： 1. 预测标签浪费很多信息，概率才是更重要的。 2. 虽然很多分类学习器都有预测概率这个功能，但很可能其简单以0.5作为阈值划分分类标签的依据。由于算法、数据不平衡和训练测试数据集标签比例不均衡等原因，此模型所谓的”概率“是不准确的，所以不可以简单以0.5作概率阈值。 3. 在概率不准情况下需要选择合适的概率阈值作为划分标签的依据。 4.也可以校准，在sklearn中有sklearn.calibration.CalibratedClassifierCV。TOM FAWCETT先生的意思我并没有叙述准确，详见其博客（参考4、5）。
+那么将train分成tra、val，选取学习器比如逻辑回归，高参由tra进行cv获取，运用全部tra并cv获取的高参训练模型。查看模型对tra和val的aucroc，比较tra和val的aucroc，若接近说明没有过拟合，可用这个模型对test进行预测。class_weight需使weigh乘以分类样本数得到的乘积平衡，在sklearn可选‘balanced’。其他包应根据分类样本数自己设定。
+第一步选择逻辑回归，重复上行过程，这个结果作为基础，其他学习器的结果需好于此学习器。
+参考：
+ 1.Investigation on handling Structured &amp;amp; Imbalanced Datasets with Deep Learning； 2.EXPLAINERS TUTORIALS__How to Handle Imbalanced Classes in Machine Learning； 3.Cost-sensitive 分类算法——综述与实验； 4.</description>
+    </item>
+    
+    <item>
+      <title>Kaggle之Store item demand forecasting challenge竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</link>
+      <pubDate>Sun, 03 Mar 2019 22:06:58 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</guid>
+      <description>1.项目情况 kaggle的Store Item Demand Forecasting Challenge竞赛， 有2013年初到2017年末10个商店、50种货物每日销量情况，预测2018年头3个月这些商店、货物的每日销售情况。竞赛要求结果采用SMAPE度量。 $$SMAPE=100 \text{%} \frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2}$$ $A_i$代表第i个样本的真实值，$F_i$代表第i个样本的预测值。
+2.项目成绩 以下代码采用2014年、2015年和2016年数据用于训练，2017年数据用于验证，模型采用损失函数RMSE，度量函数SMAPE。得到训练smape约12.30[11]，2017年smape为11.860766606767626[12]，2014年第一季度smape为14.645917711865364[3]，2015年第一季度smape为14.091883155407277[4]，2016年第一季度smape为13.476791353148277[5]，2017年第一季度smape为13.301776762020786[6]。据此推断2018年第一季度smape约12.5846141148，与竞赛最优成绩12.58015相当，可惜不在竞赛时段，无法最终验证。依据如下：
+损失函数采用RMSE， $$RMSE=\sqrt{\frac{1}{n} \sum_{i=1}^{n} {(A_i-F_i)}^{2}}$$ 其关注的是绝对误差，而且RMSE对绝对误差的离散程度容忍较小，个体绝对误差偏离均值将显著增加RMSE，因此RMSE倾向于减小绝对误差并使绝对误差尽可能均一化。 模型的绝对误差接近均一化，但是由于实际销量情况随时间是不平衡的，这就是造成smape差异的原因。
+为估计2018年第一季度smape，作如下假设：
+ SMAPE约等于销量绝对误差的平均值除以销量的平均值。即： $$SMAPE=\frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} (|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} |A_i|}$$ 2018年第一季度销量平均值取自2013年第一季度、2014年第一季度、2015年第一季度、2016年第一季度、2017年第一季度销量平均值的最小二乘法线性插值。  smape计算
+   时间 平均绝对误差[8] 平均销量[9] smape     2014q1 572.6247872118 39.097911[1] 14.645917711865364[3]   2015q1 574.5670977178 40.772911[1] 14.091883155407277[4]   2016q1 594.8380237664 44.137956[1] 13.476791353148277[5]   2017q1 609.</description>
+    </item>
     
     <item>
       <title>Adaboost2</title>
@@ -19,6 +163,16 @@
       <guid>https://chen-feiyang.github.io/posts/adaboost2/</guid>
       <description>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。
 Abstract摘要 In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.</description>
+    </item>
+    
+    <item>
+      <title>Adaboost1</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost1/</link>
+      <pubDate>Wed, 26 Dec 2018 15:04:08 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost1/</guid>
+      <description>sklearn文档介绍AdaBoostClassifier采用的算法是SAMME和SAMME.R，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有优势，下文全文翻译SAMME和SAMME.R发明人论文，当然，遇有不懂的我将找资料再去了解。
+1 Introduction介绍 Boosting has been a very successful technique for solving the two-class classiﬁcation problem. It was ﬁrst introduced by Freund &amp;amp; Schapire (1997), with their AdaBoost algorithm. In going from two-class to multi-class classiﬁcation, most boosting algorithms have been restricted to reducing the multi-class classiﬁcation problem to multiple two-class problems, e.g. Freund &amp;amp; Schapire (1997), Schapire (1997), Schapire &amp;amp; Singer (1999), Allwein, Schapire &amp;amp; Singer (2000), Friedman, Hastie &amp;amp; Tibshirani (2000), Friedman (2001).</description>
     </item>
     
   </channel>

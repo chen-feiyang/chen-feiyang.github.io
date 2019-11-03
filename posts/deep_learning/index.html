@@ -1,0 +1,1327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Deep_learning | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Deep_learning</h1>
+
+
+<!-- TOC -->
+
+<ul>
+<li><a href="#website">Website</a></li>
+<li><a href="#acknowledgments">Acknowledgments</a></li>
+<li><a href="#notation">Notation</a></li>
+<li><a href="#introduction">Introduction</a>
+
+<ul>
+<li><a href="#who-should-read-this-book">Who Should Read This Book?</a></li>
+<li><a href="#historical-trends-in-deep-learning">Historical Trends in Deep Learning</a></li>
+</ul></li>
+<li><a href="#i-applied-math-and-machine-learning-basics">I Applied Math and Machine Learning Basics</a>
+
+<ul>
+<li><a href="#linear-algebra">Linear Algebra</a>
+
+<ul>
+<li><a href="#scalars-vectors-matrices-and-tensors">Scalars, Vectors, Matrices and Tensors</a></li>
+<li><a href="#multiplying-matrices-and-vectors">Multiplying Matrices and Vectors</a></li>
+<li><a href="#identity-and-inverse-matrices">Identity and Inverse Matrices</a></li>
+<li><a href="#linear-dependence-and-span">Linear Dependence and Span</a></li>
+<li><a href="#norms">Norms</a></li>
+<li><a href="#special-kinds-of-matrices-and-vectors">Special Kinds of Matrices and Vectors</a></li>
+<li><a href="#eigendecomposition">Eigendecomposition</a></li>
+<li><a href="#singular-value-decomposition">Singular Value Decomposition</a></li>
+<li><a href="#the-moore-penrose-pseudoinverse">The Moore-Penrose Pseudoinverse</a></li>
+<li><a href="#the-trace-operator">The Trace Operator</a></li>
+<li><a href="#the-determinant">The Determinant</a></li>
+<li><a href="#example-principal-components-analysis">Example: Principal Components Analysis</a></li>
+</ul></li>
+<li><a href="#probability-and-information-theory">Probability and Information Theory</a>
+
+<ul>
+<li><a href="#why-probability">Why Probability?</a></li>
+<li><a href="#random-variables">Random Variables</a></li>
+<li><a href="#probability-distributions">Probability Distributions</a></li>
+<li><a href="#marginal-probability">Marginal Probability</a></li>
+<li><a href="#conditional-probability">Conditional Probability</a></li>
+<li><a href="#the-chain-rule-of-conditional-probabilities">The Chain Rule of Conditional Probabilities</a></li>
+<li><a href="#independence-and-conditional-independence">Independence and Conditional Independence</a></li>
+<li><a href="#expectation-variance-and-covariance">Expectation, Variance and Covariance</a></li>
+<li><a href="#common-probability-distributions">Common Probability Distributions</a></li>
+<li><a href="#useful-properties-of-common-functions">Useful Properties of Common Functions</a></li>
+<li><a href="#bayes-rule">Bayes’ Rule</a></li>
+<li><a href="#technical-details-of-continuous-variables">Technical Details of Continuous Variables</a></li>
+<li><a href="#information-theory">Information Theory</a></li>
+<li><a href="#structured-probabilistic-models">Structured Probabilistic Models</a></li>
+</ul></li>
+<li><a href="#numerical-computation">Numerical Computation</a>
+
+<ul>
+<li><a href="#overﬂow-and-underﬂow">Overﬂow and Underﬂow</a></li>
+<li><a href="#poor-conditioning">Poor Conditioning</a></li>
+<li><a href="#gradient-based-optimization">Gradient-Based Optimization</a></li>
+<li><a href="#constrained-optimization">Constrained Optimization</a></li>
+<li><a href="#example-linear-least-squares">Example: Linear Least Squares</a></li>
+</ul></li>
+<li><a href="#machine-learning-basics">Machine Learning Basics</a>
+
+<ul>
+<li><a href="#learning-algorithms">Learning Algorithms</a></li>
+<li><a href="#capacity-overﬁtting-and-underﬁtting">Capacity, Overﬁtting and Underﬁtting</a></li>
+<li><a href="#hyperparameters-and-validation-sets">Hyperparameters and Validation Sets</a></li>
+<li><a href="#estimators-bias-and-variance">Estimators, Bias and Variance</a></li>
+<li><a href="#maximum-likelihood-estimation">Maximum Likelihood Estimation</a></li>
+<li><a href="#bayesian-statistics">Bayesian Statistics</a></li>
+<li><a href="#supervised-learning-algorithms">Supervised Learning Algorithms</a></li>
+<li><a href="#unsupervised-learning-algorithms">Unsupervised Learning Algorithms</a></li>
+<li><a href="#stochastic-gradient-descent">Stochastic Gradient Descent</a></li>
+<li><a href="#building-a-machine-learning-algorithm">Building a Machine Learning Algorithm</a></li>
+<li><a href="#challenges-motivating-deep-learning">Challenges Motivating Deep Learning</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#ii-deep-networks-modern-practices">II Deep Networks: Modern Practices</a>
+
+<ul>
+<li><a href="#deep-feedforward-networks">Deep Feedforward Networks</a>
+
+<ul>
+<li><a href="#example-learning-xor">Example: Learning XOR</a></li>
+<li><a href="#gradient-based-learning">Gradient-Based Learning</a></li>
+<li><a href="#hidden-units">Hidden Units</a></li>
+<li><a href="#architecture-design">Architecture Design</a></li>
+<li><a href="#back-propagation-and-other-diﬀerentiation-algorithms">Back-Propagation and Other Diﬀerentiation Algorithms</a></li>
+<li><a href="#historical-notes">Historical Notes</a></li>
+</ul></li>
+<li><a href="#regularization-for-deep-learning">Regularization for Deep Learning</a>
+
+<ul>
+<li><a href="#parameter-norm-penalties">Parameter Norm Penalties</a></li>
+<li><a href="#norm-penalties-as-constrained-optimization">Norm Penalties as Constrained Optimization</a></li>
+<li><a href="#regularization-and-under-constrained-problems">Regularization and Under-Constrained Problems</a></li>
+<li><a href="#dataset-augmentation">Dataset Augmentation</a></li>
+<li><a href="#noise-robustness">Noise Robustness</a></li>
+<li><a href="#semi-supervised-learning">Semi-Supervised Learning</a></li>
+<li><a href="#multi-task-learning">Multi-Task Learning</a></li>
+<li><a href="#early-stopping">Early Stopping</a></li>
+<li><a href="#parameter-tying-and-parameter-sharing">Parameter Tying and Parameter Sharing</a></li>
+<li><a href="#sparse-representations">Sparse Representations</a></li>
+<li><a href="#bagging-and-other-ensemble-methods">Bagging and Other Ensemble Methods</a></li>
+<li><a href="#dropout">Dropout</a></li>
+<li><a href="#adversarial-training">Adversarial Training</a></li>
+<li><a href="#tangent-distance-tangent-prop-and-manifold-tangent-classiﬁer">Tangent Distance, Tangent Prop, and Manifold Tangent Classiﬁer</a></li>
+</ul></li>
+<li><a href="#optimization-for-training-deep-models">Optimization for Training Deep Models</a>
+
+<ul>
+<li><a href="#how-learning-diﬀers-from-pure-optimization">How Learning Diﬀers from Pure Optimization</a></li>
+<li><a href="#challenges-in-neural-network-optimization">Challenges in Neural Network Optimization</a></li>
+<li><a href="#basic-algorithms">Basic Algorithms</a></li>
+<li><a href="#parameter-initialization-strategies">Parameter Initialization Strategies</a></li>
+<li><a href="#algorithms-with-adaptive-learning-rates">Algorithms with Adaptive Learning Rates</a></li>
+<li><a href="#approximate-second-order-methods">Approximate Second-Order Methods</a></li>
+<li><a href="#optimization-strategies-and-meta-algorithms">Optimization Strategies and Meta-Algorithms</a></li>
+</ul></li>
+<li><a href="#convolutional-networks">Convolutional Networks</a>
+
+<ul>
+<li><a href="#the-convolution-operation">The Convolution Operation</a></li>
+<li><a href="#motivation">Motivation</a></li>
+<li><a href="#pooling">Pooling</a></li>
+<li><a href="#convolution-and-pooling-as-an-inﬁnitely-strong-prior">Convolution and Pooling as an Inﬁnitely Strong Prior</a></li>
+<li><a href="#variants-of-the-basic-convolution-function">Variants of the Basic Convolution Function</a></li>
+<li><a href="#structured-outputs">Structured Outputs</a></li>
+<li><a href="#data-types">Data Types</a></li>
+<li><a href="#eﬃcient-convolution-algorithms">Eﬃcient Convolution Algorithms</a></li>
+<li><a href="#random-or-unsupervised-features">Random or Unsupervised Features</a></li>
+<li><a href="#the-neuroscientiﬁc-basis-for-convolutional-networks">The Neuroscientiﬁc Basis for Convolutional Networks</a></li>
+<li><a href="#convolutional-networks-and-the-history-of-deep-learning">Convolutional Networks and the History of Deep Learning</a></li>
+</ul></li>
+<li><a href="#sequence-modeling-recurrent-and-recursive-nets">Sequence Modeling: Recurrent and Recursive Nets</a>
+
+<ul>
+<li><a href="#unfolding-computational-graphs">Unfolding Computational Graphs</a></li>
+<li><a href="#recurrent-neural-networks">Recurrent Neural Networks</a></li>
+<li><a href="#bidirectional-rnns">Bidirectional RNNs</a></li>
+<li><a href="#encoder-decoder-sequence-to-sequence-architectures">Encoder-Decoder Sequence-to-Sequence Architectures</a></li>
+<li><a href="#deep-recurrent-networks">Deep Recurrent Networks</a></li>
+<li><a href="#recursive-neural-networks">Recursive Neural Networks</a></li>
+<li><a href="#the-challenge-of-long-term-dependencies">The Challenge of Long-Term Dependencies</a></li>
+<li><a href="#echo-state-networks">Echo State Networks</a></li>
+<li><a href="#leaky-units-and-other-strategies-for-multiple-time-scales">Leaky Units and Other Strategies for Multiple Time Scales</a></li>
+<li><a href="#the-long-short-term-memory-and-other-gated-rnns">The Long Short-Term Memory and Other Gated RNNs</a></li>
+<li><a href="#optimization-for-long-term-dependencies">Optimization for Long-Term Dependencies</a></li>
+<li><a href="#explicit-memory">Explicit Memory</a></li>
+</ul></li>
+<li><a href="#practical-methodology">Practical Methodology</a>
+
+<ul>
+<li><a href="#performance-metrics">Performance Metrics</a></li>
+<li><a href="#default-baseline-models">Default Baseline Models</a></li>
+<li><a href="#determining-whether-to-gather-more-data">Determining Whether to Gather More Data</a></li>
+<li><a href="#selecting-hyperparameters">Selecting Hyperparameters</a></li>
+<li><a href="#debugging-strategies">Debugging Strategies</a></li>
+<li><a href="#example-multi-digit-number-recognition">Example: Multi-Digit Number Recognition</a></li>
+</ul></li>
+<li><a href="#applications">Applications</a>
+
+<ul>
+<li><a href="#large-scale-deep-learning">Large-Scale Deep Learning</a></li>
+<li><a href="#computer-vision">Computer Vision</a></li>
+<li><a href="#speech-recognition">Speech Recognition</a></li>
+<li><a href="#natural-language-processing">Natural Language Processing</a></li>
+<li><a href="#other-applications">Other Applications</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#iii-deep-learning-research">III Deep Learning Research</a>
+
+<ul>
+<li><a href="#linear-factor-models">Linear Factor Models</a>
+
+<ul>
+<li><a href="#probabilistic-pca-and-factor-analysis">Probabilistic PCA and Factor Analysis</a></li>
+<li><a href="#independent-component-analysis-ica">Independent Component Analysis (ICA)</a></li>
+<li><a href="#slow-feature-analysis">Slow Feature Analysis</a></li>
+<li><a href="#sparse-coding">Sparse Coding</a></li>
+<li><a href="#manifold-interpretation-of-pca">Manifold Interpretation of PCA</a></li>
+</ul></li>
+<li><a href="#autoencoders">Autoencoders</a>
+
+<ul>
+<li><a href="#undercomplete-autoencoders">Undercomplete Autoencoders</a></li>
+<li><a href="#regularized-autoencoders">Regularized Autoencoders</a></li>
+<li><a href="#representational-power-layer-size-and-depth">Representational Power, Layer Size and Depth</a></li>
+<li><a href="#stochastic-encoders-and-decoders">Stochastic Encoders and Decoders</a></li>
+<li><a href="#denoising-autoencoders">Denoising Autoencoders</a></li>
+<li><a href="#learning-manifolds-with-autoencoders">Learning Manifolds with Autoencoders</a></li>
+<li><a href="#contractive-autoencoders">Contractive Autoencoders</a></li>
+<li><a href="#predictive-sparse-decomposition">Predictive Sparse Decomposition</a></li>
+<li><a href="#applications-of-autoencoders">Applications of Autoencoders</a></li>
+</ul></li>
+<li><a href="#representation-learning">Representation Learning</a>
+
+<ul>
+<li><a href="#greedy-layer-wise-unsupervised-pretraining">Greedy Layer-Wise Unsupervised Pretraining</a></li>
+<li><a href="#transfer-learning-and-domain-adaptation">Transfer Learning and Domain Adaptation</a></li>
+<li><a href="#semi-supervised-disentangling-of-causal-factors">Semi-Supervised Disentangling of Causal Factors</a></li>
+<li><a href="#distributed-representation">Distributed Representation</a></li>
+<li><a href="#exponential-gains-from-depth">Exponential Gains from Depth</a></li>
+<li><a href="#providing-clues-to-discover-underlying-causes">Providing Clues to Discover Underlying Causes</a></li>
+</ul></li>
+<li><a href="#structured-probabilistic-models-for-deep-learning">Structured Probabilistic Models for Deep Learning</a>
+
+<ul>
+<li><a href="#the-challenge-of-unstructured-modeling">The Challenge of Unstructured Modeling</a></li>
+<li><a href="#using-graphs-to-describe-model-structure">Using Graphs to Describe Model Structure</a></li>
+<li><a href="#sampling-from-graphical-models">Sampling from Graphical Models</a></li>
+<li><a href="#advantages-of-structured-modeling">Advantages of Structured Modeling</a></li>
+<li><a href="#learning-about-dependencies">Learning about Dependencies</a></li>
+<li><a href="#inference-and-approximate-inference">Inference and Approximate Inference</a></li>
+<li><a href="#the-deep-learning-approach-to-structured-probabilistic-models">The Deep Learning Approach to Structured Probabilistic Models</a></li>
+</ul></li>
+<li><a href="#monte-carlo-methods">Monte Carlo Methods</a>
+
+<ul>
+<li><a href="#sampling-and-monte-carlo-methods">Sampling and Monte Carlo Methods</a></li>
+<li><a href="#importance-sampling">Importance Sampling</a></li>
+<li><a href="#markov-chain-monte-carlo-methods">Markov Chain Monte Carlo Methods</a></li>
+<li><a href="#gibbs-sampling">Gibbs Sampling</a></li>
+<li><a href="#the-challenge-of-mixing-between-separated-modes">The Challenge of Mixing between Separated Modes</a></li>
+</ul></li>
+<li><a href="#confronting-the-partition-function">Confronting the Partition Function</a>
+
+<ul>
+<li><a href="#the-log-likelihood-gradient">The Log-Likelihood Gradient</a></li>
+<li><a href="#stochastic-maximum-likelihood-and-contrastive-divergence">Stochastic Maximum Likelihood and Contrastive Divergence</a></li>
+<li><a href="#pseudolikelihood">Pseudolikelihood</a></li>
+<li><a href="#score-matching-and-ratio-matching">Score Matching and Ratio Matching</a></li>
+<li><a href="#denoising-score-matching">Denoising Score Matching</a></li>
+<li><a href="#noise-contrastive-estimation">Noise-Contrastive Estimation</a></li>
+<li><a href="#estimating-the-partition-function">Estimating the Partition Function</a></li>
+</ul></li>
+<li><a href="#approximate-inference">Approximate Inference</a>
+
+<ul>
+<li><a href="#inference-as-optimization">Inference as Optimization</a></li>
+<li><a href="#expectation-maximization">Expectation Maximization</a></li>
+<li><a href="#map-inference-and-sparse-coding">MAP Inference and Sparse Coding</a></li>
+<li><a href="#variational-inference-and-learning">Variational Inference and Learning</a></li>
+<li><a href="#learned-approximate-inference">Learned Approximate Inference</a></li>
+</ul></li>
+<li><a href="#deep-generative-models">Deep Generative Models</a>
+
+<ul>
+<li><a href="#boltzmann-machines">Boltzmann Machines</a></li>
+<li><a href="#restricted-boltzmann-machines">Restricted Boltzmann Machines</a></li>
+<li><a href="#deep-belief-networks">Deep Belief Networks</a></li>
+<li><a href="#deep-boltzmann-machines">Deep Boltzmann Machines</a></li>
+<li><a href="#boltzmann-machines-for-real-valued-data">Boltzmann Machines for Real-Valued Data</a></li>
+<li><a href="#convolutional-boltzmann-machines">Convolutional Boltzmann Machines</a></li>
+<li><a href="#boltzmann-machines-for-structured-or-sequential-outputs">Boltzmann Machines for Structured or Sequential Outputs</a></li>
+<li><a href="#other-boltzmann-machines">Other Boltzmann Machines</a></li>
+<li><a href="#back-propagation-through-random-operations">Back-Propagation through Random Operations</a></li>
+<li><a href="#directed-generative-nets">Directed Generative Nets</a></li>
+<li><a href="#drawing-samples-from-autoencoders">Drawing Samples from Autoencoders</a></li>
+<li><a href="#generative-stochastic-networks">Generative Stochastic Networks</a></li>
+<li><a href="#other-generation-schemes">Other Generation Schemes</a></li>
+<li><a href="#evaluating-generative-models">Evaluating Generative Models</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#bibliography">Bibliography</a></li>
+<li><a href="#index">Index</a></li>
+</ul>
+
+<!-- /TOC -->
+
+<h1 id="website">Website</h1>
+
+<h1 id="acknowledgments">Acknowledgments</h1>
+
+<h1 id="notation">Notation</h1>
+
+<p>This section provides a concise reference describing the notation used throughout this book. If you are unfamiliar with any of the corresponding mathematical concepts, we describe most of these ideas in chapters 2–4.</p>
+
+<p><center><strong>Numbers and Arrays a A scalar (integer or real)</strong></center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"><code>$a$</code><br>小写、斜体、衬线</td>
+<td align="left">A scalar</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\vec{a}$</code><br>小写、斜体、衬线、上箭头</td>
+<td align="left">A vector</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\mathbf{A}$</code><br>斜体、粗体、衬线</td>
+<td align="left">A matrix</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\mathsf{A}$</code><br>斜体、粗体、衬线</td>
+<td align="left">A tensor</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\mathbf{I}_{n}$</code>n<br>斜体、粗体、衬线</td>
+<td align="left">Identity matrix with rows and columns n n</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\vec{a}$</code>I<br>斜体、粗体、衬线</td>
+<td align="left">Identity matrix with dimensionality implied by context e( ) i Standard basis vector [0,..., 0, 1,0,...,0] with a 1 at position i</td>
+</tr>
+
+<tr>
+<td align="left">diag( ) a A square, diagonal matrix with diagonal entries given by a</td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"><code>$\vec{a}$</code>a<br>斜体、粗体、衬线</td>
+<td align="left">A scalar random variable</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\vec{a}$</code>a<br>斜体、粗体、衬线</td>
+<td align="left">A vector-valued random variable</td>
+</tr>
+
+<tr>
+<td align="left"><code>$\vec{a}$</code>A<br>斜体、粗体、衬线</td>
+<td align="left">A matrix-valued random variable</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<p><center><strong>Sets and Graphs</strong></center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">A</td>
+<td align="left">A set</td>
+</tr>
+
+<tr>
+<td align="left">R</td>
+<td align="left">The set of real numbers</td>
+</tr>
+
+<tr>
+<td align="left">{0, 1}</td>
+<td align="left">The set containing 0 and 1</td>
+</tr>
+
+<tr>
+<td align="left">{0, 1, . . . , n}</td>
+<td align="left">The set of all integers between 0 and n</td>
+</tr>
+
+<tr>
+<td align="left">[a, b] The real interval including a and b</td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left">(a, b]</td>
+<td align="left">The real interval excluding a but including b</td>
+</tr>
+
+<tr>
+<td align="left">A\B</td>
+<td align="left">Set subtraction, i.e., the set containing the elements of A that are not in B</td>
+</tr>
+
+<tr>
+<td align="left">G</td>
+<td align="left">A graph</td>
+</tr>
+
+<tr>
+<td align="left">PaG(xi)</td>
+<td align="left">The parents of xi in G</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<p><center><strong>Indexing</strong></center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">ai</td>
+<td align="left">Element i of vector a, with indexing starting at 1</td>
+</tr>
+
+<tr>
+<td align="left">a−i</td>
+<td align="left">All elements of vector a except for element i</td>
+</tr>
+
+<tr>
+<td align="left">Ai,j</td>
+<td align="left">Element i, j of matrix A</td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<p><center>****</center></p>
+
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+<th align="left"></th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+
+<tr>
+<td align="left"></td>
+<td align="left"></td>
+</tr>
+</tbody>
+</table>
+
+<p>Ai,j Element i, j of matrix A
+Ai,: Row i of matrix A
+A:,i Column i of matrix A
+Ai,j,k Element (i, j, k) of a 3-D tensor A
+A:,:,i 2-D slice of a 3-D tensor
+ai Element i of the random vector a
+Linear Algebra Operations
+A Transpose of matrix A
+A+ Moore-Penrose pseudoinverse of A
+A  B Element-wise (Hadamard) product of A and B
+det(A) Determinant of A</p>
+
+<h1 id="1-introduction">1 Introduction</h1>
+
+<h2 id="1-1-who-should-read-this-book">1.1 Who Should Read This Book?</h2>
+
+<h2 id="1-2-historical-trends-in-deep-learning">1.2 Historical Trends in Deep Learning</h2>
+
+<h1 id="i-applied-math-and-machine-learning-basics">I Applied Math and Machine Learning Basics</h1>
+
+<h2 id="2-linear-algebra">2 Linear Algebra</h2>
+
+<h3 id="2-1-scalars-vectors-matrices-and-tensors">2.1 Scalars, Vectors, Matrices and Tensors</h3>
+
+<h3 id="2-2-multiplying-matrices-and-vectors">2.2 Multiplying Matrices and Vectors</h3>
+
+<h3 id="2-3-identity-and-inverse-matrices">2.3 Identity and Inverse Matrices</h3>
+
+<h3 id="2-4-linear-dependence-and-span">2.4 Linear Dependence and Span</h3>
+
+<h3 id="2-5-norms">2.5 Norms</h3>
+
+<h3 id="2-6-special-kinds-of-matrices-and-vectors">2.6 Special Kinds of Matrices and Vectors</h3>
+
+<h3 id="2-7-eigendecomposition">2.7 Eigendecomposition</h3>
+
+<h3 id="2-8-singular-value-decomposition">2.8 Singular Value Decomposition</h3>
+
+<h3 id="2-9-the-moore-penrose-pseudoinverse">2.9 The Moore-Penrose Pseudoinverse</h3>
+
+<h3 id="2-10-the-trace-operator">2.10 The Trace Operator</h3>
+
+<h3 id="2-11-the-determinant">2.11 The Determinant</h3>
+
+<h3 id="2-12-example-principal-components-analysis">2.12 Example: Principal Components Analysis</h3>
+
+<h2 id="3-probability-and-information-theory">3 Probability and Information Theory</h2>
+
+<h3 id="3-1-why-probability">3.1 Why Probability?</h3>
+
+<h3 id="3-2-random-variables">3.2 Random Variables</h3>
+
+<h3 id="3-3-probability-distributions">3.3 Probability Distributions</h3>
+
+<h3 id="3-4-marginal-probability">3.4 Marginal Probability</h3>
+
+<h3 id="3-5-conditional-probability">3.5 Conditional Probability</h3>
+
+<h3 id="3-6-the-chain-rule-of-conditional-probabilities">3.6 The Chain Rule of Conditional Probabilities</h3>
+
+<h3 id="3-7-independence-and-conditional-independence">3.7 Independence and Conditional Independence</h3>
+
+<h3 id="3-8-expectation-variance-and-covariance">3.8 Expectation, Variance and Covariance</h3>
+
+<h3 id="3-9-common-probability-distributions">3.9 Common Probability Distributions</h3>
+
+<h3 id="3-10-useful-properties-of-common-functions">3.10 Useful Properties of Common Functions</h3>
+
+<h3 id="3-11-bayes-rule">3.11 Bayes’ Rule</h3>
+
+<h3 id="3-12-technical-details-of-continuous-variables">3.12 Technical Details of Continuous Variables</h3>
+
+<h3 id="3-13-information-theory">3.13 Information Theory</h3>
+
+<h3 id="3-14-structured-probabilistic-models">3.14 Structured Probabilistic Models</h3>
+
+<h2 id="4-numerical-computation">4 Numerical Computation</h2>
+
+<h3 id="4-1-overﬂow-and-underﬂow">4.1 Overﬂow and Underﬂow</h3>
+
+<h3 id="4-2-poor-conditioning">4.2 Poor Conditioning</h3>
+
+<h3 id="4-3-gradient-based-optimization">4.3 Gradient-Based Optimization</h3>
+
+<h3 id="4-4-constrained-optimization">4.4 Constrained Optimization</h3>
+
+<h3 id="4-5-example-linear-least-squares">4.5 Example: Linear Least Squares</h3>
+
+<h2 id="5-machine-learning-basics">5 Machine Learning Basics</h2>
+
+<h3 id="5-1-learning-algorithms">5.1 Learning Algorithms</h3>
+
+<h3 id="5-2-capacity-overﬁtting-and-underﬁtting">5.2 Capacity, Overﬁtting and Underﬁtting</h3>
+
+<h3 id="5-3-hyperparameters-and-validation-sets">5.3 Hyperparameters and Validation Sets</h3>
+
+<h3 id="5-4-estimators-bias-and-variance">5.4 Estimators, Bias and Variance</h3>
+
+<h3 id="5-5-maximum-likelihood-estimation">5.5 Maximum Likelihood Estimation</h3>
+
+<h3 id="5-6-bayesian-statistics">5.6 Bayesian Statistics</h3>
+
+<h3 id="5-7-supervised-learning-algorithms">5.7 Supervised Learning Algorithms</h3>
+
+<h3 id="5-8-unsupervised-learning-algorithms">5.8 Unsupervised Learning Algorithms</h3>
+
+<h3 id="5-9-stochastic-gradient-descent">5.9 Stochastic Gradient Descent</h3>
+
+<h3 id="5-10-building-a-machine-learning-algorithm">5.10 Building a Machine Learning Algorithm</h3>
+
+<h3 id="5-11-challenges-motivating-deep-learning">5.11 Challenges Motivating Deep Learning</h3>
+
+<h1 id="ii-deep-networks-modern-practices">II Deep Networks: Modern Practices</h1>
+
+<h2 id="6-deep-feedforward-networks">6 Deep Feedforward Networks</h2>
+
+<h3 id="6-1-example-learning-xor">6.1 Example: Learning XOR</h3>
+
+<h3 id="6-2-gradient-based-learning">6.2 Gradient-Based Learning</h3>
+
+<h3 id="6-3-hidden-units">6.3 Hidden Units</h3>
+
+<h3 id="6-4-architecture-design">6.4 Architecture Design</h3>
+
+<h3 id="6-5-back-propagation-and-other-diﬀerentiation-algorithms">6.5 Back-Propagation and Other Diﬀerentiation Algorithms</h3>
+
+<h3 id="6-6-historical-notes">6.6 Historical Notes</h3>
+
+<h2 id="7-regularization-for-deep-learning">7 Regularization for Deep Learning</h2>
+
+<h3 id="7-1-parameter-norm-penalties">7.1 Parameter Norm Penalties</h3>
+
+<h3 id="7-2-norm-penalties-as-constrained-optimization">7.2 Norm Penalties as Constrained Optimization</h3>
+
+<h3 id="7-3-regularization-and-under-constrained-problems">7.3 Regularization and Under-Constrained Problems</h3>
+
+<h3 id="7-4-dataset-augmentation">7.4 Dataset Augmentation</h3>
+
+<h3 id="7-5-noise-robustness">7.5 Noise Robustness</h3>
+
+<h3 id="7-6-semi-supervised-learning">7.6 Semi-Supervised Learning</h3>
+
+<h3 id="7-7-multi-task-learning">7.7 Multi-Task Learning</h3>
+
+<h3 id="7-8-early-stopping">7.8 Early Stopping</h3>
+
+<h3 id="7-9-parameter-tying-and-parameter-sharing">7.9 Parameter Tying and Parameter Sharing</h3>
+
+<h3 id="7-10-sparse-representations">7.10 Sparse Representations</h3>
+
+<h3 id="7-11-bagging-and-other-ensemble-methods">7.11 Bagging and Other Ensemble Methods</h3>
+
+<h3 id="7-12-dropout">7.12 Dropout</h3>
+
+<h3 id="7-13-adversarial-training">7.13 Adversarial Training</h3>
+
+<h3 id="7-14-tangent-distance-tangent-prop-and-manifold-tangent-classiﬁer">7.14 Tangent Distance, Tangent Prop, and Manifold Tangent Classiﬁer</h3>
+
+<h2 id="8-optimization-for-training-deep-models">8 Optimization for Training Deep Models</h2>
+
+<h3 id="8-1-how-learning-diﬀers-from-pure-optimization">8.1 How Learning Diﬀers from Pure Optimization</h3>
+
+<h3 id="8-2-challenges-in-neural-network-optimization">8.2 Challenges in Neural Network Optimization</h3>
+
+<h3 id="8-3-basic-algorithms">8.3 Basic Algorithms</h3>
+
+<h3 id="8-4-parameter-initialization-strategies">8.4 Parameter Initialization Strategies</h3>
+
+<h3 id="8-5-algorithms-with-adaptive-learning-rates">8.5 Algorithms with Adaptive Learning Rates</h3>
+
+<h3 id="8-6-approximate-second-order-methods">8.6 Approximate Second-Order Methods</h3>
+
+<h3 id="8-7-optimization-strategies-and-meta-algorithms">8.7 Optimization Strategies and Meta-Algorithms</h3>
+
+<h2 id="9-convolutional-networks">9 Convolutional Networks</h2>
+
+<h3 id="9-1-the-convolution-operation">9.1 The Convolution Operation</h3>
+
+<h3 id="9-2-motivation">9.2 Motivation</h3>
+
+<h3 id="9-3-pooling">9.3 Pooling</h3>
+
+<h3 id="9-4-convolution-and-pooling-as-an-inﬁnitely-strong-prior">9.4 Convolution and Pooling as an Inﬁnitely Strong Prior</h3>
+
+<h3 id="9-5-variants-of-the-basic-convolution-function">9.5 Variants of the Basic Convolution Function</h3>
+
+<h3 id="9-6-structured-outputs">9.6 Structured Outputs</h3>
+
+<h3 id="9-7-data-types">9.7 Data Types</h3>
+
+<h3 id="9-8-eﬃcient-convolution-algorithms">9.8 Eﬃcient Convolution Algorithms</h3>
+
+<h3 id="9-9-random-or-unsupervised-features">9.9 Random or Unsupervised Features</h3>
+
+<h3 id="9-10-the-neuroscientiﬁc-basis-for-convolutional-networks">9.10 The Neuroscientiﬁc Basis for Convolutional Networks</h3>
+
+<h3 id="9-11-convolutional-networks-and-the-history-of-deep-learning">9.11 Convolutional Networks and the History of Deep Learning</h3>
+
+<h2 id="10-sequence-modeling-recurrent-and-recursive-nets">10 Sequence Modeling: Recurrent and Recursive Nets</h2>
+
+<h3 id="10-1-unfolding-computational-graphs">10.1 Unfolding Computational Graphs</h3>
+
+<h3 id="10-2-recurrent-neural-networks">10.2 Recurrent Neural Networks</h3>
+
+<h3 id="10-3-bidirectional-rnns">10.3 Bidirectional RNNs</h3>
+
+<h3 id="10-4-encoder-decoder-sequence-to-sequence-architectures">10.4 Encoder-Decoder Sequence-to-Sequence Architectures</h3>
+
+<h3 id="10-5-deep-recurrent-networks">10.5 Deep Recurrent Networks</h3>
+
+<h3 id="10-6-recursive-neural-networks">10.6 Recursive Neural Networks</h3>
+
+<h3 id="10-7-the-challenge-of-long-term-dependencies">10.7 The Challenge of Long-Term Dependencies</h3>
+
+<h3 id="10-8-echo-state-networks">10.8 Echo State Networks</h3>
+
+<h3 id="10-9-leaky-units-and-other-strategies-for-multiple-time-scales">10.9 Leaky Units and Other Strategies for Multiple Time Scales</h3>
+
+<h3 id="10-10-the-long-short-term-memory-and-other-gated-rnns">10.10 The Long Short-Term Memory and Other Gated RNNs</h3>
+
+<h3 id="10-11-optimization-for-long-term-dependencies">10.11 Optimization for Long-Term Dependencies</h3>
+
+<h3 id="10-12-explicit-memory">10.12 Explicit Memory</h3>
+
+<h2 id="11-practical-methodology">11 Practical Methodology</h2>
+
+<h3 id="11-1-performance-metrics">11.1 Performance Metrics</h3>
+
+<h3 id="11-2-default-baseline-models">11.2 Default Baseline Models</h3>
+
+<h3 id="11-3-determining-whether-to-gather-more-data">11.3 Determining Whether to Gather More Data</h3>
+
+<h3 id="11-4-selecting-hyperparameters">11.4 Selecting Hyperparameters</h3>
+
+<h3 id="11-5-debugging-strategies">11.5 Debugging Strategies</h3>
+
+<h3 id="11-6-example-multi-digit-number-recognition">11.6 Example: Multi-Digit Number Recognition</h3>
+
+<h2 id="12-applications">12 Applications</h2>
+
+<h3 id="12-1-large-scale-deep-learning">12.1 Large-Scale Deep Learning</h3>
+
+<h3 id="12-2-computer-vision">12.2 Computer Vision</h3>
+
+<h3 id="12-3-speech-recognition">12.3 Speech Recognition</h3>
+
+<h3 id="12-4-natural-language-processing">12.4 Natural Language Processing</h3>
+
+<h3 id="12-5-other-applications">12.5 Other Applications</h3>
+
+<h1 id="iii-deep-learning-research">III Deep Learning Research</h1>
+
+<h2 id="13-linear-factor-models">13 Linear Factor Models</h2>
+
+<h3 id="13-1-probabilistic-pca-and-factor-analysis">13.1 Probabilistic PCA and Factor Analysis</h3>
+
+<h3 id="13-2-independent-component-analysis-ica">13.2 Independent Component Analysis (ICA)</h3>
+
+<h3 id="13-3-slow-feature-analysis">13.3 Slow Feature Analysis</h3>
+
+<h3 id="13-4-sparse-coding">13.4 Sparse Coding</h3>
+
+<h3 id="13-5-manifold-interpretation-of-pca">13.5 Manifold Interpretation of PCA</h3>
+
+<h2 id="14-autoencoders">14 Autoencoders</h2>
+
+<h3 id="14-1-undercomplete-autoencoders">14.1 Undercomplete Autoencoders</h3>
+
+<h3 id="14-2-regularized-autoencoders">14.2 Regularized Autoencoders</h3>
+
+<h3 id="14-3-representational-power-layer-size-and-depth">14.3 Representational Power, Layer Size and Depth</h3>
+
+<h3 id="14-4-stochastic-encoders-and-decoders">14.4 Stochastic Encoders and Decoders</h3>
+
+<h3 id="14-5-denoising-autoencoders">14.5 Denoising Autoencoders</h3>
+
+<h3 id="14-6-learning-manifolds-with-autoencoders">14.6 Learning Manifolds with Autoencoders</h3>
+
+<h3 id="14-7-contractive-autoencoders">14.7 Contractive Autoencoders</h3>
+
+<h3 id="14-8-predictive-sparse-decomposition">14.8 Predictive Sparse Decomposition</h3>
+
+<h3 id="14-9-applications-of-autoencoders">14.9 Applications of Autoencoders</h3>
+
+<h2 id="15-representation-learning">15 Representation Learning</h2>
+
+<h3 id="15-1-greedy-layer-wise-unsupervised-pretraining">15.1 Greedy Layer-Wise Unsupervised Pretraining</h3>
+
+<h3 id="15-2-transfer-learning-and-domain-adaptation">15.2 Transfer Learning and Domain Adaptation</h3>
+
+<h3 id="15-3-semi-supervised-disentangling-of-causal-factors">15.3 Semi-Supervised Disentangling of Causal Factors</h3>
+
+<h3 id="15-4-distributed-representation">15.4 Distributed Representation</h3>
+
+<h3 id="15-5-exponential-gains-from-depth">15.5 Exponential Gains from Depth</h3>
+
+<h3 id="15-6-providing-clues-to-discover-underlying-causes">15.6 Providing Clues to Discover Underlying Causes</h3>
+
+<h2 id="16-structured-probabilistic-models-for-deep-learning">16 Structured Probabilistic Models for Deep Learning</h2>
+
+<h3 id="16-1-the-challenge-of-unstructured-modeling">16.1 The Challenge of Unstructured Modeling</h3>
+
+<h3 id="16-2-using-graphs-to-describe-model-structure">16.2 Using Graphs to Describe Model Structure</h3>
+
+<h3 id="16-3-sampling-from-graphical-models">16.3 Sampling from Graphical Models</h3>
+
+<h3 id="16-4-advantages-of-structured-modeling">16.4 Advantages of Structured Modeling</h3>
+
+<h3 id="16-5-learning-about-dependencies">16.5 Learning about Dependencies</h3>
+
+<h3 id="16-6-inference-and-approximate-inference">16.6 Inference and Approximate Inference</h3>
+
+<h3 id="16-7-the-deep-learning-approach-to-structured-probabilistic-models">16.7 The Deep Learning Approach to Structured Probabilistic Models</h3>
+
+<h2 id="17-monte-carlo-methods">17 Monte Carlo Methods</h2>
+
+<h3 id="17-1-sampling-and-monte-carlo-methods">17.1 Sampling and Monte Carlo Methods</h3>
+
+<h3 id="17-2-importance-sampling">17.2 Importance Sampling</h3>
+
+<h3 id="17-3-markov-chain-monte-carlo-methods">17.3 Markov Chain Monte Carlo Methods</h3>
+
+<h3 id="17-4-gibbs-sampling">17.4 Gibbs Sampling</h3>
+
+<h3 id="17-5-the-challenge-of-mixing-between-separated-modes">17.5 The Challenge of Mixing between Separated Modes</h3>
+
+<h2 id="18-confronting-the-partition-function">18 Confronting the Partition Function</h2>
+
+<h3 id="18-1-the-log-likelihood-gradient">18.1 The Log-Likelihood Gradient</h3>
+
+<h3 id="18-2-stochastic-maximum-likelihood-and-contrastive-divergence">18.2 Stochastic Maximum Likelihood and Contrastive Divergence</h3>
+
+<h3 id="18-3-pseudolikelihood">18.3 Pseudolikelihood</h3>
+
+<h3 id="18-4-score-matching-and-ratio-matching">18.4 Score Matching and Ratio Matching</h3>
+
+<h3 id="18-5-denoising-score-matching">18.5 Denoising Score Matching</h3>
+
+<h3 id="18-6-noise-contrastive-estimation">18.6 Noise-Contrastive Estimation</h3>
+
+<h3 id="18-7-estimating-the-partition-function">18.7 Estimating the Partition Function</h3>
+
+<h2 id="19-approximate-inference">19 Approximate Inference</h2>
+
+<h3 id="19-1-inference-as-optimization">19.1 Inference as Optimization</h3>
+
+<h3 id="19-2-expectation-maximization">19.2 Expectation Maximization</h3>
+
+<h3 id="19-3-map-inference-and-sparse-coding">19.3 MAP Inference and Sparse Coding</h3>
+
+<h3 id="19-4-variational-inference-and-learning">19.4 Variational Inference and Learning</h3>
+
+<h3 id="19-5-learned-approximate-inference">19.5 Learned Approximate Inference</h3>
+
+<h2 id="20-deep-generative-models">20 Deep Generative Models</h2>
+
+<h3 id="20-1-boltzmann-machines">20.1 Boltzmann Machines</h3>
+
+<h3 id="20-2-restricted-boltzmann-machines">20.2 Restricted Boltzmann Machines</h3>
+
+<h3 id="20-3-deep-belief-networks">20.3 Deep Belief Networks</h3>
+
+<h3 id="20-4-deep-boltzmann-machines">20.4 Deep Boltzmann Machines</h3>
+
+<h3 id="20-5-boltzmann-machines-for-real-valued-data">20.5 Boltzmann Machines for Real-Valued Data</h3>
+
+<h3 id="20-6-convolutional-boltzmann-machines">20.6 Convolutional Boltzmann Machines</h3>
+
+<h3 id="20-7-boltzmann-machines-for-structured-or-sequential-outputs">20.7 Boltzmann Machines for Structured or Sequential Outputs</h3>
+
+<h3 id="20-8-other-boltzmann-machines">20.8 Other Boltzmann Machines</h3>
+
+<h3 id="20-9-back-propagation-through-random-operations">20.9 Back-Propagation through Random Operations</h3>
+
+<h3 id="20-10-directed-generative-nets">20.10 Directed Generative Nets</h3>
+
+<h3 id="20-11-drawing-samples-from-autoencoders">20.11 Drawing Samples from Autoencoders</h3>
+
+<h3 id="20-12-generative-stochastic-networks">20.12 Generative Stochastic Networks</h3>
+
+<h3 id="20-13-other-generation-schemes">20.13 Other Generation Schemes</h3>
+
+<h3 id="20-14-evaluating-generative-models">20.14 Evaluating Generative Models</h3>
+
+<h3 id="20-15-conclusion">20.15 Conclusion</h3>
+
+<h1 id="bibliography">Bibliography</h1>
+
+<h1 id="index">Index</h1>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

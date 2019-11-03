@@ -1,0 +1,2406 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>The Markdown Guide | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>The Markdown Guide</h1>
+
+
+<p>目录：</p>
+
+<ul>
+<li><a href="#1"># 1 Introduction</a>
+
+<ul>
+<li><a href="#1.1">## 1.1Where to Get This Books</a></li>
+<li><a href="#1.2">## 1.2 How to read This Books</a>
+
+<ul>
+<li><a href="#1.2.1">### 1.2.1 Beginner Resources</a></li>
+<li><a href="#1.2.2">### 1.2.2 Syntax Examples</a></li>
+<li><a href="#1.2.3">### 1.2.3 Asides</a></li>
+<li><a href="#1.2.4">### 1.2.4 Quirks</a></li>
+</ul></li>
+<li><a href="#1.3">## 1.3 Contrbuting</a></li>
+<li><a href="#1.4">## 1.4 Reporting Issues</a></li>
+<li><a href="#1.5">## 1.5 Acknowledgements</a></li>
+</ul></li>
+<li><a href="#2"># 2 Getting Started</a>
+
+<ul>
+<li><a href="#2.1">## 2.1 Kicking the Tires</a></li>
+<li><a href="#2.2">## 2.2 How Markdown Works</a></li>
+<li><a href="#2.3">## 2.3 Additional Resources</a></li>
+</ul></li>
+<li><a href="#3"># 3 Doing Things With Markdown</a>
+
+<ul>
+<li><a href="#3.1">## 3.1 Webstes</a></li>
+<li><a href="#3.2">## 3.2 Documents</a></li>
+<li><a href="#3.3">## 3.3 Notes</a></li>
+<li><a href="#3.4">## 3.4 Books</a></li>
+<li><a href="#3.5">## 3.5 Presentations</a></li>
+<li><a href="#3.6">## 3.6 Emails</a></li>
+<li><a href="#3.7">## 3.7 Documentation</a></li>
+</ul></li>
+<li><a href="#4"># 4 Basic Syntax</a>
+
+<ul>
+<li><a href="#4.1">## 4.1 Headings</a>
+
+<ul>
+<li><a href="#4.1.1">### 4.1.1 Alternate Syntax</a></li>
+</ul></li>
+<li><a href="#4.2">## 4.2 Paragraphs</a></li>
+<li><a href="#4.3">## 4.3 Line Breaks</a></li>
+<li><a href="#4.4">## 4.4 Emphasis</a>
+
+<ul>
+<li><a href="#4.4.1">### 4.4.1 Bold</a></li>
+<li><a href="#4.4.2">### 4.4.2 Italic</a></li>
+<li><a href="#4.4.3">### 4.4.3 Bold and Italic</a></li>
+</ul></li>
+<li><a href="#4.5">## 4.5 Blockquotes</a>
+
+<ul>
+<li><a href="#4.5.1">### 4.5.1 Blockquotes with Multiple Paragraphs</a></li>
+<li><a href="#4.5.2">### 4.5.2 Nested Blockquotes</a></li>
+<li><a href="#4.5.3">### 4.5.3 Blockquotes with Other Elements</a></li>
+</ul></li>
+<li><a href="#4.6">## 4.6 Lists</a>
+
+<ul>
+<li><a href="#4.6.1">### 4.6.1 Ordered Lists</a>
+
+<ul>
+<li><a href="#4.6.1.1">#### 4.6.1.1 Nesting List Items</a></li>
+</ul></li>
+<li><a href="#4.6.2">### 4.6.2 Unordered Lists</a>
+
+<ul>
+<li><a href="#4.6.2.1">#### 4.6.2.1 Nesting List Items</a></li>
+</ul></li>
+<li><a href="#4.6.3">### 4.6.3 Adding Elements in Lists</a>
+
+<ul>
+<li><a href="#4.6.3.1">#### 4.6.3.1 Paragraphs</a></li>
+<li><a href="#4.6.3.2">#### 4.6.3.2 Blockquotes</a></li>
+<li><a href="#4.6.3.3">#### 4.6.3.3 Code Blocks</a></li>
+<li><a href="#4.6.3.4">#### 4.6.3.4 Images</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#4.7">## 4.7 Code</a>
+
+<ul>
+<li><a href="#4.7.1">### 4.7.1 Escaping Tick Marks</a></li>
+<li><a href="#4.7.2">### 4.7.2 Code Blocks</a></li>
+</ul></li>
+<li><a href="#4.8">## 4.8 Horizontal Rules</a></li>
+<li><a href="#4.9">## 4.9 Links</a>
+
+<ul>
+<li><a href="#4.9.1">### 4.9.1 Adding Titles</a></li>
+<li><a href="#4.9.2">### 4.9.2 URLs and Email Address</a></li>
+<li><a href="#4.9.3">### 4.9.3 Formatting Links</a></li>
+<li><a href="#4.9.4">### 4.9.4 Reference-style Links</a>
+
+<ul>
+<li><a href="#4.9.4.1">#### 4.9.4.1 Formatting the First Part of the Link</a></li>
+<li><a href="#4.9.4.2">#### 4.9.4.2 Formatting the Second Part of the Link</a></li>
+<li><a href="#4.9.4.3">#### 4.9.4.3 An Example Putting the Parts Together</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#4.10">## 4.10 Images</a></li>
+<li><a href="#4.11">## 4.11 Escaping Characters</a>
+
+<ul>
+<li><a href="#4.11.1">### 4.11.1 Characters You Can Escape</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#5"># 5 Extendes Syntax</a>
+
+<ul>
+<li><a href="#5.1">## 5.1 Availability</a>
+
+<ul>
+<li><a href="#5.1.1">### 5.1.1 Lightweight Markup Languages</a></li>
+<li><a href="#5.1.2">### 5.1.2 Markdown Processors</a></li>
+</ul></li>
+<li><a href="#5.2">## 5.2 Tables</a>
+
+<ul>
+<li><a href="#5.2.1">### 5.2.1 Alignment</a></li>
+<li><a href="#5.2.2">### 5.2.2 Formatting Text in Tables</a></li>
+<li><a href="#5.2.3">### 5.2.3 Escaping Pipe Characters in Tables</a></li>
+</ul></li>
+<li><a href="#5.3">## 5.3 Fenced Code Bloks</a>
+
+<ul>
+<li><a href="#5.3.1">### 5.3.1  Synatax Highlighting</a></li>
+</ul></li>
+<li><a href="#5.4">## 5.4 Footnotes</a></li>
+<li><a href="#5.5">## 5.5 Heading IDs</a>
+
+<ul>
+<li><a href="#5.5.1">### 5.5.1 Linking to Heading IDs</a></li>
+</ul></li>
+<li><a href="#5.6">## 5.6 Definition Lists</a></li>
+<li><a href="#5.7">## 5.7 Strikethrough</a></li>
+<li><a href="#5.8">## 5.8 Task Lists</a></li>
+<li><a href="#5.9">## 5.9 Automatic URL Linking</a>
+
+<ul>
+<li><a href="#5.9.1">### 5.9.1 Disabling Automatic URL Linking</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#6"># 6 Cheat Sheet</a>
+
+<ul>
+<li><a href="#6.1">## 6.1 Basic Syntax</a></li>
+<li><a href="#6.2">## 6.2 Extended Syntax</a></li>
+</ul></li>
+<li><a href="#7"># 7 About the Author</a></li>
+</ul>
+
+<h1 id="1">1 Introduction</h1>
+
+<h2 id="1.1">1.1Where to Get This Books</h2>
+
+<h2 id="1.2">1.2 How to read This Books</h2>
+
+<h3 id="1.2.1">1.2.1 Beginner Resources</h3>
+
+<h3 id="1.2.2">1.2.2 Syntax Examples</h3>
+
+<h3 id="1.2.3">1.2.3 Asides</h3>
+
+<h3 id="1.2.4">1.2.4 Quirks</h3>
+
+<h2 id="1.3">1.3 Contrbuting</h2>
+
+<h2 id="1.4">1.4 Reporting Issues</h2>
+
+<h2 id="1.5">1.5 Acknowledgements</h2>
+
+<h1 id="2">2 Getting Started</h1>
+
+<h2 id="2.1">2.1 Kicking the Tires</h2>
+
+<h2 id="2.2">2.2 How Markdown Works</h2>
+
+<p>The short answer is that you need a Markdown application capable of processing the Markdown file. There are lots of applications available — everything from simple scripts to desktop applications that look like Microsoft Word. Despite their visual differences, all of the applications do the same thing. Like Dillinger, they all convert Markdown-formatted text to HTML so it can be displayed in web browsers.</p>
+
+<p>Markdown applications use something called a Markdown processor (alsocommonly referred to as a “parser” or an “implementation”) to take the Markdown-formatted text and output it to HTML format. At that point, your document can be viewed in a web browser or combined with a style sheet and printed. You can see a visual representation of this process below.</p>
+
+<h2 id="2.3">2.3 Additional Resources</h2>
+
+<ul>
+<li><a href="https://daringfireball.net/projects/markdown/">John Gruber’s Markdown documentation</a>. The original guide written by the creator of Markdown.</li>
+<li><a href="https://www.markdowntutorial.com/">Markdown Tutorial</a>. An open source website that allows you to try Markdown in your web browser.</li>
+<li><a href="https://github.com/mundimark/awesome-markdown">Awesome Markdown</a>. A list of Markdown tools and learning resources.</li>
+<li><a href="https://github.com/mundimark/awesome-markdown">Typesetting Markdown</a>. A multi-part series that describes an ecosystem for typesetting Markdown documents using pandoc and ConTeXt.</li>
+</ul>
+
+<h1 id="3">3 Doing Things With Markdown</h1>
+
+<p>注：</p>
+
+<ol>
+<li>这里作者似乎在讲怎么配置以在这些应用的环境下实现markdown功能。</li>
+</ol>
+
+<h2 id="3.1">3.1 Webstes</h2>
+
+<h2 id="3.2">3.2 Documents</h2>
+
+<h2 id="3.3">3.3 Notes</h2>
+
+<h2 id="3.4">3.4 Books</h2>
+
+<h2 id="3.5">3.5 Presentations</h2>
+
+<h2 id="3.6">3.6 Emails</h2>
+
+<h2 id="3.7">3.7 Documentation</h2>
+
+<h1 id="4">4 Basic Syntax</h1>
+
+<p>Nearly all Markdown applications support the basic syntax outlined in John Gruber’s original design document. There are minor variations and discrepancies between Markdown processors — those are noted inline wherever possible.</p>
+
+<blockquote>
+<p>Using Markdown doesn’t mean that you can’t also use HTML. You can add HTML tags to any Markdown file. This is helpful if you prefer certain HTML tags to Markdown syntax. For example, some people find that it’s easier to use HTML tags for images.</p>
+</blockquote>
+
+<h2 id="4.1">4.1 Headings</h2>
+
+<p>To create a heading, add number signs (#) in front of a word or phrase.The number of number signs you use should correspond to the heading level. For example, to create a heading level three (&lt;h3&gt;), use three number signs (e.g., ### My Header).</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p># Heading level 1<br />
+## Heading level 2<br />
+### Heading level 3<br />
+#### Heading level 4<br />
+##### Heading level 5<br />
+###### Heading level 6</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<h1 id="heading-level-1">Heading level 1</h1>
+
+<h2 id="heading-level-2">Heading level 2</h2>
+
+<h3 id="heading-level-3">Heading level 3</h3>
+
+<h4 id="heading-level-4">Heading level 4</h4>
+
+<h5 id="heading-level-5">Heading level 5</h5>
+
+<h6 id="heading-level-6">Heading level 6</h6>
+
+<hr />
+
+<h3 id="4.1.1">4.1.1 Alternate Syntax</h3>
+
+<p>Alternatively, on the line below the text, add any number of = characters for heading level 1 or - characters for heading level 2.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>Heading level 1<br />
+<code>======</code><br />
+Heading level 2<br />
+------</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<h1 id="heading-level-1-1">Heading level 1</h1>
+
+<h2 id="heading-level-2-1">Heading level 2</h2>
+
+<hr />
+
+<h2 id="4.2">4.2 Paragraphs</h2>
+
+<p>To create paragraphs, use a blank line to separate one or more lines of text. You should not indent paragraphs with spaces or tabs.要创建段落，请使用空行来分隔一行或多行文本。段落不应用空格或制表符来缩进。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>I really like using Markdown.<br />
+{blank line}<br />
+I think I'll use it from now on.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>I really like using Markdown.</p>
+
+<p>I think I'll use it from now on.</p>
+
+<hr />
+
+<h2 id="4.3">4.3 Line Breaks</h2>
+
+<p>To create a line break (&lt;br&gt;), end a line with two or more spaces, and then type return.至少两空格并回车，以达到行末换行的目的。
+Markdown</p>
+
+<hr />
+
+<p>This is the first line.{more than two space and then enter}<br />
+And this is the second line.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>This is the first line.<br />
+And this is the second line.</p>
+
+<hr />
+
+<h2 id="4.4">4.4 Emphasis</h2>
+
+<p>You can add emphasis by making text bold or italic.</p>
+
+<h3 id="4.4.1">4.4.1 Bold</h3>
+
+<p>To bold text, add two asterisks or underscores before and after a word or phrase. To bold the middle of a word for emphasis, add two asterisks without spaces around the letters.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>I love **bold text**.</p>
+
+<p>I love __bold text__.</p>
+
+<p>Love **is** bold</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>I love <strong>bold text</strong>.</p>
+
+<p>I love <strong>bold text</strong>.</p>
+
+<p>Love <strong>is</strong> bold</p>
+
+<hr />
+
+<h3 id="4.4.2">4.4.2 Italic</h3>
+
+<p>To italicize text, add one asterisk or underscore before and after a word or phrase. To italicize the middle of a word for emphasis, add one asterisk without spaces around the letters.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>The *cat's meow*.</p>
+
+<p>The _cat's meow_.</p>
+
+<p>A *cat meow*</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>The <em>cat's meow</em>.</p>
+
+<p>The <em>cat's meow</em>.</p>
+
+<p>A <em>cat</em> meow</p>
+
+<hr />
+
+<h3 id="4.4.3">4.4.3 Bold and Italic</h3>
+
+<p>To emphasize text with bold and italics at the same time, add three asterisks or underscores before and after a word or phrase.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>***Important*** text.</p>
+
+<p>___Important___ text.</p>
+
+<p>__*Important*__ text.</p>
+
+<p>**_Important_** text.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><strong><em>Important</em></strong> text.</p>
+
+<p><strong><em>Important</em></strong> text.</p>
+
+<p><strong><em>Important</em></strong> text.</p>
+
+<p><strong><em>Important</em></strong> text.</p>
+
+<hr />
+
+<h2 id="4.5">4.5 Blockquotes</h2>
+
+<p>To create a blockquote, add a &gt; in front of a paragraph.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>&gt; Dorothy followed her through many rooms.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<blockquote>
+<p>Dorothy followed her through many rooms.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="4.5.1">4.5.1 Blockquotes with Multiple Paragraphs</h3>
+
+<p>Blockquotes can contain multiple paragraphs. Add a &gt; on the blank lines between the paragraphs.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>&gt; This the first paragraph.<br />
+&gt;<br />
+&gt; And this is the second paragraph.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<blockquote>
+<p>This the first paragraph.</p>
+
+<p>And this is the second paragraph.</p>
+</blockquote>
+
+<hr />
+
+<h3 id="4.5.2">4.5.2 Nested Blockquotes</h3>
+
+<p>lockquotes can be nested. Add a &gt;&gt; in front of the paragraph you want to nest.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>&gt; This the first paragraph.<br />
+&gt;<br />
+&gt;&gt; And this is the nested paragraph.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<blockquote>
+<p>This the first paragraph.</p>
+
+<blockquote>
+<p>And this is the nested paragraph.</p>
+</blockquote>
+</blockquote>
+
+<hr />
+
+<h3 id="4.5.3">4.5.3 Blockquotes with Other Elements</h3>
+
+<p>Blockquotes can contain other Markdown formatted elements. Not all elements can be used — you’ll need to experiment to see which ones work.</p>
+
+<p>注：</p>
+
+<ol>
+<li>块索引中其它功能的实现，不一定都能，作者发现斜体和加粗还是有效。</li>
+</ol>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>&gt; ##### The quarterly results look great!<br />
+&gt;<br />
+&gt; - Revenue was off the chart.<br />
+&gt; - Profits were higher than ever.<br />
+&gt;<br />
+&gt; *Everything* is going **well**.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<blockquote>
+<h5 id="the-quarterly-results-look-great">The quarterly results look great!</h5>
+
+<ul>
+<li>Revenue was off the chart.</li>
+<li>Profits were higher than ever.</li>
+</ul>
+
+<p><em>Everything</em> is going <strong>well</strong>.</p>
+</blockquote>
+
+<hr />
+
+<h2 id="4.6">4.6 Lists</h2>
+
+<p>You can organize items into ordered and unordered lists.</p>
+
+<p>注：</p>
+
+<ol>
+<li>列表的实现需要保证列表全体独在一个段落并仅在一个段落，比如本列表含有2个项目（items），那应在项目1前和项目2后各有不少于一个空行并项目1、2之间不得有空行。</li>
+<li>列表的紧上文字可解释为列表的标题，如：我在这里的列表紧上加了“注：”即表示列表内的项目1、2均是注释。</li>
+<li>赘述一下，列表遇到空行方止。遇到换行符仅能换行，不能实现停止列表。</li>
+</ol>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>注：</p>
+
+<p>1. 列表的实现需要保证列表全体独在一个段落并仅在一个段落，比如本列表含有2个项目（items），那应在项目1前和项目2后各有不少于一个空行并项目1、2之间不得有空行。<br />
+2. 列表的紧上文字可解释为列表的标题，如：我在这里的列表紧上加了“注：”即表示列表内的项目1、2均是注释。<br />
+3. 赘述一下，列表遇到空行方止。遇到换行符仅能换行，不能实现停止列表。</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>列表的实现需要保证列表全体独在一个段落并仅在一个段落，比如本列表含有2个项目（items），那应在项目1前和项目2后各有不少于一个空行并项目1、2之间不得有空行。</li>
+<li>列表的紧上文字可解释为列表的标题，如：我在这里的列表紧上加了“注：”即表示列表内的项目1、2均是注释。</li>
+<li>赘述一下，列表遇到空行方止。遇到换行符仅能换行，不能实现停止列表。</li>
+</ol>
+
+<hr />
+
+<h3 id="4.6.1">4.6.1 Ordered Lists</h3>
+
+<p>To create an ordered list, add line items with numbers followed by periods. The numbers don’t have to be in numerical order, but the list should start with the number one.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. First item<br />
+2. Second item<br />
+3. Third item<br />
+4. Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ol>
+
+<hr />
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. First item<br />
+1. Second item<br />
+1. Third item<br />
+1. Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ol>
+
+<hr />
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. First item<br />
+8. Second item<br />
+3. Third item<br />
+5. Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ol>
+
+<hr />
+
+<h4 id="4.6.1.1">4.6.1.1 Nesting List Items</h4>
+
+<p>To nest line items in an ordered list, indent the items four spaces or one tab.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. First item<br />
+2. Second item<br />
+3. Third item<br />
+{a tab or four spaces}1. Indented item<br />
+{a tab or four spaces}2. Indented item<br />
+4. Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item
+
+<ol>
+<li>Indented item</li>
+<li>Indented item</li>
+</ol></li>
+<li>Fourth item</li>
+</ol>
+
+<hr />
+
+<h3 id="4.6.2">4.6.2 Unordered Lists</h3>
+
+<p>To create an unordered list, add dashes (-), asterisks (*), or plus signs (+) in front of line items. Indent one or more items to create a nested list.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>- First item<br />
+- Second item<br />
+- Third item<br />
+- Fourth ite</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth ite</li>
+</ul>
+
+<hr />
+
+<p>Markdown</p>
+
+<hr />
+
+<p>* First item<br />
+* Second item<br />
+* Third item<br />
+* Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ul>
+
+<hr />
+
+<p>Markdown</p>
+
+<hr />
+
+<p>+ First item<br />
+* Second item<br />
+- Third item<br />
++ Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+<li>Fourth item</li>
+</ul>
+
+<hr />
+
+<h4 id="4.6.2.1">4.6.2.1 Nesting List Items</h4>
+
+<p>To nest line items in an unordered list, indent the items four spaces or one tab.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>- First item<br />
+- Second item<br />
+- Third item<br />
+{a tab or four spaces}- Indented item<br />
+{a tab or four spaces}- Indented item<br />
+- Fourth item</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item
+
+<ul>
+<li>Indented item</li>
+<li>Indented item</li>
+</ul></li>
+<li>Fourth item</li>
+</ul>
+
+<hr />
+
+<h3 id="4.6.3">4.6.3 Adding Elements in Lists</h3>
+
+<p>To add another element in a list while preserving the continuity of the list, indent the element four spaces or one tab, as shown in the following examples.</p>
+
+<h4 id="4.6.3.1">4.6.3.1 Paragraphs</h4>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>* This is the first list item.<br />
+* Here's the second list item.</p>
+
+<p>{a tab or four spaces}I need to add another paragraph below the second list item.</p>
+
+<p>* And here's the third list item.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>This is the first list item.</li>
+
+<li><p>Here's the second list item.</p>
+
+<p>I need to add another paragraph below the second list item.</p></li>
+
+<li><p>And here's the third list item.</p></li>
+</ul>
+
+<hr />
+
+<h4 id="4.6.3.2">4.6.3.2 Blockquotes</h4>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>* This is the first list item.<br />
+* Here's the second list item.</p>
+
+<p>{a tab or four spaces}&gt; A blockquote would look great here.</p>
+
+<p>* And here's the third list item.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul>
+<li>This is the first list item.</li>
+
+<li><p>Here's the second list item.</p>
+
+<blockquote>
+<p>A blockquote would look great here.</p>
+</blockquote></li>
+
+<li><p>And here's the third list item.</p></li>
+</ul>
+
+<hr />
+
+<h4 id="4.6.3.3">4.6.3.3 Code Blocks</h4>
+
+<p>Code blocks are normally indented four spaces or one tab. When they’re in a list, indent them eight spaces or two tabs.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. Open the file.<br />
+2. Find the following code block on line 21:</p>
+
+<p>{two tabs or eight spaces}Test</p>
+
+<p>3. Update the title to match the name of your website.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>Open the file.</li>
+
+<li><p>Find the following code block on line 21:</p>
+
+<pre><code>Test
+</code></pre></li>
+
+<li><p>Update the title to match the name of your website.</p></li>
+</ol>
+
+<hr />
+
+<h4 id="4.6.3.4">4.6.3.4 Images</h4>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>1. Open the file containing Tux, the Linux mascot.<br />
+2. Marvel at its beauty.</p>
+
+<p>{a tab or four spaces}![Tux](images/tux.png)</p>
+
+<p>3. Close the file.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ol>
+<li>Open the file containing Tux, the Linux mascot.</li>
+
+<li><p>Marvel at its beauty.</p>
+
+<p><img src="images/tux.png" alt="Tux" /></p></li>
+
+<li><p>Close the file.</p></li>
+</ol>
+
+<hr />
+
+<h2 id="4.7">4.7 Code</h2>
+
+<p>To denote a word or phrase as code, enclose it in tick marks (`).</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>At the command prompt, type `nano`.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>At the command prompt, type <code>nano</code>.</p>
+
+<hr />
+
+<h3 id="4.7.1">4.7.1 Escaping Tick Marks</h3>
+
+<p>If the word or phrase you want to denote as code includes one or more tick marks, you can escape it by enclosing the word or phrase in double tick marks (``).</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>``Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file.``</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><code>Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file. Use `code` in your Markdown file.</code></p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>看作者示例，似乎````中间的``将直接显示，但看紧上示例，我的博客markdown环境似乎````仍解读为代码块。</li>
+</ol>
+
+<h3 id="4.7.2">4.7.2 Code Blocks</h3>
+
+<p>To create code blocks, indent every line of the block by at least four spaces or one tab.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>{a tab or four spaces}&lt;html&gt;<br />
+{a tab or four spaces}{a tab or four spaces}&lt;head&gt;<br />
+{a tab or four spaces}{a tab or four spaces}&lt;/head&gt;<br />
+{a tab or four spaces}&lt;/html&gt;</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<pre><code>&lt;html&gt;
+    &lt;head&gt;
+    &lt;/head&gt;
+&lt;/html&gt;
+</code></pre>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>代码块也可以用``````，若用紧上示例方式，标记代码块可每行前加至少一Tab，若代码本身有缩进，应相应增加Tab。</li>
+</ol>
+
+<h2 id="4.8">4.8 Horizontal Rules</h2>
+
+<p>To create a horizontal rule, use three or more asterisks (***), dashes (---), or underscores (___) on a line by themselves.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>本笔记正是靠这种方式呈现Markdown语法和其显示效果。</li>
+<li>最好使用___来表示水平线，如用---来表示水平线，将与标题（二级标题）的替代用法冲突。</li>
+</ol>
+
+<h2 id="4.9">4.9 Links</h2>
+
+<p>To create a link, enclose the link text in brackets (e.g., [Duck Duck Go]) and then follow it immediately with the URL in parentheses (e.g., (<a href="https://duckduckgo.com)">https://duckduckgo.com)</a>).</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>Use [Duck Duck Go](<a href="https://duckduckgo.com">https://duckduckgo.com</a>).</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>Use <a href="https://duckduckgo.com">Duck Duck Go</a>.</p>
+
+<hr />
+
+<h3 id="4.9.1">4.9.1 Adding Titles</h3>
+
+<p>You can optionally add a title for a link. This will appear as a tooltip when the user hovers over the link. To add a title, enclose it in parentheses after the URL.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>Use [Duck Duck Go](<a href="https://duckduckgo.com">https://duckduckgo.com</a> &quot;My search engine!&quot;).</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>Use <a href="https://duckduckgo.com" title="My search engine!">Duck Duck Go</a>.</p>
+
+<hr />
+
+<h3 id="4.9.2">4.9.2 URLs and Email Address</h3>
+
+<p>To quickly turn a URL or email address into a link, enclose it in angle brackets.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>&lt;<a href="https://eff.org&gt;">https://eff.org&gt;</a><br />
+&lt;fake@example.com&gt;</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><a href="https://eff.org">https://eff.org</a><br />
+<a href="mailto:fake@example.com">fake@example.com</a></p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>作者示例环境中，上述方法对网址和邮箱均有效，我的博客markdown环境仅对邮箱有效。</li>
+</ol>
+
+<h3 id="4.9.3">4.9.3 Formatting Links</h3>
+
+<p>To emphasize links, add asterisks before and after the brackets and parentheses.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>I love supporting **[EFF](<a href="https://eff.org)**">https://eff.org)**</a>.<br />
+This is the *[EFF](<a href="https://eff.org)*">https://eff.org)*</a>.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>I love supporting <strong><a href="https://eff.org">EFF</a></strong>.<br />
+This is the <em><a href="https://eff.org">EFF</a></em>.</p>
+
+<hr />
+
+<h3 id="4.9.4">4.9.4 Reference-style Links</h3>
+
+<p>Reference-style links are a special kind of link that make URLs easier to display and read in Markdown. Reference-style links are constructed in two parts: the part you keep inline with your text and the part you store somewhere else in the file to keep the text easy to read.</p>
+
+<h4 id="4.9.4.1">4.9.4.1 Formatting the First Part of the Link</h4>
+
+<p>The first part of a reference-style link is formatted with two sets of brackets. The first set of brackets surrounds the text that should appear linked. The second set of brackets displays a label used to point to the link you’re storing elsewhere in your document.</p>
+
+<p>Although not required, you can include a space between the first and second set of brackets. Also, the label in the second set of brackets is not case sensitive and can include letters, numbers, spaces, or punctuation.</p>
+
+<p>This means the following example formats are all roughly equivalent for the first part of the link:</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>[hobbit-hole][1]</p>
+
+<p>[hobbit-hole] [1]</p>
+
+<p>[hobbit-hole][a]</p>
+
+<p>[hobbit-hole][A]</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><a href="1" title="This is the first footnote. 
+">hobbit-hole</a></p>
+
+<p><a href="1" title="This is the first footnote. 
+">hobbit-hole</a></p>
+
+<p>[hobbit-hole][a]</p>
+
+<p>[hobbit-hole][A]</p>
+
+<hr />
+
+<p>注：</p>
+
+<p>1.如上示例，我的博客markdown环境仅支持前两种形式。按我理解，两个中括号，前一中括号内是文本中显示的内容，后一中括号是连接的编号，对应下面给出的链接。</p>
+
+<h4 id="4.9.4.2">4.9.4.2 Formatting the Second Part of the Link</h4>
+
+<p>The second part of a reference-style link is formatted with the following attributes:</p>
+
+<ol>
+<li>The label, in brackets, followed immediately by a colon and at least one space (e.g., [label]: ).</li>
+<li>The URL for the link, which you can optionally enclose in angle brackets.</li>
+<li>The optional title for the link, which you can enclose in double quotes, single quotes, or parentheses.</li>
+</ol>
+
+<p>This means the following example formats are all roughly equivalent for the second part of the link:</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>[hobbit-hole]: <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a><br />
+[hobbit-hole]: <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a> &quot;Hobbit lifestyles&quot;<br />
+[hobbit-hole]: <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a> 'Hobbit lifestyles'<br />
+[hobbit-hole]: <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a> (Hobbit lifestyles)<br />
+[hobbit-hole]: &lt;<a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;">https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;</a> &quot;Hobbit lifestyles&quot;<br />
+[hobbit-hole]: &lt;<a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;">https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;</a> 'Hobbit lifestyles'<br />
+[hobbit-hole]: &lt;<a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;">https://en.wikipedia.org/wiki/Hobbit#Lifestyle&gt;</a> (Hobbit lifestyles)</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>行内链接和参考式链接均不会显示链接，以上是参考式链接第二部分，当然不会有显。</li>
+</ol>
+
+<h4 id="4.9.4.3">4.9.4.3 An Example Putting the Parts Together</h4>
+
+<p>Say you add a URL as a standard URL link to a paragraph and it looks like this in Markdown:</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a [hobbit-hole](<a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a> &quot;Hobbit life\ 5 styles&quot;), and that means comfort.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle" title="Hobbit life\ 5 styles">hobbit-hole</a>, and that means comfort.</p>
+
+<hr />
+
+<p>Markdown</p>
+
+<hr />
+
+<p>In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a [hobbit-hole][1], and that means comfort.</p>
+
+<p>{can 1000 lines between the text and its URL}</p>
+
+<p>[1]: <a href="https://en.wikipedia.org/wiki/Hobbit#Lifestyle">https://en.wikipedia.org/wiki/Hobbit#Lifestyle</a> &quot;Hobbit lifestyles&quot;</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>In a hole in the ground there lived a hobbit. Not a nasty, dirty, wet hole, filled with the ends of worms and an oozy smell, nor yet a dry, bare, sandy hole with nothing in it to sit down on or to eat: it was a <a href="1" title="This is the first footnote. 
+">hobbit-hole</a>, and that means comfort.</p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>前者为行内链接，后者为参考式链接。</li>
+</ol>
+
+<h2 id="4.10">4.10 Images</h2>
+
+<p>To add an image, add an exclamation mark (!), followed by alt text in brackets, and the path or URL to the image asset in parentheses. You can optionally add a title after the URL in the parentheses.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>![Philadelphia's Magic Gardens. This place was so cool!](images/philly-magic-garden.png &quot;Philadelphia's Magic Gardens&quot;)</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><img src="images/philly-magic-garden.png" alt="Philadelphia's Magic Gardens. This place was so cool!" title="Philadelphia's Magic Gardens" /></p>
+
+<hr />
+
+<h2 id="4.11">4.11 Escaping Characters</h2>
+
+<p>To display a literal character that would otherwise be used to format text in a Markdown document, add a backslash (\) in front of the character.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>\* Without the backslash, this would be a bullet in an unordered list.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>* Without the backslash, this would be a bullet in an unordered list.</p>
+
+<hr />
+
+<h3 id="4.11.1">4.11.1 Characters You Can Escape</h3>
+
+<p>You can use a backslash to escape the following characters.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>\\<br />
+\`</p>
+
+<p>\*<br />
+\_<br />
+\{ \}<br />
+\[ \]<br />
+<code>\(</code> <code>\)</code><br />
+\#<br />
+\+<br />
+\-<br />
+\.<br />
+\!<br />
+\|</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>\<br />
+`</p>
+
+<p>*<br />
+_<br />
+{ }<br />
+[ ]<br />
+( )<br />
+#<br />
++<br />
+-<br />
+.<br />
+!<br />
+|</p>
+
+<hr />
+
+<h1 id="5">5 Extendes Syntax</h1>
+
+<p>The basic syntax outlined in John Gruber’s original design document added many of the elements needed on a day-to-day basis, but it wasn’t enough for some people. That’s where extended syntax comes in. Several individuals and organizations took it upon themselves to extend the basic syntax by adding additional elements like tables, code blocks, syntax highlighting, URL auto-linking, and footnotes. These elements can be enabled by using a lightweight markup language that builds upon the basic Markdown syntax, or by adding an extension to a compatible Markdown processor.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<h2 id="5.1">5.1 Availability</h2>
+
+<p>Extended syntax isn’t available in all Markdown applications. You’ll need to check whether or not the lightweight markup language your application is using supports extended syntax. If it doesn’t, it may still be possible to enable extensions in your Markdown processor.</p>
+
+<p>注：</p>
+
+<ol>
+<li>作者这里说了，扩展语法不是在每个markdown环境中均有效。</li>
+</ol>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<h3 id="5.1.1">5.1.1 Lightweight Markup Languages</h3>
+
+<p>There are several lightweight markup languages that are supersets of Markdown. They include Gruber’s basic syntax and build upon it by adding additional elements like tables, code blocks, syntax highlighting, URL auto-linking, and footnotes. Many of the most popular Markdown applications use one of the following lightweight markup languages:</p>
+
+<ul>
+<li>CommonMark</li>
+<li>GitHub Flavored Markdown (GFM)</li>
+<li>Markdown Extra</li>
+<li>MultiMarkdown</li>
+</ul>
+
+<p>注：</p>
+
+<ol>
+<li>作者说，以上三个轻量级标记语言（lightweight markup languages），从语法包含的内容上来说是markdown语法的超集。也即，此三者可实现markdown全部基本语法功能并增加了新的扩展功能。</li>
+</ol>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<h3 id="5.1.2">5.1.2 Markdown Processors</h3>
+
+<p>There are dozens of Markdown processors available. Many of them allow you to add extensions that enable extended syntax. Check your processor’s documentation for more information.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<h2 id="5.2">5.2 Tables</h2>
+
+<p>To add a table, use three or more hyphens (---) to create each column’s header, and use pipes (|) to separate each column. You can optionally add pipes on either end of the table.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>| Syntax | Description |<br />
+| ------ | ------ |<br />
+| Header | Title |<br />
+| Paragraph | Text |</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Header</td>
+<td>Title</td>
+</tr>
+
+<tr>
+<td>Paragraph</td>
+<td>Text</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<blockquote>
+<p>Creating tables with hyphens and pipes can be tedious. To speed up the process, try using the <strong><a href="http://www.tablesgenerator.com/markdown_tables">Markdown Tables Generator</a></strong>. Build a table using the graphical interface, and then copy the generated Markdown-formatted text into your file.</p>
+</blockquote>
+
+<h3 id="5.2.1">5.2.1 Alignment</h3>
+
+<p>You can align text in the columns to the left, right, or center by adding a colon (:) to the left, right, or on both side of the hyphens within the header row.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>| Syntax | Description | Test Text |<br />
+| :--- | :----: | ---: |<br />
+| Header | Title | Here's this |<br />
+| Paragraph | Text | And more |</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<table>
+<thead>
+<tr>
+<th align="left">Syntax</th>
+<th align="center">Description</th>
+<th align="right">Test Text</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Header</td>
+<td align="center">Title</td>
+<td align="right">Here's this</td>
+</tr>
+
+<tr>
+<td align="left">Paragraph</td>
+<td align="center">Text</td>
+<td align="right">And more</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<h3 id="5.2.2">5.2.2 Formatting Text in Tables</h3>
+
+<p>You can format the text within tables. For example, you can add links, code (words or phrases in tick marks (`) only, not code blocks), and emphasis. You can’t add headings, blockquotes, lists, horizontal rules, images, or HTML tags.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>| Syntax | Description | Test Text |<br />
+| :--- | :----: | ---: |<br />
+| Header | ```Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title``` | Here's this |<br />
+| Paragraph | Text | And more |</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<table>
+<thead>
+<tr>
+<th align="left">Syntax</th>
+<th align="center">Description</th>
+<th align="right">Test Text</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td align="left">Header</td>
+<td align="center"><code>Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title&lt;br&gt;Title</code></td>
+<td align="right">Here's this</td>
+</tr>
+
+<tr>
+<td align="left">Paragraph</td>
+<td align="center">Text</td>
+<td align="right">And more</td>
+</tr>
+</tbody>
+</table>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>显然表格内无法实现代码块（Code Bloks）语法，因其需要靠<strong>换行</strong>加一会车或四空格来确定代码块内的每行，而换行是表（table）的语法，所以两者将冲突。</li>
+<li>若说到表格内实现有栅栏的代码块（Fenced Code Bloks）语法（``````这种），可以使用，但代码块需要换行，而表内的``````的内部的&lt;br&gt;将不被解析只能直接显示。</li>
+</ol>
+
+<h3 id="5.2.3">5.2.3 Escaping Pipe Characters in Tables</h3>
+
+<p>You can display a pipe (|) character in a table by using its HTML character code (&amp;#124;).</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>\|<br />
+&amp;#124;</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>|<br />
+&#124;</p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>按上，直接显示|有两种办法，如下所示。</li>
+</ol>
+
+<h2 id="5.3">5.3 Fenced Code Bloks</h2>
+
+<p>The basic Markdown syntax allows you to create code blocks by indenting lines by four spaces or one tab. If you find that inconvenient, try using fenced code blocks. Depending on your Markdown processor or editor, you’ll use three tick marks (```) or three tildes(∼∼∼) on the lines before and after the code lock. The best part? You don’t have to indent any lines!</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>```<br />
+{<br />
+    &quot;firstName&quot;: &quot;John&quot;,<br />
+    &quot;lastName&quot;: &quot;Smith&quot;,<br />
+    &quot;age&quot;: 25<br />
+}<br />
+```</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<pre><code>{
+    &quot;firstName&quot;: &quot;John&quot;,
+    &quot;lastName&quot;: &quot;Smith&quot;,
+    &quot;age&quot;: 25
+}
+</code></pre>
+
+<hr />
+
+<h3 id="5.3.1">5.3.1  Synatax Highlighting</h3>
+
+<p>Many Markdown processors support syntax highlighting for fenced code blocks. This feature allows you to add color highlighting for whatever language your code was written in. To add syntax highlighting, specify a language next to the tick marks before the fenced code block.</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>```json<br />
+{<br />
+    &quot;firstName&quot;: &quot;John&quot;,<br />
+    &quot;lastName&quot;: &quot;Smith&quot;,<br />
+    &quot;age&quot;: 25<br />
+}<br />
+```</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<pre><code class="language-json">{
+    &quot;firstName&quot;: &quot;John&quot;,
+    &quot;lastName&quot;: &quot;Smith&quot;,
+    &quot;age&quot;: 25
+}
+</code></pre>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>我的博客markdown环境不支持语法高亮，语法高亮即变成语法对应的类（如函数等）将相应显示不同颜色。</li>
+</ol>
+
+<h2 id="5.4">5.4 Footnotes</h2>
+
+<p>Footnotes allow you to add notes and references without cluttering the body of the document. When you create a footnote, a superscript number with a link appears where you added the footnote reference. Readers can click the link to jump to the content of the footnote at the bottom of the page. 脚注允许您添加注释和引用，而不会打乱文档的主体。当您创建脚注时，在添加脚注引用的地方将出现一个带链接的上标数字。读者可以点击链接跳转到页面底部脚注的内容。</p>
+
+<p>To create a footnote reference, add a caret and an identifier inside brackets ([^1]). Identifiers can be numbers or words, but they can’t contain spaces or tabs. Identifiers only correlate the footnote reference with the footnote itself — in the output, footnotes are numbered sequentially. 要创建脚注引用，请在括号内添加插入符号和标识符（[^1]）。标识符可以是数字或单词，但不能包含空格或制表符（tabs）。标识符只将脚注引用与脚注本身关联—在输出中，脚注按顺序编号。</p>
+
+<p>Add the footnote using another caret and number inside brackets with a colon and text ([^1]: My footnote.). You don’t have to put footnotes at the end of the document. You can put them anywhere except inside other elements like lists, block quotes, and tables.使用括号内的另一个插入符号和数字加上冒号和文本添加脚注（[^1]: My footnote.）。不必在文件的末尾加上脚注。可将脚注放在任何位置，不放在列表（lists）、块引用（block quotes）和表（tables）内部即可。（注：不必将脚注放在文末，脚注内容将自动出现在文末。）</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>Here's a simple footnote,[^1] and here's a longer one.[^bignote]<br />
+[^1]: This is the first footnote.</p>
+
+<p>[^bignote]: Here's one with multiple paragraphs and code.&lt;br&gt;<br />
+{a tab or four spaces}Indent paragraphs to include them in the footnote.&lt;br&gt;<br />
+{a tab or four spaces}`{ my code }`&lt;br&gt;<br />
+{a tab or four spaces}Add as many paragraphs as you like.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>Here's a simple footnote,<sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup> and here's a longer one.<sup class="footnote-ref" id="fnref:bignote"><a href="#fn:bignote">2</a></sup></p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>脚注是对<strong>文本位置</strong>进行补充说明，格式为在需添加脚注的文本位置处添加[^标识符]，并在除列表快引用、表内部以外任何地方写下脚注的内容，格式为[^标识符]: 脚注文本。</li>
+<li>文本位置和脚注依靠标识符对应，标识符可取不包含空格符和制表符的任何字符，但无论取了什么合法的标识符，显示的标识符均将按照脚注出现在文本的位置自动从1开始。</li>
+<li>无论脚注放在什么位置，脚注文本均将自动出现在文末。</li>
+<li>按作者意思，其markdown环境下，脚注文本可分段，分段时候只需增加缩进（一个制表符或四个空格符）。但我博客markdown环境下，按作者方法脚注无法分段，增加缩进仅起到表明之后内容也属于脚注的作用。在缩进基础上再在段后加入分行符号（&lt;br&gt;），仍仅能分行而非真正分段。</li>
+</ol>
+
+<h2 id="5.5">5.5 Heading IDs</h2>
+
+<p>Many Markdown processors support custom IDs for headings — some Markdown processors automatically add them. Adding custom IDs allows you to link directly to headings and modify them with CSS. To add a custom heading ID, enclose the custom ID in curly braces on the same line as the heading.许多Markdown处理器支持标题的自定义id——一些Markdown处理器会自动添加它们。添加自定义id允许您直接链接到标题并用CSS修改它们。要添加自定义标题ID，请将自定义ID用大括号括起来，与标题位于同一行。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>### My Great Heading {#custom-id}</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<h3 id="custom-id">My Great Heading</h3>
+
+<hr />
+
+<h3 id="5.5.1">5.5.1 Linking to Heading IDs</h3>
+
+<p>You can link to headings with custom IDs in the file by creating a standard link with a number sign (#) followed by the custom heading ID.可以通过创建一个标准链接来链接到文件中带有自定义ID的标题，该链接的数字符号(#)后面跟着自定义标题ID。</p>
+
+<p>Other websites can link to the heading by adding the custom heading ID to the full URL of the webpage(e.g,[Heading IDs](https:/www.eff.org/page#heading-ids)).其他网站可以通过将自定义标题ID添加到网页的完整URL链接到标题（例如e.g,[Heading IDs](https:/www.eff.org/page#heading-ids)）。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>[Heading IDs](#heading-ids)</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><a href="#heading-ids">Heading IDs</a></p>
+
+<hr />
+
+<p>注：</p>
+
+<ol>
+<li>猜测此语法应能实现文章内部导航，即点击标题内容自动到达标题所对应的文字位置。暂未实验，待本文全部完成再来试验。</li>
+<li>确实此功能是用来根据标题进行页面导航，导航后页面顶端即目标标题，结合列表实现了目录功能。但是此方法应不是最好方法，暂时先这样。</li>
+<li>呈现博客文章内容最好的方式也许是根据标题折叠展开，当不需要看的时候折叠，当需要看的时候展开。Markdown能实现吗？</li>
+<li>VSCode中搜索toc，可其示例似乎可以<strong>自动</strong>生成<strong>可导航</strong>目录，有空试一下效果。</li>
+</ol>
+
+<h4 id="5-5-1-1">5.5.1.1</h4>
+
+<p>Markdown</p>
+
+<hr />
+
+<p><details>
+<summary>Title</summary></p>
+
+<p>content!!!
+</details></p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><details>
+<summary>CLICK ME</summary></p>
+
+<p><strong><summary>标签与正文间一定要空一行！！！</strong>
+</details></p>
+
+<hr />
+
+<p>这似乎是html语法，实现折叠功能，见于<a href="https://www.jianshu.com/p/3f13850d66ea">markdown折叠内容语法</a>。</p>
+
+<h2 id="5.6">5.6 Definition Lists</h2>
+
+<p>Some Markdown processors allow you to create definition lists of terms and their corresponding definitions. To create a definition list, type the term on the first line. On the next line, type a colon followed by a space and the definition.一些Markdown处理器允许您创建术语及其对应定义的定义列表。在第一行键入这个术语。在下一行中，键入冒号，后跟空格和定义。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>First Term<br />
+: This is the definition of the first term.</p>
+
+<p>Second Term<br />
+: This is one definition of the second term.<br />
+: This is another definition of the second term.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<dl>
+<dt>First Term</dt>
+<dd>This is the definition of the first term.</dd>
+<dt>Second Term</dt>
+<dd>This is one definition of the second term.</dd>
+<dd>This is another definition of the second term.</dd>
+</dl>
+
+<hr />
+
+<p>注:</p>
+
+<ol>
+<li>必须留空格。</li>
+</ol>
+
+<h2 id="5.7">5.7 Strikethrough</h2>
+
+<p>You can “strikethrough” words by putting a horizontal line through the center of them. This feature allows you to indicate that certain words are a mistake not meant for inclusion in the document. To strikethrough words, use two tilde symbols (∼∼) before and after the words.可以通过在单词中间画一条水平线来“划掉”单词。这个特性用来标记文内错误文字。错误文字前后使用两个波浪线（∼∼）来“划掉”此错误文字。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>The world is ~~flat~~ round.</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p>The world is <del>flat</del> round.</p>
+
+<hr />
+
+<h2 id="5.8">5.8 Task Lists</h2>
+
+<p>Task lists allow you to create a list of items with checkboxes. In Markdown applications that support task lists, checkboxes will be displayed next to the content. To create a task list, add dashes (-) and brackets with a space ([ ]) in front of task list items. To select a checkbox, add an <code>x</code> in between the brackets ([x]).任务列表允许您创建带有复选框的项列表。在支持任务列表的标记应用程序中，复选框将显示在内容旁边。要创建任务列表，请在任务列表项前添加破折号（-）和带<strong>空格</strong>（[ ]）的方括号。要选中复选框，在中括号内加<code>x</code>（[x]）。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>- [x] Write the press release<br />
+- [ ] Update the website<br />
+- [ ] Contact the media</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> Write the press release</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Update the website</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Contact the media</label></li>
+</ul>
+
+<hr />
+
+<h2 id="5.9">5.9 Automatic URL Linking</h2>
+
+<p>Many Markdown processors automatically turn URLs into links. That means if you type <a href="http://www.example.com">http://www.example.com</a>, your Markdown processor will automatically turn it into a link even though you haven’t used brackets.许多Markdown处理器自动将URL转换为链接。这意味着，如果您输入<a href="http://www.example.com，Markdown处理器将自动将其转换为链接，即使没有使用方括号。">http://www.example.com，Markdown处理器将自动将其转换为链接，即使没有使用方括号。</a></p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p><a href="http://www.example.com">http://www.example.com</a></p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><a href="http://www.example.com">http://www.example.com</a></p>
+
+<hr />
+
+<h3 id="5.9.1">5.9.1 Disabling Automatic URL Linking</h3>
+
+<p>If you don’t want a URL to be automatically linked, you can remove the link by denoting the URL as code with tick marks.如果不希望URL被自动链接，可以通过将URL标记为带有标记的代码来删除链接。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p>`<a href="http://www.example.com`">http://www.example.com`</a></p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><code>http://www.example.com</code></p>
+
+<hr />
+
+<h1 id="6">6 Cheat Sheet</h1>
+
+<p>This cheat sheet provides a quick overview of all the Markdown syntax elements. It can’t cover every edge case! If you need more information about any of these elements, refer back to the chapters on basic and extended syntax.此备忘单提供了所有Markdown语法元素的快速概览。它不能覆盖所有的边缘情况!如果您需要关于这些元素的更多信息，请参阅关于基本语法和扩展语法的章节。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<hr />
+
+<h2 id="6.1">6.1 Basic Syntax</h2>
+
+<p>These are the elements outlined in John Gruber’s original design document. All Markdown applications support these elements.这些是John Gruber的原始设计文档中概述的元素。所有的Markdown应用程序都支持这些元素。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p><strong><em>Heading</em></strong><br />
+# H1<br />
+## H2<br />
+### H3</p>
+
+<p><strong><em>Bold</em></strong><br />
+**bold text**</p>
+
+<p><strong><em>Italic</em></strong><br />
+*italicized text*</p>
+
+<p><strong><em>Blockquote</em></strong></p>
+
+<p>&gt; blockquote</p>
+
+<p><strong><em>Ordered list</em></strong></p>
+
+<p>1. First item<br />
+2. Second item<br />
+3. Third item</p>
+
+<p><strong><em>Unordered list</em></strong></p>
+
+<p>- First item<br />
+- Second item<br />
+- Third item</p>
+
+<p><strong><em>Code</em></strong><br />
+`code`</p>
+
+<p><strong><em>Horizontal Rule</em></strong><br />
+___</p>
+
+<p><strong><em>Link</em></strong><br />
+[title](<a href="https://www.example.com">https://www.example.com</a>)</p>
+
+<p><strong><em>Image</em></strong><br />
+![alt text](image.jpg)</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><strong><em>Heading</em></strong></p>
+
+<h1 id="h1">H1</h1>
+
+<h2 id="h2">H2</h2>
+
+<h3 id="h3">H3</h3>
+
+<p><strong><em>Bold</em></strong><br />
+<strong>bold text</strong></p>
+
+<p><strong><em>Italic</em></strong><br />
+<em>italicized text</em></p>
+
+<p><strong><em>Blockquote</em></strong></p>
+
+<blockquote>
+<p>blockquote</p>
+</blockquote>
+
+<p><strong><em>Ordered list</em></strong></p>
+
+<ol>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+</ol>
+
+<p><strong><em>Unordered list</em></strong></p>
+
+<ul>
+<li>First item</li>
+<li>Second item</li>
+<li>Third item</li>
+</ul>
+
+<p><strong><em>Code</em></strong><br />
+<code>code</code></p>
+
+<p><strong><em>Horizontal Rule</em></strong></p>
+
+<hr />
+
+<p><strong><em>Link</em></strong><br />
+<a href="https://www.example.com">title</a></p>
+
+<p><strong><em>Image</em></strong><br />
+<img src="image.jpg" alt="alt text" /></p>
+
+<hr />
+
+<h2 id="6.2">6.2 Extended Syntax</h2>
+
+<p>These elements extend the basic syntax by adding additional features. Not all Markdown applications support these elements.这些元素通过添加附加功能扩展了基本语法。并非所有的Markdown应用程序都支持这些元素。</p>
+
+<p>Markdown</p>
+
+<hr />
+
+<p><strong><em>Table</em></strong></p>
+
+<p>|Syntax|Description|<br />
+|------|------|<br />
+|Header|Title|<br />
+|Paragraph|Text|</p>
+
+<p><strong><em>Fencd Code Block</em></strong><br />
+```<br />
+{<br />
+    &quot;firstName&quot;: &quot;John&quot;,<br />
+    &quot;lastName&quot;: &quot;Smith&quot;<br />
+}<br />
+```<br />
+<strong><em>Footnote</em></strong><br />
+Here's a sentence with a footnote. [^1]</p>
+
+<p><strong><em>Heading IDs</em></strong><br />
+### My Great Heading {#custom-id}</p>
+
+<p><strong><em>Definition List</em></strong></p>
+
+<p>term<br />
+: definition</p>
+
+<p><strong><em>Strikethrough</em></strong><br />
+~~The world is flat.~~</p>
+
+<p><strong><em>Task List</em></strong></p>
+
+<p>- [x] Write the press release<br />
+- [ ] Update the website<br />
+- [ ] Contact the media</p>
+
+<hr />
+
+<p>Display</p>
+
+<hr />
+
+<p><strong><em>Table</em></strong></p>
+
+<table>
+<thead>
+<tr>
+<th>Syntax</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>Header</td>
+<td>Title</td>
+</tr>
+
+<tr>
+<td>Paragraph</td>
+<td>Text</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong><em>Fencd Code Block</em></strong></p>
+
+<pre><code>{
+    &quot;firstName&quot;: &quot;John&quot;,
+    &quot;lastName&quot;: &quot;Smith&quot;
+}
+</code></pre>
+
+<p><strong><em>Footnote</em></strong><br />
+Here's a sentence with a footnote. <sup class="footnote-ref" id="fnref:1"><a href="#fn:1">1</a></sup></p>
+
+<p><strong><em>Heading IDs</em></strong></p>
+
+<h3 id="custom-id-1">My Great Heading</h3>
+
+<p><strong><em>Definition List</em></strong></p>
+
+<dl>
+<dt>term</dt>
+<dd>definition</dd>
+</dl>
+
+<p><strong><em>Strikethrough</em></strong><br />
+<del>The world is flat.</del></p>
+
+<p><strong><em>Task List</em></strong></p>
+
+<ul class="task-list">
+<li><label><input type="checkbox" checked disabled class="task-list-item"> Write the press release</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Update the website</label></li>
+<li><label><input type="checkbox" disabled class="task-list-item"> Contact the media
+___</label></li>
+</ul>
+
+<h1 id="7">7 About the Author</h1>
+
+<p>Matt Cone is a technical writer at Fastly. He has experience creating documentation for organizations like Linode and the U.S.Department of Health and Human Services. Matt’s first book, Master Your Mac, was published by No Starch Press. To get in touch with Matt, visit <a href="http://mattcone.com">http://mattcone.com</a>. 作者Matt Cone是Fastly的技术作家。他有为Linode和美国卫生及公众服务部等组织编写文档的经验。Matt的第一本书《掌握你的Mac》是由No Starch出版社出版。请访问<a href="http://mattcone.com与Matt联系。">http://mattcone.com与Matt联系。</a></p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">This is the first footnote. 
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+
+<li id="fn:bignote"><p>Here's one with multiple paragraphs and code.<br>
+Indent paragraphs to include them in the footnote.<br>
+<code>{ my code }</code><br>
+Add as many paragraphs as you like.    </p>
+ <a class="footnote-return" href="#fnref:bignote"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

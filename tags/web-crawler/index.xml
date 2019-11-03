@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>web crawler on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/web-crawler/</link>
+    <description>Recent content in web crawler on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Aug 2019 16:37:55 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/web-crawler/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Selenium</title>
+      <link>https://chen-feiyang.github.io/posts/selenium/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:55 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/selenium/</guid>
+      <description>又是爬虫，我似乎跟爬虫干上了。同事教了我selenium并要求我将房天下此页面分区域、近一年的数据爬下来。同事已经实现，现在的问题是：手动确实能实现，但是由于量大很费时，因此需要改一下代码，使得可以更加自动实现。</description>
+    </item>
+    
+    <item>
+      <title>Scrapy</title>
+      <link>https://chen-feiyang.github.io/posts/scrapy/</link>
+      <pubDate>Mon, 12 Aug 2019 16:37:26 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/scrapy/</guid>
+      <description>之前没学过爬虫，这次需要我去运维爬虫，所以这次找了本书专门学一下。《精通Scrapy网络爬虫》。学习有5天了，学到了第十章模拟登录，也说不上有什么很大体会。但是，关于选书，这本还是不错的，上面的示例经我验证均能成功运行，这得益于作者示例选的网站是专门供爬虫练习者使用的。
+我理解爬虫的难点：1.网站多不喜欢被爬，因此会设置障碍并持续改进以阻挡爬虫。2.解析（prase，会用到xpath、css）爬取的内容是关键，怎么从一堆代码中提取有用信息，我遇到的难点就在这。3.要循序渐进，否则劳而无功或劳得微功。
+照着《精通Scrapy网络爬虫》敲了对应示例，发现最大困难是选择器的运用，css和xpath。同事说scrapy的css选择器跟前端的css选择器是不同的，建议我完全使用xpath解析器。而且，在运行爬虫scrapy scrawl xx会得到log信息，出现2019-08-21 19:49:07 [scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301) to &amp;lt;GET https://matplotlib.org/robots.txt&amp;gt; from &amp;lt;GET http://matplotlib.org/robots.txt&amp;gt;，[scrapy.downloadermiddlewares.redirect] DEBUG: Redirecting (301)代表网页重定向，重定向之后自然解析不到内容。或者还要注意[scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt:，我这次运行出现一行2019-08-21 19:49:08 [scrapy.downloadermiddlewares.robotstxt] DEBUG: Forbidden by robots.txt: &amp;lt;GET http://matplotlib.org/examples/index.html&amp;gt;，
+那么问题来了：在哪里可以看到xpath选择器语法的官方文档呢？ 答：W3C xpath cover page是scrapy给出的xpath链接，其上显示2017-03-21发布了XML Path Language (XPath) 3.1。太长的英文，所以等遇到其他有错误嫌疑再来细看此文吧。同事推荐了Xpath和CSS选择器的使用详解、CSS 选择器参考手册、xpath如何取包含多个class属性、XPath详解，总结、Xpath string()提取多个子节点中的文本、使用 lxml 中的 xpath 高效提取文本与标签属性值、Xpath判断某个属性是否包含或不包含指定的属性或值等博文，均是同事认为不错的，遇到不懂的还是首先看看同事给的资料，而不是即刻网络搜索。
+什么是xpath？ xpath使用路径表达式在xml文档中进行导航；xpatth包含一个标准函数库；xpath是xslt中的主要元素，xpath是一个w3c标准。
+xpath术语： 在xpath中，有七种类型的节点：元素、属性、文本、命名空间、处理指令、注释以即文档（根）节点。XML文档是一种被作为节点树来对待的。树的根被称为文档节点或者根节点。
+请看下面这个XML文档：
+&amp;lt;?xml version=&amp;quot;1.0&amp;quot; encoding=&amp;quot;ISO-8859-1&amp;quot;?&amp;gt; &amp;lt;bookstore&amp;gt; &amp;lt;book&amp;gt; &amp;lt;title lang=&amp;quot;en&amp;quot;&amp;gt;Harry Potter&amp;lt;/title&amp;gt; &amp;lt;author&amp;gt;J K. Rowling&amp;lt;/author&amp;gt; &amp;lt;year&amp;gt;2005&amp;lt;/year&amp;gt; &amp;lt;price&amp;gt;29.99&amp;lt;/price&amp;gt; &amp;lt;/book&amp;gt; &amp;lt;/bookstore&amp;gt;  上面的XML文档中的节点例子：
+&amp;lt;bookstore&amp;gt; （文档节点） &amp;lt;author&amp;gt;J K.</description>
+    </item>
+    
+  </channel>
+</rss>

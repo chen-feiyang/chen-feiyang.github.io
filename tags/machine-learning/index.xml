@@ -6,10 +6,56 @@
     <description>Recent content in machine learning on Feiyang Chen&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Jan 2019 21:43:45 +0800</lastBuildDate>
+    <lastBuildDate>Sun, 28 Jul 2019 22:58:19 +0800</lastBuildDate>
     
 	<atom:link href="https://chen-feiyang.github.io/tags/machine-learning/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Kaggle之House Prices: Advanced Regression Techniques竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/hpart/</link>
+      <pubDate>Sun, 28 Jul 2019 22:58:19 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/hpart/</guid>
+      <description> 项目介绍： 竞赛数据集为Ames Housing dataset，是一个房价销售的数据集，需据此预测房屋销售价格，误差度量要求采用实际售价与预测售价的对数的均方根误差（RMSE），在此度量标准下，关注的不是实际售价和预测售价的差值，而是其比值。
+项目成绩： 我的迄今最好成绩是0.10616，也就是实际售价与预测售价之比平均约为e的0.10616次方（约等于1.1120），目前排名29/4413。成绩见于https://www.kaggle.com/c/house-prices-advanced-regression-techniques/leaderboard，名称feiyang0chen1。
+项目心得体会：  若未认真理解项目需求，采用不经对数转换的RMSE，也许成绩停留在0.15；若不经对数转换，采用RMSLE（对数均方根误差），也许误差停留在0.14。显然损失函数决定优化的方向，这两种情况均因偏离项目要求的优化方向难以取得更好表现。 单个模型最好的是线性回归，发现对严重偏离正态分布的特征进行转换可提高成绩。 线性模型需要特征矩阵之间线性无关，PCA可以做到，但将过滤掉一些有用信息。若不采用PCA，可引入正则化项抑制线性模型特征对应的系数，这也是一种特征选择的方法，视正则化项的不同分别为lasso、ridge、elasticnet。 分类变量最理想的情况应该平衡，查阅文献，对于高分化分类变量（即含有很多分类，一些分类含有极少的数据点rare category），应采用target encoding而不是onehot encoding，target encoding可以采取忽视rare category的策略以减少杂讯。本案例分类变量虽不是特别高分化，但某些分类所含的数据点只有6个，应具有类似特点。但是发现target encoding没有提高成绩。 数据集含有较多的缺失数据，对于一些特征列，有相互印证的数据列比较好填补缺失值，没有这些印证信息的缺失数据，可采用删除数据点、删除特征列，或补入均值、中值、众值、回归（分类）等，回归（分类）又涉及到具体该采用什么模型什么特征列等，变数很多，查阅文献暂没有绝对优势的策略。补入虽然补充了信息但也引入了杂讯，一般认为补充中值、众值将使模型更鲁棒。 离群值，检索数据集，含有一个特征名为MSZoning，是标注地产商业性质的分类变量。通过分析此变量，发现在大多数特征点为各种住宅地产，极少数是工业或其他地产。自然想到有些数据点为离群值。而且，常识判断，与总售价最相关的是总使用面积GrLivArea，分析相关性也证明了这一点。根据总使用面积和总售价的联合分布，有些数据点是明显偏离的。单变量离群值分析，可假设此变量服从某分布，再排除概率小于某值比如1%的范围区间内的值，但这种判断方法应无益于机器学习问题。机器学习中可将模型残差大于一定值的数据点视为域外值，但选择什么特征建立模型、选择什么模型、残差大于多少判断为残差目前似乎没有公论，只能视具体情况试验。而且，排除过多数据点将使预测数据集的分布过多偏离训练数据。这违背机器学习的根本假设即数据同分布。 若特征数量较少，可直观地判断欠拟合和过拟合；当纬度较大时，可通过判断验证数据集上的表现来减小过拟合，但仍不能根绝。异源的模型组合可进一步减少过拟合以提高表现，假设两个模型的预测不同，具体到某一数据点，若真实值不在两模型预测值之间，此点模型融合的表现将是单个模型表现的某权值组合的加权平均；但也很可能实际值处在两模型预测值之间，此点模型融合的表现将优于单个模型，所以模型融合较大概率对表现有提升，我的模型的明显提升也正是来源于此，几个RMSE在0.11上下的模型平均后RMSE为0.106，优于任一单个模型的表现。可任意武断假设模型的权值，这在sklearn里面可通过VotingRegressor实现。当然模型融合的权值也是可以通过学习得到的，mlxtend中便捷函数StackingRegressor，设置meta_regressor为线性模型并线性模型设置fit_intercept=False可学习权值。当然meta_regressor也可不是线性模型甚至融合模型让基础模型的特征重新参与训练，这正是堆叠stack的含义。基础模型的预测作为特征重新参与建模将造成过拟合/泄露，可以让基础模型的预测来自k折后的k个训练数据形成的模型的折外数据点的预测（out-of-fold predictions），这可通过StackingCVRegressor实现。 关于模型的特征数量和特征选择：模型的特征数量影响计算速度并模型复杂度，过度复杂的模型容易产生过拟合。分类变量的编码方式将改变潜在特征数，lasso、基于树的模型等可自动选择特征。 最终模型取自特定补充缺失值策略、分类变量编码策略、排除离群值策略、PCA、基础模型选择、模型融合策略的组合，很难相信这是最优解，但结果尚可。 鉴于我的模型表现与排行榜仍有较大差距，猜测也许数据更适于采用某一非线性模型。可实现非线性的模型主要有：1基于树的模型，2线性模型采用非线性核函数，3.深度模型采用非线性激活函数。基于树的模型如决策树、提升等不能取得优于线性模型的表现是因为训练数据点较少时基于树的模型将不够顺滑，这将使预测表现不够好。当训练数据点较少时候，以决策树为例，若训练数据点含n个独特值，那么模型的预测值也将不外乎这n个独特值。提升算法的情况类似，虽然权值将导致预测的可能取值稍微增加，但仍不可避免比较稀疏，这将导致在非训练数据上表现不佳。而线性模型采用非线性核函数将不产生类似基于树模型同类的稀疏，但是，其非线性是不可学习的，只能作为高参调参，而且非线性高参可调弹性比较小，比方采用多项式核，其次数只能为整数。深度学习可学习非线性本身，也许进一步提升模型性能的方向在此。 以上体会基于此项目的一些经验或我的一些主观猜测，错漏之处在所难免，应进一步夯实。  </description>
+    </item>
+    
+    <item>
+      <title>Dont_overfit_ii</title>
+      <link>https://chen-feiyang.github.io/posts/dont_overfit_ii/</link>
+      <pubDate>Fri, 12 Apr 2019 17:02:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/dont_overfit_ii/</guid>
+      <description>2019/4/9开始kaggle的Don&#39;t Overfit! II竞赛，竞赛含250条训练数据，需要据此预测19.8k条数据的目标值。特征300个，目标值为0-1变量，训练样本含正样本160条，负样本90条。
+kaggle的Don&#39;t Overfit! II竞赛。
+显然，此竞赛的特点是小样本和不平衡样本。
+关于小样本的解决参考4；关于不平衡数据参考2。
+注意：不平衡数据不会造成过拟合，不平衡数据倾向于归入大分类的误分类，AUCROC是度量这种误分类的度量函数。？？？？？？
+关于不平衡：
+按参考2，解决不平衡学习问题的五种方法包括： 1. Up-sample the minority class对少数分类升采样 2. Down-sample the majority class对多数分类降采样 3. Change your performance metric改变度量函数 4. Penalize algorithms (cost-sensitive training)惩罚算法（即代价敏感训练） 5. Use tree-based algorithms采用基于树的算法
+COSTCLA、costsensitive包可实现方法4。
+按TOM FAWCETT，分类问题不能简单地预测标签。因为但： 1. 预测标签浪费很多信息，概率才是更重要的。 2. 虽然很多分类学习器都有预测概率这个功能，但很可能其简单以0.5作为阈值划分分类标签的依据。由于算法、数据不平衡和训练测试数据集标签比例不均衡等原因，此模型所谓的”概率“是不准确的，所以不可以简单以0.5作概率阈值。 3. 在概率不准情况下需要选择合适的概率阈值作为划分标签的依据。 4.也可以校准，在sklearn中有sklearn.calibration.CalibratedClassifierCV。TOM FAWCETT先生的意思我并没有叙述准确，详见其博客（参考4、5）。
+那么将train分成tra、val，选取学习器比如逻辑回归，高参由tra进行cv获取，运用全部tra并cv获取的高参训练模型。查看模型对tra和val的aucroc，比较tra和val的aucroc，若接近说明没有过拟合，可用这个模型对test进行预测。class_weight需使weigh乘以分类样本数得到的乘积平衡，在sklearn可选‘balanced’。其他包应根据分类样本数自己设定。
+第一步选择逻辑回归，重复上行过程，这个结果作为基础，其他学习器的结果需好于此学习器。
+参考：
+ 1.Investigation on handling Structured &amp;amp; Imbalanced Datasets with Deep Learning； 2.EXPLAINERS TUTORIALS__How to Handle Imbalanced Classes in Machine Learning； 3.Cost-sensitive 分类算法——综述与实验； 4.</description>
+    </item>
+    
+    <item>
+      <title>Kaggle之Store item demand forecasting challenge竞赛项目总结</title>
+      <link>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</link>
+      <pubDate>Sun, 03 Mar 2019 22:06:58 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/store_item_demand_forecasting_challenge/</guid>
+      <description>1.项目情况 kaggle的Store Item Demand Forecasting Challenge竞赛， 有2013年初到2017年末10个商店、50种货物每日销量情况，预测2018年头3个月这些商店、货物的每日销售情况。竞赛要求结果采用SMAPE度量。 $$SMAPE=100 \text{%} \frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2}$$ $A_i$代表第i个样本的真实值，$F_i$代表第i个样本的预测值。
+2.项目成绩 以下代码采用2014年、2015年和2016年数据用于训练，2017年数据用于验证，模型采用损失函数RMSE，度量函数SMAPE。得到训练smape约12.30[11]，2017年smape为11.860766606767626[12]，2014年第一季度smape为14.645917711865364[3]，2015年第一季度smape为14.091883155407277[4]，2016年第一季度smape为13.476791353148277[5]，2017年第一季度smape为13.301776762020786[6]。据此推断2018年第一季度smape约12.5846141148，与竞赛最优成绩12.58015相当，可惜不在竞赛时段，无法最终验证。依据如下：
+损失函数采用RMSE， $$RMSE=\sqrt{\frac{1}{n} \sum_{i=1}^{n} {(A_i-F_i)}^{2}}$$ 其关注的是绝对误差，而且RMSE对绝对误差的离散程度容忍较小，个体绝对误差偏离均值将显著增加RMSE，因此RMSE倾向于减小绝对误差并使绝对误差尽可能均一化。 模型的绝对误差接近均一化，但是由于实际销量情况随时间是不平衡的，这就是造成smape差异的原因。
+为估计2018年第一季度smape，作如下假设：
+ SMAPE约等于销量绝对误差的平均值除以销量的平均值。即： $$SMAPE=\frac{1}{n} \sum_{i=1}^{n} \frac{|A_i-F_i|}{(|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} (|A_i|+|F_i|)/2} \approx \frac{\frac{1}{n} \sum_{i=1}^{n} |A_i-F_i|}{\frac{1}{n} \sum_{i=1}^{n} |A_i|}$$ 2018年第一季度销量平均值取自2013年第一季度、2014年第一季度、2015年第一季度、2016年第一季度、2017年第一季度销量平均值的最小二乘法线性插值。  smape计算
+   时间 平均绝对误差[8] 平均销量[9] smape     2014q1 572.6247872118 39.097911[1] 14.645917711865364[3]   2015q1 574.5670977178 40.772911[1] 14.091883155407277[4]   2016q1 594.8380237664 44.137956[1] 13.476791353148277[5]   2017q1 609.</description>
+    </item>
     
     <item>
       <title>Adaboost2</title>
@@ -19,6 +65,109 @@
       <guid>https://chen-feiyang.github.io/posts/adaboost2/</guid>
       <description>sklearn文档介绍AdaBoostRegressor采用的算法是AdaBoost.R2，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有改进，下文全文翻译AdaBoost.R2发明人论文，当然，遇有不懂的我将找资料再去了解。
 Abstract摘要 In the regression context, boosting and bagging are techniques to build a committee of regressors that may be superior to a single regressor. We use regression trees as fundamental building blocks in bagging committee machines and boosting committee machines. Performance is analyzed on three non-linear functions and the Boston housing database. In all cases, boosting is at least equivalent, and in most cases better than bagging in terms of prediction error.</description>
+    </item>
+    
+    <item>
+      <title>Adaboost1</title>
+      <link>https://chen-feiyang.github.io/posts/adaboost1/</link>
+      <pubDate>Wed, 26 Dec 2018 15:04:08 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/adaboost1/</guid>
+      <description>sklearn文档介绍AdaBoostClassifier采用的算法是SAMME和SAMME.R，在多分类时候此两种算法相对Freund等AdaBoost发明人的原算法有优势，下文全文翻译SAMME和SAMME.R发明人论文，当然，遇有不懂的我将找资料再去了解。
+1 Introduction介绍 Boosting has been a very successful technique for solving the two-class classiﬁcation problem. It was ﬁrst introduced by Freund &amp;amp; Schapire (1997), with their AdaBoost algorithm. In going from two-class to multi-class classiﬁcation, most boosting algorithms have been restricted to reducing the multi-class classiﬁcation problem to multiple two-class problems, e.g. Freund &amp;amp; Schapire (1997), Schapire (1997), Schapire &amp;amp; Singer (1999), Allwein, Schapire &amp;amp; Singer (2000), Friedman, Hastie &amp;amp; Tibshirani (2000), Friedman (2001).</description>
+    </item>
+    
+    <item>
+      <title>集成学习ensemble_learning</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</link>
+      <pubDate>Thu, 20 Dec 2018 21:58:16 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0ensemble_learning/</guid>
+      <description>The goal of ensemble methods is to combine the predictions of several base estimators built with a given learning algorithm in order to improve generalizability / robustness over a single estimator.集成方法的目标是将多个基本估计器的预测与给定的学习算法结合起来，以提高单个估计器的可通用性/鲁棒性。
+Two families of ensemble methods are usually distinguished:通常分成两类不同的集成方法：
+ In averaging methods, the driving principle is to build several estimators independently and then to average their predictions. On average, the combined estimator is usually better than any of the single base estimator because its variance is reduced.</description>
+    </item>
+    
+    <item>
+      <title>决策树decision_tree</title>
+      <link>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</link>
+      <pubDate>Thu, 20 Dec 2018 21:57:24 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E5%86%B3%E7%AD%96%E6%A0%91decision_tree/</guid>
+      <description>1 不纯度impurity 考虑特征数据集$\mathbf{D}=(\mathbf{X},\vec{y})$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m \tag{1}$$ 每个数据点$\vec{x}_i$由$m$个特征组成，我们可以试着根据其中一个特征及其阈值划分数据，这样的一个划分我们称之为节点，节点是某一特征及其阈值组成的元组。
+例如，假设我们有一个班的数据，这些数据中有一列是发色深色与否，我们想根据头发颜色判断男生还是女生。碰巧男生均是深色头发，女生均是浅色头发，那么我们预测深色头发为男生浅色头发为女生。那么我们只用特征深色头发与否就成功将学生性别分类了。
+但是，经一个节点（也就是一个特征及其阈值）划分后每个划分的目标变量$y$只含一个值的情况是理想情况。大多时候每个划分含有多个值，也就是划分后的$y$的值是不纯的。比如按发色深与否划分后的两个分类，每个分类将既有男生又有女生（你见过深色头发的男生与女生，也见过浅色头发的男生与女生）。为此我们引入不纯度概念。
+用于分类的不纯度impurity有：
+ 基尼不纯度Gini impurity： $$I_{Gini}(\mathbf{D}) = \sum_k p(y=k) (1 - p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{2}$$ 熵不纯度Entropy impurity： $$I_{Entropy}(\mathbf{D}) = - \sum_k p(y=k) \log(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{3}$$ 基尼不纯度Misclassification impurity： $$I_{Misclassification}(\mathbf{D}) = 1 - \max(p(y=k)) \\ where \ k \text{ is one of all possible values of $y$} \tag{4}$$  用于回归的不纯度impurity有：</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_2</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</link>
+      <pubDate>Wed, 19 Dec 2018 16:16:17 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_2/</guid>
+      <description>8 Decision Trees and Ensemble Learning决策树和集成学习 8.1 Binary decision trees二分类决策树 决策树的公式基本都是错误的，请参阅我的博文笔记决策树decision_tree。 In the following figure, there are plots of an unnormalized bidimensional dataset and the cross-validation scores obtained using a logistic regression and a decision tree:下图是一个未归一化的二维数据集，以及使用逻辑回归和决策树得到的交叉验证得分: 8.1.1 Binary decisions二分类决策 Let&#39;s consider an input dataset $\mathbf{X}$:让我们考虑一个输入数据集$\mathbf{X}$： $$\mathbf{X}=\{\vec{x}_1, \vec{x}_2, \ldots, \vec{x}_n\} \ where \ \vec{x}_i \in \mathbb{R}^m$$ Every vector is made up of $m$ features, so each of them can be a good candidate to create a node based on the (feature, threshold) tuple:每个向量由$m$个特征组成，因此每个特征都是基于(特征、阈值)元组创建节点的良好候选： For example, let&#39;s consider a class of students where all males have dark hair and all females have blonde hair, while both subsets have samples of different sizes.</description>
+    </item>
+    
+    <item>
+      <title>支持向量机svm之数学原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sun, 16 Dec 2018 23:04:20 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BAsvm%E4%B9%8B%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86/</guid>
+      <description>A support vector machine constructs a hyper-plane or set of hyper-planes in a high or infinite dimensional space, which can be used for classification, regression or other tasks. Intuitively, a good separation is achieved by the hyper-plane that has the largest distance to the nearest training data points of any class (so-called functional margin), since in general the larger the margin the lower the generalization error of the classifier.机器在高维或无限维空间中构造超平面或超平面集合，可用于分类、回归或其他任务。直观上，超平面是距离任何类最近的训练数据点距离最大的平面(即所谓的函数边界)，可以实现很好的分离，因为一般来说，边界越大，分类器的泛化误差越低。</description>
+    </item>
+    
+    <item>
+      <title>朴素贝叶斯naive_bayes</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</link>
+      <pubDate>Sat, 15 Dec 2018 11:16:40 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AFnaive_bayes/</guid>
+      <description>Naive Bayes methods are a set of supervised learning algorithms based on applying Bayes’ theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable. Bayes’ theorem states the following relationship, given class variable $y$ and dependent feature vector $x_1$ through $x_m$ ,:朴素贝叶斯方法是应用贝叶斯定理的监督学习算法的集合，其假设决定目标分类的各特征列之间两两条件独立，这是“朴素”二字的由来。贝叶斯定理陈述如下关系，给定分类变量$y$和其依存特征变量从$x_1$到$x_m$： $$P(y \mid x_1, x_2, \dots, x_m) = \frac{P(y) P(x_1, x_2, \dots x_m \mid y)} {P(x_1, x_2, \dots, x_m)} \tag{1}$$</description>
+    </item>
+    
+    <item>
+      <title>逻辑回归logistic_regression</title>
+      <link>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</link>
+      <pubDate>Thu, 13 Dec 2018 19:19:09 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92logistic_regression/</guid>
+      <description>1 回归(Regression) 回归，我的理解来说，其直观的理解就是拟合的意思。我们以线性回归为例子，在二维平面上有一系列红色的点，我们想用一条直线来尽量拟合这些红色的点，这就是线性回归。回归的本质就是我们的预测结果尽量贴近实际观测的结果，或者说我们的求得一些参数，经过计算之后的预测结果尽可能接近真实值。 按照机器学习的一些作者的叙述，如果目标变量是连续型的，那么是回归；如果预测变量是离散型的，那么是分类。
+最简单的回归是普通最小二乘法回归（Ordinary Least Squares），在sklearn中是sklearn.linear_model.LinearRegression。数学上即解决以下数学问题。 $$\min_{w} {|| \mathbf{X} \vec{w} - \vec{y}||_2}^2$$ 也就是损失函数为MSE。
+2 逻辑回归的由来 对于二类线性可分的数据集，使用线性感知器就可以很好的分类。如下图中红色和蓝色的点，我们使用一条直线$x_1 +x_2 = 3$就可以区分两种数据集，在直线上方的属于红色类，直线下方的属于蓝色类。 线性回归和非线性回归的分类问题都不能给予解答，因为线性回归和非线性回归的问题，假设其分类函数如下： $$y=\vec{w}^T\vec{x}+b$$ 这里$\vec{x}$是数据矩阵$\mathbf{X}$中的一行。
+但是如果我们想知道对于一个二类分类问题，对于具体的一个样例，我们不仅想知道该类属于某一类，而且还想知道该类属于某一类的概率多大,有什么办法呢？
+y的阈值处于$(-\infty，+\infty)$，此时不能很好的给出属于某一类的概率，因为概率的范围是$(0,1)$，我们需要一个更好的映射函数，能够将分类的结果很好的映射成为$(0,1)$之间的概率，并且这个函数能够具有很好的可微分性。在这种需求下，人们找到了这个映射函数，即逻辑斯谛函数，也就是我们常说的sigmoid函数，其形式如下： $$\frac{1}{1+e^{-z}}$$ sigmoid函数图像如下图所示 如图，其可以将$(-\infty，+\infty)$数据映射到$(0,1)$，正好满足我们的要求。
+sigmoid函数完美的解决了上述需求，而且sigmoid函数连续可微分。 假设数据离散二类可分，分为0类和1类,如果概率值大于1/2，我们就将该类划分为1类，如果概率值低于1/2,我们就将该类划分为0类。当z取值为0的时候，概率值为1/2，这时候需要人为规定划分为哪一类。
+但是如果二类线性不可分的数据集，我们无法找到一条直线能够将两种类别很好的区分，即线性回归的分类法对于线性不可分的数据无法有效分类。例如下图中的红色点和蓝色点，我们无法使用一条直线很好的区分这两类，但是我们可以使用非线性分类器，如果我们使用${x_1}^2+{x_2}^2 = 1$，在圆外面的为红色类，在圆里面的一类为蓝色类。 诚然，数据线性可分可以使用线性分类器，如果数据线性不可分，可以使用非线性分类器，然后再运用sigmoid函数，这样就是非线性逻辑回归。
+但以下讨论仅限于线性可分的情况的逻辑回归。
+3 为什么采用sigmoid函数 http://www.win-vector.com/dfiles/LogisticRegressionMaxEnt.pdf
+3 逻辑回归的损失函数(Loss Function)和成本函数(Cost Function) 在二类分类中，我们假定sigmoid输出结果表示属于1类的概率值，我们很容易想到用平方损失函数（也就是MSE），即 $$J(\vec{w})=\sum_{i=1}^{n}{\frac{1}{2}(\hat{y}_{i}-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi({z}_i)-y_{i})^2}=\sum_{i=1}^{n}{\frac{1}{2}(\phi(\vec{w}^T\vec{x}_i+b)-y_{i})^2}$$ 这里$z_i=\vec{w}^T\vec{x}_i+b$，$i$代表第$i$个样本点。$\hat{y}_i$代表第$i$个样本的预测值，$y_i$代表第$i$个样本的实际值，$\phi{(z_i)}$代表对第$i$个$z$施加sigmoid函数。
+在这种情况下，我们$\phi({z_{i}})$表示sigmoid对第i个值的预测结果，我们将sigmoid函数带入上述成本函数中，绘制其图像，发现这个成本函数的函数图像是一个非凸函数，如下图所示，这个函数里面有很多极小值，如果采用梯度下降法，则会导致陷入局部最优解中,有没有一个凸函数的成本函数呢？ Cross entropy can be used to define a loss function in machine learning and optimization. The true probability $p_{i}$ is the true label, and the given distribution $q_{i}$ is the predicted value of the current model.</description>
+    </item>
+    
+    <item>
+      <title>稀疏pca原理</title>
+      <link>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</link>
+      <pubDate>Sat, 08 Dec 2018 13:31:30 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E7%A8%80%E7%96%8Fpca%E5%8E%9F%E7%90%86/</guid>
+      <description>Note that there are many different formulations for the Sparse PCA problem. The one implemented here is based on Mrl09. The optimization problem solved is a PCA problem with an $\ell_1$ penalty on the components:注意稀疏主成分分析问题有许多不同的公式。这里应用的公式基于Mrl09。优化问题是一个带有$\ell_1$惩罚组件的PCA问题： $$\begin{split}(W_{n \times k}^*, H_{k \times m}^*) = \underset{W_{n \times k}, H_{k \times m}}{\operatorname{arg\,min\,}} &amp;amp; \frac{1}{2} ||X_{n \times m}-W_{n \times k}H_{k \times m}||_2^2+\alpha||H_{k \times m}||_1 \\ \text{subject to } &amp;amp; ||W_i||_2 = 1 \text{ for all } 0 \leq i \leq k \leq m\end{split}$$</description>
+    </item>
+    
+    <item>
+      <title>机器学习算法machine_learning_algorithms_1</title>
+      <link>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</link>
+      <pubDate>Mon, 26 Nov 2018 15:35:14 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95machine_learning_algorithms_1/</guid>
+      <description>make sure all our blog md file under post.
+文前申明：机器学习算法涉及到很多公式、数学概念。为统一表述，特申明：
+ 关于向量、矩阵：矩阵标记采用\mathbf{X} $\mathbf{X}$；向量标记采用 \vec{x} $\vec{x}$；行向量的元素是用逗号隔开$\vec{x} = [ x_1,x_2,\ldots,x_m ]$；列向量则用分号隔开$\vec{x} = [ x_1;x_2;\ldots;x_n ]$。 那么$n \times m$矩阵$\mathbf{X}$，可表示为由行向量作为元素组成的列向量，即： $$\mathbf{X}=[\vec{x_1};\vec{x_2};\ldots;\vec{x_n}] \\ where \ \vec{x_i}=[x_{i1},x_{i2},\ldots,x_{im}] \\ where \ i \in \lbrace 1,2,\ldots,n \rbrace$$
+ 那么$n \times m$矩阵$\mathbf{X}$，可表示为由列向量作为元素组成的行向量，即： $$\mathbf{X}=[\vec{x_1},\vec{x_2},\ldots,\vec{x_m}] \\ where \ \vec{x_j}=[x_{1j};x_{2j};\ldots;x_{nj}] \\ where \ j \in \lbrace 1,2,\ldots,m \rbrace$$
+ 区间用小括号()表示；有序的元素用中括号[]，例如向量中的元素就是有顺序要求的；无序的元素用大括号{}括起来，例如集合中的元素就是不要求顺序的。
+     algorithms            监督学习、非监督学习、强化学习 分类、回归 参数学习、无参数学习</description>
     </item>
     
   </channel>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>spark on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/spark/</link>
+    <description>Recent content in spark on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 12 Aug 2019 19:57:45 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/spark/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Pyspark</title>
+      <link>https://chen-feiyang.github.io/posts/pyspark/</link>
+      <pubDate>Mon, 12 Aug 2019 19:57:45 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/pyspark/</guid>
+      <description>若工作场景涉及大数据，则需要使用pyspark。找了三天，暂时发现Tomasz Drabas, Denny Lee的《Learning PySpark》应该是一本较适合的书，感知其难度适中。发现此书不介绍环境搭建。Bill Chambers and Matei Zaharia的《Spark: The Definitive Guide》也是，难度适中，但不涉及环境搭建。不涉及环境搭建是不行的，因为可能版本演进太快，可用代码在不同环境无法运行。比如，anaconda里面conda install -c conda-forge pyspark搭建的环境无法运行《Spark: The Definitive Guide》里的代码，也许涉及本地安装等变量的设置问题而无法运行等，暂不清楚。还是应该找本包括环境搭建的书。琳达贵的《python+spark2.0+hadoop机器学习与大数据实战》包含环境搭建的过程，需要内存和固态空间，我电脑不一定跟得上，试着安装吧。2019-08-21装好虚拟机装好linux装好hadoop，目前很卡。
+20190826: 最近在学习scrapy爬虫，今天看点这本书，明天看点那个博客，因此笔记就很杂乱。启示是：要先列一个提纲，这样即使看的书、知识比较杂也好，都可以把笔记写在对应位置。
+网易云课堂有一免费课程《Spark编程基础》，我接下来的笔记大纲则遵从此课程。当然，有可能会找其他资料等补充此笔记大纲。
+1. 大数据计数概括 1.1 大数据时代 1.2 大数据的概念 1.3 大数据的影响 1.4 大数据的关键技术 1.5 答案数据计算模式 1.6 代表大数据技术之Hadoop 1.7 代表大数据技术之Spark 1.8 代表大数据技术之Flink和Beam 2. Spark的设计与运行原理 2.1 Spark概述 2.2 Spark生态系统 2.3 基本概念和架构设计 2.4 Spark运行原理（RDD概念、操作和特性） 2.5 RDD运行原理（RDD之间的依赖关系） 2.6 RDD运行原理（阶段的划分和RDD运行过程） 2.7 Spark的部署和应用方式 3. Spark环境搭建和使用方法 3.1 安装Spark 3.1.1 单机安装Spark 参考：
+ 在Windows中使用VirtualBox安装Ubuntu
+ Hadoop安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04
+ Spark2.1.0入门：Spark的安装和使用</description>
+    </item>
+    
+  </channel>
+</rss>

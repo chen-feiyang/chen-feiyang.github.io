@@ -6,10 +6,84 @@
     <description>Recent content on Feiyang Chen&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 09 Sep 2019 09:33:39 +0800</lastBuildDate>
+    <lastBuildDate>Tue, 29 Oct 2019 23:21:43 +0800</lastBuildDate>
     
 	<atom:link href="https://chen-feiyang.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Regular Expression HOWTO</title>
+      <link>https://chen-feiyang.github.io/posts/regular_expression_howto/</link>
+      <pubDate>Tue, 29 Oct 2019 23:21:43 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/regular_expression_howto/</guid>
+      <description>Introduction Simple Patterns  Matching Characters Repeating Things  Using Regular Expressions  Compiling Regular Expressions The Backslash Plague Performing Matches Module-Level Functions Compilation Flags  More Pattern Power  More Metacharacters Grouping Non-capturing and Named Groups Lookahead Assertions  Modifying Strings  Splitting Strings Search and Replace  Common Problems  Use String Methods match() versus search() Greedy versus Non-Greedy Using re.VERBOSE  Feedback  Introduction Regular expressions (called REs, or regexes, or regex patterns) are essentially a tiny, highly specialized programming language embedded inside Python and made available through the re module.</description>
+    </item>
+    
+    <item>
+      <title>Deep_learning</title>
+      <link>https://chen-feiyang.github.io/posts/deep_learning/</link>
+      <pubDate>Wed, 09 Oct 2019 20:42:22 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/deep_learning/</guid>
+      <description>Website Acknowledgments Notation Introduction  Who Should Read This Book? Historical Trends in Deep Learning  I Applied Math and Machine Learning Basics  Linear Algebra  Scalars, Vectors, Matrices and Tensors Multiplying Matrices and Vectors Identity and Inverse Matrices Linear Dependence and Span Norms Special Kinds of Matrices and Vectors Eigendecomposition Singular Value Decomposition The Moore-Penrose Pseudoinverse The Trace Operator The Determinant Example: Principal Components Analysis  Probability and Information Theory  Why Probability?</description>
+    </item>
+    
+    <item>
+      <title>Mastering_vim</title>
+      <link>https://chen-feiyang.github.io/posts/mastering_vim/</link>
+      <pubDate>Thu, 03 Oct 2019 11:16:05 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/mastering_vim/</guid>
+      <description>目录：
+ # 1 Preface # 2 Chapter 1: Getting Started  ## 2.1 Technical requirements ## 2.2 Let’s start a conversation (about modal interfaces) ## 2.3 Installation  ### 2.3.1 Setting up on Linux ### 2.3.2 Setting up on MacOS  #### 2.3.2.1 Using Homebrew #### 2.3.2.2 Downloading a .dmg image  ### 2.3.3 Setting up on Windows  #### 2.3.3.1 Unix-like experience with Cygwin  ##### 2.3.3.1.1 Installing Cygwin ##### 2.</description>
+    </item>
+    
+    <item>
+      <title>Mastering_vim_quickly</title>
+      <link>https://chen-feiyang.github.io/posts/mastering_vim_quickly/</link>
+      <pubDate>Thu, 03 Oct 2019 11:15:26 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/mastering_vim_quickly/</guid>
+      <description>目录：
+ # 1 Instead of Preface  ## 1.1 What this book covers ## 1.2 What you need for this book ## 1.3 Who this book is for ## 1.4 Vim versions ## 1.5 Conventions  ### 1.5.1 Key presses ### 1.5.2 Normal mode commands ### 1.5.3 Command line commands ### 1.5.4 Fonts ### 1.5.5 Other formatting  ## 1.6 Piracy ## 1.7 Mastering Vim Quickly Newsletter ## 1.</description>
+    </item>
+    
+    <item>
+      <title>Learning_the_vi_and_vim_editors</title>
+      <link>https://chen-feiyang.github.io/posts/learning_the_vi_and_vim_editors/</link>
+      <pubDate>Wed, 02 Oct 2019 23:13:29 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/learning_the_vi_and_vim_editors/</guid>
+      <description>这本书是Vim官方推荐的书本之一，且有中文翻译，本该是合适的学习资料。奈何基本都在讲命令含义等，而我更需要一本实操性的Vim教材。之后再找了Vim官网推荐的《Mastering Vim》、《 Mastering Vim Quickly》，看看是不是更合适，所以本书的学习暂停止。
+前言 按前言，只有第二部分是讲Vim的，所以仅学习第二部分。
+第一部分 基础与高级的vi 第一章 vi文本编辑器 第二章 简单的文本编辑 第三章 快速移动位置 第四章 越过基础的藩篱 第五章 ex编辑器概述 第六章 全局替换 第七章 高级编辑方法 第八章 vi同类产品的功能总览 第二部分 Vim 第九章 Vim （vi improved）概述 为何选择Vim？ 大幅扩展了vi的功能，还有，类unix系统或许缺少图形界面且预装了Vim。
+与vi的比较 扩展了vi的功能，Vim的功能分类：
+ 语法扩展（syntax extension） 程序员辅助（programmer assistance） 图形用户界面功能（GUI feature） 脚本编写与插件程序（scripting and plug-in） 初始化（initialization） 会话上下文（session context） 后处理（postprocessing） 状态转换（transition） 透明的编辑（transparent editing） 元信息（meta-information） 黑洞寄存器（black-hole register） 关键字补全（keyword completion）  理念 Vim与vi两者均以来modality（命令模式与输入模式），而且都把编辑工作交给键盘：也就是说，用户的编辑工作可以快速而有效地进行，而且不需要用到鼠标（或^x ^c）。
+取得Vim 各Unix变体很可能自带Vim。 可进入Vim编辑器输入以下命令看到Vim版本
+:version  注：公司32号机是7.4版本
+若无可安装并将安装目录加入PATH。
+可从Vim网站上去的</description>
+    </item>
+    
+    <item>
+      <title>more_math_into_latex</title>
+      <link>https://chen-feiyang.github.io/posts/more_math_into_latex/</link>
+      <pubDate>Sun, 29 Sep 2019 11:30:16 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/more_math_into_latex/</guid>
+      <description>about this book  Foreword Preface to the fifth edition Introduction  Is this book for you? What is document markup? The three layers The three platforms What’s in the book? Mission statement Conventions   I Mission Impossible  Short course  Getting started  Your LATEX Sample files Editing cycle Typing the source file  The keyboard Your first text notes Lines too wide A note with formulas The building blocks of a formula Displayed formulas  Equations Symbolic referencing Aligned formulas Cases  The anatomy of a document Your own commands Adding an illustration The anatomy of a presentation  And a few more things  Structure Auxiliary files Logical and visual design General error messages Errors in math Your errors: Davey’s Dos and Don’ts   II Text and Math  Typing text  The keyboard  Basic keys Special keys Prohibited keys  Words, sentences, and paragraphs  Spacing rules Periods  Commanding LATEX  Commands and environments Scope Types of commands  Symbols not on the keyboard  Quotation marks Dashes Ties or nonbreakable spaces Special characters Ellipses Ligatures Accents and symbols in text Logos and dates Hyphenation  Comments and footnotes  Comments Footnotes  Changing font characteristics  Basic font characteristics Document font families Shape commands Italic corrections Series Size changes Orthogonality Obsolete two-letter commands Low-level commands  Lines, paragraphs, and pages  Lines Paragraphs Pages Multicolumn printing  Spaces  Horizontal spaces Vertical spaces Relative spaces Expanding spaces  Boxes  Line boxes Frame boxes Paragraph boxes Marginal comments Solid boxes Fine tuning boxes   Text environments  Some general rules for displayed text environments List environments  Numbered lists Bulleted lists Captioned lists A rule and combinations  Style and size environments Proclamations (theorem-like structures)  The full syntax Proclamations with style  Proof environments Tabular environments  Table styles  Tabbing environments Miscellaneous displayed text environments  Typing math  Math environments Spacing rules Equations Basic constructs  Arithmetic operations Binomial coefficients Ellipses Integrals Roots Text in math Hebrew and Greek letters  Delimiters  Stretching delimiters Delimiters that do not stretch Limitations of stretching Delimiters as binary relations  Operators  Operator tables Congruences Large operators Multiline subscripts and superscripts  Math accents Stretchable horizontal lines  Horizontal braces Overlines and underlines Stretchable arrow math symbols  Building a formula step-by-step Formula Gallery  More math  Spacing of symbols  Classification Three exceptions Spacing commands Examples The phantom command  The STIX math symbols  Swinging it The STIX project Installation and usage  Building new symbols  Stacking symbols Negating and side-setting symbols Changing the type of a symbol  Math alphabets and symbols  Math alphabets Math symbol alphabets Bold math symbols Size changes Continued fractions  Vertical spacing Tagging and grouping Miscellaneous  Generalized fractions Boxed formulas   Multiline math displays  Visual Guide  Columns Subsidiary math environments Adjusted columns Aligned columns Touring the Visual Guide  Gathering formulas Splitting long formulas Some general rules  General rules Subformula rules Breaking and aligning formulas Numbering groups of formulas  Aligned columns  An align variant eqnarray, the ancestor of align The subformula rule revisited The alignat environment Inserting text  Aligned subsidiary math environments  Subsidiary variants Split  Adjusted columns  Matrices Arrays Cases  Commutative diagrams Adjusting the display   III Document Structure  Documents  The structure of a document The preamble Top matter  Abstract  Main matter  Sectioning Cross-referencing Floating tables and illustrations  Back matter  Bibliographies in articles Simple indexes  Visual design  The AMS article document class  Why amsart?</description>
+    </item>
+    
+    <item>
+      <title>The Markdown Guide</title>
+      <link>https://chen-feiyang.github.io/posts/the_markdown_guide/</link>
+      <pubDate>Wed, 18 Sep 2019 20:41:27 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/the_markdown_guide/</guid>
+      <description>目录：
+ # 1 Introduction  ## 1.1Where to Get This Books ## 1.2 How to read This Books  ### 1.2.1 Beginner Resources ### 1.2.2 Syntax Examples ### 1.2.3 Asides ### 1.2.4 Quirks  ## 1.3 Contrbuting ## 1.4 Reporting Issues ## 1.5 Acknowledgements  # 2 Getting Started  ## 2.1 Kicking the Tires ## 2.2 How Markdown Works ## 2.3 Additional Resources  # 3 Doing Things With Markdown  ## 3.</description>
+    </item>
     
     <item>
       <title>正则表达式</title>
@@ -74,8 +148,37 @@ Severstal is leading the charge in efficient steel mining and production. They b
       
       <guid>https://chen-feiyang.github.io/posts/sundry/</guid>
       <description>这些问题的记录将以问题出现的时间为轴。格式为问题、细节、时间、解决方法、原因。
-问题：pandas查询那些列含有空值  细节：无 时间：20190826 解决办法：df.isnull().any()  问题：pandas查询那些列全部为空值  细节：无 时间：20190826 解决办法：df.isnull().all()  问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”  细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据&#39;name&#39;列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型Int64Index和RangeIndex，不同的index类型可能是不能join的原因。 时间：20190826 解决办法：只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。  问题：数据库更新方式：全量更新、增量更新  细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。 时间：20190829 解决办法：就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。 采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据； 采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。 所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。  问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。  细节：字符串内部为字典是指列中的格式为&amp;quot;{&#39;ka&#39;:&#39;va&#39;, &#39;kb&#39;:&#39;vb&#39;...}&amp;quot;，字符串内部为列表是指列中格式为&amp;quot;[&#39;va&#39;,&#39;vb&#39;,&#39;vc&#39;,...]&amp;quot;，嵌套列表与之类似。 时间：20190829 解决办法：这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为&#39;a&#39;转换为字典df[&#39;a&#39;].apply(eval)，如需要拆分出&#39;va&#39;等值并命名为列&#39;ka&#39;,可df[&#39;ka&#39;] = df[&#39;a&#39;].apply(eval).apply(lambda x: x[&#39;ka&#39;])。当然列&#39;a&#39;可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：
-# 列a非空的索引 column_a_not_null_index = df[df[&#39;a&#39;].notnull()].index df.loc[column_a_not_null_index, &#39;a&#39;] = \ df.loc[column_a_not_null_index, &#39;a&#39;].apply(eval) df[&#39;ka&#39;] = np.</description>
+问题：pandas查询那些列含有空值  细节：无 时间：20190826 解决办法：  df.isnull().any()
+问题：pandas查询那些列全部为空值  细节：无 时间：20190826 解决办法：  df.isnull().all()
+问题：pandas0.24.2里根据列值拼接表报错“ValueError: You are trying to merge on object and int64 columns. If you wish to proceed you should use pd.concat”  细节：pandas包工具，两表data和data_old分别读自excel和csv，需要根据&#39;name&#39;列拼接，保证条数与data同，则不能采用concat，应采用join或merge，但join遇到上述报错。可能原因是read_excel和read_csv将产生不同的索引类型Int64Index和RangeIndex，不同的index类型可能是不能join的原因。 时间：20190826 解决办法：  只部分解决，换join为merge。尝试在读时候设定数值索引类型时没成功，之后尝试改变数值索引也没成功。
+问题：数据库更新方式：全量更新、增量更新  细节：按网上搜索的结果：“全量备份就是把所有数据复制过来。增量备份就是只复制和上次备份时不一样的部分，简单说是复制变动数据。”，那么是不是：全量更新就是更新所有数据，增量更新就是只更新和之前记录不一样的部分？。 时间：20190829 解决办法：  就是这个意思，更新方式对数据表的数据无影响，是否覆盖旧数据才有影响。 采用全量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据均是此表此时间点的全量数据； 采用增量更新不覆盖旧数据的更新方式得到的数据表，任意时间点（即任意dt）的数据加上往期数据才是此表此时间点的全量数据。 所以为取得全量数据，全量更新可仅取最大dt，增量更新需取所有dt。
+问题：pandas的dataframe里某列为字符串，但字符串内部为字典、列表或嵌套列表，根据逻辑拆分此列。  细节：字符串内部为字典是指列中的格式为&amp;quot;{&#39;ka&#39;:&#39;va&#39;, &#39;kb&#39;:&#39;vb&#39;...}&amp;quot;，字符串内部为列表是指列中格式为&amp;quot;[&#39;va&#39;,&#39;vb&#39;,&#39;vc&#39;,...]&amp;quot;，嵌套列表与之类似。 时间：20190829 解决办法：  这种字符串内部是字典等的列需拆分，用正则表达式显然不是最简单的方法。首先，列内是字符，希望变成字典等，可对此列记为&#39;a&#39;转换为字典df[&#39;a&#39;].apply(eval)，如需要拆分出&#39;va&#39;等值并命名为列&#39;ka&#39;,可df[&#39;ka&#39;] = df[&#39;a&#39;].apply(eval).apply(lambda x: x[&#39;ka&#39;])。当然列&#39;a&#39;可能并不是全部为字典，还可能含有空值，空值无法eval，这个时候可专门索引非空者。具体代码为：
+# 列a非空的索引 column_a_not_null_index = df[df[&#39;a&#39;].notnull()].index df.loc[column_a_not_null_index, &#39;a&#39;] = \ df.</description>
+    </item>
+    
+    <item>
+      <title>Linux_base</title>
+      <link>https://chen-feiyang.github.io/posts/linux_base/</link>
+      <pubDate>Mon, 26 Aug 2019 09:24:51 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/linux_base/</guid>
+      <description>知乎一匿名用户推荐The Linux Command Line，说这本书简单、基础，并且快速上手terminal。 并这本书有中文翻译。另知乎用户阿尔法汪推荐学会linux的man文档，这相当于linux的字典，权威。
+但目前我毫无基础，暂时先根据The Linux Command Line学习。自然，以下提纲根据此书提纲。
+引言 (Introduction) 第一章 引言 （略）
+一些暂不知道属于下面哪个章节的知识就先放在这里：
+linux的复制快捷键为Ctrl + Insert，粘贴快捷键为Shift + Insert。
+linux中切换输入法的shift。
+相对路径：./bin/...，./etc/...等包含./的路径，均为相对路径，以/usr/local/hadoop为当前目录。例如在/usr/local/hadoop目录中执行./bin/hadoop version等同于执行/usr/local/hadoop/bin/hadoop version。可以将相对路径改成绝对路径来执行。
+Shell中管道命令操作符为|，实现仅当前面一个命令传出正确的输出信息时才传递给下一个命令。可用来给含很多输出的命令筛选关键信息等。
+学习 shell 第二章 : 什么是 shell 形如如下者就是shell界面：
+[me@linuxbox ~]$  格式为[用户名@主机名 ~]$，如果最后一字符是#，而不是$，那代表对应用户名具有超级权限。
+输入错误命令将报错：未找到命令（command not found），如下所示：
+[chenfy@entrobus32 ~]$ anssffsf -bash: anssffsf: 未找到命令 [chenfy@entrobus32 ~]$  命令历史：按下上箭头命令，将在提示符中重现之前输入的anssffsf，这就叫历史命令。
+移动光标：移动左右箭头按键，将改变输入位置。
+关于鼠标和光标：linux也可使用鼠标。点击鼠标左键并拖动鼠标，将自动拷贝对应高亮文本，按下鼠标中键，将在光标处插入刚才的复制内容。（注：windows下的复制黏贴快捷键在linux下不起作用。）
+聚焦跟随鼠标（focus follows mouse）：作者认为这样更方便，可在窗口管理器中找到这个设置。
+运行一些简单命令： date，显示系统当前时间和日期：
+[chenfy@entrobus32 ~]$ date 2019年 09月 14日 星期六 17:30:20 CST [chenfy@entrobus32 ~]$  cal，默认显示当前月份的日历：</description>
     </item>
     
     <item>
@@ -108,7 +211,10 @@ data[data[&#39;财产年限&#39;]==&#39; 总楼栋数：2栋;公寓：2栋;&#39;
       <description>若工作场景涉及大数据，则需要使用pyspark。找了三天，暂时发现Tomasz Drabas, Denny Lee的《Learning PySpark》应该是一本较适合的书，感知其难度适中。发现此书不介绍环境搭建。Bill Chambers and Matei Zaharia的《Spark: The Definitive Guide》也是，难度适中，但不涉及环境搭建。不涉及环境搭建是不行的，因为可能版本演进太快，可用代码在不同环境无法运行。比如，anaconda里面conda install -c conda-forge pyspark搭建的环境无法运行《Spark: The Definitive Guide》里的代码，也许涉及本地安装等变量的设置问题而无法运行等，暂不清楚。还是应该找本包括环境搭建的书。琳达贵的《python+spark2.0+hadoop机器学习与大数据实战》包含环境搭建的过程，需要内存和固态空间，我电脑不一定跟得上，试着安装吧。2019-08-21装好虚拟机装好linux装好hadoop，目前很卡。
 20190826: 最近在学习scrapy爬虫，今天看点这本书，明天看点那个博客，因此笔记就很杂乱。启示是：要先列一个提纲，这样即使看的书、知识比较杂也好，都可以把笔记写在对应位置。
 网易云课堂有一免费课程《Spark编程基础》，我接下来的笔记大纲则遵从此课程。当然，有可能会找其他资料等补充此笔记大纲。
-1. 大数据计数概括 1.1 大数据时代 1.2 大数据的概念 1.3 大数据的影响 1.4 大数据的关键技术 1.5 答案数据计算模式 1.6 代表大数据技术之Hadoop 1.7 代表大数据技术之Spark 1.8 代表大数据技术之Flink和Beam 2. Spark的设计与运行原理 2.1 Spark概述 2.2 Spark生态系统 2.3 基本概念和架构设计 2.4 Spark运行原理（RDD概念、操作和特性） 2.5 RDD运行原理（RDD之间的依赖关系） 2.6 RDD运行原理（阶段的划分和RDD运行过程） 2.7 Spark的部署和应用方式 3. Spark环境搭建和使用方法 3.1 安装Spark 3.2 在pyspark中运行代码 3.3 开发Spark独立应用程序 3.4 Spark集群环境搭建 3.5 在集群上运行Spark应用程序 4. RDD编程基础 4.</description>
+1. 大数据计数概括 1.1 大数据时代 1.2 大数据的概念 1.3 大数据的影响 1.4 大数据的关键技术 1.5 答案数据计算模式 1.6 代表大数据技术之Hadoop 1.7 代表大数据技术之Spark 1.8 代表大数据技术之Flink和Beam 2. Spark的设计与运行原理 2.1 Spark概述 2.2 Spark生态系统 2.3 基本概念和架构设计 2.4 Spark运行原理（RDD概念、操作和特性） 2.5 RDD运行原理（RDD之间的依赖关系） 2.6 RDD运行原理（阶段的划分和RDD运行过程） 2.7 Spark的部署和应用方式 3. Spark环境搭建和使用方法 3.1 安装Spark 3.1.1 单机安装Spark 参考：
+ 在Windows中使用VirtualBox安装Ubuntu
+ Hadoop安装教程_单机/伪分布式配置_Hadoop2.6.0/Ubuntu14.04
+ Spark2.1.0入门：Spark的安装和使用</description>
     </item>
     
     <item>
@@ -514,7 +620,8 @@ Machine learning – subfield of computer science1 that evolved from the study o
       <pubDate>Mon, 26 Nov 2018 16:08:20 +0800</pubDate>
       
       <guid>https://chen-feiyang.github.io/posts/markdown%E5%8F%8Alatex%E8%AF%AD%E6%B3%95/</guid>
-      <description>本文总结摘录Markdown及LaTex语法。由于不同环境可能稍有不同，本文指hugo+github pages环境
+      <description>本文总结摘录Markdown及LaTex语法。由于不同环境可能稍有不同，本文指hugo+github pages环境。
+似乎我这里是在记流水账呢，有没有系统的关于markdown的语法学习材料呢。 有空到这里https://www.markdownguide.org/学学吧，感觉markdown还是很有用的东西，比word什么的方便很多。
 1 Markdown 1.1 标题写法 第一种方法：
 1、在文本下面加上 等于号 = ，那么上方的文本就变成了大标题。等于号的个数无限制，但一定要大于0个哦。。
 2、在文本下面加上 下划线 - ，那么上方的文本就变成了中标题，同样的 下划线个数无限制。
@@ -522,7 +629,8 @@ Machine learning – subfield of computer science1 that evolved from the study o
 另一种方法：（推荐这种方法；注意⚠️中间需要有一个空格）
 关于标题还有等级表示法，分为六个等级，显示的文本大小依次减小。不同等级之间是以井号 # 的个数来标识的。一级标题有一个 #，二级标题有两个# ，以此类推。
 例如：
-一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 1.2 列表  项目1
+一级标题 二级标题 三级标题 四级标题 五级标题 六级标题 1.2 列表 刚刚才发现词汇叫列表，可多级，可有序，可无序。还有一个概念叫引用，也可分级。
+ 项目1
  项目2
  项目3
  项目1 （一个*号会显示为一个黑点，注意⚠️有空格，否则直接显示为*项目1）
@@ -538,7 +646,6 @@ Machine learning – subfield of computer science1 that evolved from the study o
 1.5 字体格式强调 我们可以使用下面的方式给我们的文本添加强调的效果
 强调 (示例：斜体)
 强调 (示例：斜体)
-加重强调 (示例：粗体)
 加重强调 (示例：粗体)</description>
     </item>
     

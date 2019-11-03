@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>system on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/system/</link>
+    <description>Recent content in system on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Aug 2019 09:24:51 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/system/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux_base</title>
+      <link>https://chen-feiyang.github.io/posts/linux_base/</link>
+      <pubDate>Mon, 26 Aug 2019 09:24:51 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/linux_base/</guid>
+      <description>知乎一匿名用户推荐The Linux Command Line，说这本书简单、基础，并且快速上手terminal。 并这本书有中文翻译。另知乎用户阿尔法汪推荐学会linux的man文档，这相当于linux的字典，权威。
+但目前我毫无基础，暂时先根据The Linux Command Line学习。自然，以下提纲根据此书提纲。
+引言 (Introduction) 第一章 引言 （略）
+一些暂不知道属于下面哪个章节的知识就先放在这里：
+linux的复制快捷键为Ctrl + Insert，粘贴快捷键为Shift + Insert。
+linux中切换输入法的shift。
+相对路径：./bin/...，./etc/...等包含./的路径，均为相对路径，以/usr/local/hadoop为当前目录。例如在/usr/local/hadoop目录中执行./bin/hadoop version等同于执行/usr/local/hadoop/bin/hadoop version。可以将相对路径改成绝对路径来执行。
+Shell中管道命令操作符为|，实现仅当前面一个命令传出正确的输出信息时才传递给下一个命令。可用来给含很多输出的命令筛选关键信息等。
+学习 shell 第二章 : 什么是 shell 形如如下者就是shell界面：
+[me@linuxbox ~]$  格式为[用户名@主机名 ~]$，如果最后一字符是#，而不是$，那代表对应用户名具有超级权限。
+输入错误命令将报错：未找到命令（command not found），如下所示：
+[chenfy@entrobus32 ~]$ anssffsf -bash: anssffsf: 未找到命令 [chenfy@entrobus32 ~]$  命令历史：按下上箭头命令，将在提示符中重现之前输入的anssffsf，这就叫历史命令。
+移动光标：移动左右箭头按键，将改变输入位置。
+关于鼠标和光标：linux也可使用鼠标。点击鼠标左键并拖动鼠标，将自动拷贝对应高亮文本，按下鼠标中键，将在光标处插入刚才的复制内容。（注：windows下的复制黏贴快捷键在linux下不起作用。）
+聚焦跟随鼠标（focus follows mouse）：作者认为这样更方便，可在窗口管理器中找到这个设置。
+运行一些简单命令： date，显示系统当前时间和日期：
+[chenfy@entrobus32 ~]$ date 2019年 09月 14日 星期六 17:30:20 CST [chenfy@entrobus32 ~]$  cal，默认显示当前月份的日历：</description>
+    </item>
+    
+  </channel>
+</rss>

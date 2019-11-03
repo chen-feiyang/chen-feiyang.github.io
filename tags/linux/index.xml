@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>linux  on Feiyang Chen&#39;s Blog</title>
+    <link>https://chen-feiyang.github.io/tags/linux/</link>
+    <description>Recent content in linux  on Feiyang Chen&#39;s Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 26 Aug 2019 09:24:51 +0800</lastBuildDate>
+    
+	<atom:link href="https://chen-feiyang.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Linux_base</title>
+      <link>https://chen-feiyang.github.io/posts/linux_base/</link>
+      <pubDate>Mon, 26 Aug 2019 09:24:51 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/linux_base/</guid>
+      <description>知乎一匿名用户推荐The Linux Command Line，说这本书简单、基础，并且快速上手terminal。 并这本书有中文翻译。另知乎用户阿尔法汪推荐学会linux的man文档，这相当于linux的字典，权威。
+但目前我毫无基础，暂时先根据The Linux Command Line学习。自然，以下提纲根据此书提纲。
+引言 (Introduction) 第一章 引言 （略）
+一些暂不知道属于下面哪个章节的知识就先放在这里：
+linux的复制快捷键为Ctrl + Insert，粘贴快捷键为Shift + Insert。
+linux中切换输入法的shift。
+相对路径：./bin/...，./etc/...等包含./的路径，均为相对路径，以/usr/local/hadoop为当前目录。例如在/usr/local/hadoop目录中执行./bin/hadoop version等同于执行/usr/local/hadoop/bin/hadoop version。可以将相对路径改成绝对路径来执行。
+Shell中管道命令操作符为|，实现仅当前面一个命令传出正确的输出信息时才传递给下一个命令。可用来给含很多输出的命令筛选关键信息等。
+学习 shell 第二章 : 什么是 shell 形如如下者就是shell界面：
+[me@linuxbox ~]$  格式为[用户名@主机名 ~]$，如果最后一字符是#，而不是$，那代表对应用户名具有超级权限。
+输入错误命令将报错：未找到命令（command not found），如下所示：
+[chenfy@entrobus32 ~]$ anssffsf -bash: anssffsf: 未找到命令 [chenfy@entrobus32 ~]$  命令历史：按下上箭头命令，将在提示符中重现之前输入的anssffsf，这就叫历史命令。
+移动光标：移动左右箭头按键，将改变输入位置。
+关于鼠标和光标：linux也可使用鼠标。点击鼠标左键并拖动鼠标，将自动拷贝对应高亮文本，按下鼠标中键，将在光标处插入刚才的复制内容。（注：windows下的复制黏贴快捷键在linux下不起作用。）
+聚焦跟随鼠标（focus follows mouse）：作者认为这样更方便，可在窗口管理器中找到这个设置。
+运行一些简单命令： date，显示系统当前时间和日期：
+[chenfy@entrobus32 ~]$ date 2019年 09月 14日 星期六 17:30:20 CST [chenfy@entrobus32 ~]$  cal，默认显示当前月份的日历：</description>
+    </item>
+    
+    <item>
+      <title>linux定时执行</title>
+      <link>https://chen-feiyang.github.io/posts/linux_crontab/</link>
+      <pubDate>Mon, 12 Aug 2019 13:03:28 +0800</pubDate>
+      
+      <guid>https://chen-feiyang.github.io/posts/linux_crontab/</guid>
+      <description>目前工作需要我运维爬虫，在集群上爬取速度会更快。由于爬虫代码很多时候是不变动的。但需要按照时间、周期等有规律爬取数据。故根据公司要求学习linux定时执行命令，以便按时完成爬虫排期规定的爬虫任务。
+没怎么接触过linux操作，所以笔记以备忘。
+给我的文件crontab.txt文件，含有同格式命令28条，其中第一条为0 6 * * * sh /home/chenfy/crawl/tt/crontab.sh。这是linux的crontab定时任务命令。参考(linux （ crontab 定时任务命令）)[https://www.cnblogs.com/shizhengquan/p/10876386.html]，其格式为`minute hour day month week command。时间代表触发自动执行的时间条件，command可指定command所在位置。详见此网址。关于命令本身，此示例的命令为sh，即运行脚本，后跟脚本的绝对地址（或者也可相对地址吧，暂未验证）。脚本内部命令可看同事给的linux计划执行/crontab.sh.example文件，其实这就是crontab.sh脚本，只不过希望运维人员根据具体版本环境修改后重命名为crontab.sh`再运行。脚本里面内容为：
+cd /home/chenfy/crawls/tt nohup /home/chenfy/.local/bin/scrapy crawl fang &amp;gt;&amp;gt; fang_zu.log 2&amp;gt;&amp;amp;1 &amp;amp;  cd后的内容即具体的爬虫代码，公司为了保证采用最新版本的代码，将代码放在gitlab仓库。遇到有代码更新（或为保险起见），git clone xxx加git pull original以让代码保鲜。nohup是为了保证在你退出帐户/关闭终端之后继续运行相应的进程，这些细节详见(nohup 详解)[https://www.cnblogs.com/jinxiao-pu/p/9131057.html]。 但是这些计划执行命令不可以直接在Xshell prompt执行，需要放入用户的crontab文件中（关于crontab文件的位置，暂未找到。但可通过crontab -l查看，并可通过crontab -e进入编辑。编辑时候采用linux的vim命令，按i可插入，再按esc将退出，再输入&amp;quot;:&amp;quot;可选择退出与否保存与否。“:wq”代表保存并退出。
+这些计划执行命令将根据设定的时间点开始执行，并不能限定执行完成时间。
+注意以上细节应该就可以定时执行计划命令了，爬取的文件或在计划命令的工作路径或在爬虫代码设置的具体输出路径。将爬取的文件发给对应的爬虫项目负责人。
+关于爬虫计划，暂不知道放在什么位置。仅计划了周期而没更严格的时间规定的话，可选择集群负荷较小的深夜凌晨。</description>
+    </item>
+    
+  </channel>
+</rss>

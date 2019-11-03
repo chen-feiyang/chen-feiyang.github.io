@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  
+  <meta name="generator" content="Hugo 0.58.1" />
+
+  
+  <meta name="description" content="Some description">
+  
+
+  
+  <link rel="apple-touch-icon" sizes="180x180" href="https://chen-feiyang.github.io/apple-touch-icon.png">
+
+  
+  <link rel="icon" type="image/png" sizes="32x32" href="https://chen-feiyang.github.io/favicon-32x32.png">
+
+  
+  <link rel="icon" type="image/png" sizes="16x16" href="https://chen-feiyang.github.io/favicon-16x16.png">
+
+  
+  <link rel="manifest" href="https://chen-feiyang.github.io/site.webmanifest">
+
+  
+  <link rel="mask-icon" href="https://chen-feiyang.github.io/safari-pinned-tab.svg" color="#5bbad5">
+
+  <meta name="msapplication-TileColor" content="#da532c">
+
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <link rel="stylesheet" href="https://chen-feiyang.github.io/css/bootstrap.min.css" />
+
+  
+  <title>Learning_the_vi_and_vim_editors | Feiyang Chen&#39;s Blog</title>
+  
+
+  <style>
+body {
+  min-width: 300px;
+}
+
+.custom-navbar {
+  margin-bottom: 1em;
+  height: 60px;
+}
+
+.custom-navbar a {
+  display: inline-block; 
+  padding: 18px 0;
+  margin-right: 1em; 
+  font-weight: bold; 
+}
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  text-decoration: none; 
+}
+
+@media print {
+  .custom-navbar {
+    display: none;
+  }
+}
+
+article {
+  padding-bottom: 1em;
+}
+
+img {
+  max-width: 100%;
+}
+
+
+body {
+  background-color: #ffffff;
+}
+
+
+
+body {
+  color: #212529;
+}
+
+
+
+a {
+  color: #212529;
+}
+
+
+
+a:hover,
+a:focus {
+  color: #212529;
+}
+
+
+
+.custom-navbar {
+  background-color: #212529;
+}
+
+
+
+.custom-navbar a {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+
+
+.custom-navbar a:hover,
+.custom-navbar a:focus {
+  color: rgba(255, 255, 255, 1);
+}
+
+
+
+.container {
+  max-width: 800px;
+}
+
+
+
+pre {
+  display: block;
+  padding: 9.5px;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+pre code {
+  padding: 0;
+  font-size: inherit;
+  color: inherit; 
+  white-space: pre-wrap;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+}
+
+code {
+  padding: 2px 4px;
+  color: inherit; 
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: .9em;
+}
+
+
+
+blockquote,
+.blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 1em;
+  border-left: 5px solid #6c757d;
+}
+
+</style>
+</head>
+
+<script type="text/javascript"
+        async
+        src="https://cdn.bootcss.com/mathjax/2.7.3/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+MathJax.Hub.Config({
+  tex2jax: {
+    inlineMath: [['$','$'], ['\\(','\\)']],
+    displayMath: [['$$','$$'], ['\[\[','\]\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+    TeX: { equationNumbers: { autoNumber: "AMS" },
+         extensions: ["AMSmath.js", "AMSsymbols.js"] }
+  }
+});
+
+MathJax.Hub.Queue(function() {
+    
+    
+    
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i = 0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+});
+</script>
+
+<style>
+code.has-jax {
+    font: inherit;
+    font-size: 100%;
+    background: inherit;
+    border: inherit;
+    color: #515151;
+}
+</style>
+
+<body>
+  <nav class="custom-navbar">
+  <div class="container">
+    
+    <a href="/">Posts</a>
+    
+    <a href="/tags/">Tags</a>
+    
+    <a href="/about/">About</a>
+    
+    <a href="/index.xml">RSS</a>
+    
+  </div>
+</nav>
+  
+  <div class="container">
+    <article>
+      <h1>Learning_the_vi_and_vim_editors</h1>
+
+
+<p>这本书是Vim官方推荐的书本之一，且有中文翻译，本该是合适的学习资料。奈何基本都在讲命令含义等，而我更需要一本实操性的Vim教材。之后再找了Vim官网推荐的《Mastering Vim》、《 Mastering Vim Quickly》，看看是不是更合适，所以本书的学习暂停止。</p>
+
+<h1 id="前言">前言</h1>
+
+<p>按前言，只有第二部分是讲Vim的，所以仅学习第二部分。</p>
+
+<h1 id="第一部分-基础与高级的vi">第一部分 基础与高级的vi</h1>
+
+<h2 id="第一章-vi文本编辑器">第一章 vi文本编辑器</h2>
+
+<h2 id="第二章-简单的文本编辑">第二章 简单的文本编辑</h2>
+
+<h2 id="第三章-快速移动位置">第三章 快速移动位置</h2>
+
+<h2 id="第四章-越过基础的藩篱">第四章 越过基础的藩篱</h2>
+
+<h2 id="第五章-ex编辑器概述">第五章 ex编辑器概述</h2>
+
+<h2 id="第六章-全局替换">第六章 全局替换</h2>
+
+<h2 id="第七章-高级编辑方法">第七章 高级编辑方法</h2>
+
+<h2 id="第八章-vi同类产品的功能总览">第八章 vi同类产品的功能总览</h2>
+
+<h1 id="第二部分-vim">第二部分 Vim</h1>
+
+<h2 id="第九章-vim-vi-improved-概述">第九章 Vim （vi improved）概述</h2>
+
+<h3 id="为何选择vim">为何选择Vim？</h3>
+
+<p>大幅扩展了vi的功能，还有，类unix系统或许缺少图形界面且预装了Vim。</p>
+
+<h3 id="与vi的比较">与vi的比较</h3>
+
+<p>扩展了vi的功能，Vim的功能分类：</p>
+
+<ul>
+<li>语法扩展（syntax extension）</li>
+<li>程序员辅助（programmer assistance）</li>
+<li>图形用户界面功能（GUI feature）</li>
+<li>脚本编写与插件程序（scripting and plug-in）</li>
+<li>初始化（initialization）</li>
+<li>会话上下文（session context）</li>
+<li>后处理（postprocessing）</li>
+<li>状态转换（transition）</li>
+<li>透明的编辑（transparent editing）</li>
+<li>元信息（meta-information）</li>
+<li>黑洞寄存器（black-hole register）</li>
+<li>关键字补全（keyword completion）</li>
+</ul>
+
+<h3 id="理念">理念</h3>
+
+<p>Vim与vi两者均以来modality（命令模式与输入模式），而且都把编辑工作交给键盘：也就是说，用户的编辑工作可以快速而有效地进行，而且不需要用到鼠标（或^x ^c）。</p>
+
+<h3 id="取得vim">取得Vim</h3>
+
+<p>各Unix变体很可能自带Vim。
+可进入Vim编辑器输入以下命令看到Vim版本</p>
+
+<pre><code>:version
+</code></pre>
+
+<p>注：公司32号机是7.4版本</p>
+
+<p>若无可安装并将安装目录加入PATH。</p>
+
+<p>可从<a href="http://wwww.vim.org">Vim网站</a>上去的</p>
+
+<h2 id="第十章-vim对vi的主要改进">第十章 Vim对vi的主要改进</h2>
+
+<h3 id="内置帮助功能">内置帮助功能</h3>
+
+<p>Vim的说明文档又超过10万行，很详细。可通过以下命令查看：</p>
+
+<pre><code>:help
+</code></pre>
+
+<p>庞杂的文档需要导航技巧。</p>
+
+<p>其内置tab自动补全命令的功能，如键入以下：</p>
+
+<pre><code>:e /etc/termc[TAB]
+</code></pre>
+
+<p>在任何Unix系统里将展开为：</p>
+
+<pre><code>:e /etc/termcap
+</code></pre>
+
+<p>注：暂不知为何，我试了并不能如上补全。</p>
+
+<p>假设你想了解如何分割屏幕。首先键入：</p>
+
+<pre><code>:help split
+</code></pre>
+
+<p>然后按下Tab键。在当前版本，help命令将在下列字符串间循环：<code>split()</code>、<code>:split</code>、<code>:split_f</code>、<code>splitview</code>、<code>splitfind</code>、<code>'splitright'</code>、<code>'splitbelow'</code>等，不胜枚举。想看任何一项主题的帮助时，可在该主题被高亮显示时按下ENTER键。</p>
+
+<p>你不知可看到想寻找的主题（<code>:split</code>），也会发现一些原本没想到的东西，例如：<code>vsplit</code>--“垂直分割”命令。</p>
+
+<h3 id="启动于初始化选项">启动于初始化选项</h3>
+
+<p>Vim使用一系列初始化文件，用于定义并调整难以计数的行为组合，这些初始化文件包括：</p>
+
+<ul>
+<li>命令行选项</li>
+<li>与命名称相关的行为</li>
+<li>配置文件（分为系统整体与个别用户的）</li>
+<li>环境变量</li>
+</ul>
+
+<p>这一届先介绍启动Vim的一些方式。想知道更多选项的众多细节，请使用帮助命令：</p>
+
+<pre><code>:help startup
+</code></pre>
+
+<h4 id="命令行选项">命令行选项</h4>
+
+<h2 id="第十一章-vim的多功能窗口">第十一章 Vim的多功能窗口</h2>
+
+<h2 id="第十二章-vim脚本">第十二章 Vim脚本</h2>
+
+<h2 id="第十三章-图形化vim-gvim">第十三章 图形化Vim（gvim）</h2>
+
+<h2 id="第十四章-程序员专用的vim强化功能">第十四章 程序员专用的Vim强化功能</h2>
+
+<h2 id="第十五章-其它好用的vim功能">第十五章 其它好用的Vim功能</h2>
+
+<h1 id="第三部分-其它vi同类产品">第三部分 其它vi同类产品</h1>
+
+<h2 id="第十六章-nvi-新的vi">第十六章 nvi：新的vi</h2>
+
+<h2 id="第十七章-elvis">第十七章 Elvis</h2>
+
+<h2 id="第十八章-vile-类似emacs的vi">第十八章 vile：类似Emacs的vi</h2>
+
+<h1 id="第四部分-附录">第四部分 附录</h1>
+
+<h2 id="附录a-vi-ex与vim编辑器">附录A vi、ex与Vim编辑器</h2>
+
+<h2 id="附录b-设置选项">附录B 设置选项</h2>
+
+<h2 id="附录c-问题集">附录C 问题集</h2>
+
+<h2 id="附录d-vi与国际互联网">附录D vi与国际互联网</h2>
+
+    </article>
+  </div>
+
+  
+  
+  
+  <script>
+  window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+  ga('create', 'UA-123456789-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#216942",
+      "text": "#b2d192"
+    },
+    "button": {
+      "background": "#afed71"
+    }
+  }
+})});
+</script>
+
+</body>
+
+</html>

@@ -4,11 +4,61 @@
   
   <url>
     <loc>https://chen-feiyang.github.io/</loc>
-    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+    <lastmod>2019-10-29T00:00:00+00:00</lastmod>
   </url>
   
   <url>
     <loc>https://chen-feiyang.github.io/posts/</loc>
+    <lastmod>2019-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/regular_expression_howto/</loc>
+    <lastmod>2019-10-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/deep_learning/</loc>
+    <lastmod>2019-10-09T20:42:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/mastering_vim/</loc>
+    <lastmod>2019-10-03T11:16:05+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/mastering_vim_quickly/</loc>
+    <lastmod>2019-10-03T11:15:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/learning_the_vi_and_vim_editors/</loc>
+    <lastmod>2019-10-02T23:13:29+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/more_math_into_latex/</loc>
+    <lastmod>2019-09-29T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/the_markdown_guide/</loc>
+    <lastmod>2019-09-18T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/python/</loc>
+    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/regex/</loc>
+    <lastmod>2019-09-09T09:33:39+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/</loc>
     <lastmod>2019-09-09T09:33:39+08:00</lastmod>
   </url>
   
@@ -28,8 +78,28 @@
   </url>
   
   <url>
+    <loc>https://chen-feiyang.github.io/tags/all/</loc>
+    <lastmod>2019-08-26T13:07:47+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chen-feiyang.github.io/posts/sundry/</loc>
     <lastmod>2019-08-26T13:07:47+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/linux/</loc>
+    <lastmod>2019-08-26T09:24:51+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/posts/linux_base/</loc>
+    <lastmod>2019-08-26T09:24:51+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/system/</loc>
+    <lastmod>2019-08-26T09:24:51+08:00</lastmod>
   </url>
   
   <url>
@@ -38,7 +108,42 @@
   </url>
   
   <url>
+    <loc>https://chen-feiyang.github.io/tags/big-data/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/hadoop/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/hbase/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/hdfs/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/hive/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chen-feiyang.github.io/posts/pyspark/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/pyspark/</loc>
+    <lastmod>2019-08-12T19:57:45+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/spark/</loc>
     <lastmod>2019-08-12T19:57:45+08:00</lastmod>
   </url>
   
@@ -48,8 +153,18 @@
   </url>
   
   <url>
+    <loc>https://chen-feiyang.github.io/tags/web-crawler/</loc>
+    <lastmod>2019-08-12T16:37:55+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chen-feiyang.github.io/posts/scrapy/</loc>
     <lastmod>2019-08-12T16:37:26+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/crontab/</loc>
+    <lastmod>2019-08-12T13:03:28+08:00</lastmod>
   </url>
   
   <url>
@@ -59,6 +174,26 @@
   
   <url>
     <loc>https://chen-feiyang.github.io/posts/hpart/</loc>
+    <lastmod>2019-07-28T22:58:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/machine-learning/</loc>
+    <lastmod>2019-07-28T22:58:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/project/</loc>
+    <lastmod>2019-07-28T22:58:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/regression/</loc>
+    <lastmod>2019-07-28T22:58:19+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/time-series/</loc>
     <lastmod>2019-07-28T22:58:19+08:00</lastmod>
   </url>
   
@@ -74,6 +209,16 @@
   
   <url>
     <loc>https://chen-feiyang.github.io/posts/ab_test/</loc>
+    <lastmod>2019-03-04T21:31:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/math/</loc>
+    <lastmod>2019-03-04T21:31:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/statistics/</loc>
     <lastmod>2019-03-04T21:31:22+08:00</lastmod>
   </url>
   
@@ -103,17 +248,7 @@
   </url>
   
   <url>
-    <loc>https://chen-feiyang.github.io/tags/machine-learning/</loc>
-    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chen-feiyang.github.io/tags/python/</loc>
-    <lastmod>2019-01-08T21:43:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://chen-feiyang.github.io/tags/</loc>
+    <loc>https://chen-feiyang.github.io/tags/algorithm/</loc>
     <lastmod>2019-01-08T21:43:45+08:00</lastmod>
   </url>
   
@@ -198,8 +333,43 @@
   </url>
   
   <url>
+    <loc>https://chen-feiyang.github.io/tags/blog/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/git/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/github/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/hugo/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/latex/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://chen-feiyang.github.io/posts/latex%E5%AE%9E%E7%8E%B0%E5%8F%8Ahugo/</loc>
     <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/markdown/</loc>
+    <lastmod>2018-11-26T19:09:32+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://chen-feiyang.github.io/tags/none/</loc>
+    <lastmod>2018-11-26T16:10:10+08:00</lastmod>
   </url>
   
   <url>
